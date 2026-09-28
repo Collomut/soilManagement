@@ -1,0 +1,15 @@
+*.pdf
+*.txt
+SoilGuard_Project_Document.html
+append_*.html
+generate_*.py
+finalize_doc.py
+fix_*.py
+inspect_*.py
+check_*.py
+test_*.py
+append_script.ps1
+*.pyc
+__pycache__/
+.DS_Store
+Thumbs.db
