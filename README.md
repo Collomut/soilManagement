@@ -1,4 +1,4 @@
-# 🌱 SoilGuard — Soil Intelligence System (SIS)
+# 🌱 SoilGuard: Soil Intelligence System (SIS)
 > *"Know Your Soil. Feed Your Field."*
 
 [![Competition](https://img.shields.io/badge/Innovation_Competition-Master_Submission-059669?style=for-the-badge)](./SoilGuard_Full_Documentation.html)
@@ -6,7 +6,7 @@
 [![Hardware](https://img.shields.io/badge/Hardware_Cost-$30_Node-0284c7?style=for-the-badge)](./SoilGuard_Full_Documentation.html)
 [![Offline](https://img.shields.io/badge/Operation-100%25_Offline-10b981?style=for-the-badge)](./SoilGuard_Full_Documentation.html)
 
-**SoilGuard** is an affordable, field-deployed soil intelligence system that monitors soil salinity (Electrical Conductivity) in real time, provides precision irrigation timing, and calculates crop-specific fertilizer dosages — stopping irreversible soil degradation and crop loss before it occurs.
+**SoilGuard** is an affordable, field-deployed soil intelligence system that monitors soil salinity (Electrical Conductivity) in real time, provides precision irrigation timing, and calculates crop-specific fertilizer dosages, stopping irreversible soil degradation and crop loss before it occurs.
 
 ---
 
