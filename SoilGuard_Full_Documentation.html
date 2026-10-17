@@ -991,6 +991,347 @@
             margin-bottom: 2.25rem !important;
         }
     
+    
+        
+        .vicious-cycle-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 1.25rem;
+            margin: 2rem 0;
+        }
+
+        .cycle-card {
+            background: #ffffff;
+            border: 1px solid #fed7aa;
+            border-top: 4px solid #ea580c;
+            border-radius: 0.85rem;
+            padding: 1.35rem 1.45rem;
+            box-shadow: 0 4px 10px rgba(234, 88, 12, 0.05);
+            display: flex;
+            flex-direction: column;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .cycle-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 18px rgba(234, 88, 12, 0.12);
+        }
+
+        .cycle-card-critical {
+            border-color: #fca5a5;
+            border-top-color: #dc2626;
+            box-shadow: 0 4px 10px rgba(220, 38, 38, 0.06);
+        }
+
+        .cycle-badge {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.72rem;
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+            padding: 0.25rem 0.65rem;
+            border-radius: 9999px;
+            background: #ffedd5;
+            color: #c2410c;
+            width: fit-content;
+            margin-bottom: 0.75rem;
+        }
+
+        .cycle-badge-critical {
+            background: #fee2e2;
+            color: #b91c1c;
+        }
+
+        .cycle-title {
+            font-size: 1.05rem;
+            font-weight: 800;
+            color: #0f172a;
+            margin-bottom: 0.45rem;
+            line-height: 1.35;
+        }
+
+        .cycle-desc {
+            font-size: 0.9rem;
+            color: #475569;
+            line-height: 1.6;
+            margin: 0;
+        }
+
+        .intercept-box {
+            background: linear-gradient(135deg, #ecfdf5 0%, #f0fdf4 100%);
+            border: 2px solid #059669;
+            border-radius: 1rem;
+            padding: 1.75rem 2rem;
+            margin: 2rem 0 2.5rem 0;
+            box-shadow: 0 6px 16px rgba(5, 150, 105, 0.1);
+        }
+
+        .intercept-title {
+            font-size: 1.15rem;
+            font-weight: 900;
+            color: #065f46;
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+            margin-bottom: 0.65rem;
+        }
+
+        .intercept-desc {
+            font-size: 0.975rem;
+            color: #166534;
+            line-height: 1.7;
+            margin: 0;
+        }
+
+        .whys-vertical-chain {
+            display: flex;
+            flex-direction: column;
+            gap: 1.1rem;
+            margin: 2rem 0 2.5rem 0;
+        }
+
+        .why-card {
+            background: #ffffff;
+            border: 1px solid var(--border);
+            border-left: 5px solid var(--primary);
+            border-radius: 0.85rem;
+            padding: 1.35rem 1.6rem;
+            box-shadow: 0 3px 10px rgba(15, 23, 42, 0.03);
+            display: flex;
+            align-items: flex-start;
+            gap: 1.25rem;
+            transition: transform 0.2s ease, border-color 0.2s ease;
+        }
+
+        .why-card:hover {
+            transform: translateX(4px);
+            border-left-color: #10b981;
+        }
+
+        .why-pill {
+            background: var(--primary-light);
+            color: var(--primary-dark);
+            font-weight: 900;
+            font-size: 0.78rem;
+            padding: 0.35rem 0.85rem;
+            border-radius: 9999px;
+            border: 1px solid color-mix(in srgb, var(--primary) 30%, transparent);
+            white-space: nowrap;
+            flex-shrink: 0;
+            letter-spacing: 0.05em;
+        }
+
+        .why-body-title {
+            font-size: 1.05rem;
+            font-weight: 800;
+            color: #0f172a;
+            margin: 0 0 0.35rem 0;
+        }
+
+        .why-body-desc {
+            font-size: 0.925rem;
+            color: #475569;
+            line-height: 1.6;
+            margin: 0;
+        }
+
+        .bom-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+            gap: 1.25rem;
+            margin: 2rem 0;
+        }
+
+        .bom-card {
+            background: #ffffff;
+            border: 1px solid var(--border);
+            border-top: 3px solid var(--primary);
+            border-radius: 0.85rem;
+            padding: 1.25rem 1.35rem;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.02);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .bom-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            margin-bottom: 0.5rem;
+        }
+
+        .bom-title {
+            font-size: 1rem;
+            font-weight: 800;
+            color: #0f172a;
+        }
+
+        .bom-cost {
+            font-size: 1.15rem;
+            font-weight: 900;
+            color: var(--primary);
+        }
+
+        .bom-desc {
+            font-size: 0.875rem;
+            color: #475569;
+            line-height: 1.5;
+            margin: 0;
+        }
+
+        .arch-dual-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 2rem;
+            margin: 2.25rem 0;
+        }
+
+        @media (min-width: 900px) {
+            .arch-dual-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        .arch-stream-card {
+            background: #ffffff;
+            border: 1px solid var(--border);
+            border-radius: 1.15rem;
+            padding: 1.85rem;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.03);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .arch-stream-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 1.35rem;
+            padding-bottom: 0.85rem;
+            border-bottom: 2px solid #f1f5f9;
+        }
+
+        .arch-stream-title {
+            font-size: 1.15rem;
+            font-weight: 800;
+            color: #0f172a;
+            margin: 0;
+        }
+
+        .arch-stream-badge {
+            font-size: 0.72rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            padding: 0.25rem 0.65rem;
+            border-radius: 9999px;
+            letter-spacing: 0.05em;
+        }
+
+        .arch-step-list {
+            display: flex;
+            flex-direction: column;
+            gap: 0.85rem;
+        }
+
+        .arch-step-item {
+            background: #f8fafc;
+            border: 1px solid var(--border);
+            border-radius: 0.75rem;
+            padding: 0.95rem 1.15rem;
+            font-size: 0.925rem;
+            color: #334155;
+            display: flex;
+            align-items: center;
+            gap: 0.85rem;
+        }
+
+        .arch-step-icon {
+            font-size: 1.25rem;
+            flex-shrink: 0;
+        }
+
+        .arch-arrow-down {
+            text-align: center;
+            color: var(--primary);
+            font-size: 1.25rem;
+            font-weight: 900;
+            line-height: 1;
+            margin: -0.25rem 0;
+        }
+
+        .crop-flow-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+            gap: 1rem;
+            margin: 1.5rem 0 2.25rem 0;
+        }
+
+        .crop-flow-card {
+            background: #ffffff;
+            border: 1px solid var(--border);
+            border-top: 3px solid var(--primary);
+            border-radius: 0.75rem;
+            padding: 1.15rem 1.1rem;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.02);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .crop-stage-num {
+            font-size: 0.68rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            color: var(--primary);
+            letter-spacing: 0.08em;
+            margin-bottom: 0.35rem;
+        }
+
+        .crop-stage-header {
+            font-size: 0.95rem;
+            font-weight: 800;
+            color: #0f172a;
+            margin-bottom: 0.45rem;
+            line-height: 1.35;
+        }
+
+        .crop-stage-body {
+            font-size: 0.85rem;
+            color: #475569;
+            line-height: 1.5;
+            margin: 0;
+        }
+
+        .toc-framework-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+            gap: 1.25rem;
+            margin: 2rem 0;
+        }
+
+        .toc-card {
+            background: #ffffff;
+            border: 1px solid var(--border);
+            border-radius: 0.85rem;
+            padding: 1.35rem;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.02);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .toc-badge {
+            font-size: 0.72rem;
+            font-weight: 900;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+            padding: 0.25rem 0.65rem;
+            border-radius: 9999px;
+            width: fit-content;
+            margin-bottom: 0.75rem;
+        }
+
     </style>
 </head>
 <body>
@@ -1298,6 +1639,49 @@
             <p>The primary driver is over-irrigation in poorly drained soils. Excess water raises the local water table, bringing dissolved geologic salts into the active root zone. When the water evaporates, the salt remains. A secondary, deeply ironic cause is the overuse of synthetic fertilizers. Chemically, fertilizers <em>are</em> salts. Applying standard doses of NPK fertilizer to a soil that is already salt-stressed directly pushes the local salinity past the crop's lethal threshold.</p>
             <p>A major contributing factor is the quality of the irrigation water itself. Even water that is considered fresh often has a low electrical conductivity (e.g., 0.5 dS/m). Over a 120-day growing season, applying thousands of liters of this water deposits massive quantities of raw salt into a very small area of soil.</p>
 
+            
+            <div class="vicious-cycle-grid">
+                <div class="cycle-card">
+                    <span class="cycle-badge">Stage 1</span>
+                    <div class="cycle-title">Intuition-Based Irrigation</div>
+                    <p class="cycle-desc">Farmer irrigates on a rigid calendar schedule or when topsoil feels dry, applying unmeasured volumes of water containing trace dissolved salts.</p>
+                </div>
+                <div class="cycle-card">
+                    <span class="cycle-badge">Stage 2</span>
+                    <div class="cycle-title">Subsurface Salt Accumulation</div>
+                    <p class="cycle-desc">Excess water pools beneath the surface and dissolves deep mineral salts. Strong tropical solar radiation drives rapid evaporation, pulling dissolved salts upward into the root zone via capillary draw.</p>
+                </div>
+                <div class="cycle-card cycle-card-critical">
+                    <span class="cycle-badge cycle-badge-critical">Stage 3</span>
+                    <div class="cycle-title">Osmotic Root Blockade</div>
+                    <p class="cycle-desc">High Electrical Conductivity (EC) reverses osmotic pressure. Plant roots can no longer absorb water or nutrients, inducing physiological drought despite saturated mud.</p>
+                </div>
+                <div class="cycle-card cycle-card-critical">
+                    <span class="cycle-badge cycle-badge-critical">Stage 4</span>
+                    <div class="cycle-title">Farmer Misdiagnosis</div>
+                    <p class="cycle-desc">The farmer sees drooping stalks, yellowing leaves, and wilting. Unable to see root-zone salinity, they assume the crop is desperately thirsty or lacking nitrogen.</p>
+                </div>
+                <div class="cycle-card cycle-card-critical">
+                    <span class="cycle-badge cycle-badge-critical">Stage 5</span>
+                    <div class="cycle-title">Compound Over-Application</div>
+                    <p class="cycle-desc">The farmer responds by pumping double the irrigation water and dumping synthetic NPK fertilizer. Because chemical fertilizers are salts, EC spikes to lethal levels.</p>
+                </div>
+                <div class="cycle-card cycle-card-critical">
+                    <span class="cycle-badge cycle-badge-critical">Stage 6</span>
+                    <div class="cycle-title">Crop Death & Land Abandonment</div>
+                    <p class="cycle-desc">Roots suffer irreversible toxicity and cell collapse. The entire harvest is lost, input investments are wasted, and topsoil becomes permanently encrusted with white alkali salts.</p>
+                </div>
+            </div>
+
+            <div class="intercept-box">
+                <div class="intercept-title">
+                    <span>🛡️</span> How SoilGuard Permanently Breaks This Vicious Cycle
+                </div>
+                <p class="intercept-desc">
+                    SoilGuard intercepts the crisis at <strong>Stage 3</strong> before visible damage occurs. When the analog EC probe detects salinity rising toward crop tolerance thresholds, the system immediately switches the field status LED to <strong>Yellow/Red</strong> and sends an SMS alert: <em>"Hold Fertilizer — High Soil Salinity Detected. Initiate Leaching Cycle."</em> By guiding the farmer to apply an exact leaching fraction to wash salts downward below the root zone, SoilGuard protects roots, preserves fertilizer capital, and saves the harvest.
+                </p>
+            </div>
+
             <h3><span class="sub-num">4.5</span> <strong>Consequences</strong></h3>
             <p><strong>Economic:</strong> The FAO (2021) estimates that $27 billion is lost annually on a global scale due to human-induced soil salinization.</p>
             <p><strong>Production:</strong> Peer-reviewed literature demonstrates that sensitive crops (like tomatoes or beans) routinely suffer yield reductions of 50–80% when subjected to high salinity stress during critical flowering stages.</p>
@@ -1377,16 +1761,42 @@
 <h2><span class="sec-pill">SECTION 06</span> ROOT-CAUSE ANALYSIS</h2>
             
             <h3><span class="sub-num">6.1</span> <strong>Five Whys chain</strong></h3>
-            <div class="flex-diagram">
-                <div class="diagram-box">Why do farmers lose yield to salinity? <br><small>They don't know salinity is building up until damage is done.</small></div>
-                <div class="diagram-arrow">&#8594;</div>
-                <div class="diagram-box">Why don't they know? <br><small>They have no measurement tool in the field.</small></div>
-                <div class="diagram-arrow">&#8594;</div>
-                <div class="diagram-box">Why no tool? <br><small>Commercial tools cost $500–$3,000; lab tests are slow and costly.</small></div>
-                <div class="diagram-arrow">&#8594;</div>
-                <div class="diagram-box">Why haven't cheaper tools reached farmers? <br><small>Hardware only recently became cheap enough; interface barriers.</small></div>
-                <div class="diagram-arrow">&#8594;</div>
-                <div class="diagram-box">Why hasn't adoption happened even with cheap hardware? <br><small>No local distribution, no repair network, lack of awareness.</small></div>
+            <div class="whys-vertical-chain">
+                <div class="why-card">
+                    <div class="why-pill">Why #1</div>
+                    <div class="why-content">
+                        <div class="why-body-title">Why do smallholder farmers lose 20%–40% of their yield to salinity?</div>
+                        <p class="why-body-desc">Because salinity accumulates invisibly beneath the soil surface. By the time visual signs appear (wilting, stunting, leaf scorch), irreversible root cellular damage has already occurred.</p>
+                    </div>
+                </div>
+                <div class="why-card">
+                    <div class="why-pill">Why #2</div>
+                    <div class="why-content">
+                        <div class="why-body-title">Why are farmers unaware that salinity is building up in their root zone?</div>
+                        <p class="why-body-desc">Because they have no real-time diagnostic tools deployed in their fields. Soil chemistry is currently completely invisible to the farmer during daily field operations.</p>
+                    </div>
+                </div>
+                <div class="why-card">
+                    <div class="why-pill">Why #3</div>
+                    <div class="why-content">
+                        <div class="why-body-title">Why don't smallholder farmers use existing soil measurement tools?</div>
+                        <p class="why-body-desc">Commercial laboratory soil tests cost $30–$80 per sample and take 2–4 weeks to return results. Commercial IoT telemetry systems cost $500–$3,000 per node, completely out of reach for a subsistence farmer.</p>
+                    </div>
+                </div>
+                <div class="why-card">
+                    <div class="why-pill">Why #4</div>
+                    <div class="why-content">
+                        <div class="why-body-title">Why haven't low-cost agricultural soil sensors been built until now?</div>
+                        <p class="why-body-desc">The key hardware components only reached the sub-$10 commodity price threshold after 2020. Microcontrollers like the ESP32 ($3–$5) and durable corrosion-resistant probes now make a sub-$35 node technically and economically viable for the first time.</p>
+                    </div>
+                </div>
+                <div class="why-card">
+                    <div class="why-pill">Why #5</div>
+                    <div class="why-content">
+                        <div class="why-body-title">Why hasn't cheap hardware solved this problem organically on its own?</div>
+                        <p class="why-body-desc">Because hardware alone is not a solution. Smallholders need an offline-first decision engine that translates raw sensor volts into plain-language agronomic instructions (water duration, leaching fraction, fertilizer dose) delivered through zero-literacy interfaces without requiring expensive smartphones or constant cloud connectivity.</p>
+                    </div>
+                </div>
             </div>
 
             <h3><span class="sub-num">6.2</span> <strong>Contributing factor analysis</strong></h3>
@@ -1711,6 +2121,52 @@
             <p><strong>OLED display (~$3, Optional):</strong> Shows current readings and recommendation on-screen at the node. Useful for farmers who can check the device directly.</p>
             <p><strong>LED indicator system & Weatherproof enclosure:</strong> A 3-color LED (green, yellow, red) works for zero-literacy users. An IP65-rated box protects electronics from rain, dust, insects. Total hardware cost including enclosure: ~$30–35.</p>
 
+            
+            <div class="bom-grid">
+                <div class="bom-card">
+                    <div class="bom-header">
+                        <span class="bom-title">ESP32 Microcontroller</span>
+                        <span class="bom-cost">$5.00</span>
+                    </div>
+                    <p class="bom-desc">Dual-core Xtensa 32-bit processor running MicroPython. Executes local FAO-56 decision rules, handles multi-channel ADC sensor polling, controls status LED, and stores 7-day rolling logs on microSD.</p>
+                </div>
+                <div class="bom-card">
+                    <div class="bom-header">
+                        <span class="bom-title">Analog Soil EC Probe</span>
+                        <span class="bom-cost">$8.00</span>
+                    </div>
+                    <p class="bom-desc">Dual-electrode conductivity sensor measuring dissolved ion flux in soil pore water. Calibrated to dS/m (0.0–20.0 range) with temperature compensation.</p>
+                </div>
+                <div class="bom-card">
+                    <div class="bom-header">
+                        <span class="bom-title">Capacitive Moisture Sensor</span>
+                        <span class="bom-cost">$3.00</span>
+                    </div>
+                    <p class="bom-desc">Corrosion-resistant capacitive dielectric probe measuring Volumetric Water Content (VWC %). Eliminates electrode degradation seen in cheap resistive probes.</p>
+                </div>
+                <div class="bom-card">
+                    <div class="bom-header">
+                        <span class="bom-title">DS18B20 Temp Probe</span>
+                        <span class="bom-cost">$2.00</span>
+                    </div>
+                    <p class="bom-desc">Waterproof digital probe measuring root-zone temperature (±0.5°C accuracy). Essential for standardizing all EC measurements to the standard 25°C baseline.</p>
+                </div>
+                <div class="bom-card">
+                    <div class="bom-header">
+                        <span class="bom-title">Solar & Power System</span>
+                        <span class="bom-cost">$8.00</span>
+                    </div>
+                    <p class="bom-desc">5W monocrystalline solar panel + TP4056 charge controller + 2,200mAh LiPo battery. Provides indefinite autonomous operation with a 3-day reserve without sunlight.</p>
+                </div>
+                <div class="bom-card">
+                    <div class="bom-header">
+                        <span class="bom-title">IP65 Enclosure & LED</span>
+                        <span class="bom-cost">$4.00</span>
+                    </div>
+                    <p class="bom-desc">UV-stabilized waterproof housing with stainless ground stake and external high-intensity Tri-Color LED (Green/Yellow/Red) for instantaneous zero-literacy field status.</p>
+                </div>
+            </div>
+
             <h3><span class="sub-num">11.4</span> <strong>Software components</strong></h3>
             <p><strong>Firmware (on ESP32):</strong> Written in MicroPython. Runs the sensor reading loop every 15 minutes. Performs temperature correction on EC readings. Applies crop-specific FAO tolerance thresholds. Calculates leaching requirements using FAO-56 formula when EC exceeds threshold. Generates recommendation. Controls LED output. Stores 7-day rolling log on microSD card.</p>
             <p><strong>Decision engine:</strong> A rule-based expert system referencing a lookup table of FAO crop salinity tolerance values. When EC is above threshold, it flags WARNING or CRITICAL. When moisture is below field capacity, it flags irrigation needed. Applies leaching fraction formula: LR = ECw / (5 × ECe − ECw).</p>
@@ -1877,16 +2333,72 @@
             <p><strong>Security & Backup:</strong> JWT authentication for APIs; AES-256 encrypted automated daily database backups to cold storage.</p>
 
             <h3><span class="sub-num">15.2</span> <strong>Data flow diagram</strong></h3>
-            <div class="flex-diagram">
-                <div class="diagram-box">Soil<br><small>(Physical environment)</small></div>
-                <div class="diagram-arrow">&#8594;</div>
-                <div class="diagram-box">Sensors<br><small>(EC, Moisture, Temp)</small></div>
-                <div class="diagram-arrow">&#8594;</div>
-                <div class="diagram-box">ESP32 Edge<br><small>(Decision Engine + SD Card)</small></div>
-                <div class="diagram-arrow">&#8594;</div>
-                <div class="diagram-box">LED / SMS<br><small>(Local Actionable Output)</small></div>
-                <div class="diagram-arrow">&#8594;</div>
-                <div class="diagram-box">Farmer Action<br><small>(Irrigate/Fertilize)</small></div>
+            <div class="arch-dual-grid">
+                <div class="arch-stream-card" style="border-top: 4px solid var(--primary);">
+                    <div class="arch-stream-header">
+                        <div class="arch-stream-title">Stream A: Autonomous Edge Sentry</div>
+                        <span class="arch-stream-badge" style="background: var(--primary-light); color: var(--primary-dark);">100% Offline Primary</span>
+                    </div>
+                    <div class="arch-step-list">
+                        <div class="arch-step-item">
+                            <span class="arch-step-icon">🌱</span>
+                            <div><strong>Soil Root Zone:</strong> Continuous physical moisture, salinity, and temperature dynamics</div>
+                        </div>
+                        <div class="arch-arrow-down">↓</div>
+                        <div class="arch-step-item">
+                            <span class="arch-step-icon">⚡</span>
+                            <div><strong>Sensor Probes:</strong> EC analog probe + Capacitive moisture + Digital DS18B20 polled every 15 min</div>
+                        </div>
+                        <div class="arch-arrow-down">↓</div>
+                        <div class="arch-step-item">
+                            <span class="arch-step-icon">🧠</span>
+                            <div><strong>ESP32 Edge Brain:</strong> Temperature normalization to 25°C + FAO-56 crop threshold evaluation + SD logging</div>
+                        </div>
+                        <div class="arch-arrow-down">↓</div>
+                        <div class="arch-step-item">
+                            <span class="arch-step-icon">🚦</span>
+                            <div><strong>Local Interface:</strong> Tri-color LED indicator (Green = OK, Yellow = Caution, Red = Act Now) + Optional local SMS</div>
+                        </div>
+                        <div class="arch-arrow-down">↓</div>
+                        <div class="arch-step-item">
+                            <span class="arch-step-icon">👨‍🌾</span>
+                            <div><strong>Farmer Action:</strong> Precision irrigation timing, leaching flush cycle, or adjusted fertilizer dosing</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="arch-stream-card" style="border-top: 4px solid #3b82f6;">
+                    <div class="arch-stream-header">
+                        <div class="arch-stream-title">Stream B: Cloud Telemetry & Analytics</div>
+                        <span class="arch-stream-badge" style="background: #eff6ff; color: #1d4ed8;">Connected Sync</span>
+                    </div>
+                    <div class="arch-step-list">
+                        <div class="arch-step-item">
+                            <span class="arch-step-icon">📡</span>
+                            <div><strong>GSM/GPRS Uplink:</strong> Periodic lightweight JSON telemetry payload via SIM800L module</div>
+                        </div>
+                        <div class="arch-arrow-down">↓</div>
+                        <div class="arch-step-item">
+                            <span class="arch-step-icon">🌐</span>
+                            <div><strong>FastAPI Cloud Gateway:</strong> High-throughput REST API with JWT device authentication & rate limiting</div>
+                        </div>
+                        <div class="arch-arrow-down">↓</div>
+                        <div class="arch-step-item">
+                            <span class="arch-step-icon">🗄️</span>
+                            <div><strong>TimescaleDB / Postgres:</strong> Optimized time-series telemetry storage, spatial mapping & rolling averages</div>
+                        </div>
+                        <div class="arch-arrow-down">↓</div>
+                        <div class="arch-step-item">
+                            <span class="arch-step-icon">📊</span>
+                            <div><strong>Web Dashboard & SMS:</strong> React dashboard with interactive salinity curves + automated SMS gateway</div>
+                        </div>
+                        <div class="arch-arrow-down">↓</div>
+                        <div class="arch-step-item">
+                            <span class="arch-step-icon">🤝</span>
+                            <div><strong>Institutional Users:</strong> Extension officers, cooperative agronomists, and regional food security planners</div>
+                        </div>
+                    </div>
+                </div>
             </div>
             <p><em>Optional Cloud Path:</em> ESP32 &#8594; GSM Network &#8594; Cloud API &#8594; TimescaleDB &#8594; Web Dashboard &#8594; Extension Officer.</p>
 
@@ -2066,6 +2578,40 @@
 <h2><span class="sec-pill">SECTION 19</span> AGRICULTURAL PROCESS MODEL</h2>
             <p>SoilGuard intervenes at specific points in the crop cycle to optimize outcomes. Below is the mapped cycle for Maize and Tomato.</p>
             
+            
+            <div class="crop-flow-grid">
+                <div class="crop-flow-card">
+                    <span class="crop-stage-num">Stage 1</span>
+                    <div class="crop-stage-header">Land Prep & Sowing</div>
+                    <p class="crop-stage-body">SoilGuard probe installed at 20cm depth. Baseline EC and moisture established before seedling emergence.</p>
+                </div>
+                <div class="crop-flow-card">
+                    <span class="crop-stage-num">Stage 2</span>
+                    <div class="crop-stage-header">Germination</div>
+                    <p class="crop-stage-body">Highest sensitivity window. System ensures EC remains below 1.7 dS/m and alerts against seed desiccation.</p>
+                </div>
+                <div class="crop-flow-card">
+                    <span class="crop-stage-num">Stage 3</span>
+                    <div class="crop-stage-header">Vegetative Growth</div>
+                    <p class="crop-stage-body">Rapid leaf development. SoilGuard evaluates root zone before each split fertilizer application, preventing salt burn.</p>
+                </div>
+                <div class="crop-flow-card">
+                    <span class="crop-stage-num">Stage 4</span>
+                    <div class="crop-stage-header">Flowering / Tasseling</div>
+                    <p class="crop-stage-body">Yield-determining phase. Strictly guards moisture levels; triggers salt-flushing leaching if water stress occurs.</p>
+                </div>
+                <div class="crop-flow-card">
+                    <span class="crop-stage-num">Stage 5</span>
+                    <div class="crop-stage-header">Grain Fill / Ripening</div>
+                    <p class="crop-stage-body">Moisture tapering guided by capacitive readings to prevent fungal mold and avoid late-season water waste.</p>
+                </div>
+                <div class="crop-flow-card">
+                    <span class="crop-stage-num">Stage 6</span>
+                    <div class="crop-stage-header">Harvest & Audit</div>
+                    <p class="crop-stage-body">Final season data downloaded from SD card. End-of-season soil health benchmark compared against planting baseline.</p>
+                </div>
+            </div>
+
             <h3><strong>Maize Process Model</strong></h3>
             <ul class="space-y-2">
                 <li><strong>1. Land prep & 2. Planting:</strong> Farmer tills and plants. SoilGuard installed. Baseline EC established.</li>
@@ -3368,24 +3914,37 @@
         <section id="section54">
 <h2><span class="sec-pill">SECTION 54</span> THEORY OF CHANGE</h2>
             
-            <div class="flex-diagram">
-                <div class="diagram-box"><strong>INPUT:</strong> Funding secured + hardware built + field agents trained + cooperative partnership established</div>
-                <div class="diagram-arrow">&#8595;</div>
-                <div class="diagram-box"><strong>ACTIVITY:</strong> Sensor nodes installed on 10 farms + farmers trained on LED and SMS interface + monthly field agent visits active</div>
-                <div class="diagram-arrow">&#8595;</div>
-                <div class="diagram-box"><strong>OUTPUT:</strong> 96 sensor readings per day per farm + irrigation and fertilizer recommendations delivered via LED, local screen, and SMS</div>
-                <div class="diagram-arrow">&#8595;</div>
-                <div class="diagram-box"><strong>BEHAVIOR CHANGE:</strong> Farmers irrigate based on soil moisture data rather than fixed 3-day schedule + farmers apply fertilizer only when EC is below safe threshold + farmers apply leaching cycles when EC approaches crop damage level</div>
-                <div class="diagram-arrow">&#8595;</div>
-                <div class="diagram-box"><strong>IMMEDIATE OUTCOME:</strong> Over-irrigation reduced 30-50% + salt accumulation slowed or reversed + fertilizer waste reduced 25-40% + fertilizer applied when crops can actually absorb it</div>
-                <div class="diagram-arrow">&#8595;</div>
-                <div class="diagram-box"><strong>SHORT-TERM OUTCOME (1 season):</strong> Soil EC stays below crop damage threshold + crops experience no salt stress + yield improves 15-30% + input cost decreases $50-100 per season</div>
-                <div class="diagram-arrow">&#8595;</div>
-                <div class="diagram-box"><strong>MEDIUM-TERM OUTCOME (1-3 seasons):</strong> Soil EC stabilizes and trends downward + soil structure improves + farmer income increases $200-400 per year + data-informed farming becomes standard practice</div>
-                <div class="diagram-arrow">&#8595;</div>
-                <div class="diagram-box"><strong>LONG-TERM IMPACT (3+ years):</strong> Farmland remains productive indefinitely + local food supply more reliable + household income above poverty threshold more consistently + children's education and healthcare investment enabled</div>
-                <div class="diagram-arrow">&#8595;</div>
-                <div class="diagram-box"><strong>SYSTEMIC IMPACT:</strong> Regional soil health data enables government policy + validated model attracts additional investment + open-source technology adopted globally</div>
+            <div class="toc-framework-container">
+                <div class="toc-card" style="border-top: 4px solid #64748b;">
+                    <span class="toc-badge" style="background: #f1f5f9; color: #475569;">1. Inputs</span>
+                    <p style="font-size: 0.9rem; color: #334155; line-height: 1.6; margin: 0;">
+                        Seed grant funding ($3,500) + Low-cost hardware assembly (10 nodes) + Open-source MicroPython firmware + Agronomic expert calibration with FAO-56 standards + Local cooperative partnership.
+                    </p>
+                </div>
+                <div class="toc-card" style="border-top: 4px solid #3b82f6;">
+                    <span class="toc-badge" style="background: #eff6ff; color: #1d4ed8;">2. Activities</span>
+                    <p style="font-size: 0.9rem; color: #334155; line-height: 1.6; margin: 0;">
+                        Deploy 10 field nodes across 2 agricultural districts + Train 10 smallholder farmers on visual LED cues + Weekly telemetry logging + Monthly manual EC sensor cross-verification.
+                    </p>
+                </div>
+                <div class="toc-card" style="border-top: 4px solid #8b5cf6;">
+                    <span class="toc-badge" style="background: #f5f3ff; color: #6d28d9;">3. Outputs</span>
+                    <p style="font-size: 0.9rem; color: #334155; line-height: 1.6; margin: 0;">
+                        28,800 monthly root-zone sensor readings + Timely irrigation & fertilizer alerts sent via SMS & LED + Field officer web dashboard + Verifiable seasonal soil health logs.
+                    </p>
+                </div>
+                <div class="toc-card" style="border-top: 4px solid var(--primary);">
+                    <span class="toc-badge" style="background: var(--primary-light); color: var(--primary-dark);">4. Outcomes</span>
+                    <p style="font-size: 0.9rem; color: #334155; line-height: 1.6; margin: 0;">
+                        30%–50% reduction in irrigation water waste + 25%–40% reduction in over-fertilization + 15%–30% verifiable crop yield increase + Elimination of salinity-induced crop failure.
+                    </p>
+                </div>
+                <div class="toc-card" style="border-top: 4px solid #047857;">
+                    <span class="toc-badge" style="background: #ecfdf5; color: #047857;">5. Systemic Impact</span>
+                    <p style="font-size: 0.9rem; color: #334155; line-height: 1.6; margin: 0;">
+                        Preservation of arable farmland for future generations + Enhanced household income ($160–$320/yr per smallholder) + Climate-resilient smallholder food production + Direct contribution to SDGs 2, 6, 12, 13, 15.
+                    </p>
+                </div>
             </div>
 
             <h3><strong>Assumption Analysis</strong></h3>
