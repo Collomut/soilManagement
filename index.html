@@ -1335,119 +1335,174 @@
     geologyGroup.add(stoneInstanced);
 
     /* =========================================================================
-       5. BOTANICAL MAIZE ORGANISM (ZEA MAYS L.) WITH DETAILED ANATOMY
+       5. BOTANICAL MAIZE ORGANISM (ZEA MAYS L.) WITH DETAILED FIBROUS ARCHITECTURE
        ========================================================================= */
     const plantGroup = new THREE.Group();
     plantGroup.position.set(0.35, 0.07, 0.2);
     scene.add(plantGroup);
 
     const anatomyParts = {
-      leaves: new THREE.Group(),
       stem: new THREE.Group(),
+      sheaths: new THREE.Group(),
+      leaves: new THREE.Group(),
       ears: new THREE.Group(),
-      crown: new THREE.Group(),
-      mainRoots: new THREE.Group(),
+      braceRoots: new THREE.Group(),
+      crownRoots: new THREE.Group(),
+      seminalRoots: new THREE.Group(),
       lateralRoots: new THREE.Group(),
       rootTips: new THREE.Group()
     };
     Object.values(anatomyParts).forEach(g => plantGroup.add(g));
 
-    // Stalk Material
+    // Stalk (Culm) Material with subtle rind luster
     const stalkMat = new THREE.MeshStandardMaterial({
       color: 0x3d9e38,
-      roughness: 0.52,
-      metalness: 0.06
+      roughness: 0.50,
+      metalness: 0.05
     });
 
-    // Root Material with subtle moisture sheen
-    const rootMat = new THREE.MeshStandardMaterial({
-      color: 0xe8dfcf,
-      roughness: 0.42,
+    // Root Materials with natural ivory-cream hydration sheen (fibrous monocot system)
+    const braceRootMat = new THREE.MeshStandardMaterial({
+      color: 0xd6c7af,
+      roughness: 0.40,
+      metalness: 0.03
+    });
+    const crownRootMat = new THREE.MeshStandardMaterial({
+      color: 0xe8dfce,
+      roughness: 0.38,
       metalness: 0.02
     });
+    const lateralRootMat = new THREE.MeshStandardMaterial({
+      color: 0xf0e8db,
+      roughness: 0.34,
+      metalness: 0.02
+    });
+    const rootCapMat = new THREE.MeshStandardMaterial({
+      color: 0xfdfbf7,
+      roughness: 0.22,
+      metalness: 0.04
+    });
 
-    // Stratified Canopy Foliage Materials (Upper, Mid, Lower Canopy)
+    // Stratified Canopy Foliage Materials (Upper, Mid, Lower Canopy with distinct age & cuticle thickness)
     const leafMatUpper = new THREE.MeshStandardMaterial({
       color: 0x4fae3b,
       map: leafTexture,
-      roughness: 0.34,
+      roughness: 0.32,
       metalness: 0.03,
       side: THREE.DoubleSide
     });
     const leafMatMid = new THREE.MeshStandardMaterial({
-      color: 0x2b8228,
+      color: 0x277824,
       map: leafTexture,
-      roughness: 0.38,
+      roughness: 0.36,
       metalness: 0.04,
       side: THREE.DoubleSide
     });
     const leafMatLower = new THREE.MeshStandardMaterial({
-      color: 0x31752b,
+      color: 0x316f2b,
       map: leafTexture,
       roughness: 0.44,
       metalness: 0.05,
       side: THREE.DoubleSide
     });
+    const sheathMat = new THREE.MeshStandardMaterial({
+      color: 0x48963c,
+      roughness: 0.46,
+      metalness: 0.04,
+      side: THREE.DoubleSide
+    });
 
-    // A. Culm (Stalk) with Nodes and Sheaths
+    // A. Culm (Stalk) with Anatomically Spaced Nodes and Solid Internodes
     const stalkPoints = [
       new THREE.Vector3(0, 0, 0),
-      new THREE.Vector3(0.015, 0.5, -0.01),
-      new THREE.Vector3(-0.02, 1.1, 0.015),
-      new THREE.Vector3(0.01, 1.8, -0.01),
-      new THREE.Vector3(0.005, 2.25, 0.0)
+      new THREE.Vector3(0.012, 0.4, -0.008),
+      new THREE.Vector3(-0.015, 0.95, 0.012),
+      new THREE.Vector3(0.01, 1.6, -0.01),
+      new THREE.Vector3(0.005, 2.3, 0.0)
     ];
     const stalkCurve = new THREE.CatmullRomCurve3(stalkPoints);
-    const stalkGeo = new THREE.TubeGeometry(stalkCurve, 32, 0.046, 12, false);
+    const stalkGeo = new THREE.TubeGeometry(stalkCurve, 40, 0.046, 16, false);
     const stalkMesh = new THREE.Mesh(stalkGeo, stalkMat);
     stalkMesh.castShadow = true;
     stalkMesh.receiveShadow = true;
-    stalkMesh.userData = { id: 'plant-stem', name: 'Zea Mays Culm (Stalk)', type: 'BOTANY', badge: 'MEASURED' };
+    stalkMesh.userData = { id: 'plant-stem', name: 'Zea Mays Culm (Stalk Internodes)', type: 'BOTANY', badge: 'MEASURED' };
     anatomyParts.stem.add(stalkMesh);
 
-    // Stalk Nodes / Sheaths
-    for (let node = 1; node <= 4; node++) {
-      const nodeRingGeo = new THREE.TorusGeometry(0.05, 0.009, 8, 24);
-      nodeRingGeo.rotateX(Math.PI / 2);
-      const nodeMesh = new THREE.Mesh(nodeRingGeo, stalkMat);
-      nodeMesh.position.set(0, node * 0.45, 0);
+    // Node Collars along the Culm
+    const nodeHeights = [0.08, 0.18, 0.35, 0.55, 0.80, 1.08, 1.38, 1.70, 2.05];
+    nodeHeights.forEach((nh, idx) => {
+      const nodeGeo = new THREE.TorusGeometry(0.049, 0.008, 8, 24);
+      nodeGeo.rotateX(Math.PI / 2);
+      const nodeMesh = new THREE.Mesh(nodeGeo, stalkMat);
+      nodeMesh.position.set(0, nh, 0);
+      nodeMesh.userData = { id: `culm-node-${idx+1}`, name: `Culm Node Collar #${idx+1}`, type: 'BOTANY', badge: 'MEASURED' };
       anatomyParts.stem.add(nodeMesh);
-    }
+    });
 
-    // Maize Tassel (Male inflorescence at apical apex)
-    for (let t = 0; t < 9; t++) {
-      const angle = (t / 9) * Math.PI * 2;
+    // Apical Tassel (Male Inflorescence with central spike & radiating branches)
+    const tasselSpike = new THREE.TubeGeometry(new THREE.CatmullRomCurve3([
+      new THREE.Vector3(0, 2.25, 0),
+      new THREE.Vector3(0, 2.52, 0)
+    ]), 8, 0.008, 6, false);
+    const tasselMat = new THREE.MeshStandardMaterial({ color: 0xd4be6a, roughness: 0.65 });
+    const spikeMesh = new THREE.Mesh(tasselSpike, tasselMat);
+    spikeMesh.userData = { id: 'tassel-central', name: 'Tassel Central Rachis (Inflorescence)', type: 'BOTANY', badge: 'MEASURED' };
+    anatomyParts.stem.add(spikeMesh);
+
+    for (let t = 0; t < 10; t++) {
+      const angle = (t / 10) * Math.PI * 2 + (Math.random() - 0.5) * 0.2;
       const tCurve = new THREE.CatmullRomCurve3([
-        new THREE.Vector3(0, 2.22, 0),
-        new THREE.Vector3(Math.cos(angle) * 0.09, 2.38, Math.sin(angle) * 0.09),
-        new THREE.Vector3(Math.cos(angle) * 0.18, 2.48, Math.sin(angle) * 0.18)
+        new THREE.Vector3(0, 2.26 + (t / 10) * 0.06, 0),
+        new THREE.Vector3(Math.cos(angle) * 0.08, 2.38, Math.sin(angle) * 0.08),
+        new THREE.Vector3(Math.cos(angle) * 0.19, 2.48, Math.sin(angle) * 0.19),
+        new THREE.Vector3(Math.cos(angle) * 0.24, 2.44, Math.sin(angle) * 0.24)
       ]);
-      const tGeo = new THREE.TubeGeometry(tCurve, 8, 0.006, 5, false);
-      const tMesh = new THREE.Mesh(tGeo, new THREE.MeshStandardMaterial({ color: 0xd9c279, roughness: 0.6 }));
-      tMesh.userData = { id: 'plant-tassel', name: 'Apical Tassel (Inflorescence)', type: 'BOTANY', badge: 'MEASURED' };
+      const tGeo = new THREE.TubeGeometry(tCurve, 8, 0.005, 5, false);
+      const tMesh = new THREE.Mesh(tGeo, tasselMat);
+      tMesh.userData = { id: `tassel-branch-${t+1}`, name: `Tassel Spikelet Branch #${t+1}`, type: 'BOTANY', badge: 'MEASURED' };
       anatomyParts.stem.add(tMesh);
     }
 
-    // B. Anatomically Plausible Maize Leaves: 5-Point Cross Section with Ruffled Margins
+    // B. Anatomically Detailed Maize Leaves (Sheath + 7-Point Cross-Section Blade with Ruffled Margins)
     const leafMeshes = [];
 
-    function createMaizeLeafRibbon(index, totalLeaves) {
+    function createBotanicalMaizeLeaf(index, totalLeaves) {
       const leafGroup = new THREE.Group();
-      const length = 1.35 + Math.random() * 0.35;
-      const maxWidth = 0.19 + Math.random() * 0.04;
+      const nodeH = nodeHeights[Math.min(nodeHeights.length - 1, index + 1)] || (0.3 + (index / totalLeaves) * 1.6);
+      leafGroup.position.set(0, nodeH, 0);
+
+      // Distichous alternating phyllotaxis (~180° alternation with subtle 15° natural spiral)
+      const baseAngle = (index % 2 === 0) ? 0 : Math.PI;
+      const spiralOffset = (index - 5) * 0.12 + (Math.random() - 0.5) * 0.08;
+      leafGroup.rotation.y = baseAngle + spiralOffset;
+
+      // 1. Clasping Cylindrical Leaf Sheath wrapping the stalk below the collar
+      const sheathLen = 0.14 + (index / totalLeaves) * 0.08;
+      const sheathGeo = new THREE.CylinderGeometry(0.052, 0.050, sheathLen, 16, 1, true, 0.2, Math.PI * 1.85);
+      sheathGeo.translate(0, -sheathLen * 0.45, 0);
+      const sheathMesh = new THREE.Mesh(sheathGeo, sheathMat);
+      sheathMesh.castShadow = true;
+      sheathMesh.userData = { id: `sheath-${index+1}`, name: `Leaf Sheath #${index+1} (Clasping Collar)`, type: 'BOTANY', badge: 'MEASURED' };
+      anatomyParts.sheaths.add(sheathMesh);
+
+      // 2. Leaf Blade with 7-Point Profile, V-Groove, and Undulating Fluted Margins
+      const length = 1.35 + Math.sin((index / totalLeaves) * Math.PI) * 0.42;
+      const maxWidth = 0.17 + Math.sin((index / totalLeaves) * Math.PI) * 0.07;
       const segments = 28;
 
+      const archFactor = 0.28 + (index / totalLeaves) * 0.35;
+      const droopPower = 1.8 + (1.0 - index / totalLeaves) * 0.7;
+
       const curvePoints = [];
-      const archFactor = 0.32 + index * 0.055;
       for (let i = 0; i <= segments; i++) {
         const u = i / segments;
         const x = Math.sin(u * Math.PI * 0.5) * length;
-        const y = Math.sin(u * Math.PI * 0.8) * archFactor - (u ** 2.2) * 0.55;
-        const z = Math.sin(u * Math.PI) * (0.04 * (Math.random() - 0.5));
+        const y = Math.sin(u * Math.PI * 0.8) * archFactor - Math.pow(u, droopPower) * (0.45 + (1.0 - index / totalLeaves) * 0.25);
+        const z = Math.sin(u * Math.PI) * (0.035 * (Math.random() - 0.5));
         curvePoints.push(new THREE.Vector3(x, y, z));
       }
 
-      // Generate 5-point ribbon profile (outer ruffled margins, blade wings, center midrib)
+      // 7-Point Transverse Profile Mesh
       const geom = new THREE.BufferGeometry();
       const vertices = [];
       const uvs = [];
@@ -1456,7 +1511,7 @@
       for (let i = 0; i <= segments; i++) {
         const u = i / segments;
         const p = curvePoints[i];
-        const w = Math.sin(u * Math.PI) * maxWidth * (1.0 - u * 0.38);
+        const w = Math.sin(u * Math.PI) * maxWidth * (1.0 - u * 0.35);
 
         const tangent = (i < segments)
           ? curvePoints[i + 1].clone().sub(p).normalize()
@@ -1464,24 +1519,43 @@
         let side = new THREE.Vector3(0, 0, 1).cross(tangent).normalize();
         if (side.lengthSq() < 0.001) side.set(0, 0, 1);
 
-        // Natural wavy ruffled margin oscillations
-        const edgeRuffle = Math.sin(u * 22.0) * (0.012 * (1.0 - u * 0.3));
+        // Fluted wavy margin undulations
+        const marginWave = Math.sin(u * 26.0 + index) * (0.015 * Math.sin(u * Math.PI));
 
-        // 5 profile vertices across width
-        const p0 = p.clone().add(side.clone().multiplyScalar(w * 0.5)).add(new THREE.Vector3(0, 0.012 + edgeRuffle, 0)); // outer left
-        const p1 = p.clone().add(side.clone().multiplyScalar(w * 0.25)).add(new THREE.Vector3(0, 0.006, 0));            // mid left
-        const p2 = p.clone().add(new THREE.Vector3(0, -0.009, 0));                                                       // midrib trough
-        const p3 = p.clone().sub(side.clone().multiplyScalar(w * 0.25)).add(new THREE.Vector3(0, 0.006, 0));            // mid right
-        const p4 = p.clone().sub(side.clone().multiplyScalar(w * 0.5)).add(new THREE.Vector3(0, 0.012 - edgeRuffle, 0)); // outer right
+        // 7 profile points: p0 (ruffled left) to p6 (ruffled right) with p3 (midrib keel)
+        const v0 = p.clone().add(side.clone().multiplyScalar(w * 0.50)).add(new THREE.Vector3(0, 0.014 + marginWave, 0));
+        const v1 = p.clone().add(side.clone().multiplyScalar(w * 0.32)).add(new THREE.Vector3(0, 0.008 + marginWave * 0.5, 0));
+        const v2 = p.clone().add(side.clone().multiplyScalar(w * 0.12)).add(new THREE.Vector3(0, 0.002, 0));
+        const v3 = p.clone().add(new THREE.Vector3(0, -0.010, 0));
+        const v4 = p.clone().sub(side.clone().multiplyScalar(w * 0.12)).add(new THREE.Vector3(0, 0.002, 0));
+        const v5 = p.clone().sub(side.clone().multiplyScalar(w * 0.32)).add(new THREE.Vector3(0, 0.008 - marginWave * 0.5, 0));
+        const v6 = p.clone().sub(side.clone().multiplyScalar(w * 0.50)).add(new THREE.Vector3(0, 0.014 - marginWave, 0));
 
-        vertices.push(p0.x, p0.y, p0.z,  p1.x, p1.y, p1.z,  p2.x, p2.y, p2.z,  p3.x, p3.y, p3.z,  p4.x, p4.y, p4.z);
-        uvs.push(0.0, u,  0.25, u,  0.5, u,  0.75, u,  1.0, u);
+        vertices.push(
+          v0.x, v0.y, v0.z,
+          v1.x, v1.y, v1.z,
+          v2.x, v2.y, v2.z,
+          v3.x, v3.y, v3.z,
+          v4.x, v4.y, v4.z,
+          v5.x, v5.y, v5.z,
+          v6.x, v6.y, v6.z
+        );
+
+        uvs.push(
+          0.00, u,
+          0.18, u,
+          0.38, u,
+          0.50, u,
+          0.62, u,
+          0.82, u,
+          1.00, u
+        );
 
         if (i < segments) {
-          const row = i * 5;
-          for (let q = 0; q < 4; q++) {
-            indices.push(row + q, row + q + 5, row + q + 1);
-            indices.push(row + q + 1, row + q + 5, row + q + 6);
+          const row = i * 7;
+          for (let q = 0; q < 6; q++) {
+            indices.push(row + q, row + q + 7, row + q + 1);
+            indices.push(row + q + 1, row + q + 7, row + q + 8);
           }
         }
       }
@@ -1491,9 +1565,9 @@
       geom.setIndex(indices);
       geom.computeVertexNormals();
 
-      // Stratified canopy material based on leaf height
+      // Stratified foliage material based on leaf insertion level
       let chosenMat = leafMatMid;
-      if (index >= 6) chosenMat = leafMatUpper;
+      if (index >= 7) chosenMat = leafMatUpper;
       else if (index <= 2) chosenMat = leafMatLower;
 
       const mesh = new THREE.Mesh(geom, chosenMat);
@@ -1501,35 +1575,31 @@
       mesh.receiveShadow = true;
       mesh.userData = { id: `leaf-${index + 1}`, name: `Maize Leaf Blade #${index + 1}`, type: 'BOTANY', badge: 'MEASURED' };
 
-      const nodeHeight = 0.35 + (index / totalLeaves) * 1.5;
-      leafGroup.position.set(0, nodeHeight, 0);
-      leafGroup.rotation.y = (index * 2.399) + (Math.random() - 0.5) * 0.12;
       leafGroup.add(mesh);
-
       anatomyParts.leaves.add(leafGroup);
       leafMeshes.push(leafGroup);
     }
 
-    for (let l = 0; l < 9; l++) {
-      createMaizeLeafRibbon(l, 9);
+    for (let l = 0; l < 11; l++) {
+      createBotanicalMaizeLeaf(l, 11);
     }
 
-    // C. Maize Ears (Cobs with Husk and Cascading Golden Silk)
-    function createMaizeEar(yPos, angle, earIndex) {
+    // C. Developing Maize Ears (Female Inflorescences with Husks and Cascading Silk)
+    function createBotanicalMaizeEar(nodeHeight, angle, earIndex) {
       const earGroup = new THREE.Group();
-      earGroup.position.set(0, yPos, 0);
+      earGroup.position.set(0, nodeHeight, 0);
       earGroup.rotation.y = angle;
-      earGroup.rotation.z = -0.42;
+      earGroup.rotation.z = -0.44;
 
-      // Shank
-      const shankGeo = new THREE.CylinderGeometry(0.018, 0.024, 0.14, 8);
-      const shankMat = new THREE.MeshStandardMaterial({ color: 0x2e8b38, roughness: 0.6 });
+      // Rigid Ear Shank
+      const shankGeo = new THREE.CylinderGeometry(0.018, 0.024, 0.15, 10);
+      const shankMat = new THREE.MeshStandardMaterial({ color: 0x2e8b38, roughness: 0.58 });
       const shank = new THREE.Mesh(shankGeo, shankMat);
-      shank.position.y = 0.06;
+      shank.position.y = 0.07;
       earGroup.add(shank);
 
-      // Cob Body
-      const cobGeo = new THREE.CylinderGeometry(0.048, 0.065, 0.40, 16);
+      // Cob Body wrapped in Spathe Husk Leaves
+      const cobGeo = new THREE.CylinderGeometry(0.046, 0.068, 0.42, 16);
       const huskMat = new THREE.MeshStandardMaterial({
         color: 0x3d9e40,
         map: leafTexture,
@@ -1537,36 +1607,36 @@
         metalness: 0.04
       });
       const cob = new THREE.Mesh(cobGeo, huskMat);
-      cob.position.y = 0.25;
+      cob.position.y = 0.26;
       cob.castShadow = true;
-      cob.userData = { id: `ear-${earIndex}`, name: `Developing Maize Ear #${earIndex}`, type: 'BOTANY', badge: 'MEASURED' };
+      cob.userData = { id: `ear-${earIndex}`, name: `Developing Maize Ear #${earIndex} (Husk Sheaths)`, type: 'BOTANY', badge: 'MEASURED' };
       earGroup.add(cob);
 
-      // Layered Husk Leaves
-      for (let h = 0; h < 4; h++) {
+      // Overlapping Husk Bracts (spathes)
+      for (let h = 0; h < 6; h++) {
         const hPoints = [
-          new THREE.Vector3(0, 0.1, 0),
-          new THREE.Vector3(Math.cos(h * 1.57) * 0.07, 0.28, Math.sin(h * 1.57) * 0.07),
-          new THREE.Vector3(Math.cos(h * 1.57) * 0.02, 0.46, Math.sin(h * 1.57) * 0.02)
+          new THREE.Vector3(0, 0.10, 0),
+          new THREE.Vector3(Math.cos(h * 1.05) * 0.075, 0.28, Math.sin(h * 1.05) * 0.075),
+          new THREE.Vector3(Math.cos(h * 1.05) * 0.022, 0.47, Math.sin(h * 1.05) * 0.022)
         ];
         const hCurve = new THREE.CatmullRomCurve3(hPoints);
-        const hGeo = new THREE.TubeGeometry(hCurve, 8, 0.014, 5, false);
+        const hGeo = new THREE.TubeGeometry(hCurve, 8, 0.015, 6, false);
         const hMesh = new THREE.Mesh(hGeo, huskMat);
         earGroup.add(hMesh);
       }
 
-      // Golden Silk (tuft of styles/stigmata)
-      for (let s = 0; s < 14; s++) {
-        const sAngle = (s / 14) * Math.PI * 2;
-        const sPoints = [
-          new THREE.Vector3(0, 0.44, 0),
-          new THREE.Vector3(Math.cos(sAngle) * 0.035, 0.50, Math.sin(sAngle) * 0.035),
-          new THREE.Vector3(Math.cos(sAngle) * 0.07 + (Math.random() - 0.5) * 0.03, 0.55 - Math.random() * 0.04, Math.sin(sAngle) * 0.07)
-        ];
-        const sCurve = new THREE.CatmullRomCurve3(sPoints);
-        const sGeo = new THREE.TubeGeometry(sCurve, 6, 0.003, 4, false);
+      // Cascading Corn Silk Tufts (styles/stigmata)
+      for (let s = 0; s < 18; s++) {
+        const sAngle = (s / 18) * Math.PI * 2;
+        const sCurve = new THREE.CatmullRomCurve3([
+          new THREE.Vector3(0, 0.45, 0),
+          new THREE.Vector3(Math.cos(sAngle) * 0.038, 0.51, Math.sin(sAngle) * 0.038),
+          new THREE.Vector3(Math.cos(sAngle) * 0.075 + (Math.random() - 0.5) * 0.03, 0.56 - Math.random() * 0.04, Math.sin(sAngle) * 0.075),
+          new THREE.Vector3(Math.cos(sAngle) * 0.09, 0.49 - Math.random() * 0.08, Math.sin(sAngle) * 0.09)
+        ]);
+        const sGeo = new THREE.TubeGeometry(sCurve, 8, 0.003, 4, false);
         const sMesh = new THREE.Mesh(sGeo, new THREE.MeshStandardMaterial({
-          color: 0xe6b840,
+          color: 0xdeb842,
           roughness: 0.45,
           emissive: 0x4a3508
         }));
@@ -1576,71 +1646,117 @@
       anatomyParts.ears.add(earGroup);
     }
 
-    createMaizeEar(0.95, 1.25, 1);
-    createMaizeEar(1.35, 3.85, 2);
+    createBotanicalMaizeEar(0.82, 1.30, 1);
+    createBotanicalMaizeEar(1.40, 3.90, 2);
 
-    // D. Crown / Brace Roots (Stilt prop roots plunging from aerial nodes)
+    // D. Whorled Aerial Brace Roots (Prop Roots for Mechanical Support & Topsoil Uptake)
+    // Whorl 1: Emerging from above-ground Node 1 (8 prop roots)
     for (let c = 0; c < 8; c++) {
-      const angle = (c / 8) * Math.PI * 2;
+      const angle = (c / 8) * Math.PI * 2 + 0.15;
       const cPoints = [
-        new THREE.Vector3(0, 0.14, 0),
-        new THREE.Vector3(Math.cos(angle) * 0.14, 0.06, Math.sin(angle) * 0.14),
-        new THREE.Vector3(Math.cos(angle) * 0.30, -0.18, Math.sin(angle) * 0.30)
+        new THREE.Vector3(0, 0.08, 0),
+        new THREE.Vector3(Math.cos(angle) * 0.12, 0.03, Math.sin(angle) * 0.12),
+        new THREE.Vector3(Math.cos(angle) * 0.24, -0.14, Math.sin(angle) * 0.24)
       ];
       const cCurve = new THREE.CatmullRomCurve3(cPoints);
-      const cGeo = new THREE.TubeGeometry(cCurve, 12, 0.022, 6, false);
-      const cMesh = new THREE.Mesh(cGeo, rootMat);
+      const cGeo = new THREE.TubeGeometry(cCurve, 10, 0.022, 6, false);
+      const cMesh = new THREE.Mesh(cGeo, braceRootMat);
       cMesh.castShadow = true;
-      cMesh.userData = { id: 'brace-roots', name: 'Adventitious Brace Roots', type: 'BOTANY', badge: 'MEASURED' };
-      anatomyParts.crown.add(cMesh);
+      cMesh.userData = { id: `brace-root-w1-${c+1}`, name: `Brace Root (Whorl 1, #${c+1})`, type: 'BOTANY', badge: 'MEASURED' };
+      anatomyParts.braceRoots.add(cMesh);
     }
 
-    // E. Main Seminal Taproot & Subsurface Feeder Roots
+    // Whorl 2: Emerging from above-ground Node 2 (10 prop roots)
+    for (let c = 0; c < 10; c++) {
+      const angle = (c / 10) * Math.PI * 2;
+      const cPoints = [
+        new THREE.Vector3(0, 0.18, 0),
+        new THREE.Vector3(Math.cos(angle) * 0.16, 0.08, Math.sin(angle) * 0.16),
+        new THREE.Vector3(Math.cos(angle) * 0.32, -0.20, Math.sin(angle) * 0.32)
+      ];
+      const cCurve = new THREE.CatmullRomCurve3(cPoints);
+      const cGeo = new THREE.TubeGeometry(cCurve, 12, 0.026, 6, false);
+      const cMesh = new THREE.Mesh(cGeo, braceRootMat);
+      cMesh.castShadow = true;
+      cMesh.userData = { id: `brace-root-w2-${c+1}`, name: `Brace Root (Whorl 2, #${c+1})`, type: 'BOTANY', badge: 'MEASURED' };
+      anatomyParts.braceRoots.add(cMesh);
+    }
+
+    // E. Subterranean Crown Roots (Nodal Roots radiating in Topsoil Horizon A)
+    const crownRootAxes = [];
+    for (let cr = 0; cr < 16; cr++) {
+      const angle = (cr / 16) * Math.PI * 2 + (Math.random() - 0.5) * 0.3;
+      const reach = 0.55 + Math.random() * 0.35;
+      const depth = -0.25 - Math.random() * 0.35;
+      const crPoints = [
+        new THREE.Vector3(0, -0.04 - (cr % 4) * 0.02, 0),
+        new THREE.Vector3(Math.cos(angle) * (reach * 0.45), depth * 0.5, Math.sin(angle) * (reach * 0.45)),
+        new THREE.Vector3(Math.cos(angle) * reach, depth, Math.sin(angle) * reach)
+      ];
+      const crCurve = new THREE.CatmullRomCurve3(crPoints);
+      const crGeo = new THREE.TubeGeometry(crCurve, 16, 0.020, 6, false);
+      const crMesh = new THREE.Mesh(crGeo, crownRootMat);
+      crMesh.castShadow = true;
+      crMesh.userData = { id: `crown-root-${cr+1}`, name: `Crown Nodal Root #${cr+1} (Horizon A)`, type: 'BOTANY', badge: 'MEASURED' };
+      anatomyParts.crownRoots.add(crMesh);
+      crownRootAxes.push(crPoints[2]);
+    }
+
+    // F. Seminal Taproot System (Deep vertical moisture axes penetrating Horizons B & C)
     const tapPoints = [
-      new THREE.Vector3(0, 0, 0),
-      new THREE.Vector3(0.04, -0.5, -0.02),
-      new THREE.Vector3(-0.03, -1.1, 0.03),
-      new THREE.Vector3(0.015, -1.75, 0.0)
+      new THREE.Vector3(0, -0.05, 0),
+      new THREE.Vector3(0.03, -0.45, -0.02),
+      new THREE.Vector3(-0.025, -1.05, 0.02),
+      new THREE.Vector3(0.015, -1.82, 0.0)
     ];
     const tapCurve = new THREE.CatmullRomCurve3(tapPoints);
-    const tapGeo = new THREE.TubeGeometry(tapCurve, 24, 0.036, 8, false);
-    const tapMesh = new THREE.Mesh(tapGeo, rootMat);
+    const tapGeo = new THREE.TubeGeometry(tapCurve, 28, 0.034, 8, false);
+    const tapMesh = new THREE.Mesh(tapGeo, crownRootMat);
     tapMesh.castShadow = true;
-    tapMesh.userData = { id: 'tap-root', name: 'Seminal Taproot System', type: 'BOTANY', badge: 'MEASURED' };
-    anatomyParts.mainRoots.add(tapMesh);
+    tapMesh.userData = { id: 'seminal-taproot', name: 'Primary Seminal Taproot (Deep Subsoil)', type: 'BOTANY', badge: 'MEASURED' };
+    anatomyParts.seminalRoots.add(tapMesh);
 
-    // Lateral Feeder Roots branching into Horizons A and B
+    // 4 Secondary Seminal Axes radiating downwards
+    for (let s = 0; s < 4; s++) {
+      const sAngle = (s / 4) * Math.PI * 2 + 0.4;
+      const sCurve = new THREE.CatmullRomCurve3([
+        new THREE.Vector3(0, -0.06, 0),
+        new THREE.Vector3(Math.cos(sAngle) * 0.12, -0.65, Math.sin(sAngle) * 0.12),
+        new THREE.Vector3(Math.cos(sAngle) * 0.18, -1.45, Math.sin(sAngle) * 0.18)
+      ]);
+      const sGeo = new THREE.TubeGeometry(sCurve, 18, 0.018, 6, false);
+      const sMesh = new THREE.Mesh(sGeo, crownRootMat);
+      sMesh.userData = { id: `seminal-axis-${s+1}`, name: `Secondary Seminal Axis #${s+1}`, type: 'BOTANY', badge: 'MEASURED' };
+      anatomyParts.seminalRoots.add(sMesh);
+    }
+
+    // G. Dense Lateral Feeder Root Web (1st and 2nd Order Branches in Rhizosphere)
     const rootTipPositions = [];
-    for (let r = 0; r < 24; r++) {
-      const angle = (r / 24) * Math.PI * 2 + (Math.random() - 0.5) * 0.4;
-      const startDepth = -0.15 - (r / 24) * 1.35;
-      const reach = 0.45 + Math.random() * 0.8;
-      const endDepth = startDepth - 0.22 - Math.random() * 0.35;
+    for (let r = 0; r < 48; r++) {
+      const angle = (r / 48) * Math.PI * 2 + (Math.random() - 0.5) * 0.45;
+      const startDepth = -0.12 - (r / 48) * 1.45;
+      const reach = 0.42 + Math.random() * 0.85;
+      const endDepth = startDepth - 0.18 - Math.random() * 0.32;
 
       const p0 = new THREE.Vector3(0, startDepth, 0);
       const p2 = new THREE.Vector3(Math.cos(angle) * reach, endDepth, Math.sin(angle) * reach);
       const p1 = new THREE.Vector3(
-        (p0.x + p2.x) * 0.5 + (Math.random() - 0.5) * 0.18,
-        (p0.y + p2.y) * 0.5,
-        (p0.z + p2.z) * 0.5 + (Math.random() - 0.5) * 0.18
+        (p0.x + p2.x) * 0.5 + (Math.random() - 0.5) * 0.16,
+        (p0.y + p2.y) * 0.5 - 0.05,
+        (p0.z + p2.z) * 0.5 + (Math.random() - 0.5) * 0.16
       );
 
       const latCurve = new THREE.CatmullRomCurve3([p0, p1, p2]);
-      const latGeo = new THREE.TubeGeometry(latCurve, 12, 0.014, 5, false);
-      const latMesh = new THREE.Mesh(latGeo, rootMat);
-      latMesh.userData = { id: 'feeder-root', name: 'Lateral Feeder Root Web', type: 'BOTANY', badge: 'MEASURED' };
+      const latGeo = new THREE.TubeGeometry(latCurve, 12, 0.012, 5, false);
+      const latMesh = new THREE.Mesh(latGeo, lateralRootMat);
+      latMesh.userData = { id: `feeder-root-${r+1}`, name: `Lateral Feeder Root #${r+1} (Rhizosphere)`, type: 'BOTANY', badge: 'MEASURED' };
       anatomyParts.lateralRoots.add(latMesh);
 
-      // Active Meristematic Root Tip with hydration sheen
-      const tipGeo = new THREE.SphereGeometry(0.022, 8, 8);
-      const tipMat = new THREE.MeshStandardMaterial({
-        color: 0xf4eee1,
-        roughness: 0.25,
-        metalness: 0.05
-      });
-      const tipMesh = new THREE.Mesh(tipGeo, tipMat);
+      // Active Meristematic Root Cap (Calyptra)
+      const tipGeo = new THREE.SphereGeometry(0.018, 8, 8);
+      const tipMesh = new THREE.Mesh(tipGeo, rootCapMat);
       tipMesh.position.copy(p2);
-      tipMesh.userData = { id: 'root-tip', name: 'Active Meristematic Root Tip', type: 'BOTANY', badge: 'MEASURED' };
+      tipMesh.userData = { id: `root-cap-${r+1}`, name: `Active Root Cap #${r+1} (Calyptra)`, type: 'BOTANY', badge: 'MEASURED' };
       anatomyParts.rootTips.add(tipMesh);
       rootTipPositions.push(p2);
     }
@@ -1968,8 +2084,8 @@
        9. LAYER VISIBILITY CONTROLS
        ========================================================================= */
     const visibilityToggles = {
-      canopy: { el: document.getElementById('tog-canopy'), active: true, target: [anatomyParts.leaves, anatomyParts.ears, anatomyParts.stem] },
-      roots: { el: document.getElementById('tog-roots'), active: true, target: [anatomyParts.crown, anatomyParts.mainRoots, anatomyParts.lateralRoots, anatomyParts.rootTips] },
+      canopy: { el: document.getElementById('tog-canopy'), active: true, target: [anatomyParts.leaves, anatomyParts.sheaths, anatomyParts.ears, anatomyParts.stem] },
+      roots: { el: document.getElementById('tog-roots'), active: true, target: [anatomyParts.braceRoots, anatomyParts.crownRoots, anatomyParts.seminalRoots, anatomyParts.lateralRoots, anatomyParts.rootTips] },
       soil: { el: document.getElementById('tog-soil'), active: true, target: [geologyGroup] },
       hw: { el: document.getElementById('tog-hw'), active: true, target: [hardwareGroup] },
       hydro: { el: document.getElementById('tog-hydro'), active: true, target: [hydrologyGroup] }
@@ -2038,8 +2154,29 @@
       let meta = 'Status: NOMINAL | Calibrated';
 
       if (data.id?.includes('leaf')) {
-        desc = 'Broad monocot blade with V-groove midrib for natural rainwater harvesting and C4 photosynthesis.';
+        desc = 'Linear-lanceolate monocot leaf blade with 7-point V-groove midrib, fluted wavy margins, and C4 dicarboxylic photosynthetic pathway.';
         meta = 'Transpiration: g_s ≈ 0.28 mol/m²s | Chlorophyll: High';
+      } else if (data.id?.includes('sheath')) {
+        desc = 'Cylindrical split leaf sheath wrapping tightly around the culm internode, providing structural mechanical reinforcement and protecting intercalary meristems.';
+        meta = 'Structure: Clasping Petiole Equivalent | Node Insertion: Base Collar';
+      } else if (data.id?.includes('tassel')) {
+        desc = 'Apical male inflorescence terminating the main culm, with central rachis and lateral spikes shedding millions of windborne pollen grains.';
+        meta = 'Anthesis Stage (VT) | Pollen Shed: ~2–5 million grains/tassel';
+      } else if (data.id?.includes('brace-root')) {
+        desc = 'Adventitious prop root emerging in whorls from aerial stalk nodes 1 and 2. Plunges into soil at 50° to prevent lodging and absorb topsoil moisture.';
+        meta = 'Prop Roots (Whorls 1 & 2) | Anthocyanin-pigmented epidermis';
+      } else if (data.id?.includes('crown-root')) {
+        desc = 'Subterranean nodal crown root radiating through Horizon A topsoil, responsible for over 80% of mature vegetative water and nutrient uptake.';
+        meta = 'Corona Nodal System | Rhizosphere nutrient mass flow';
+      } else if (data.id?.includes('seminal')) {
+        desc = 'Embryonic seminal root system penetrating vertically deep into Horizon B and C subsoil to access deep residual water tables during moisture stress.';
+        meta = 'Seminal Axis | Subsoil Penetration Depth: 1.5–1.8m';
+      } else if (data.id?.includes('feeder-root')) {
+        desc = 'High-density 1st and 2nd order lateral feeder root network branching profusely in the rhizosphere to maximize surface area for ion diffusion.';
+        meta = 'Lateral Web | Nitrate mass flow & Phosphate diffusion zone';
+      } else if (data.id?.includes('root-cap')) {
+        desc = 'Apical meristematic calyptra protecting dividing cell initials and secreting mucigel to lubricate soil pore passage.';
+        meta = 'Calyptra | Gravitropic amyloplast statocytes | Active absorption';
       } else if (data.id?.includes('ear')) {
         desc = 'Developing maize ear enclosed in protective husks; golden silk styles receive pollen from the apical tassel.';
         meta = 'Physiological Stage: R1 Silking / R2 Blister | Grains: Active filling';
@@ -2157,7 +2294,8 @@
           slider.addEventListener('input', (e) => applyAnatomyExplosion(e.target.value / 100));
           document.getElementById('btn-isolate-roots').addEventListener('click', () => {
             gsap.to(anatomyParts.leaves.position, { y: 2.2, duration: 0.8 });
-            gsap.to(anatomyParts.ears.position, { y: 1.8, duration: 0.8 });
+            gsap.to(anatomyParts.sheaths.position, { y: 1.8, duration: 0.8 });
+            gsap.to(anatomyParts.ears.position, { y: 1.6, duration: 0.8 });
             gsap.to(anatomyParts.stem.position, { y: 1.4, duration: 0.8 });
           });
           document.getElementById('btn-reassemble-plant').addEventListener('click', () => {
@@ -2573,13 +2711,15 @@
     }
 
     function applyAnatomyExplosion(val) {
-      gsap.to(anatomyParts.leaves.position, { y: val * 0.8, duration: 0.4 });
-      if (anatomyParts.ears) gsap.to(anatomyParts.ears.position, { y: val * 0.45, duration: 0.4 });
-      gsap.to(anatomyParts.stem.position, { y: val * 0.2, duration: 0.4 });
-      gsap.to(anatomyParts.crown.position, { y: -val * 0.15, duration: 0.4 });
-      gsap.to(anatomyParts.mainRoots.position, { y: -val * 0.35, duration: 0.4 });
-      gsap.to(anatomyParts.lateralRoots.position, { y: -val * 0.55, duration: 0.4 });
-      gsap.to(anatomyParts.rootTips.position, { y: -val * 0.65, duration: 0.4 });
+      gsap.to(anatomyParts.leaves.position,        { y: val * 0.85, duration: 0.4 });
+      gsap.to(anatomyParts.sheaths.position,       { y: val * 0.45, duration: 0.4 });
+      if (anatomyParts.ears) gsap.to(anatomyParts.ears.position, { y: val * 0.60, duration: 0.4 });
+      gsap.to(anatomyParts.stem.position,          { y: val * 0.20, duration: 0.4 });
+      gsap.to(anatomyParts.braceRoots.position,    { y: -val * 0.15, duration: 0.4 });
+      gsap.to(anatomyParts.crownRoots.position,    { y: -val * 0.35, duration: 0.4 });
+      gsap.to(anatomyParts.seminalRoots.position,  { y: -val * 0.55, duration: 0.4 });
+      gsap.to(anatomyParts.lateralRoots.position,  { y: -val * 0.65, duration: 0.4 });
+      gsap.to(anatomyParts.rootTips.position,      { y: -val * 0.75, duration: 0.4 });
     }
 
     function assembleAnatomy() {
