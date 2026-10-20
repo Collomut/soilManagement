@@ -3,10 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Zerthiva: Soil Intelligence System · Precision Agritech Master Dossier</title>
-    <meta name="description" content="Zerthiva Soil Intelligence System (SIS) - Complete Technical, Scientific, and Agronomic Dossier. Autonomous root-zone monitoring for smallholder climate resilience.">
+    <title>Zerthiva: Soil Intelligence System · Precision Agritech Research Platform</title>
+    <meta name="description" content="Zerthiva: Precision Soil Intelligence System for Smallholder Climate Resilience. Post-Audit Master Technical Dossier (58 Sections & 9 Annexes).">
     
-    <!-- Editorial Typography Fonts -->
+    <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=IBM+Plex+Mono:ital,wght@0,400;0,600;0,700;1,400&family=Newsreader:ital,opsz,wght@0,6..72,400..800;1,6..72,400..700&family=Plus+Jakarta+Sans:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400&display=swap" rel="stylesheet">
@@ -21,7 +21,7 @@
         /* ============================================================
            ZERTHIVA EDITORIAL AGRITECH DESIGN SYSTEM
            Color Tokens: Forest Green (#142D25), Warm Paper (#F4F1E8),
-           Sage (#B7CC8A), Clay Orange (#D87943), Ink (#242923).
+           Sage (#B7CC8A), Clay Orange (#D87943), Ink (#242923), Neutral (#D8D8CC).
            ============================================================ */
 
         :root {
@@ -43,7 +43,6 @@
             --ink-subtle: #828B80;          /* Subtle metadata text */
             --border-neutral: #D8D8CC;      /* Separators, card borders */
             --border-subtle: #E8E8DD;       /* Very light borders */
-            --border-forest: #142D25;       /* Strong forest border */
             --danger-red: #C53030;          /* Critical risk / fail only */
             --danger-red-bg: #FDF2F2;       /* Danger tint */
             
@@ -56,8 +55,8 @@
             --shadow-sm: 0 1px 3px rgba(36, 41, 35, 0.04);
             --shadow-md: 0 4px 12px rgba(36, 41, 35, 0.06);
             --shadow-lg: 0 10px 25px rgba(36, 41, 35, 0.08);
-            
-            /* Legacy Variable Mappings for Compatibility */
+
+            /* Legacy variable mappings for complete backward compatibility */
             --background: var(--bg-primary);
             --foreground: var(--ink);
             --card: var(--bg-surface);
@@ -65,7 +64,6 @@
             --primary: var(--forest-green);
             --primary-dark: var(--forest-green-dark);
             --primary-light: var(--sage-green-bg);
-            --primary-foreground: #FFFFFF;
             --muted-foreground: var(--ink-muted);
             --accent: var(--clay-orange);
             --accent-light: var(--clay-orange-bg);
@@ -79,33 +77,31 @@
         }
 
         [data-theme="dark"], body.dark-mode {
-            /* Nighttime Agritech Telemetry Palette */
-            --bg-primary: #080D0B;          /* Pitch OLED deep forest */
-            --bg-surface: #111A16;          /* Deep forest card surface */
-            --bg-surface-warm: #14201B;     /* Slightly lighter forest card */
-            --bg-surface-elevated: #182620; /* Elevated surface */
-            --forest-green: #B7CC8A;        /* Sage green becomes primary accent */
+            /* Pure Pitch Black & Refined Subdued Earthy Sage */
+            --bg-primary: #050505;          /* Pure pitch OLED black - zero blue */
+            --bg-surface: #0E0F0E;          /* Pure neutral deep black surface */
+            --bg-surface-warm: #141514;     /* Neutral black card */
+            --bg-surface-elevated: #1A1C1A; /* Elevated neutral surface */
+            --forest-green: #8CA365;        /* Subdued, toned-down earthy sage (no bright neon) */
             --forest-green-dark: #142D25;   /* Deep forest */
-            --forest-green-light: #2A483E;  /* Mid forest */
-            --sage-green: #B7CC8A;          /* Sage highlight */
-            --sage-green-muted: #435A42;    /* Dark sage */
-            --sage-green-bg: #15221B;       /* Dark sage background tint */
-            --clay-orange: #D87943;         /* Clay orange accent */
-            --clay-orange-bg: #2B180E;      /* Clay background tint */
-            --ink: #E8EAE6;                 /* Light ink text */
-            --ink-muted: #8E988D;           /* Muted text */
-            --ink-subtle: #687267;          /* Subtle text */
-            --border-neutral: #1E2D26;      /* Dark border */
-            --border-subtle: #17241E;       /* Very dark border */
-            --border-forest: #B7CC8A;       /* Sage border */
+            --forest-green-light: #233120;  /* Subdued mid */
+            --sage-green: #8CA365;          /* Subdued, toned-down earthy sage */
+            --sage-green-muted: #3D4A32;    /* Dark earthy sage */
+            --sage-green-bg: #121611;       /* Very dark subtle sage background tint */
+            --clay-orange: #CF733F;         /* Muted clay orange accent */
+            --clay-orange-bg: #24140B;      /* Dark clay background tint */
+            --ink: #E5E7E4;                 /* Clean, high-contrast readable off-white */
+            --ink-muted: #8E968D;           /* Muted text */
+            --ink-subtle: #687067;          /* Subtle text */
+            --border-neutral: #202220;      /* Pure neutral dark border - zero blue */
+            --border-subtle: #161816;       /* Pure neutral dark subtle border */
             --danger-red: #E53E3E;          /* Danger text */
-            --danger-red-bg: #2B1212;       /* Danger background */
+            --danger-red-bg: #241010;       /* Danger background */
             
             --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.4);
             --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.5);
             --shadow-lg: 0 10px 25px rgba(0, 0, 0, 0.6);
             
-            /* Legacy mappings */
             --background: var(--bg-primary);
             --foreground: var(--ink);
             --card: var(--bg-surface);
@@ -125,10 +121,16 @@
             --shadow: var(--shadow-md);
         }
 
-        /* Base Resets & Global Styles */
+        /* Base Resets & Global Anti-Overflow Foundations */
         *, *::before, *::after {
             box-sizing: border-box;
+        }
+
+        html {
             scroll-behavior: smooth;
+            scroll-padding-top: 5.5rem;
+            max-width: 100%;
+            overflow-x: clip;
         }
 
         body {
@@ -136,29 +138,19 @@
             color: var(--ink);
             font-family: var(--font-sans);
             font-size: 1.05rem;
-            line-height: 1.68;
+            line-height: 1.65;
             margin: 0;
             padding: 0;
-            display: flex;
+            max-width: 100%;
+            overflow-x: clip;
             -webkit-font-smoothing: antialiased;
             -moz-osx-font-smoothing: grayscale;
             text-rendering: optimizeLegibility;
             transition: background-color 0.25s ease, color 0.25s ease;
         }
 
-        /* Ambient subtle grain texture for editorial paper feel */
-        body::before {
-            content: '';
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100vw;
-            height: 100vh;
-            pointer-events: none;
-            z-index: 1;
-            opacity: 0.025;
-            background-image: radial-gradient(#142D25 1px, transparent 1px);
-            background-size: 24px 24px;
+        body.menu-open {
+            overflow: hidden;
         }
 
         /* Reading Progress Indicator */
@@ -173,7 +165,7 @@
             transition: width 0.1s ease-out;
         }
 
-        /* Mobile Top Bar */
+        /* Mobile Top Header */
         .mobile-top-bar {
             display: none;
             position: fixed;
@@ -195,13 +187,14 @@
             align-items: center;
             gap: 0.4rem;
             background: none;
-            border: none;
+            border: 1px solid var(--border-neutral);
+            border-radius: 6px;
             color: var(--ink);
             font-family: var(--font-sans);
-            font-size: 0.95rem;
+            font-size: 0.88rem;
             font-weight: 700;
             cursor: pointer;
-            padding: 0.4rem;
+            padding: 0.4rem 0.65rem;
         }
 
         .mobile-brand-title {
@@ -224,87 +217,162 @@
             display: none;
             position: fixed;
             inset: 0;
-            background: rgba(0, 0, 0, 0.5);
+            background: rgba(0, 0, 0, 0.45);
             backdrop-filter: blur(2px);
-            z-index: 40;
+            z-index: 900;
+        }
+
+        #sidebar-backdrop.active {
+            display: block;
         }
 
         /* ============================================================
-           SIDEBAR NAVIGATION (280px Wide, Persistent Desktop)
+           SITE LAYOUT (Responsive CSS Grid Foundation)
            ============================================================ */
-        #sidebar {
-            width: 280px;
-            height: 100vh;
-            position: fixed;
-            top: 0;
-            left: 0;
+        .site-layout {
+            display: grid;
+            grid-template-columns: 260px minmax(0, 1fr);
+            gap: 2.25rem;
+            max-width: 1600px;
+            margin-inline: auto;
+            padding-inline: clamp(1rem, 2.5vw, 2.5rem);
+            padding-top: 1.5rem;
+            padding-bottom: 5rem;
+            min-width: 0;
+            width: 100%;
+            transition: grid-template-columns 0.25s cubic-bezier(0.16, 1, 0.3, 1), gap 0.25s ease;
+        }
+
+        .site-layout.sidebar-collapsed {
+            grid-template-columns: 0px minmax(0, 1fr);
+            gap: 0;
+        }
+
+        /* ============================================================
+           SIDEBAR COMPONENT
+           ============================================================ */
+        .sidebar {
+            position: sticky;
+            top: 1.25rem;
+            align-self: start;
+            max-height: calc(100dvh - 2.5rem);
+            overflow-y: auto;
+            overflow-x: hidden;
+            min-width: 0;
+            width: 260px;
             background-color: var(--sidebar-bg);
-            border-right: 1px solid var(--sidebar-border);
+            border: 1px solid var(--sidebar-border);
+            border-radius: 10px;
             display: flex;
             flex-direction: column;
+            box-shadow: var(--shadow-sm);
             z-index: 45;
-            box-shadow: 2px 0 10px rgba(0, 0, 0, 0.02);
-            transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+            transition: transform 0.25s ease, opacity 0.2s ease, width 0.25s ease;
+        }
+
+        .site-layout.sidebar-collapsed .sidebar {
+            transform: translateX(-110%);
+            opacity: 0;
+            pointer-events: none;
+            visibility: hidden;
         }
 
         .sidebar-brand-wrapper {
-            padding: 1.25rem 1rem 0.85rem 1rem;
+            padding: 1.1rem 1rem 0.75rem 1rem;
             border-bottom: 1px solid var(--border-neutral);
             display: flex;
-            flex-direction: column;
-            gap: 0.4rem;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .sidebar-brand-left {
+            display: flex;
+            align-items: center;
         }
 
         .sidebar-brand-link {
             display: flex;
             align-items: center;
-            gap: 0.75rem;
+            gap: 0.65rem;
             text-decoration: none !important;
             color: inherit;
         }
 
         .sidebar-brand-title {
             font-family: var(--font-serif);
-            font-size: 1.6rem;
-            font-weight: 700;
+            font-size: 1.65rem;
+            font-weight: 800;
             line-height: 1.1;
             color: var(--forest-green);
-            letter-spacing: -0.02em;
+            letter-spacing: -0.03em;
+        }
+
+        [data-theme="dark"] .sidebar-brand-title {
+            color: #FFFFFF !important;
         }
 
         .sidebar-brand-tagline {
             display: block;
-            font-size: 0.72rem;
-            font-weight: 600;
-            color: var(--ink-muted);
-            letter-spacing: 0.03em;
+            font-family: var(--font-mono);
+            font-size: 0.62rem;
+            font-weight: 700;
+            color: var(--clay-orange);
+            letter-spacing: 0.08em;
             text-transform: uppercase;
+            margin-top: 2px;
         }
 
-        .sidebar-version-pill {
-            align-self: flex-start;
+        .sidebar-collapse-btn {
+            background: none;
+            border: 1px solid var(--border-neutral);
+            border-radius: 6px;
+            color: var(--ink-muted);
+            cursor: pointer;
+            padding: 0.3rem 0.4rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.15s ease;
+        }
+
+        .sidebar-collapse-btn:hover {
+            background: var(--sage-green-bg);
+            color: var(--forest-green);
+            border-color: var(--forest-green);
+        }
+
+        .sidebar-sub-header {
+            padding: 0.5rem 1rem 0.75rem 1rem;
+            border-bottom: 1px solid var(--border-neutral);
+            display: flex;
+            gap: 0.4rem;
+            flex-wrap: wrap;
+        }
+
+        .sidebar-version-pill, .sidebar-trl-pill {
             font-family: var(--font-mono);
-            font-size: 0.65rem;
+            font-size: 0.62rem;
             font-weight: 700;
             text-transform: uppercase;
             letter-spacing: 0.06em;
-            padding: 0.15rem 0.5rem;
+            padding: 0.15rem 0.45rem;
             border-radius: 9999px;
             background: var(--sage-green-bg);
             color: #142D25;
             border: 1px solid var(--sage-green);
         }
 
-        [data-theme="dark"] .sidebar-version-pill {
-            background: #14251D;
+        [data-theme="dark"] .sidebar-version-pill,
+        [data-theme="dark"] .sidebar-trl-pill {
+            background: #121814;
             color: var(--sage-green);
             border-color: #274537;
         }
 
-        /* Sidebar Search Box */
+        /* Sidebar Search */
         .sidebar-search-box {
             position: relative;
-            padding: 0.75rem 1rem;
+            padding: 0.65rem 0.85rem;
             border-bottom: 1px solid var(--border-neutral);
             display: flex;
             align-items: center;
@@ -312,22 +380,22 @@
 
         .sidebar-search-box .search-icon {
             position: absolute;
-            left: 1.6rem;
+            left: 1.45rem;
             color: var(--ink-muted);
             pointer-events: none;
         }
 
         .sidebar-search-box input {
             width: 100%;
-            padding: 0.45rem 1.8rem 0.45rem 2rem;
+            padding: 0.4rem 1.6rem 0.4rem 1.85rem;
             font-family: var(--font-sans);
-            font-size: 0.78rem;
+            font-size: 0.76rem;
             background: var(--bg-surface);
             border: 1px solid var(--border-neutral);
             border-radius: 6px;
             color: var(--ink);
             outline: none;
-            transition: border-color 0.15s ease, box-shadow 0.15s ease;
+            transition: border-color 0.15s ease;
         }
 
         .sidebar-search-box input:focus {
@@ -337,7 +405,7 @@
 
         #search-clear {
             position: absolute;
-            right: 1.5rem;
+            right: 1.35rem;
             background: none;
             border: none;
             color: var(--ink-muted);
@@ -346,11 +414,12 @@
             padding: 0.2rem;
         }
 
-        /* Scrollable Nav Area */
+        /* Nav Scrollable Links */
         .sidebar-nav-scroll {
             flex-grow: 1;
             overflow-y: auto;
-            padding: 0.85rem 0.75rem;
+            overflow-x: hidden;
+            padding: 0.75rem 0.65rem;
         }
 
         .sidebar-nav-scroll::-webkit-scrollbar {
@@ -370,8 +439,8 @@
             color: #F4F1E8 !important;
             font-weight: 700 !important;
             border-radius: 6px !important;
-            padding: 0.55rem 0.75rem !important;
-            margin-bottom: 0.85rem !important;
+            padding: 0.5rem 0.75rem !important;
+            margin-bottom: 0.75rem !important;
             text-decoration: none !important;
             box-shadow: var(--shadow-sm);
             transition: transform 0.15s ease, background-color 0.15s ease;
@@ -395,13 +464,13 @@
 
         .special-link .special-title {
             flex-grow: 1;
-            font-size: 0.82rem;
+            font-size: 0.8rem;
             letter-spacing: 0.02em;
         }
 
-        /* Level Accordion Groups */
+        /* Accordion Groups */
         .nav-level-group {
-            margin-bottom: 0.65rem;
+            margin-bottom: 0.5rem;
         }
 
         .nav-level-toggle {
@@ -413,11 +482,11 @@
             border: 1px solid var(--border-neutral);
             border-left: 3px solid var(--forest-green);
             border-radius: 6px;
-            padding: 0.5rem 0.65rem;
+            padding: 0.45rem 0.6rem;
             font-family: var(--font-sans);
-            font-size: 0.73rem;
+            font-size: 0.72rem;
             font-weight: 800;
-            letter-spacing: 0.05em;
+            letter-spacing: 0.04em;
             text-transform: uppercase;
             color: var(--ink);
             cursor: pointer;
@@ -431,7 +500,7 @@
         }
 
         [data-theme="dark"] .nav-level-toggle {
-            background: #101915;
+            background: #101411;
             border-color: #1F2E27;
             border-left-color: var(--sage-green);
             color: var(--ink);
@@ -440,18 +509,18 @@
         .nav-level-header-left {
             display: flex;
             align-items: center;
-            gap: 0.45rem;
+            gap: 0.4rem;
         }
 
         .nav-level-header-right {
             display: flex;
             align-items: center;
-            gap: 0.4rem;
+            gap: 0.35rem;
         }
 
         .level-badge {
             font-family: var(--font-mono);
-            font-size: 0.62rem;
+            font-size: 0.6rem;
             font-weight: 900;
             padding: 0.1rem 0.35rem;
             border-radius: 3px;
@@ -467,7 +536,7 @@
 
         .level-range {
             font-family: var(--font-mono);
-            font-size: 0.64rem;
+            font-size: 0.62rem;
             font-weight: 600;
             color: var(--ink-muted);
         }
@@ -483,28 +552,27 @@
         .nav-level-links {
             display: flex;
             flex-direction: column;
-            gap: 0.15rem;
-            padding: 0.35rem 0 0.35rem 0.35rem;
-            transition: max-height 0.25s ease;
+            gap: 0.12rem;
+            padding: 0.3rem 0 0.3rem 0.25rem;
         }
 
         .nav-level-toggle[aria-expanded="false"] + .nav-level-links {
             display: none;
         }
 
-        /* Individual Nav Link */
         .nav-link {
             display: flex;
             align-items: center;
-            gap: 0.55rem;
-            padding: 0.38rem 0.65rem;
+            gap: 0.5rem;
+            padding: 0.34rem 0.55rem;
             color: var(--ink-muted);
             text-decoration: none !important;
-            font-size: 0.8rem;
+            font-size: 0.78rem;
             font-weight: 600;
             border-radius: 5px;
             transition: all 0.15s ease;
-            position: relative;
+            max-width: 100%;
+            overflow-wrap: anywhere;
         }
 
         .nav-link:hover {
@@ -514,7 +582,7 @@
         }
 
         [data-theme="dark"] .nav-link:hover {
-            background: #14251D;
+            background: #121814;
             color: var(--sage-green);
         }
 
@@ -523,7 +591,7 @@
             color: var(--forest-green) !important;
             font-weight: 800 !important;
             border-left: 3px solid var(--forest-green) !important;
-            padding-left: 0.65rem !important;
+            padding-left: 0.55rem !important;
         }
 
         [data-theme="dark"] .nav-link.active {
@@ -537,14 +605,14 @@
             align-items: center;
             justify-content: center;
             font-family: var(--font-mono);
-            font-size: 0.68rem;
+            font-size: 0.65rem;
             font-weight: 800;
             color: var(--ink-muted);
             background: var(--bg-surface);
             border: 1px solid var(--border-neutral);
             border-radius: 4px;
-            padding: 0.1rem 0.35rem;
-            min-width: 1.6rem;
+            padding: 0.08rem 0.3rem;
+            min-width: 1.55rem;
             line-height: 1.2;
             flex-shrink: 0;
         }
@@ -573,9 +641,9 @@
             border-color: var(--sage-green) !important;
         }
 
-        /* Sidebar Footer & Theme Toggle */
+        /* Sidebar Footer */
         .sidebar-footer {
-            padding: 0.85rem 1rem;
+            padding: 0.75rem 0.85rem;
             border-top: 1px solid var(--border-neutral);
         }
 
@@ -585,7 +653,7 @@
             align-items: center;
             justify-content: center;
             gap: 0.5rem;
-            padding: 0.55rem;
+            padding: 0.5rem;
             background: var(--bg-surface);
             border: 1px solid var(--border-neutral);
             border-radius: 6px;
@@ -604,20 +672,104 @@
         }
 
         /* ============================================================
-           MAIN CONTENT AREA & READING COLUMN
+           ARTICLE CONTENT & TOP BAR
            ============================================================ */
-        #main-content {
-            margin-left: 280px;
-            padding: 3rem 4.5rem 6rem 4.5rem;
-            max-width: 1240px;
-            min-height: 100vh;
-            flex-grow: 1;
+        main, .article-content {
+            min-width: 0;
+            max-width: 100%;
+            padding-bottom: 5rem;
         }
 
-        /* Long-form readable column constraint */
+        .article-top-bar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0.6rem 0.85rem;
+            margin-bottom: 2rem;
+            background: var(--bg-surface);
+            border: 1px solid var(--border-neutral);
+            border-radius: 8px;
+            box-shadow: var(--shadow-sm);
+            flex-wrap: wrap;
+            gap: 0.75rem;
+        }
+
+        .desktop-sidebar-expand-btn {
+            display: none;
+            align-items: center;
+            gap: 0.4rem;
+            background: var(--bg-surface-warm);
+            border: 1px solid var(--border-neutral);
+            border-radius: 6px;
+            color: var(--forest-green);
+            font-family: var(--font-sans);
+            font-size: 0.82rem;
+            font-weight: 700;
+            padding: 0.35rem 0.65rem;
+            cursor: pointer;
+            transition: all 0.15s ease;
+        }
+
+        .site-layout.sidebar-collapsed .desktop-sidebar-expand-btn {
+            display: inline-flex;
+        }
+
+        .desktop-sidebar-expand-btn:hover {
+            background: var(--sage-green-bg);
+            border-color: var(--forest-green);
+        }
+
+        .article-breadcrumb {
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+            font-size: 0.82rem;
+            font-weight: 600;
+            color: var(--ink-muted);
+        }
+
+        .breadcrumb-active {
+            color: var(--forest-green);
+            font-weight: 700;
+        }
+
+        .article-top-actions {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .top-nav-chip {
+            font-family: var(--font-mono);
+            font-size: 0.72rem;
+            font-weight: 700;
+            padding: 0.2rem 0.6rem;
+            border-radius: 9999px;
+            background: var(--bg-surface-warm);
+            border: 1px solid var(--border-neutral);
+            color: var(--ink-muted);
+            text-decoration: none !important;
+            transition: all 0.15s ease;
+        }
+
+        .top-nav-chip:hover {
+            background: var(--sage-green-bg);
+            color: var(--forest-green);
+            border-color: var(--forest-green);
+        }
+
+        /* Long-Form Reading Constraints */
         p, li, .hero-description {
             max-width: 78ch;
             color: var(--ink);
+            overflow-wrap: break-word;
+        }
+
+        /* Responsive Media & SVGs */
+        .article-content img,
+        .article-content svg,
+        .article-content video {
+            max-width: 100%;
+            height: auto;
         }
 
         /* Headings */
@@ -626,6 +778,7 @@
             color: var(--forest-green);
             font-weight: 700;
             letter-spacing: -0.015em;
+            overflow-wrap: break-word;
         }
 
         [data-theme="dark"] h1,
@@ -670,14 +823,14 @@
         }
 
         [data-theme="dark"] .hero-eyebrow {
-            background: #14251D;
+            background: #121814;
             color: var(--sage-green);
             border-color: #274537;
         }
 
         .hero-title {
             font-family: var(--font-serif);
-            font-size: 3.8rem;
+            font-size: clamp(2.4rem, 5vw, 3.8rem);
             font-weight: 700;
             line-height: 1.08;
             letter-spacing: -0.03em;
@@ -687,7 +840,7 @@
 
         .hero-subtitle {
             font-family: var(--font-sans);
-            font-size: 1.35rem;
+            font-size: clamp(1.1rem, 2.5vw, 1.35rem);
             font-weight: 600;
             color: var(--clay-orange);
             letter-spacing: -0.01em;
@@ -702,7 +855,6 @@
             margin-bottom: 2rem;
         }
 
-        /* Hero Action Buttons */
         .hero-actions {
             display: flex;
             gap: 1rem;
@@ -762,7 +914,7 @@
             border-color: #274033;
         }
 
-        /* Hero Custom Soil-Profile Illustration Card */
+        /* Hero Soil-Profile Illustration Card */
         .hero-illustration-card {
             background: var(--bg-surface);
             border: 1px solid var(--border-neutral);
@@ -770,6 +922,7 @@
             overflow: hidden;
             margin-bottom: 2.5rem;
             box-shadow: var(--shadow-md);
+            max-width: 100%;
         }
 
         .illustration-header {
@@ -800,30 +953,21 @@
         .illustration-body {
             padding: 1.25rem 1.4rem;
             overflow-x: auto;
+            max-width: 100%;
         }
 
-        /* Adapt SVG to Dark Mode */
-        [data-theme="dark"] .soil-profile-svg rect[fill="#FFFFFF"] {
-            fill: #14201B !important;
-        }
-        [data-theme="dark"] .soil-profile-svg text[fill="#142D25"] {
-            fill: #B7CC8A !important;
-        }
-        [data-theme="dark"] .soil-profile-svg text[fill="#5A6258"] {
-            fill: #8E988D !important;
-        }
+        /* Dark mode adapt for hero SVG */
+        [data-theme="dark"] .soil-profile-svg rect[fill="#FFFFFF"] { fill: #14201B !important; }
+        [data-theme="dark"] .soil-profile-svg text[fill="#142D25"] { fill: #B7CC8A !important; }
+        [data-theme="dark"] .soil-profile-svg text[fill="#5A6258"] { fill: #8E988D !important; }
         [data-theme="dark"] .soil-profile-svg line[stroke="#142D25"],
-        [data-theme="dark"] .soil-profile-svg path[stroke="#142D25"] {
-            stroke: #B7CC8A !important;
-        }
-        [data-theme="dark"] .soil-profile-svg rect[stroke="#142D25"] {
-            stroke: #B7CC8A !important;
-        }
+        [data-theme="dark"] .soil-profile-svg path[stroke="#142D25"] { stroke: #B7CC8A !important; }
+        [data-theme="dark"] .soil-profile-svg rect[stroke="#142D25"] { stroke: #B7CC8A !important; }
 
         /* Project Metadata Strip */
         .project-metadata-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
             gap: 0.85rem;
             background: var(--bg-surface);
             border: 1px solid var(--border-neutral);
@@ -885,7 +1029,7 @@
         /* Metric Cards Grid */
         .hero-metrics-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
             gap: 1.1rem;
             margin-bottom: 2.5rem;
             width: 100%;
@@ -923,7 +1067,7 @@
 
         .metric-val {
             font-family: var(--font-serif);
-            font-size: 2rem;
+            font-size: 1.95rem;
             font-weight: 700;
             color: var(--forest-green);
             line-height: 1.1;
@@ -980,7 +1124,7 @@
 
         .evidence-legend-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
             gap: 1.15rem;
         }
 
@@ -992,14 +1136,68 @@
         }
 
         /* ============================================================
+           TECHNICAL DIAGRAM CARDS (Diagrams A through H)
+           ============================================================ */
+        .technical-diagram-card {
+            background: var(--bg-surface);
+            border: 1px solid var(--border-neutral);
+            border-radius: 12px;
+            overflow: hidden;
+            margin: 2.25rem 0;
+            box-shadow: var(--shadow-md);
+            max-width: 100%;
+        }
+
+        .diagram-header {
+            padding: 0.85rem 1.35rem;
+            background: var(--bg-surface-warm);
+            border-bottom: 1px solid var(--border-neutral);
+            display: flex;
+            flex-direction: column;
+            gap: 0.25rem;
+        }
+
+        .diagram-tag {
+            font-family: var(--font-mono);
+            font-size: 0.74rem;
+            font-weight: 800;
+            letter-spacing: 0.06em;
+            color: var(--forest-green);
+        }
+
+        .diagram-caption {
+            font-size: 0.84rem;
+            color: var(--ink-muted);
+            font-weight: 500;
+            line-height: 1.4;
+        }
+
+        .diagram-body {
+            padding: 1.25rem 1.35rem;
+            overflow-x: auto;
+            max-width: 100%;
+        }
+
+        /* Dark mode adapt for technical diagrams */
+        [data-theme="dark"] .diagram-svg rect[fill="#FFFFFF"] { fill: #14201B !important; }
+        [data-theme="dark"] .diagram-svg rect[fill="#FAF8F5"] { fill: #101915 !important; }
+        [data-theme="dark"] .diagram-svg text[fill="#142D25"] { fill: #B7CC8A !important; }
+        [data-theme="dark"] .diagram-svg text[fill="#242923"] { fill: #E8EAE6 !important; }
+        [data-theme="dark"] .diagram-svg text[fill="#5A6258"] { fill: #8E988D !important; }
+        [data-theme="dark"] .diagram-svg line[stroke="#142D25"],
+        [data-theme="dark"] .diagram-svg path[stroke="#142D25"] { stroke: #B7CC8A !important; }
+        [data-theme="dark"] .diagram-svg rect[stroke="#142D25"] { stroke: #B7CC8A !important; }
+
+        /* ============================================================
            SECTIONS & TECHNICAL CONTENT STYLING
            ============================================================ */
         section {
-            scroll-margin-top: 2rem;
+            scroll-margin-top: 5.5rem;
             border-top: 1px solid var(--border-neutral);
             padding-top: 3.5rem;
             margin-top: 3.5rem;
             position: relative;
+            max-width: 100%;
         }
 
         section:first-of-type {
@@ -1054,14 +1252,7 @@
             color: var(--clay-orange);
         }
 
-        section h4 {
-            font-size: 1.1rem;
-            margin-top: 1.5rem;
-            margin-bottom: 0.5rem;
-            font-weight: 600;
-        }
-
-        /* Evidence Classification Badges */
+        /* Evidence Badges */
         .badge, .badge-evidence, .badge-spec, .badge-bench, .badge-field, .badge-proj, .badge-hypo, .badge-planned, .badge-failed {
             display: inline-block;
             font-family: var(--font-mono);
@@ -1141,6 +1332,7 @@
             border: 1px solid var(--border-neutral);
             border-left: 4px solid var(--forest-green);
             box-shadow: var(--shadow-sm);
+            max-width: 100%;
         }
 
         .callout-insight {
@@ -1158,10 +1350,12 @@
             background: var(--danger-red-bg);
         }
 
-        /* Standardized Table Design */
-        .table-container {
+        /* Standardized Table Design with Local Horizontal Scroll Wrapper */
+        .table-wrap {
             width: 100%;
+            max-width: 100%;
             overflow-x: auto;
+            overscroll-behavior-x: contain;
             margin: 1.75rem 0;
             border-radius: 8px;
             border: 1px solid var(--border-neutral);
@@ -1191,7 +1385,7 @@
         }
 
         [data-theme="dark"] thead th {
-            background-color: #0E1814;
+            background-color: #0F1310;
             color: var(--sage-green);
             border-bottom-color: var(--border-neutral);
         }
@@ -1213,12 +1407,13 @@
         }
 
         [data-theme="dark"] tbody tr:hover {
-            background-color: #14251D;
+            background-color: #151A14;
         }
 
-        /* Monospace Code & Formulas */
+        /* Code Blocks & Formulas */
         pre, code, .code-block {
             font-family: var(--font-mono);
+            max-width: 100%;
         }
 
         code:not(pre code) {
@@ -1231,7 +1426,7 @@
         }
 
         [data-theme="dark"] code:not(pre code) {
-            background: #101915;
+            background: #101411;
             border-color: #1F2E27;
             color: var(--sage-green);
         }
@@ -1246,6 +1441,7 @@
             line-height: 1.6;
             margin: 1.5rem 0;
             border: 1px solid var(--border-neutral);
+            max-width: 100%;
         }
 
         [data-theme="dark"] pre {
@@ -1254,7 +1450,6 @@
             border-color: #1E2D26;
         }
 
-        /* Formulas & Math */
         .katex-display {
             margin: 1.5rem 0 !important;
             padding: 1rem !important;
@@ -1262,9 +1457,10 @@
             border: 1px solid var(--border-neutral);
             border-radius: 8px;
             overflow-x: auto;
+            max-width: 100%;
         }
 
-        /* Technical Annex Styling */
+        /* Annex Styling */
         .annex-section {
             border-top: 2px dashed var(--border-neutral);
             padding-top: 3.5rem;
@@ -1398,11 +1594,17 @@
                 font-size: 11pt;
             }
 
-            #sidebar, .mobile-top-bar, #reading-progress, .back-to-top, .theme-toggle-btn, .sidebar-search-box {
+            .sidebar, .mobile-top-bar, #reading-progress, .back-to-top, .theme-toggle-btn, .sidebar-search-box, .article-top-bar {
                 display: none !important;
             }
 
-            #main-content {
+            .site-layout {
+                display: block !important;
+                padding: 0 !important;
+                max-width: 100% !important;
+            }
+
+            main, .article-content {
                 margin: 0 !important;
                 padding: 0 !important;
                 max-width: 100% !important;
@@ -1418,72 +1620,77 @@
                 page-break-after: always;
             }
 
-            table {
+            table, .table-wrap {
                 page-break-inside: avoid;
             }
         }
 
         /* ============================================================
-           RESPONSIVE BREAKPOINTS (Desktop, Tablet, Mobile)
+           RESPONSIVE BREAKPOINTS (Mobile Drawer <= 900px)
            ============================================================ */
-        @media (max-width: 1024px) {
-            #sidebar {
-                transform: translateX(-100%);
-            }
-
-            #sidebar.sidebar-open {
-                transform: translateX(0);
-            }
-
-            #sidebar-backdrop.active {
+        @media (max-width: 900px) {
+            .site-layout {
                 display: block;
+                padding-inline: 1rem;
+                padding-top: 4.5rem;
+            }
+
+            .sidebar {
+                position: fixed;
+                inset: 0 auto 0 0;
+                z-index: 1000;
+                width: min(85vw, 320px);
+                max-height: 100dvh;
+                height: 100dvh;
+                padding: 1rem;
+                background: var(--bg-surface-warm);
+                border-right: 1px solid var(--border-neutral);
+                border-radius: 0;
+                transform: translateX(-105%);
+                visibility: hidden;
+                transition: transform 220ms ease, visibility 220ms ease;
+            }
+
+            .sidebar.is-open {
+                transform: translateX(0);
+                visibility: visible;
             }
 
             .mobile-top-bar {
                 display: flex;
             }
 
-            #main-content {
-                margin-left: 0;
-                padding: 4.5rem 1.75rem 4rem 1.75rem;
+            .sidebar-footer {
+                display: none !important; /* Strictly ONE theme toggle on mobile: in mobile-top-bar */
+            }
+
+            .desktop-sidebar-expand-btn {
+                display: none !important;
+            }
+
+            .article-content {
+                width: 100%;
             }
 
             .hero-title {
-                font-size: 2.8rem;
+                font-size: 2.5rem;
             }
         }
 
-        @media (max-width: 640px) {
-            #main-content {
-                padding: 4.5rem 1.1rem 3rem 1.1rem;
+        @media (prefers-reduced-motion: reduce) {
+            html {
+                scroll-behavior: auto;
             }
 
-            .hero-title {
-                font-size: 2.2rem;
-            }
-
-            .hero-subtitle {
-                font-size: 1.1rem;
-            }
-
-            .hero-actions {
-                flex-direction: column;
-            }
-
-            .btn {
-                width: 100%;
-                justify-content: center;
-            }
-
-            .hero-metrics-grid {
-                grid-template-columns: 1fr;
+            .sidebar, .chevron-icon, .btn, .metric-pill {
+                transition: none !important;
             }
         }
 
     </style>
 
     <script>
-      // Anti-flicker theme initialization
+      // Anti-flicker theme loader
       (function() {
         try {
           const saved = localStorage.getItem('zerthiva-theme');
@@ -1496,20 +1703,22 @@
     </script>
 </head>
 <body>
-    <div id="reading-progress" role="progressbar" aria-valuemin="0" aria-valuemax="100"></div>
-    <div class="mobile-top-bar">
-      <button class="mobile-menu-toggle" onclick="toggleSidebar()" aria-label="Toggle navigation menu">
-        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
-        <span>Menu</span>
-      </button>
-      <div class="mobile-brand-title">Zerthiva</div>
-      <button class="mobile-theme-toggle" onclick="toggleTheme()" aria-label="Toggle theme">🌙</button>
-    </div>
-    <div id="sidebar-backdrop" onclick="toggleSidebar()"></div>
-    <nav id="sidebar" aria-label="Table of contents">
+  <div id="reading-progress" role="progressbar" aria-valuemin="0" aria-valuemax="100"></div>
+  <div class="mobile-top-bar">
+    <button class="mobile-menu-toggle" onclick="openMobileMenu()" aria-label="Toggle navigation menu">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+      <span>Menu</span>
+    </button>
+    <div class="mobile-brand-title">Zerthiva</div>
+    <button class="mobile-theme-toggle" onclick="toggleTheme()" aria-label="Toggle theme">🌙</button>
+  </div>
+  <div id="sidebar-backdrop" onclick="closeMobileMenu()"></div>
+  <div class="site-layout" id="site-layout">
+    <aside id="sidebar" class="sidebar" aria-label="Table of contents">
       <div class="sidebar-brand-wrapper">
-        <a href="#cover" class="sidebar-brand-link">
-          <svg class="brand-logo" width="34" height="34" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <div class="sidebar-brand-left">
+          <a href="#cover" class="sidebar-brand-link">
+            <svg class="brand-logo" width="34" height="34" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
   <rect width="36" height="36" rx="8" fill="var(--forest-green)"/>
   <path d="M4 27C12 25 24 29 32 27" stroke="var(--sage-green)" stroke-width="1.5" stroke-linecap="round" opacity="0.6"/>
   <path d="M4 31C10 29.5 26 32.5 32 31" stroke="var(--sage-green)" stroke-width="1.2" stroke-linecap="round" opacity="0.4"/>
@@ -1521,12 +1730,19 @@
   <path d="M18 16C18 12 25 11 25 8C20 8 18 12 18 16Z" fill="var(--sage-green)" opacity="0.85"/>
   <circle cx="18" cy="16" r="2.2" fill="#FFFFFF"/>
 </svg>
-          <div class="sidebar-brand-text">
-            <span class="sidebar-brand-title">Zerthiva</span>
-            <span class="sidebar-brand-tagline">Precision Soil Intelligence</span>
-          </div>
-        </a>
-        <div class="sidebar-version-pill">v2.0 Master Dossier</div>
+            <div class="sidebar-brand-text">
+              <span class="sidebar-brand-title">Zerthiva</span>
+              <span class="sidebar-brand-tagline">Soil Intelligence System</span>
+            </div>
+          </a>
+        </div>
+        <button id="sidebar-collapse-btn" class="sidebar-collapse-btn" title="Collapse navigation sidebar (Ctrl+B)" aria-label="Collapse sidebar" onclick="toggleDesktopSidebar()">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><line x1="9" y1="3" x2="9" y2="21"></line><path d="M14 15l-3-3 3-3"></path></svg>
+        </button>
+      </div>
+
+      <div class="sidebar-sub-header">
+        <div class="sidebar-version-pill">v2.0 Master Technical Dossier</div>
       </div>
 
       <div class="sidebar-search-box">
@@ -1555,21 +1771,12 @@
             </div>
           </button>
           <div class="nav-level-links">
-          <a href="#section1" class="nav-link"><span class="nav-num">01</span> <span class="nav-text">Project Identity</span></a>
-          <a href="#section2" class="nav-link"><span class="nav-num">02</span> <span class="nav-text">Executive Summary</span></a>
-          <a href="#section3" class="nav-link"><span class="nav-num">03</span> <span class="nav-text">Introduction</span></a>
-          <a href="#section4" class="nav-link"><span class="nav-num">04</span> <span class="nav-text">Background of Problem</span></a>
-          <a href="#section5" class="nav-link"><span class="nav-num">05</span> <span class="nav-text">Problem Statement</span></a>
-          <a href="#section6" class="nav-link"><span class="nav-num">06</span> <span class="nav-text">Root-Cause Analysis</span></a>
-          <a href="#section7" class="nav-link"><span class="nav-num">07</span> <span class="nav-text">Research & Evidence Base</span></a>
-          <a href="#section8" class="nav-link"><span class="nav-num">08</span> <span class="nav-text">Case Studies</span></a>
-          <a href="#section9" class="nav-link"><span class="nav-num">09</span> <span class="nav-text">Existing Solutions & Physics</span></a>
-          <a href="#section10" class="nav-link"><span class="nav-num">10</span> <span class="nav-text">The Unaddressed Gap</span></a>
+
           </div>
         </div>
 
         <div class="nav-level-group" data-level="2">
-          <button class="nav-level-toggle" aria-expanded="true" onclick="toggleLevelGroup(this)">
+          <button class="nav-level-toggle" aria-expanded="false" onclick="toggleLevelGroup(this)">
             <div class="nav-level-header-left">
               <span class="level-badge">L2</span>
               <span class="level-title">Solution Architecture</span>
@@ -1580,21 +1787,12 @@
             </div>
           </button>
           <div class="nav-level-links">
-          <a href="#section11" class="nav-link"><span class="nav-num">11</span> <span class="nav-text">Proposed Solution & Functions</span></a>
-          <a href="#section12" class="nav-link"><span class="nav-num">12</span> <span class="nav-text">User Journeys</span></a>
-          <a href="#section13" class="nav-link"><span class="nav-num">13</span> <span class="nav-text">Technical & Verification Reqs</span></a>
-          <a href="#section14" class="nav-link"><span class="nav-num">14</span> <span class="nav-text">Hardware Selection & Design</span></a>
-          <a href="#section15" class="nav-link"><span class="nav-num">15</span> <span class="nav-text">System Architecture & Modes</span></a>
-          <a href="#section16" class="nav-link"><span class="nav-num">16</span> <span class="nav-text">Data Management & Integrity</span></a>
-          <a href="#section17" class="nav-link"><span class="nav-num">17</span> <span class="nav-text">AI / Machine Learning Roadmap</span></a>
-          <a href="#section18" class="nav-link"><span class="nav-num">18</span> <span class="nav-text">Agricultural Science & Physics</span></a>
-          <a href="#section19" class="nav-link"><span class="nav-num">19</span> <span class="nav-text">Crop Process Models</span></a>
-          <a href="#section20" class="nav-link"><span class="nav-num">20</span> <span class="nav-text">Expected Outputs</span></a>
+
           </div>
         </div>
 
         <div class="nav-level-group" data-level="3">
-          <button class="nav-level-toggle" aria-expanded="true" onclick="toggleLevelGroup(this)">
+          <button class="nav-level-toggle" aria-expanded="false" onclick="toggleLevelGroup(this)">
             <div class="nav-level-header-left">
               <span class="level-badge">L3</span>
               <span class="level-title">Operations & Pilot</span>
@@ -1605,21 +1803,12 @@
             </div>
           </button>
           <div class="nav-level-links">
-          <a href="#section21" class="nav-link"><span class="nav-num">21</span> <span class="nav-text">Cross-Sector Impacts</span></a>
-          <a href="#section22" class="nav-link"><span class="nav-num">22</span> <span class="nav-text">Impact Measurement & Baselines</span></a>
-          <a href="#section23" class="nav-link"><span class="nav-num">23</span> <span class="nav-text">Target User Profiles</span></a>
-          <a href="#section24" class="nav-link"><span class="nav-num">24</span> <span class="nav-text">Market Sizing (TAM/SAM/SOM)</span></a>
-          <a href="#section25" class="nav-link"><span class="nav-num">25</span> <span class="nav-text">Business Model & Value Prop</span></a>
-          <a href="#section26" class="nav-link"><span class="nav-num">26</span> <span class="nav-text">Cost Model & Subscriptions</span></a>
-          <a href="#section27" class="nav-link"><span class="nav-num">27</span> <span class="nav-text">Financial Projections (3-Year)</span></a>
-          <a href="#section28" class="nav-link"><span class="nav-num">28</span> <span class="nav-text">Reconciled $3,500 Funding</span></a>
-          <a href="#section29" class="nav-link"><span class="nav-num">29</span> <span class="nav-text">Pilot Protocol & Design</span></a>
-          <a href="#section30" class="nav-link"><span class="nav-num">30</span> <span class="nav-text">Implementation Roadmap</span></a>
+
           </div>
         </div>
 
         <div class="nav-level-group" data-level="4">
-          <button class="nav-level-toggle" aria-expanded="true" onclick="toggleLevelGroup(this)">
+          <button class="nav-level-toggle" aria-expanded="false" onclick="toggleLevelGroup(this)">
             <div class="nav-level-header-left">
               <span class="level-badge">L4</span>
               <span class="level-title">Governance & Risk</span>
@@ -1630,24 +1819,12 @@
             </div>
           </button>
           <div class="nav-level-links">
-          <a href="#section31" class="nav-link"><span class="nav-num">31</span> <span class="nav-text">Team & Organizational Structure</span></a>
-          <a href="#section32" class="nav-link"><span class="nav-num">32</span> <span class="nav-text">Strategic Partnerships</span></a>
-          <a href="#section33" class="nav-link"><span class="nav-num">33</span> <span class="nav-text">Regulatory & Legal Compliance</span></a>
-          <a href="#section34" class="nav-link"><span class="nav-num">34</span> <span class="nav-text">Security & Threat Model</span></a>
-          <a href="#section35" class="nav-link"><span class="nav-num">35</span> <span class="nav-text">Reliability & Power Budget</span></a>
-          <a href="#section36" class="nav-link"><span class="nav-num">36</span> <span class="nav-text">Accessibility & Inclusive UI</span></a>
-          <a href="#section37" class="nav-link"><span class="nav-num">37</span> <span class="nav-text">Environmental Impact</span></a>
-          <a href="#section38" class="nav-link"><span class="nav-num">38</span> <span class="nav-text">Social Impact & Equity</span></a>
-          <a href="#section39" class="nav-link"><span class="nav-num">39</span> <span class="nav-text">Risk Register & Mitigation</span></a>
-          <a href="#section40" class="nav-link"><span class="nav-num">40</span> <span class="nav-text">Failure Scenarios & Plan B</span></a>
-          <a href="#section41" class="nav-link"><span class="nav-num">41</span> <span class="nav-text">Scalability Strategy</span></a>
-          <a href="#section42" class="nav-link"><span class="nav-num">42</span> <span class="nav-text">Operational Sustainability</span></a>
-          <a href="#section43" class="nav-link"><span class="nav-num">43</span> <span class="nav-text">IP & Data Sovereignty</span></a>
+
           </div>
         </div>
 
         <div class="nav-level-group" data-level="5">
-          <button class="nav-level-toggle" aria-expanded="true" onclick="toggleLevelGroup(this)">
+          <button class="nav-level-toggle" aria-expanded="false" onclick="toggleLevelGroup(this)">
             <div class="nav-level-header-left">
               <span class="level-badge">L5</span>
               <span class="level-title">Validation & Defense</span>
@@ -1658,26 +1835,12 @@
             </div>
           </button>
           <div class="nav-level-links">
-          <a href="#section44" class="nav-link"><span class="nav-num">44</span> <span class="nav-text">Testing & Bench Calibration</span></a>
-          <a href="#section45" class="nav-link"><span class="nav-num">45</span> <span class="nav-text">Matched-Pair Methodology</span></a>
-          <a href="#section46" class="nav-link"><span class="nav-num">46</span> <span class="nav-text">Results & Hypotheses</span></a>
-          <a href="#section47" class="nav-link"><span class="nav-num">47</span> <span class="nav-text">Commercialization Dynamics</span></a>
-          <a href="#section48" class="nav-link"><span class="nav-num">48</span> <span class="nav-text">Go-to-Market Strategy</span></a>
-          <a href="#section49" class="nav-link"><span class="nav-num">49</span> <span class="nav-text">Competitive Moat</span></a>
-          <a href="#section50" class="nav-link"><span class="nav-num">50</span> <span class="nav-text">Macroeconomic Impact</span></a>
-          <a href="#section51" class="nav-link"><span class="nav-num">51</span> <span class="nav-text">Food Security Impact</span></a>
-          <a href="#section52" class="nav-link"><span class="nav-num">52</span> <span class="nav-text">Climate Resilience</span></a>
-          <a href="#section53" class="nav-link"><span class="nav-num">53</span> <span class="nav-text">M&E Framework</span></a>
-          <a href="#section54" class="nav-link"><span class="nav-num">54</span> <span class="nav-text">Theory of Change</span></a>
-          <a href="#section55" class="nav-link"><span class="nav-num">55</span> <span class="nav-text">UN SDG Alignment</span></a>
-          <a href="#section56" class="nav-link"><span class="nav-num">56</span> <span class="nav-text">Product Requirements Matrix</span></a>
-          <a href="#section57" class="nav-link"><span class="nav-num">57</span> <span class="nav-text">Final Pitch</span></a>
-          <a href="#section58" class="nav-link"><span class="nav-num">58</span> <span class="nav-text">The Final Kill Test (30 Qs)</span></a>
+
           </div>
         </div>
 
         <div class="nav-level-group" data-level="A">
-          <button class="nav-level-toggle" aria-expanded="true" onclick="toggleLevelGroup(this)">
+          <button class="nav-level-toggle" aria-expanded="false" onclick="toggleLevelGroup(this)">
             <div class="nav-level-header-left">
               <span class="level-badge">ANNEX</span>
               <span class="level-title">Technical Annexes</span>
@@ -1688,15 +1851,7 @@
             </div>
           </button>
           <div class="nav-level-links">
-          <a href="#annexA" class="nav-link"><span class="nav-num">A</span> <span class="nav-text">Document Control & Audit Log</span></a>
-          <a href="#annexB" class="nav-link"><span class="nav-num">B</span> <span class="nav-text">Scientific Reference Register</span></a>
-          <a href="#annexC" class="nav-link"><span class="nav-num">C</span> <span class="nav-text">Hardware & Power Budget</span></a>
-          <a href="#annexD" class="nav-link"><span class="nav-num">D</span> <span class="nav-text">Software & Schemas</span></a>
-          <a href="#annexE" class="nav-link"><span class="nav-num">E</span> <span class="nav-text">Agronomic Methodology</span></a>
-          <a href="#annexF" class="nav-link"><span class="nav-num">F</span> <span class="nav-text">Verification Matrix (Traceable)</span></a>
-          <a href="#annexG" class="nav-link"><span class="nav-num">G</span> <span class="nav-text">Pilot Protocol & Ethics</span></a>
-          <a href="#annexH" class="nav-link"><span class="nav-num">H</span> <span class="nav-text">Reconciled Financials</span></a>
-          <a href="#annexI" class="nav-link"><span class="nav-num">I</span> <span class="nav-text">Governance & Safety Disclaimers</span></a>
+
           </div>
         </div>
       </div>
@@ -1707,12 +1862,29 @@
           <span class="theme-toggle-text">DARK MODE</span>
         </button>
       </div>
-    </nav>
-    <main id="main-content" role="main">
+    </aside>
+    <main id="main-content" class="article-content" role="main">
+      <div class="article-top-bar">
+        <button id="desktop-sidebar-expand" class="desktop-sidebar-expand-btn" title="Expand navigation (Ctrl+B)" onclick="toggleDesktopSidebar()">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><line x1="9" y1="3" x2="9" y2="21"></line><path d="M13 9l3 3-3 3"></path></svg>
+          <span>Open Navigation</span>
+        </button>
+        <div class="article-breadcrumb">
+          <span class="breadcrumb-item">Zerthiva</span>
+          <span class="breadcrumb-sep">/</span>
+          <span class="breadcrumb-active" id="active-breadcrumb-section">Cover & Summary</span>
+        </div>
+        <div class="article-top-actions">
+          <a href="#section11" class="top-nav-chip">Architecture</a>
+          <a href="#section29" class="top-nav-chip">Pilot Design</a>
+          <a href="#annexA" class="top-nav-chip">Annexes</a>
+        </div>
+      </div>
+
         <div id="cover" class="hero">
           <div class="hero-eyebrow">
             <span class="eyebrow-dot"></span>
-            AGRITECH / PRECISION SOIL INTELLIGENCE / RESEARCH DOSSIER
+            AGRITECH / SOIL INTELLIGENCE / 2026 RESEARCH DOSSIER
           </div>
           
           <h1 class="hero-title">Zerthiva</h1>
@@ -1726,11 +1898,11 @@
           <div class="hero-actions">
             <a href="#section11" class="btn btn-primary">
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>
-              Explore System Architecture
+              Explore the System
             </a>
             <a href="#section1" class="btn btn-secondary">
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
-              Read Technical Dossier
+              Read the Technical Dossier
             </a>
           </div>
 
@@ -2123,7 +2295,7 @@
             </ul>
 
             <h3><span class="sub-num">2.5</span> <strong>Performance targets & evidence classifications</strong></h3>
-            <table>
+            <div class="table-wrap"><table>
                 <thead>
                     <tr>
                         <th>Metric / Target</th>
@@ -2164,7 +2336,7 @@
                         <td><span class="badge-hypo">Unvalidated Behavioral Hypothesis</span></td>
                     </tr>
                 </tbody>
-            </table>
+            </table></div>
 
             <h3><span class="sub-num">2.6</span> <strong>The funding request & trial scope</strong></h3>
             <p><span class="badge-spec">Design Specification</span> Zerthiva requests a lean seed grant of <strong>$3,500.00 USD</strong>. This budget funds the fabrication of 15 hardware units, laboratory electrical and soil core calibration, and the execution of a <strong>10-farm exploratory feasibility trial</strong> (Option A: 5 matched pairs = 3 Maize pairs, 2 Tomato pairs) over a 120-day cropping season in Machakos County, Kenya. The trial evaluates engineering reliability, calibration drift, user comprehension, and directional agronomic effect sizes, providing the empirical foundation required for a future confirmatory trial.</p>
@@ -2188,6 +2360,93 @@
             
             <h3><span class="sub-num">4.1</span> <strong>The physics of root-zone salt accumulation</strong></h3>
             <p><span class="badge-evidence">Established Evidence</span> When irrigation water containing dissolved mineral ions ($Ca^{2+}, Mg^{2+}, Na^+, Cl^-, SO_4^{2-}, HCO_3^-$) is applied to soil, crop roots extract almost pure water ($H_2O$) through transpiration, while water also evaporates directly from the soil surface. Virtually all dissolved mineral ions remain in the root zone.</p>
+
+<div class="technical-diagram-card" id="fig-4-1">
+  <div class="diagram-header">
+    <div class="diagram-tag">FIGURE 4.1 · SECONDARY SALINIZATION & OSMOTIC DROUGHT DYNAMICS</div>
+    <div class="diagram-caption">Mechanisms of salt accumulation in the root zone: Evaporation and transpiration extract pure water, leaving salts that create osmotic drought despite moist soil</div>
+  </div>
+  <div class="diagram-body">
+    <svg class="diagram-svg" viewBox="0 0 960 330" width="100%" height="auto" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <marker id="arr-b" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+          <path d="M 0 1 L 8 5 L 0 9 z" fill="#142D25" />
+        </marker>
+        <marker id="arr-orange" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+          <path d="M 0 1 L 8 5 L 0 9 z" fill="#D87943" />
+        </marker>
+      </defs>
+
+      <!-- Stage 1 -->
+      <g transform="translate(20, 30)">
+        <rect x="0" y="0" width="200" height="260" rx="8" fill="#FAF8F5" stroke="#D8D8CC" stroke-width="1.5"/>
+        <rect x="0" y="0" width="200" height="32" rx="8" fill="#142D25"/>
+        <text x="100" y="21" font-family="'IBM Plex Mono', monospace" font-size="11" font-weight="700" fill="#F4F1E8" text-anchor="middle">1. SALINE IRRIGATION</text>
+        <circle cx="100" cy="70" r="22" fill="#D87943" opacity="0.15"/>
+        <text x="100" y="75" font-family="'IBM Plex Mono', monospace" font-size="14" font-weight="800" fill="#D87943" text-anchor="middle">ECw</text>
+        <text x="15" y="115" font-family="'Plus Jakarta Sans', sans-serif" font-size="11" font-weight="700" fill="#242923">• Borehole / River Water</text>
+        <text x="15" y="133" font-family="'Plus Jakarta Sans', sans-serif" font-size="10" fill="#5A6258">  Contains dissolved ions:</text>
+        <text x="15" y="151" font-family="'IBM Plex Mono', monospace" font-size="10" fill="#D87943">  Na⁺, Cl⁻, Ca²⁺, SO₄²⁻</text>
+        <text x="15" y="175" font-family="'Plus Jakarta Sans', sans-serif" font-size="10" fill="#5A6258">• Salinity levels:</text>
+        <text x="15" y="193" font-family="'IBM Plex Mono', monospace" font-size="10" fill="#242923">  1.2 – 3.5 dS/m</text>
+        <text x="15" y="225" font-family="'Plus Jakarta Sans', sans-serif" font-size="10" font-weight="600" fill="#142D25">Water enters soil tilth</text>
+      </g>
+
+      <line x1="225" y1="160" x2="260" y2="160" stroke="#142D25" stroke-width="2.5" marker-end="url(#arr-b)"/>
+
+      <!-- Stage 2 -->
+      <g transform="translate(265, 30)">
+        <rect x="0" y="0" width="200" height="260" rx="8" fill="#FAF8F5" stroke="#D8D8CC" stroke-width="1.5"/>
+        <rect x="0" y="0" width="200" height="32" rx="8" fill="#142D25"/>
+        <text x="100" y="21" font-family="'IBM Plex Mono', monospace" font-size="11" font-weight="700" fill="#F4F1E8" text-anchor="middle">2. PURE WATER EVAP</text>
+        <circle cx="100" cy="70" r="22" fill="#B7CC8A" opacity="0.3"/>
+        <text x="100" y="75" font-family="'IBM Plex Mono', monospace" font-size="14" font-weight="800" fill="#142D25" text-anchor="middle">ETc</text>
+        <text x="15" y="115" font-family="'Plus Jakarta Sans', sans-serif" font-size="11" font-weight="700" fill="#242923">• High ASAL Demand</text>
+        <text x="15" y="133" font-family="'Plus Jakarta Sans', sans-serif" font-size="10" fill="#5A6258">  Solar flux & dry winds</text>
+        <text x="15" y="151" font-family="'Plus Jakarta Sans', sans-serif" font-size="10" fill="#5A6258">• Pure H₂O vaporizes</text>
+        <text x="15" y="169" font-family="'Plus Jakarta Sans', sans-serif" font-size="10" fill="#5A6258">  via transpiration & soil</text>
+        <text x="15" y="195" font-family="'Plus Jakarta Sans', sans-serif" font-size="10" font-weight="700" fill="#D87943">• Salt Ions CANNOT vaporize</text>
+        <text x="15" y="225" font-family="'Plus Jakarta Sans', sans-serif" font-size="10" font-weight="600" fill="#142D25">Ions remain in root-zone</text>
+      </g>
+
+      <line x1="470" y1="160" x2="505" y2="160" stroke="#142D25" stroke-width="2.5" marker-end="url(#arr-b)"/>
+
+      <!-- Stage 3 -->
+      <g transform="translate(510, 30)">
+        <rect x="0" y="0" width="200" height="260" rx="8" fill="#FAF8F5" stroke="#D87943" stroke-width="1.8"/>
+        <rect x="0" y="0" width="200" height="32" rx="8" fill="#D87943"/>
+        <text x="100" y="21" font-family="'IBM Plex Mono', monospace" font-size="11" font-weight="700" fill="#F4F1E8" text-anchor="middle">3. SALT ION CONCENTRATION</text>
+        <circle cx="100" cy="70" r="22" fill="#D87943" opacity="0.25"/>
+        <text x="100" y="75" font-family="'IBM Plex Mono', monospace" font-size="14" font-weight="800" fill="#D87943" text-anchor="middle">Ψs ↑</text>
+        <text x="15" y="115" font-family="'Plus Jakarta Sans', sans-serif" font-size="11" font-weight="700" fill="#242923">• Osmotic Potential Spikes</text>
+        <text x="15" y="133" font-family="'IBM Plex Mono', monospace" font-size="9.5" fill="#5A6258">  Ψs = -0.036 × ECe (bars)</text>
+        <text x="15" y="155" font-family="'Plus Jakarta Sans', sans-serif" font-size="10" fill="#5A6258">• Pore water solution</text>
+        <text x="15" y="173" font-family="'Plus Jakarta Sans', sans-serif" font-size="10" fill="#5A6258">  becomes hypertonic</text>
+        <text x="15" y="195" font-family="'Plus Jakarta Sans', sans-serif" font-size="10" font-weight="700" fill="#D87943">• Soil looks visibly moist!</text>
+        <text x="15" y="225" font-family="'Plus Jakarta Sans', sans-serif" font-size="10" font-weight="600" fill="#142D25">Chemical lock on moisture</text>
+      </g>
+
+      <line x1="715" y1="160" x2="750" y2="160" stroke="#142D25" stroke-width="2.5" marker-end="url(#arr-orange)"/>
+
+      <!-- Stage 4 -->
+      <g transform="translate(755, 30)">
+        <rect x="0" y="0" width="185" height="260" rx="8" fill="#FDF2F2" stroke="#E53E3E" stroke-width="2"/>
+        <rect x="0" y="0" width="185" height="32" rx="8" fill="#C53030"/>
+        <text x="92" y="21" font-family="'IBM Plex Mono', monospace" font-size="11" font-weight="700" fill="#F4F1E8" text-anchor="middle">4. OSMOTIC DROUGHT</text>
+        <circle cx="92" cy="70" r="22" fill="#E53E3E" opacity="0.2"/>
+        <text x="92" y="75" font-family="'IBM Plex Mono', monospace" font-size="13" font-weight="800" fill="#C53030" text-anchor="middle">FAIL</text>
+        <text x="12" y="115" font-family="'Plus Jakarta Sans', sans-serif" font-size="11" font-weight="700" fill="#C53030">• Plant Water Starvation</text>
+        <text x="12" y="133" font-family="'Plus Jakarta Sans', sans-serif" font-size="10" fill="#5A6258">• Root cells cannot extract</text>
+        <text x="12" y="151" font-family="'Plus Jakarta Sans', sans-serif" font-size="10" fill="#5A6258">  moisture against gradient</text>
+        <text x="12" y="173" font-family="'Plus Jakarta Sans', sans-serif" font-size="10.5" font-weight="700" fill="#242923">• Visible Stunting & Wilt</text>
+        <text x="12" y="195" font-family="'Plus Jakarta Sans', sans-serif" font-size="10" fill="#5A6258">• Leaf tip necrotic burn</text>
+        <text x="12" y="225" font-family="'IBM Plex Mono', monospace" font-size="10" font-weight="700" fill="#C53030">Yield Collapse: 20–50%</text>
+      </g>
+    </svg>
+  </div>
+</div>
+
+
             <p><span class="badge-spec">Design Specification</span> <em>Illustrative Mass-Balance Approximation:</em> If an irrigator applies 500 mm ($5,000\text{ m}^3/\text{ha}$) of water across a season from a source with an electrical conductivity of $1.5\text{ dS/m}$ ($TDS \approx 960\text{ mg/L}$ based on standard conversion $TDS \approx 640 \times EC$), each hectare receives approximately:</p>
             <div class="code-block">
 Mass of Salt Deposited = 5,000,000 L/ha × 0.96 g/L = 4,800,000 g = 4,800 kg/ha (4.8 metric tons/ha)
@@ -2266,6 +2525,104 @@ Mass of Salt Deposited = 5,000,000 L/ha × 0.96 g/L = 4,800,000 g = 4,800 kg/ha 
                     <div class="why-content">
                         <div class="why-body-title">Why do smallholder farmers lose 15%–40% of their harvest to salinity?</div>
                         <p class="why-body-desc">Because salinity accumulates invisibly in the root zone. By the time visual signs appear (leaf scorch, chlorosis, stunting), irreversible root cellular damage and yield loss have already occurred.</p>
+
+<div class="technical-diagram-card" id="fig-6-1">
+  <div class="diagram-header">
+    <div class="diagram-tag">FIGURE 6.1 · THE DESTRUCTIVE SECONDARY SALINIZATION FEEDBACK LOOP</div>
+    <div class="diagram-caption">The behavioural trap: Visual wilting triggers additional saline irrigation. Zerthiva diagnostic LED breaks the destructive cycle.</div>
+  </div>
+  <div class="diagram-body">
+    <svg class="diagram-svg" viewBox="0 0 960 380" width="100%" height="auto" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <marker id="arr-loop" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+          <path d="M 0 1 L 8 5 L 0 9 z" fill="#D87943" />
+        </marker>
+        <marker id="arr-green" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+          <path d="M 0 1 L 8 5 L 0 9 z" fill="#059669" />
+        </marker>
+      </defs>
+
+      <!-- Center Loop Nodes (Hexagonal / Circular arrangement) -->
+      <!-- Node 1: Salt Accumulates (Top Left) -->
+      <g transform="translate(140, 40)">
+        <rect x="0" y="0" width="220" height="70" rx="8" fill="#FFFFFF" stroke="#D8D8CC" stroke-width="1.5"/>
+        <rect x="0" y="0" width="220" height="22" rx="8" fill="#142D25"/>
+        <text x="110" y="15" font-family="'IBM Plex Mono', monospace" font-size="10" font-weight="700" fill="#F4F1E8" text-anchor="middle">1. SALINITY ACCUMULATION</text>
+        <text x="12" y="42" font-family="'Plus Jakarta Sans', sans-serif" font-size="10.5" font-weight="600" fill="#242923">Sub-surface root salts rise</text>
+        <text x="12" y="58" font-family="'IBM Plex Mono', monospace" font-size="9.5" fill="#5A6258">ECe exceeds crop threshold</text>
+      </g>
+
+      <!-- Arrow 1 -> 2 -->
+      <path d="M 365 75 L 435 75" fill="none" stroke="#D87943" stroke-width="2.5" marker-end="url(#arr-loop)"/>
+
+      <!-- Node 2: Osmotic Tension Spikes (Top Right) -->
+      <g transform="translate(440, 40)">
+        <rect x="0" y="0" width="220" height="70" rx="8" fill="#FFFFFF" stroke="#D87943" stroke-width="1.8"/>
+        <rect x="0" y="0" width="220" height="22" rx="8" fill="#D87943"/>
+        <text x="110" y="15" font-family="'IBM Plex Mono', monospace" font-size="10" font-weight="700" fill="#F4F1E8" text-anchor="middle">2. OSMOTIC WATER LOCK</text>
+        <text x="12" y="42" font-family="'Plus Jakarta Sans', sans-serif" font-size="10.5" font-weight="600" fill="#242923">Roots chemically barred</text>
+        <text x="12" y="58" font-family="'Plus Jakarta Sans', sans-serif" font-size="9.5" fill="#5A6258">Water potential gradient drops</text>
+      </g>
+
+      <!-- Arrow 2 -> 3 -->
+      <path d="M 665 75 Q 740 75, 740 145" fill="none" stroke="#D87943" stroke-width="2.5" marker-end="url(#arr-loop)"/>
+
+      <!-- Node 3: Crop Wilt Observed (Mid Right) -->
+      <g transform="translate(630, 150)">
+        <rect x="0" y="0" width="220" height="70" rx="8" fill="#FFFFFF" stroke="#D8D8CC" stroke-width="1.5"/>
+        <rect x="0" y="0" width="220" height="22" rx="8" fill="#142D25"/>
+        <text x="110" y="15" font-family="'IBM Plex Mono', monospace" font-size="10" font-weight="700" fill="#F4F1E8" text-anchor="middle">3. VISIBLE WILTING</text>
+        <text x="12" y="42" font-family="'Plus Jakarta Sans', sans-serif" font-size="10.5" font-weight="600" fill="#242923">Crop leaves curl and stunt</text>
+        <text x="12" y="58" font-family="'Plus Jakarta Sans', sans-serif" font-size="9.5" fill="#5A6258">Farmer spots physical stress</text>
+      </g>
+
+      <!-- Arrow 3 -> 4 (TRAP POINT) -->
+      <path d="M 740 225 Q 740 295, 665 295" fill="none" stroke="#C53030" stroke-width="2.5" marker-end="url(#arr-loop)"/>
+      <text x="750" y="265" font-family="'IBM Plex Mono', monospace" font-size="9.5" font-weight="800" fill="#C53030">TRAP</text>
+
+      <!-- Node 4: Fatal Misdiagnosis (Bottom Right) -->
+      <g transform="translate(440, 260)">
+        <rect x="0" y="0" width="220" height="75" rx="8" fill="#FDF2F2" stroke="#E53E3E" stroke-width="2"/>
+        <rect x="0" y="0" width="220" height="22" rx="8" fill="#C53030"/>
+        <text x="110" y="15" font-family="'IBM Plex Mono', monospace" font-size="10" font-weight="700" fill="#F4F1E8" text-anchor="middle">4. MISDIAGNOSIS</text>
+        <text x="12" y="42" font-family="'Plus Jakarta Sans', sans-serif" font-size="10.5" font-weight="700" fill="#C53030">"Soil must be dry!"</text>
+        <text x="12" y="58" font-family="'Plus Jakarta Sans', sans-serif" font-size="9.5" fill="#5A6258">Assumes drought; ignores salts</text>
+      </g>
+
+      <!-- Arrow 4 -> 5 -->
+      <path d="M 435 295 L 365 295" fill="none" stroke="#C53030" stroke-width="2.5" marker-end="url(#arr-loop)"/>
+
+      <!-- Node 5: Adding Saline Irrigation (Bottom Left) -->
+      <g transform="translate(140, 260)">
+        <rect x="0" y="0" width="220" height="75" rx="8" fill="#FDF2F2" stroke="#E53E3E" stroke-width="2"/>
+        <rect x="0" y="0" width="220" height="22" rx="8" fill="#C53030"/>
+        <text x="110" y="15" font-family="'IBM Plex Mono', monospace" font-size="10" font-weight="700" fill="#F4F1E8" text-anchor="middle">5. ACCELERATED SALINE WATER</text>
+        <text x="12" y="42" font-family="'Plus Jakarta Sans', sans-serif" font-size="10.5" font-weight="600" fill="#242923">Pumps more saline water</text>
+        <text x="12" y="58" font-family="'Plus Jakarta Sans', sans-serif" font-size="9.5" fill="#5A6258">Adds tons of salts per acre</text>
+      </g>
+
+      <!-- Arrow 5 -> 1 (Completing Loop) -->
+      <path d="M 135 295 Q 60 295, 60 220 L 60 145 Q 60 75, 135 75" fill="none" stroke="#C53030" stroke-width="2.5" marker-end="url(#arr-loop)"/>
+      <text x="45" y="185" font-family="'IBM Plex Mono', monospace" font-size="9.5" font-weight="800" fill="#C53030" transform="rotate(-90 45 185)">CYCLE REPEATS</text>
+
+      <!-- ZERTHIVA INTERVENTION CALLOUT (Center Green Island) -->
+      <g transform="translate(260, 135)">
+        <rect x="0" y="0" width="310" height="95" rx="10" fill="#EEF3E4" stroke="#059669" stroke-width="2.5" filter="drop-shadow(0 4px 8px rgba(5,150,105,0.15))"/>
+        <rect x="0" y="0" width="310" height="24" rx="10" fill="#059669"/>
+        <text x="155" y="16" font-family="'IBM Plex Mono', monospace" font-size="11" font-weight="800" fill="#FFFFFF" text-anchor="middle">★ ZERTHIVA INTERVENTION POINT</text>
+        <text x="14" y="44" font-family="'Plus Jakarta Sans', sans-serif" font-size="10.5" font-weight="700" fill="#142D25">Diagnostic Blue LED Alert Activates:</text>
+        <text x="14" y="60" font-family="'Plus Jakarta Sans', sans-serif" font-size="10" fill="#242923">• Signals: "Salinity Critical; Do NOT irrigate normally"</text>
+        <text x="14" y="74" font-family="'Plus Jakarta Sans', sans-serif" font-size="10" fill="#242923">• Directs: Apply Leaching Fraction or fresh water</text>
+        <text x="14" y="88" font-family="'IBM Plex Mono', monospace" font-size="9.5" font-weight="800" fill="#059669">BREAKS FEEDBACK TRAP & SAVES CROP</text>
+      </g>
+
+      <!-- Intercept Line from Intervention to Step 4 -->
+      <path d="M 415 235 L 415 285" fill="none" stroke="#059669" stroke-width="2.5" stroke-dasharray="3 3" marker-end="url(#arr-green)"/>
+    </svg>
+  </div>
+</div>
+
+
                     </div>
                 </div>
                 <div class="why-card">
@@ -2299,7 +2656,7 @@ Mass of Salt Deposited = 5,000,000 L/ha × 0.96 g/L = 4,800,000 g = 4,800 kg/ha 
             </div>
 
             <h3><span class="sub-num">6.2</span> <strong>Root-cause fishbone synthesis</strong></h3>
-            <table>
+            <div class="table-wrap"><table>
                 <thead>
                     <tr>
                         <th>People & Knowledge</th>
@@ -2328,7 +2685,7 @@ Mass of Salt Deposited = 5,000,000 L/ha × 0.96 g/L = 4,800,000 g = 4,800 kg/ha 
                         <td>Lack of on-farm sensor subsidies<br>Underfunded agricultural extension</td>
                     </tr>
                 </tbody>
-            </table>
+            </table></div>
         </section>
 
 <section id="section7">
@@ -2370,7 +2727,96 @@ Mass of Salt Deposited = 5,000,000 L/ha × 0.96 g/L = 4,800,000 g = 4,800 kg/ha 
             
             <h3><span class="sub-num">9.1</span> <strong>Rigorous definitions of electrical conductivity metrics</strong></h3>
             <p><span class="badge-evidence">Established Evidence</span> To avoid scientific ambiguity, the documentation formally distinguishes five distinct electrical conductivity metrics:</p>
-            <table>
+
+<div class="technical-diagram-card" id="fig-9-1">
+  <div class="diagram-header">
+    <div class="diagram-tag">FIGURE 9.1 · ELECTRICAL CONDUCTIVITY: PHYSICAL CONVERSIONS & RELATIONSHIPS</div>
+    <div class="diagram-caption">Physical progression from raw in-situ probe measurement ($EC_a$) to temperature-compensated ($EC_{25}$), soil-solution ($EC_p$), saturated-paste equivalent ($EC_e$), and crop screening</div>
+  </div>
+  <div class="diagram-body">
+    <svg class="diagram-svg" viewBox="0 0 960 300" width="100%" height="auto" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <marker id="arr-f" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+          <path d="M 0 1 L 8 5 L 0 9 z" fill="#142D25" />
+        </marker>
+      </defs>
+
+      <!-- Step 1: ECa Measured -->
+      <g transform="translate(20, 40)">
+        <rect x="0" y="0" width="165" height="220" rx="8" fill="#FAF8F5" stroke="#142D25" stroke-width="2"/>
+        <rect x="0" y="0" width="165" height="28" rx="8" fill="#142D25"/>
+        <text x="82" y="18" font-family="'IBM Plex Mono', monospace" font-size="10.5" font-weight="700" fill="#F4F1E8" text-anchor="middle">1. DIRECT MEASURE</text>
+        <text x="82" y="60" font-family="'IBM Plex Mono', monospace" font-size="20" font-weight="800" fill="#142D25" text-anchor="middle">ECa</text>
+        <text x="12" y="86" font-family="'Plus Jakarta Sans', sans-serif" font-size="10.5" font-weight="700" fill="#242923">Apparent Bulk EC</text>
+        <text x="12" y="104" font-family="'Plus Jakarta Sans', sans-serif" font-size="9.5" fill="#5A6258">• Measured in-situ by probe pins</text>
+        <text x="12" y="122" font-family="'Plus Jakarta Sans', sans-serif" font-size="9.5" fill="#5A6258">• Senses soil matrix + water + salts together</text>
+        <text x="12" y="152" font-family="'IBM Plex Mono', monospace" font-size="9.5" font-weight="600" fill="#D87943">Units: mS/cm or dS/m</text>
+        <text x="12" y="172" font-family="'Plus Jakarta Sans', sans-serif" font-size="9.5" fill="#5A6258">Raw temperature Tsoil</text>
+      </g>
+
+      <line x1="190" y1="140" x2="225" y2="140" stroke="#142D25" stroke-width="2.5" marker-end="url(#arr-f)"/>
+
+      <!-- Step 2: EC25 Normalized -->
+      <g transform="translate(230, 40)">
+        <rect x="0" y="0" width="165" height="220" rx="8" fill="#FAF8F5" stroke="#D8D8CC" stroke-width="1.5"/>
+        <rect x="0" y="0" width="165" height="28" rx="8" fill="#142D25"/>
+        <text x="82" y="18" font-family="'IBM Plex Mono', monospace" font-size="10.5" font-weight="700" fill="#F4F1E8" text-anchor="middle">2. TEMPERATURE COMP</text>
+        <text x="82" y="60" font-family="'IBM Plex Mono', monospace" font-size="20" font-weight="800" fill="#142D25" text-anchor="middle">EC₂₅</text>
+        <text x="12" y="86" font-family="'Plus Jakarta Sans', sans-serif" font-size="10.5" font-weight="700" fill="#242923">Normalized to 25°C</text>
+        <text x="12" y="104" font-family="'Plus Jakarta Sans', sans-serif" font-size="9.5" fill="#5A6258">• Removes thermal drift error (~1.9% per °C)</text>
+        <text x="12" y="132" font-family="'IBM Plex Mono', monospace" font-size="8.5" fill="#242923">f_T = 1 + 0.0191(T-25)</text>
+        <text x="12" y="152" font-family="'IBM Plex Mono', monospace" font-size="8.5" fill="#242923">EC₂₅ = ECa / f_T</text>
+        <text x="12" y="182" font-family="'Plus Jakarta Sans', sans-serif" font-size="9.5" font-weight="600" fill="#D87943">Still bulk soil property!</text>
+      </g>
+
+      <line x1="400" y1="140" x2="435" y2="140" stroke="#142D25" stroke-width="2.5" marker-end="url(#arr-f)"/>
+
+      <!-- Step 3: ECp Pore Water -->
+      <g transform="translate(440, 40)">
+        <rect x="0" y="0" width="165" height="220" rx="8" fill="#FAF8F5" stroke="#D8D8CC" stroke-width="1.5"/>
+        <rect x="0" y="0" width="165" height="28" rx="8" fill="#142D25"/>
+        <text x="82" y="18" font-family="'IBM Plex Mono', monospace" font-size="10.5" font-weight="700" fill="#F4F1E8" text-anchor="middle">3. PORE WATER EST</text>
+        <text x="82" y="60" font-family="'IBM Plex Mono', monospace" font-size="20" font-weight="800" fill="#D87943" text-anchor="middle">ECp</text>
+        <text x="12" y="86" font-family="'Plus Jakarta Sans', sans-serif" font-size="10.5" font-weight="700" fill="#242923">Pore-Water Solution</text>
+        <text x="12" y="104" font-family="'Plus Jakarta Sans', sans-serif" font-size="9.5" fill="#5A6258">• Rhoades transfer function</text>
+        <text x="12" y="122" font-family="'Plus Jakarta Sans', sans-serif" font-size="9.5" fill="#5A6258">• Requires measured θv</text>
+        <text x="12" y="140" font-family="'Plus Jakarta Sans', sans-serif" font-size="9.5" fill="#5A6258">• Accounts for tortuosity (τ) and solid phase (σs)</text>
+        <text x="12" y="172" font-family="'IBM Plex Mono', monospace" font-size="8.5" fill="#D87943">ECp = (EC₂₅ - σs)/(θ·τ)</text>
+      </g>
+
+      <line x1="610" y1="140" x2="645" y2="140" stroke="#142D25" stroke-width="2.5" marker-end="url(#arr-f)"/>
+
+      <!-- Step 4: ECe Agronomic Standard -->
+      <g transform="translate(650, 40)">
+        <rect x="0" y="0" width="165" height="220" rx="8" fill="#FAF8F5" stroke="#B7CC8A" stroke-width="2"/>
+        <rect x="0" y="0" width="165" height="28" rx="8" fill="#B7CC8A"/>
+        <text x="82" y="18" font-family="'IBM Plex Mono', monospace" font-size="10.5" font-weight="800" fill="#142D25" text-anchor="middle">4. EXTRACT EQUIV</text>
+        <text x="82" y="60" font-family="'IBM Plex Mono', monospace" font-size="20" font-weight="800" fill="#142D25" text-anchor="middle">ECe</text>
+        <text x="12" y="86" font-family="'Plus Jakarta Sans', sans-serif" font-size="10.5" font-weight="700" fill="#242923">Saturated Paste Ext.</text>
+        <text x="12" y="104" font-family="'Plus Jakarta Sans', sans-serif" font-size="9.5" fill="#5A6258">• Universal scientific standard</text>
+        <text x="12" y="122" font-family="'Plus Jakarta Sans', sans-serif" font-size="9.5" fill="#5A6258">• Estimated via dilution factor:</text>
+        <text x="12" y="142" font-family="'IBM Plex Mono', monospace" font-size="9" fill="#242923">ECe ≈ (ECp · θv) / SP</text>
+        <text x="12" y="172" font-family="'Plus Jakarta Sans', sans-serif" font-size="9.5" font-weight="700" fill="#059669">Comparable to FAO tables</text>
+      </g>
+
+      <line x1="820" y1="140" x2="855" y2="140" stroke="#142D25" stroke-width="2.5" marker-end="url(#arr-f)"/>
+
+      <!-- Step 5: Crop Threshold Evaluation -->
+      <g transform="translate(860, 40)">
+        <rect x="0" y="0" width="85" height="220" rx="8" fill="#142D25"/>
+        <text x="42" y="60" font-family="'IBM Plex Mono', monospace" font-size="12" font-weight="800" fill="#B7CC8A" text-anchor="middle">CROP</text>
+        <text x="42" y="80" font-family="'IBM Plex Mono', monospace" font-size="12" font-weight="800" fill="#B7CC8A" text-anchor="middle">RULES</text>
+        <text x="42" y="120" font-family="'Plus Jakarta Sans', sans-serif" font-size="9" fill="#F4F1E8" text-anchor="middle">Maas-</text>
+        <text x="42" y="135" font-family="'Plus Jakarta Sans', sans-serif" font-size="9" fill="#F4F1E8" text-anchor="middle">Hoffman</text>
+        <text x="42" y="150" font-family="'Plus Jakarta Sans', sans-serif" font-size="9" fill="#F4F1E8" text-anchor="middle">Threshold</text>
+        <text x="42" y="180" font-family="'IBM Plex Mono', monospace" font-size="14" font-weight="800" fill="#D87943" text-anchor="middle">Yr</text>
+      </g>
+    </svg>
+  </div>
+</div>
+
+
+            <div class="table-wrap"><table>
                 <thead>
                     <tr>
                         <th>Metric</th>
@@ -2411,7 +2857,7 @@ Mass of Salt Deposited = 5,000,000 L/ha × 0.96 g/L = 4,800,000 g = 4,800 kg/ha 
                         <td>Rapid laboratory screening metric.</td>
                     </tr>
                 </tbody>
-            </table>
+            </table></div>
 
             <h3><span class="sub-num">9.2</span> <strong>The mathematical measurement and conversion chain</strong></h3>
             <p><span class="badge-spec">Design Specification</span> Zerthiva executes a rigorous 5-step conversion chain from raw voltage to agronomic screening advisory:</p>
@@ -2454,6 +2900,121 @@ EC_e_est ≈ EC_p × (θ_FC / θ_SP) ≈ 0.5 × EC_p (for typical loam soils)
             
             <h3><span class="sub-num">11.1</span> <strong>Decoupled multi-state internal logic</strong></h3>
             <p><span class="badge-spec">Design Specification</span> To ensure agricultural safety and unambiguous guidance, the Zerthiva firmware maintains separate internal state variables rather than collapsing disparate physical conditions into a single arbitrary number:</p>
+
+<div class="technical-diagram-card" id="fig-11-1">
+  <div class="diagram-header">
+    <div class="diagram-tag">FIGURE 11.1 · END-TO-END SYSTEM ARCHITECTURE & DATA FLOW</div>
+    <div class="diagram-caption">Complete signal path from in-situ soil sensing to 100% offline edge decision-making and optional cellular telemetry</div>
+  </div>
+  <div class="diagram-body">
+    <svg class="diagram-svg" viewBox="0 0 960 360" width="100%" height="auto" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <marker id="arr-a" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+          <path d="M 0 1 L 8 5 L 0 9 z" fill="#142D25" />
+        </marker>
+        <marker id="arr-acc" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+          <path d="M 0 1 L 8 5 L 0 9 z" fill="#D87943" />
+        </marker>
+      </defs>
+
+      <!-- Offline Edge Domain Boundary -->
+      <rect x="15" y="15" width="680" height="330" rx="10" fill="#FAF8F5" stroke="#142D25" stroke-width="2" stroke-dasharray="6 4"/>
+      <rect x="30" y="8" width="280" height="22" rx="4" fill="#142D25"/>
+      <text x="170" y="23" font-family="'IBM Plex Mono', monospace" font-size="11" font-weight="700" fill="#F4F1E8" text-anchor="middle">100% OFFLINE EDGE DOMAIN (FIELD)</text>
+
+      <!-- Cloud Domain Boundary -->
+      <rect x="715" y="15" width="230" height="330" rx="10" fill="#FAF8F5" stroke="#D8D8CC" stroke-width="1.5" stroke-dasharray="4 4"/>
+      <rect x="730" y="8" width="200" height="22" rx="4" fill="#D87943"/>
+      <text x="830" y="23" font-family="'IBM Plex Mono', monospace" font-size="11" font-weight="700" fill="#F4F1E8" text-anchor="middle">OPTIONAL CLOUD UPLINK</text>
+
+      <!-- 1. Sensing Array -->
+      <g transform="translate(35, 50)">
+        <rect x="0" y="0" width="175" height="130" rx="8" fill="#FFFFFF" stroke="#D8D8CC" stroke-width="1.5"/>
+        <rect x="0" y="0" width="175" height="28" rx="8" fill="#142D25"/>
+        <text x="87" y="18" font-family="'IBM Plex Mono', monospace" font-size="11" font-weight="700" fill="#F4F1E8" text-anchor="middle">1. SENSING ARRAY</text>
+        <text x="12" y="52" font-family="'Plus Jakarta Sans', sans-serif" font-size="11" font-weight="700" fill="#242923">Dual-Depth Probes</text>
+        <text x="12" y="70" font-family="'Plus Jakarta Sans', sans-serif" font-size="10" fill="#5A6258">• Upper: z₁ = 15 cm</text>
+        <text x="12" y="88" font-family="'Plus Jakarta Sans', sans-serif" font-size="10" fill="#5A6258">• Lower: z₂ = 35 cm</text>
+        <text x="12" y="112" font-family="'IBM Plex Mono', monospace" font-size="10" font-weight="600" fill="#D87943">ECa, θv, Tsoil signals</text>
+      </g>
+
+      <line x1="210" y1="115" x2="260" y2="115" stroke="#142D25" stroke-width="2.5" marker-end="url(#arr-a)"/>
+      <text x="235" y="107" font-family="'IBM Plex Mono', monospace" font-size="9" font-weight="700" fill="#5A6258" text-anchor="middle">RS-485</text>
+
+      <!-- 2. ESP32 Engine -->
+      <g transform="translate(265, 45)">
+        <rect x="0" y="0" width="190" height="140" rx="8" fill="#FFFFFF" stroke="#142D25" stroke-width="2"/>
+        <rect x="0" y="0" width="190" height="28" rx="8" fill="#142D25"/>
+        <text x="95" y="18" font-family="'IBM Plex Mono', monospace" font-size="11" font-weight="700" fill="#F4F1E8" text-anchor="middle">2. ESP32 CONTROLLER</text>
+        <text x="12" y="48" font-family="'Plus Jakarta Sans', sans-serif" font-size="10.5" font-weight="700" fill="#142D25">Xtensa Dual-Core 240MHz</text>
+        <text x="12" y="66" font-family="'Plus Jakarta Sans', sans-serif" font-size="10" fill="#5A6258">• Deep Sleep: 15μA quiescent</text>
+        <text x="12" y="84" font-family="'Plus Jakarta Sans', sans-serif" font-size="10" fill="#5A6258">• Measurement cycle: 1/hr</text>
+        <text x="12" y="102" font-family="'Plus Jakarta Sans', sans-serif" font-size="10" fill="#5A6258">• Dry inhibition: θv &lt; 0.08</text>
+        <text x="12" y="122" font-family="'IBM Plex Mono', monospace" font-size="9.5" font-weight="600" fill="#D87943">MicroPython Edge Stack</text>
+      </g>
+
+      <line x1="455" y1="115" x2="505" y2="115" stroke="#142D25" stroke-width="2.5" marker-end="url(#arr-a)"/>
+      <text x="480" y="107" font-family="'IBM Plex Mono', monospace" font-size="9" font-weight="700" fill="#5A6258" text-anchor="middle">BUS</text>
+
+      <!-- 3. Decision Logic -->
+      <g transform="translate(510, 45)">
+        <rect x="0" y="0" width="170" height="140" rx="8" fill="#FFFFFF" stroke="#D8D8CC" stroke-width="1.5"/>
+        <rect x="0" y="0" width="170" height="28" rx="8" fill="#142D25"/>
+        <text x="85" y="18" font-family="'IBM Plex Mono', monospace" font-size="11" font-weight="700" fill="#F4F1E8" text-anchor="middle">3. DECISION ENGINE</text>
+        <text x="12" y="48" font-family="'Plus Jakarta Sans', sans-serif" font-size="10" font-weight="700" fill="#D87943">FAO-56 Water Balance</text>
+        <text x="12" y="64" font-family="'Plus Jakarta Sans', sans-serif" font-size="9.5" fill="#5A6258">• Depletion Dr vs RAW</text>
+        <text x="12" y="80" font-family="'Plus Jakarta Sans', sans-serif" font-size="9.5" fill="#5A6258">• Daily ETc accumulation</text>
+        <text x="12" y="100" font-family="'Plus Jakarta Sans', sans-serif" font-size="10" font-weight="700" fill="#142D25">Rhoades Salinity Model</text>
+        <text x="12" y="116" font-family="'Plus Jakarta Sans', sans-serif" font-size="9.5" fill="#5A6258">• EC₂₅ = ECa / [1+α(T-25)]</text>
+        <text x="12" y="132" font-family="'Plus Jakarta Sans', sans-serif" font-size="9.5" fill="#5A6258">• Threshold ECe screening</text>
+      </g>
+
+      <!-- Local Output Bus -->
+      <path d="M 595 185 L 595 220 L 375 220 L 375 235" fill="none" stroke="#142D25" stroke-width="2.5" marker-end="url(#arr-a)"/>
+
+      <!-- 4. Local Outputs -->
+      <g transform="translate(190, 240)">
+        <rect x="0" y="0" width="370" height="90" rx="8" fill="#FFFFFF" stroke="#B7CC8A" stroke-width="2"/>
+        <rect x="0" y="0" width="370" height="24" rx="8" fill="#B7CC8A"/>
+        <text x="185" y="16" font-family="'IBM Plex Mono', monospace" font-size="10.5" font-weight="800" fill="#142D25" text-anchor="middle">4. LOCAL STATUS BEACON (TRI-COLOR LED)</text>
+        <circle cx="28" cy="44" r="5" fill="#10B981"/>
+        <text x="42" y="48" font-family="'Plus Jakarta Sans', sans-serif" font-size="10" font-weight="700" fill="#242923">GREEN: Optimal Root Conditions (Moisture OK, ECe &lt; Limit)</text>
+        <circle cx="28" cy="62" r="5" fill="#D97706"/>
+        <text x="42" y="66" font-family="'Plus Jakarta Sans', sans-serif" font-size="10" font-weight="700" fill="#242923">AMBER: Water Deficit (Dr ≥ RAW, Schedule Routine Irrigation)</text>
+        <circle cx="28" cy="80" r="5" fill="#0284C7"/>
+        <text x="42" y="84" font-family="'Plus Jakarta Sans', sans-serif" font-size="10" font-weight="700" fill="#242923">BLUE: Salinity Alert (ECe &gt; Threshold, Leaching Fraction Due)</text>
+      </g>
+
+      <!-- GSM Uplink -->
+      <path d="M 680 115 L 730 115" fill="none" stroke="#D87943" stroke-width="2" stroke-dasharray="4 3" marker-end="url(#arr-acc)"/>
+      <text x="705" y="107" font-family="'IBM Plex Mono', monospace" font-size="9" font-weight="700" fill="#D87943" text-anchor="middle">GSM</text>
+
+      <!-- Cloud Box -->
+      <g transform="translate(735, 45)">
+        <rect x="0" y="0" width="190" height="140" rx="8" fill="#FFFFFF" stroke="#D8D8CC" stroke-width="1.5"/>
+        <rect x="0" y="0" width="190" height="28" rx="8" fill="#D87943"/>
+        <text x="95" y="18" font-family="'IBM Plex Mono', monospace" font-size="11" font-weight="700" fill="#F4F1E8" text-anchor="middle">5. CLOUD PLATFORM</text>
+        <text x="12" y="50" font-family="'Plus Jakarta Sans', sans-serif" font-size="10.5" font-weight="600" fill="#242923">• HTTPS / MQTT Ingestion</text>
+        <text x="12" y="70" font-family="'Plus Jakarta Sans', sans-serif" font-size="10" fill="#5A6258">• 24-Byte Compact Payload</text>
+        <text x="12" y="90" font-family="'Plus Jakarta Sans', sans-serif" font-size="10" fill="#5A6258">• Regional Salinity Mapping</text>
+        <text x="12" y="110" font-family="'Plus Jakarta Sans', sans-serif" font-size="10" fill="#5A6258">• Matched-Pair Analytics</text>
+        <text x="12" y="130" font-family="'IBM Plex Mono', monospace" font-size="9.5" font-weight="700" fill="#D87943">NON-BLOCKING: Optional</text>
+      </g>
+
+      <!-- Local SPI Flash -->
+      <g transform="translate(35, 240)">
+        <rect x="0" y="0" width="125" height="90" rx="8" fill="#FFFFFF" stroke="#D8D8CC" stroke-width="1.5"/>
+        <text x="62" y="26" font-family="'IBM Plex Mono', monospace" font-size="10" font-weight="700" fill="#142D25" text-anchor="middle">SPI FLASH LOG</text>
+        <text x="10" y="48" font-family="'Plus Jakarta Sans', sans-serif" font-size="9.5" fill="#5A6258">• 60-day circular buffer</text>
+        <text x="10" y="66" font-family="'Plus Jakarta Sans', sans-serif" font-size="9.5" fill="#5A6258">• Zero packet drop</text>
+        <text x="10" y="84" font-family="'Plus Jakarta Sans', sans-serif" font-size="9.5" fill="#5A6258">• Field USB download</text>
+      </g>
+      <path d="M 265 165 L 97 165 L 97 235" fill="none" stroke="#142D25" stroke-width="1.8" marker-end="url(#arr-a)"/>
+    </svg>
+  </div>
+</div>
+
+
             <ul>
                 <li><strong>State 1: Salinity Status ($S_{sal}$):</strong> Evaluates estimated saturated extract salinity ($EC_{e\_est}$) relative to crop threshold $a$. (Values: <code>SAFE</code>, <code>CAUTION</code>, <code>CRITICAL_LOCKOUT</code>, <code>UNRELIABLE_DRY</code>).</li>
                 <li><strong>State 2: Soil Water Depletion ($S_{wat}$):</strong> Evaluates volumetric moisture ($\theta$) relative to Field Capacity ($\theta_{FC}$) and Management Allowed Depletion ($MAD$). (Values: <code>SATURATED</code>, <code>OPTIMAL</code>, <code>DEPLETED_IRRIGATE</code>, <code>WILTING_STRESS</code>).</li>
@@ -2463,7 +3024,7 @@ EC_e_est ≈ EC_p × (θ_FC / θ_SP) ≈ 0.5 × EC_p (for typical loam soils)
 
             <h3><span class="sub-num">11.2</span> <strong>Visual sentry beacon signaling matrix</strong></h3>
             <p><span class="badge-spec">Design Specification</span> The tri-color LED beacon communicates primary root-zone status to smallholder farmers through distinct color and pulse patterns to prevent misinterpretation:</p>
-            <table>
+            <div class="table-wrap"><table>
                 <thead>
                     <tr>
                         <th>Visual Beacon Pattern</th>
@@ -2504,7 +3065,7 @@ EC_e_est ≈ EC_p × (θ_FC / θ_SP) ≈ 0.5 × EC_p (for typical loam soils)
                         <td>Inspect probe wiring or clean solar panel.</td>
                     </tr>
                 </tbody>
-            </table>
+            </table></div>
 
             <h3><span class="sub-num">11.3</span> <strong>Hardware Bill of Materials Grid ($34.80 BOM / $35.00 Budget)</strong></h3>
             <div class="bom-grid">
@@ -2567,7 +3128,7 @@ EC_e_est ≈ EC_p × (θ_FC / θ_SP) ≈ 0.5 × EC_p (for typical loam soils)
             </div>
 
             <h3><span class="sub-num">11.4</span> <strong>Features: essential vs optional</strong></h3>
-            <table>
+            <div class="table-wrap"><table>
                 <thead>
                     <tr>
                         <th>Feature</th>
@@ -2612,7 +3173,7 @@ EC_e_est ≈ EC_p × (θ_FC / θ_SP) ≈ 0.5 × EC_p (for typical loam soils)
                         <td>Optional / Periodic (Mode C)</td>
                     </tr>
                 </tbody>
-            </table>
+            </table></div>
         </section>
 
 <section id="section12">
@@ -2640,7 +3201,7 @@ EC_e_est ≈ EC_p × (θ_FC / θ_SP) ≈ 0.5 × EC_p (for typical loam soils)
             <h2><span class="sec-pill">SECTION 13</span> TECHNICAL & VERIFICATION REQUIREMENTS</h2>
             
             <h3><span class="sub-num">13.1</span> <strong>Traceable functional requirements (FR)</strong></h3>
-            <table>
+            <div class="table-wrap"><table>
                 <thead>
                     <tr>
                         <th>Req ID</th>
@@ -2687,10 +3248,10 @@ EC_e_est ≈ EC_p × (θ_FC / θ_SP) ≈ 0.5 × EC_p (for typical loam soils)
                         <td>Security capture test (TC-FR06-01)</td>
                     </tr>
                 </tbody>
-            </table>
+            </table></div>
 
             <h3><span class="sub-num">13.2</span> <strong>Traceable non-functional requirements (NFR)</strong></h3>
-            <table>
+            <div class="table-wrap"><table>
                 <thead>
                     <tr>
                         <th>Req ID</th>
@@ -2737,14 +3298,102 @@ EC_e_est ≈ EC_p × (θ_FC / θ_SP) ≈ 0.5 × EC_p (for typical loam soils)
                         <td>Protocol analyzer verification (Annex D)</td>
                     </tr>
                 </tbody>
-            </table>
+            </table></div>
         </section>
 
 <section id="section14">
             <h2><span class="sec-pill">SECTION 14</span> HARDWARE SELECTION & ELECTRICAL DESIGN</h2>
+
+<div class="technical-diagram-card" id="fig-14-1">
+  <div class="diagram-header">
+    <div class="diagram-tag">FIGURE 14.1 · HARDWARE BLOCK DIAGRAM & ELECTRICAL INTERFACES</div>
+    <div class="diagram-caption">Physical subsystem architecture detailing MCU buses, power harvesting, battery management, sensor transceiver, and output peripherals</div>
+  </div>
+  <div class="diagram-body">
+    <svg class="diagram-svg" viewBox="0 0 960 360" width="100%" height="auto" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <marker id="arr-e" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+          <path d="M 0 1 L 8 5 L 0 9 z" fill="#142D25" />
+        </marker>
+      </defs>
+
+      <!-- Center MCU Block -->
+      <g transform="translate(360, 90)">
+        <rect x="0" y="0" width="240" height="180" rx="10" fill="#142D25" stroke="#B7CC8A" stroke-width="2.5"/>
+        <text x="120" y="28" font-family="'IBM Plex Mono', monospace" font-size="13" font-weight="800" fill="#F4F1E8" text-anchor="middle">ESP32-WROOM-32</text>
+        <text x="120" y="46" font-family="'Plus Jakarta Sans', sans-serif" font-size="10" fill="#B7CC8A" text-anchor="middle">Dual-Core Xtensa LX6 @ 240MHz</text>
+        <line x1="20" y1="58" x2="220" y2="58" stroke="#234237" stroke-width="1.5"/>
+        <text x="25" y="78" font-family="'IBM Plex Mono', monospace" font-size="9.5" fill="#F4F1E8">• UART2: GPIO 16/17 (RS485)</text>
+        <text x="25" y="96" font-family="'IBM Plex Mono', monospace" font-size="9.5" fill="#F4F1E8">• I2C: GPIO 21/22 (RTC)</text>
+        <text x="25" y="114" font-family="'IBM Plex Mono', monospace" font-size="9.5" fill="#F4F1E8">• SPI: GPIO 18/19/23 (SD/Flash)</text>
+        <text x="25" y="132" font-family="'IBM Plex Mono', monospace" font-size="9.5" fill="#F4F1E8">• GPIO 25/26/27: LED Beacon</text>
+        <text x="25" y="150" font-family="'IBM Plex Mono', monospace" font-size="9.5" fill="#F4F1E8">• UART1: GPIO 4/5 (GSM Mod.)</text>
+        <text x="25" y="168" font-family="'IBM Plex Mono', monospace" font-size="9.5" fill="#B7CC8A">• Deep Sleep: 15μA RTC active</text>
+      </g>
+
+      <!-- Subsystem 1: Power (Left Top) -->
+      <g transform="translate(30, 40)">
+        <rect x="0" y="0" width="240" height="130" rx="8" fill="#FFFFFF" stroke="#D87943" stroke-width="1.8"/>
+        <rect x="0" y="0" width="240" height="26" rx="8" fill="#D87943"/>
+        <text x="120" y="17" font-family="'IBM Plex Mono', monospace" font-size="11" font-weight="700" fill="#F4F1E8" text-anchor="middle">POWER HARVESTING & STORAGE</text>
+        <text x="15" y="48" font-family="'Plus Jakarta Sans', sans-serif" font-size="10.5" font-weight="700" fill="#242923">• 6V 2W Monocrystalline PV Panel</text>
+        <text x="15" y="66" font-family="'Plus Jakarta Sans', sans-serif" font-size="10" fill="#5A6258">• CN3791 MPPT Solar Charge Controller</text>
+        <text x="15" y="84" font-family="'Plus Jakarta Sans', sans-serif" font-size="10" fill="#5A6258">• 3.2V 2000mAh LiFePO4 Cell (Safe chem)</text>
+        <text x="15" y="102" font-family="'Plus Jakarta Sans', sans-serif" font-size="10" fill="#5A6258">• TPS62203 Buck Regulator (3.3V System)</text>
+        <text x="15" y="120" font-family="'IBM Plex Mono', monospace" font-size="9.5" font-weight="600" fill="#D87943">Autonomy: 18+ days zero sun</text>
+      </g>
+      <line x1="270" y1="105" x2="355" y2="105" stroke="#D87943" stroke-width="2.5" marker-end="url(#arr-e)"/>
+      <text x="312" y="97" font-family="'IBM Plex Mono', monospace" font-size="9" font-weight="700" fill="#D87943" text-anchor="middle">3.3V BUS</text>
+
+      <!-- Subsystem 2: Soil Sensor Transceiver (Left Bottom) -->
+      <g transform="translate(30, 200)">
+        <rect x="0" y="0" width="240" height="130" rx="8" fill="#FFFFFF" stroke="#D8D8CC" stroke-width="1.5"/>
+        <rect x="0" y="0" width="240" height="26" rx="8" fill="#142D25"/>
+        <text x="120" y="17" font-family="'IBM Plex Mono', monospace" font-size="11" font-weight="700" fill="#F4F1E8" text-anchor="middle">RS-485 TRANSCEIVER INTERFACE</text>
+        <text x="15" y="48" font-family="'Plus Jakarta Sans', sans-serif" font-size="10.5" font-weight="700" fill="#242923">• SP3485 / MAX485 Half-Duplex</text>
+        <text x="15" y="66" font-family="'Plus Jakarta Sans', sans-serif" font-size="10" fill="#5A6258">• 12V Boost Regulator (MOSFET Switched)</text>
+        <text x="15" y="84" font-family="'Plus Jakarta Sans', sans-serif" font-size="10" fill="#5A6258">• TVS Diode ESD Surge Protection</text>
+        <text x="15" y="102" font-family="'Plus Jakarta Sans', sans-serif" font-size="10" fill="#5A6258">• Galvanically isolated Modbus loop</text>
+        <text x="15" y="120" font-family="'IBM Plex Mono', monospace" font-size="9.5" font-weight="600" fill="#142D25">Warmup: 200ms power strobe</text>
+      </g>
+      <line x1="270" y1="245" x2="355" y2="245" stroke="#142D25" stroke-width="2.5" marker-end="url(#arr-e)"/>
+      <text x="312" y="237" font-family="'IBM Plex Mono', monospace" font-size="9" font-weight="700" fill="#142D25" text-anchor="middle">UART2</text>
+
+      <!-- Subsystem 3: Local Indicators & Storage (Right Top) -->
+      <g transform="translate(690, 40)">
+        <rect x="0" y="0" width="240" height="130" rx="8" fill="#FFFFFF" stroke="#B7CC8A" stroke-width="2"/>
+        <rect x="0" y="0" width="240" height="26" rx="8" fill="#B7CC8A"/>
+        <text x="120" y="17" font-family="'IBM Plex Mono', monospace" font-size="11" font-weight="800" fill="#142D25" text-anchor="middle">PERIPHERALS & INDICATORS</text>
+        <text x="15" y="48" font-family="'Plus Jakarta Sans', sans-serif" font-size="10.5" font-weight="700" fill="#242923">• Tri-Color Diffused LED (5mm)</text>
+        <text x="15" y="66" font-family="'Plus Jakarta Sans', sans-serif" font-size="10" fill="#5A6258">  Pulsed: 50ms every 3 sec (0.002 mAh)</text>
+        <text x="15" y="84" font-family="'Plus Jakarta Sans', sans-serif" font-size="10.5" font-weight="700" fill="#242923">• DS3231 Temperature-Compensated RTC</text>
+        <text x="15" y="102" font-family="'Plus Jakarta Sans', sans-serif" font-size="10.5" font-weight="700" fill="#242923">• Onboard MicroSD / 8MB SPI Flash</text>
+        <text x="15" y="120" font-family="'IBM Plex Mono', monospace" font-size="9.5" font-weight="600" fill="#059669">100% Autonomous Function</text>
+      </g>
+      <line x1="600" y1="105" x2="685" y2="105" stroke="#142D25" stroke-width="2.5" marker-end="url(#arr-e)"/>
+      <text x="642" y="97" font-family="'IBM Plex Mono', monospace" font-size="9" font-weight="700" fill="#142D25" text-anchor="middle">GPIO/I2C</text>
+
+      <!-- Subsystem 4: Cellular Modem (Right Bottom) -->
+      <g transform="translate(690, 200)">
+        <rect x="0" y="0" width="240" height="130" rx="8" fill="#FFFFFF" stroke="#D8D8CC" stroke-width="1.5"/>
+        <rect x="0" y="0" width="240" height="26" rx="8" fill="#D87943"/>
+        <text x="120" y="17" font-family="'IBM Plex Mono', monospace" font-size="11" font-weight="700" fill="#F4F1E8" text-anchor="middle">OPTIONAL GSM TELEMETRY</text>
+        <text x="15" y="48" font-family="'Plus Jakarta Sans', sans-serif" font-size="10.5" font-weight="700" fill="#242923">• SIM7000G / SIM800L Module</text>
+        <text x="15" y="66" font-family="'Plus Jakarta Sans', sans-serif" font-size="10" fill="#5A6258">• Dedicated High-Side P-MOSFET Gate</text>
+        <text x="15" y="84" font-family="'Plus Jakarta Sans', sans-serif" font-size="10" fill="#5A6258">• Transmit: 1 uplink daily (20 sec active)</text>
+        <text x="15" y="102" font-family="'Plus Jakarta Sans', sans-serif" font-size="10" fill="#5A6258">• Peak draw: 1.8A (supported by cap)</text>
+        <text x="15" y="120" font-family="'IBM Plex Mono', monospace" font-size="9.5" font-weight="600" fill="#D87943">Failsafe: Firmware ignores no-service</text>
+      </g>
+      <line x1="600" y1="245" x2="685" y2="245" stroke="#D87943" stroke-width="2" stroke-dasharray="4 3" marker-end="url(#arr-e)"/>
+      <text x="642" y="237" font-family="'IBM Plex Mono', monospace" font-size="9" font-weight="700" fill="#D87943" text-anchor="middle">UART1</text>
+    </svg>
+  </div>
+</div>
+
+
             
             <h3><span class="sub-num">14.1</span> <strong>Component selection trade-off analysis</strong></h3>
-            <table>
+            <div class="table-wrap"><table>
                 <thead>
                     <tr>
                         <th>Subsystem</th>
@@ -2785,11 +3434,116 @@ EC_e_est ≈ EC_p × (θ_FC / θ_SP) ≈ 0.5 × EC_p (for typical loam soils)
                         <td>1-Wire digital output eliminates analog ADC drift over long cable runs. Stainless steel capsule rated IP68; factory calibrated to $\pm 0.5^\circ\text{C}$ over $-10^\circ\text{C}$ to $+85^\circ\text{C}$.</td>
                     </tr>
                 </tbody>
-            </table>
+            </table></div>
         </section>
 
 <section id="section15">
             <h2><span class="sec-pill">SECTION 15</span> SYSTEM ARCHITECTURE & OPERATING MODES</h2>
+
+<div class="technical-diagram-card" id="fig-15-1">
+  <div class="diagram-header">
+    <div class="diagram-tag">FIGURE 15.1 · AUTONOMOUS EDGE DECISION FLOWCHART</div>
+    <div class="diagram-caption">Sequential firmware execution logic: sensor acquisition, dry-soil screening, temperature compensation, Rhoades conversion, and multi-tier output dispatch</div>
+  </div>
+  <div class="diagram-body">
+    <svg class="diagram-svg" viewBox="0 0 960 400" width="100%" height="auto" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <marker id="arr-d" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+          <path d="M 0 1 L 8 5 L 0 9 z" fill="#142D25" />
+        </marker>
+        <marker id="arr-d-red" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+          <path d="M 0 1 L 8 5 L 0 9 z" fill="#C53030" />
+        </marker>
+      </defs>
+
+      <!-- Start Block -->
+      <rect x="30" y="40" width="130" height="50" rx="25" fill="#142D25"/>
+      <text x="95" y="70" font-family="'IBM Plex Mono', monospace" font-size="11" font-weight="700" fill="#F4F1E8" text-anchor="middle">WAKE (1/HR)</text>
+
+      <line x1="160" y1="65" x2="200" y2="65" stroke="#142D25" stroke-width="2.5" marker-end="url(#arr-d)"/>
+
+      <!-- Step 1: Read Telemetry -->
+      <rect x="205" y="35" width="150" height="60" rx="8" fill="#FFFFFF" stroke="#D8D8CC" stroke-width="1.5"/>
+      <text x="280" y="58" font-family="'Plus Jakarta Sans', sans-serif" font-size="11" font-weight="700" fill="#142D25" text-anchor="middle">Acquire Modbus</text>
+      <text x="280" y="76" font-family="'IBM Plex Mono', monospace" font-size="10" fill="#5A6258" text-anchor="middle">ECa, θv, Tsoil</text>
+
+      <line x1="355" y1="65" x2="395" y2="65" stroke="#142D25" stroke-width="2.5" marker-end="url(#arr-d)"/>
+
+      <!-- Step 2: Integrity & Dry Soil Diamond -->
+      <polygon points="455,30 520,65 455,100 390,65" fill="#FAF8F5" stroke="#D87943" stroke-width="1.8"/>
+      <text x="455" y="60" font-family="'IBM Plex Mono', monospace" font-size="9" font-weight="700" fill="#242923" text-anchor="middle">θv &gt; 0.08?</text>
+      <text x="455" y="74" font-family="'Plus Jakarta Sans', sans-serif" font-size="8.5" fill="#5A6258" text-anchor="middle">Moisture check</text>
+
+      <!-- Dry Soil Branch (DOWN) -->
+      <line x1="455" y1="100" x2="455" y2="140" stroke="#C53030" stroke-width="2" marker-end="url(#arr-d-red)"/>
+      <text x="468" y="125" font-family="'IBM Plex Mono', monospace" font-size="9" font-weight="700" fill="#C53030">NO</text>
+      <rect x="385" y="145" width="140" height="50" rx="6" fill="#FDF2F2" stroke="#E53E3E" stroke-width="1.5"/>
+      <text x="455" y="165" font-family="'Plus Jakarta Sans', sans-serif" font-size="9.5" font-weight="700" fill="#C53030" text-anchor="middle">Suppress EC Calc</text>
+      <text x="455" y="180" font-family="'Plus Jakarta Sans', sans-serif" font-size="8.5" fill="#5A6258" text-anchor="middle">Log: Dry Soil Error</text>
+
+      <!-- Proceed Branch (RIGHT) -->
+      <line x1="520" y1="65" x2="560" y2="65" stroke="#142D25" stroke-width="2.5" marker-end="url(#arr-d)"/>
+      <text x="540" y="55" font-family="'IBM Plex Mono', monospace" font-size="9" font-weight="700" fill="#059669">YES</text>
+
+      <!-- Step 3: Temp Normalization -->
+      <rect x="565" y="35" width="155" height="60" rx="8" fill="#FFFFFF" stroke="#D8D8CC" stroke-width="1.5"/>
+      <text x="642" y="58" font-family="'Plus Jakarta Sans', sans-serif" font-size="10.5" font-weight="700" fill="#142D25" text-anchor="middle">Normalize to EC₂₅</text>
+      <text x="642" y="76" font-family="'IBM Plex Mono', monospace" font-size="9" fill="#5A6258" text-anchor="middle">EC₂₅ = ECa/[1+α(T-25)]</text>
+
+      <line x1="720" y1="65" x2="760" y2="65" stroke="#142D25" stroke-width="2.5" marker-end="url(#arr-d)"/>
+
+      <!-- Step 4: Rhoades ECe Model -->
+      <rect x="765" y="35" width="165" height="60" rx="8" fill="#FFFFFF" stroke="#142D25" stroke-width="1.8"/>
+      <text x="847" y="58" font-family="'Plus Jakarta Sans', sans-serif" font-size="10.5" font-weight="700" fill="#142D25" text-anchor="middle">Rhoades Conversion</text>
+      <text x="847" y="76" font-family="'IBM Plex Mono', monospace" font-size="9" fill="#D87943" text-anchor="middle">ECe = (ECp · θv) / SP</text>
+
+      <!-- Down to Agronomic Decision Diamond -->
+      <path d="M 847 95 L 847 160 L 760 160" fill="none" stroke="#142D25" stroke-width="2.5" marker-end="url(#arr-d)"/>
+
+      <!-- Agronomic Check Diamond -->
+      <polygon points="695,125 760,160 695,195 630,160" fill="#FAF8F5" stroke="#142D25" stroke-width="2"/>
+      <text x="695" y="155" font-family="'IBM Plex Mono', monospace" font-size="9" font-weight="700" fill="#242923" text-anchor="middle">ECe &gt; Limit?</text>
+      <text x="695" y="169" font-family="'Plus Jakarta Sans', sans-serif" font-size="8.5" fill="#5A6258" text-anchor="middle">Crop threshold</text>
+
+      <!-- Salinity Limit Exceeded (LEFT -> BLUE) -->
+      <line x1="630" y1="160" x2="575" y2="160" stroke="#0284C7" stroke-width="2.5" marker-end="url(#arr-d)"/>
+      <text x="605" y="150" font-family="'IBM Plex Mono', monospace" font-size="9" font-weight="700" fill="#0284C7">YES</text>
+      <rect x="420" y="225" width="145" height="55" rx="6" fill="#F0F9FF" stroke="#0284C7" stroke-width="2"/>
+      <text x="492" y="248" font-family="'Plus Jakarta Sans', sans-serif" font-size="10.5" font-weight="800" fill="#0284C7" text-anchor="middle">BLUE LED: ALERT</text>
+      <text x="492" y="266" font-family="'Plus Jakarta Sans', sans-serif" font-size="9" fill="#242923" text-anchor="middle">Leaching Flush Needed</text>
+
+      <!-- Moisture Check (DOWN from Diamond) -->
+      <line x1="695" y1="195" x2="695" y2="235" stroke="#142D25" stroke-width="2" marker-end="url(#arr-d)"/>
+      <text x="708" y="215" font-family="'IBM Plex Mono', monospace" font-size="9" font-weight="700" fill="#059669">NO</text>
+
+      <!-- Water Depletion Diamond -->
+      <polygon points="695,235 750,265 695,295 640,265" fill="#FAF8F5" stroke="#D87943" stroke-width="1.8"/>
+      <text x="695" y="260" font-family="'IBM Plex Mono', monospace" font-size="9" font-weight="700" fill="#242923" text-anchor="middle">Dr ≥ RAW?</text>
+      <text x="695" y="274" font-family="'Plus Jakarta Sans', sans-serif" font-size="8.5" fill="#5A6258" text-anchor="middle">FAO-56</text>
+
+      <!-- Depleted (RIGHT -> AMBER) -->
+      <line x1="750" y1="265" x2="795" y2="265" stroke="#D97706" stroke-width="2.5" marker-end="url(#arr-d)"/>
+      <text x="770" y="255" font-family="'IBM Plex Mono', monospace" font-size="9" font-weight="700" fill="#D97706">YES</text>
+      <rect x="800" y="235" width="140" height="55" rx="6" fill="#FFFBEB" stroke="#D97706" stroke-width="2"/>
+      <text x="870" y="258" font-family="'Plus Jakarta Sans', sans-serif" font-size="10.5" font-weight="800" fill="#D97706" text-anchor="middle">AMBER LED: DEFICIT</text>
+      <text x="870" y="276" font-family="'Plus Jakarta Sans', sans-serif" font-size="9" fill="#242923" text-anchor="middle">Routine Irrigation Due</text>
+
+      <!-- Optimal (DOWN -> GREEN) -->
+      <line x1="695" y1="295" x2="695" y2="330" stroke="#059669" stroke-width="2.5" marker-end="url(#arr-d)"/>
+      <text x="710" y="315" font-family="'IBM Plex Mono', monospace" font-size="9" font-weight="700" fill="#059669">NO</text>
+      <rect x="625" y="335" width="140" height="50" rx="6" fill="#ECFDF5" stroke="#059669" stroke-width="2"/>
+      <text x="695" y="358" font-family="'Plus Jakarta Sans', sans-serif" font-size="10.5" font-weight="800" fill="#059669" text-anchor="middle">GREEN LED: OPTIMAL</text>
+      <text x="695" y="374" font-family="'Plus Jakarta Sans', sans-serif" font-size="9" fill="#242923" text-anchor="middle">Moisture & Salts OK</text>
+
+      <!-- Connect to Sleep (Left Side) -->
+      <path d="M 420 252 L 95 252 L 95 330" fill="none" stroke="#142D25" stroke-width="2" marker-end="url(#arr-d)"/>
+      <rect x="30" y="335" width="130" height="50" rx="25" fill="#142D25"/>
+      <text x="95" y="365" font-family="'IBM Plex Mono', monospace" font-size="11" font-weight="700" fill="#F4F1E8" text-anchor="middle">DEEP SLEEP</text>
+    </svg>
+  </div>
+</div>
+
+
             
             <h3><span class="sub-num">15.1</span> <strong>Dual-stream architectural flow diagram</strong></h3>
             <div class="arch-dual-grid">
@@ -2901,7 +3655,7 @@ File 2: /archive/season_archive.csv
             
             <h3><span class="sub-num">18.1</span> <strong>Target crops & physiological salinity response</strong></h3>
             <p><span class="badge-evidence">Established Evidence</span> Zerthiva scopes its initial validation to <strong>Maize (*Zea mays*)</strong> as the primary staple crop and <strong>Tomato (*Solanum lycopersicum*)</strong> as the secondary cash crop. Salinity thresholds are governed by the established Maas-Hoffman piecewise linear model:</p>
-            <table>
+            <div class="table-wrap"><table>
                 <thead>
                     <tr>
                         <th>Crop & Variety</th>
@@ -2927,7 +3681,7 @@ File 2: /archive/season_archive.csv
                         <td>$Y_{rel} = 100 - 9.9 \times (EC_e - 2.5)$</td>
                     </tr>
                 </tbody>
-            </table>
+            </table></div>
             <p><em>Sources: Maas & Hoffman (1977); Ayers & Westcot (1985, FAO-29).</em></p>
 
             <h3><span class="sub-num">18.2</span> <strong>The Rhoades bulk-to-solution conversion model</strong></h3>
@@ -2991,7 +3745,7 @@ EC_e_est ≈ EC_p × (θ_FC / θ_SP) ≈ 0.5 × EC_p (for typical loam soils)
                 </div>
             </div>
 
-            <table>
+            <div class="table-wrap"><table>
                 <thead>
                     <tr>
                         <th>Crop Stage</th>
@@ -3031,7 +3785,7 @@ EC_e_est ≈ EC_p × (θ_FC / θ_SP) ≈ 0.5 × EC_p (for typical loam soils)
                         <td>Low: Fruit maturation; slight salinity can enhance tomato brix content.</td>
                     </tr>
                 </tbody>
-            </table>
+            </table></div>
 
             <h3><span class="sub-num">19.2</span> <strong>Temperature tracking & Growing Degree Day (GDD) sources</strong></h3>
             <p><span class="badge-spec">Design Specification</span> <em>Audit Finding Addressed:</em> The Zerthiva hardware node incorporates a DS18B20 digital probe embedded at 15 cm depth, measuring <strong>soil temperature ($T_{soil}$)</strong>. For local offline GDD tracking (Mode A), firmware calculates soil-thermal units ($\text{GDD}_{soil} = \max[0, (T_{soil\_max} + T_{soil\_min})/2 - T_{base}]$). In connected Mode B/C, regional ambient air temperature is synchronized from the nearest Kenya Meteorological Department (KMD) automated station to calculate atmospheric GDD without requiring an uncalibrated outdoor ambient sensor on the node.</p>
@@ -3064,7 +3818,7 @@ EC_e_est ≈ EC_p × (θ_FC / θ_SP) ≈ 0.5 × EC_p (for typical loam soils)
             <h2><span class="sec-pill">SECTION 22</span> IMPACT MEASUREMENT FRAMEWORK & BASELINES</h2>
             
             <h3><span class="sub-num">22.1</span> <strong>Core impact indicators & measurement protocols</strong></h3>
-            <table>
+            <div class="table-wrap"><table>
                 <thead>
                     <tr>
                         <th>Impact Indicator</th>
@@ -3099,7 +3853,7 @@ EC_e_est ≈ EC_p × (θ_FC / θ_SP) ≈ 0.5 × EC_p (for typical loam soils)
                         <td>Input application field logs verified against bag receipts.</td>
                     </tr>
                 </tbody>
-            </table>
+            </table></div>
 
             <h3><span class="sub-num">22.2</span> <strong>Data integrity & honest metrics statement</strong></h3>
             <div class="callout">
@@ -3141,7 +3895,7 @@ EC_e_est ≈ EC_p × (θ_FC / θ_SP) ≈ 0.5 × EC_p (for typical loam soils)
             
             <h3><span class="sub-num">26.1</span> <strong>Disaggregated unit economics & cluster technician pooling</strong></h3>
             <p><span class="badge-spec">Design Specification</span> <em>Audit Finding Addressed:</em> A single smallholder node cannot sustain a dedicated field technician. The commercial viability of the $15.00 annual subscription depends entirely on <strong>cooperative technician pooling across localized geographic clusters</strong>:</p>
-            <table>
+            <div class="table-wrap"><table>
                 <thead>
                     <tr>
                         <th>Operating Cost Component</th>
@@ -3194,7 +3948,7 @@ EC_e_est ≈ EC_p × (θ_FC / θ_SP) ≈ 0.5 × EC_p (for typical loam soils)
                         <td><span style="color:#16a34a; font-weight:700;">+$5.30 / node / year (+35.3%)</span></td>
                     </tr>
                 </tbody>
-            </table>
+            </table></div>
             <p><em>Conclusion:</em> In the 100-node feasibility stage, operating expenses are legitimately subsidized by grant funding ($3,500). Full commercial self-sustainability requires a minimum cluster density of <strong>300 nodes per cooperative technician hub</strong>, unlocking a sustainable 35% net operating margin at 500 nodes.</p>
         </section>
 
@@ -3203,7 +3957,7 @@ EC_e_est ≈ EC_p × (θ_FC / θ_SP) ≈ 0.5 × EC_p (for typical loam soils)
             
             <h3><span class="sub-num">27.1</span> <strong>3-Year commercial pro forma model (Projections)</strong></h3>
             <p><span class="badge-proj">Literature-Derived Projection</span> All financial figures represent projected pro forma estimates based on explicit scaling assumptions (85% annual subscription renewal rate, $35 BOM scaling to $28 at volume, cooperative cluster deployment):</p>
-            <table>
+            <div class="table-wrap"><table>
                 <thead>
                     <tr>
                         <th>Financial Line Item (USD)</th>
@@ -3268,7 +4022,7 @@ EC_e_est ≈ EC_p × (θ_FC / θ_SP) ≈ 0.5 × EC_p (for typical loam soils)
                         <td><span style="color:#16a34a;">+$28,944 (+37.0%)</span></td>
                     </tr>
                 </tbody>
-            </table>
+            </table></div>
         </section>
 
 <section id="section28">
@@ -3276,7 +4030,7 @@ EC_e_est ≈ EC_p × (θ_FC / θ_SP) ≈ 0.5 × EC_p (for typical loam soils)
             
             <h3><span class="sub-num">28.1</span> <strong>Audited budget reconciliation ($3,500 Seed Grant)</strong></h3>
             <p><span class="badge-spec">Design Specification</span> <em>Audit Finding Addressed:</em> The seed budget totals exactly <strong>$3,500.00 USD</strong> ($3,080.00 direct itemized expenses + $420.00 / 13.64% contingency reserve), with every dollar tied to an audited pilot deliverable:</p>
-            <table>
+            <div class="table-wrap"><table>
                 <thead>
                     <tr>
                         <th>Budget Line Item</th>
@@ -3347,7 +4101,7 @@ EC_e_est ≈ EC_p × (θ_FC / θ_SP) ≈ 0.5 × EC_p (for typical loam soils)
                         <td><strong>Balanced Master Budget.</strong></td>
                     </tr>
                 </tbody>
-            </table>
+            </table></div>
         </section>
 
 <section id="section29">
@@ -3355,6 +4109,112 @@ EC_e_est ≈ EC_p × (θ_FC / θ_SP) ≈ 0.5 × EC_p (for typical loam soils)
             
             <h3><span class="sub-num">29.1</span> <strong>Harmonized study design (Option A: 10 Farms Total)</strong></h3>
             <p><span class="badge-spec">Design Specification</span> <em>Audit Finding Addressed:</em> The pilot design is harmonized to eliminate previous farm count ambiguities by adopting <strong>Option A (Exactly 10 Farms Total / 5 Matched Pairs)</strong>:</p>
+
+<div class="technical-diagram-card" id="fig-29-1">
+  <div class="diagram-header">
+    <div class="diagram-tag">FIGURE 29.1 · OPTION A PILOT PROTOCOL: 10 FARMS / 5 MATCHED PAIRS</div>
+    <div class="diagram-caption">Exploratory pre-pilot feasibility trial design in Machakos County, Kenya: 3 Maize pairs and 2 Tomato pairs comparing Zerthiva-guided management vs traditional farmer practice</div>
+  </div>
+  <div class="diagram-body">
+    <svg class="diagram-svg" viewBox="0 0 960 320" width="100%" height="auto" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <marker id="arr-g" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+          <path d="M 0 1 L 8 5 L 0 9 z" fill="#142D25" />
+        </marker>
+      </defs>
+
+      <!-- 5 Matched Pairs Grid -->
+      <g transform="translate(20, 20)">
+        <!-- Header -->
+        <rect x="0" y="0" width="580" height="28" rx="6" fill="#142D25"/>
+        <text x="290" y="18" font-family="'IBM Plex Mono', monospace" font-size="11" font-weight="700" fill="#F4F1E8" text-anchor="middle">5 MATCHED PAIR ARRAYS (10 SMALLHOLDER FARMS TOTAL)</text>
+
+        <!-- Pair 1: Maize Kathonzweni -->
+        <g transform="translate(0, 38)">
+          <rect x="0" y="0" width="580" height="42" rx="6" fill="#FFFFFF" stroke="#D8D8CC" stroke-width="1.2"/>
+          <text x="15" y="25" font-family="'Plus Jakarta Sans', sans-serif" font-size="11" font-weight="700" fill="#242923">PAIR 1: Maize (Kathonzweni, Sandy Loam)</text>
+          <rect x="290" y="10" width="130" height="22" rx="4" fill="#ECFDF5" stroke="#059669" stroke-width="1"/>
+          <text x="355" y="24" font-family="'IBM Plex Mono', monospace" font-size="9" font-weight="700" fill="#059669" text-anchor="middle">TREATMENT: Zerthiva</text>
+          <rect x="435" y="10" width="130" height="22" rx="4" fill="#FAF8F5" stroke="#D8D8CC" stroke-width="1"/>
+          <text x="500" y="24" font-family="'IBM Plex Mono', monospace" font-size="9" font-weight="700" fill="#5A6258" text-anchor="middle">CONTROL: Traditional</text>
+        </g>
+
+        <!-- Pair 2: Maize Kivandini -->
+        <g transform="translate(0, 88)">
+          <rect x="0" y="0" width="580" height="42" rx="6" fill="#FFFFFF" stroke="#D8D8CC" stroke-width="1.2"/>
+          <text x="15" y="25" font-family="'Plus Jakarta Sans', sans-serif" font-size="11" font-weight="700" fill="#242923">PAIR 2: Maize (Kivandini, Loamy Sand)</text>
+          <rect x="290" y="10" width="130" height="22" rx="4" fill="#ECFDF5" stroke="#059669" stroke-width="1"/>
+          <text x="355" y="24" font-family="'IBM Plex Mono', monospace" font-size="9" font-weight="700" fill="#059669" text-anchor="middle">TREATMENT: Zerthiva</text>
+          <rect x="435" y="10" width="130" height="22" rx="4" fill="#FAF8F5" stroke="#D8D8CC" stroke-width="1"/>
+          <text x="500" y="24" font-family="'IBM Plex Mono', monospace" font-size="9" font-weight="700" fill="#5A6258" text-anchor="middle">CONTROL: Traditional</text>
+        </g>
+
+        <!-- Pair 3: Maize Makueni -->
+        <g transform="translate(0, 138)">
+          <rect x="0" y="0" width="580" height="42" rx="6" fill="#FFFFFF" stroke="#D8D8CC" stroke-width="1.2"/>
+          <text x="15" y="25" font-family="'Plus Jakarta Sans', sans-serif" font-size="11" font-weight="700" fill="#242923">PAIR 3: Maize (Makueni Valley, Clay Loam)</text>
+          <rect x="290" y="10" width="130" height="22" rx="4" fill="#ECFDF5" stroke="#059669" stroke-width="1"/>
+          <text x="355" y="24" font-family="'IBM Plex Mono', monospace" font-size="9" font-weight="700" fill="#059669" text-anchor="middle">TREATMENT: Zerthiva</text>
+          <rect x="435" y="10" width="130" height="22" rx="4" fill="#FAF8F5" stroke="#D8D8CC" stroke-width="1"/>
+          <text x="500" y="24" font-family="'IBM Plex Mono', monospace" font-size="9" font-weight="700" fill="#5A6258" text-anchor="middle">CONTROL: Traditional</text>
+        </g>
+
+        <!-- Pair 4: Tomato Mitaboni -->
+        <g transform="translate(0, 188)">
+          <rect x="0" y="0" width="580" height="42" rx="6" fill="#FFFFFF" stroke="#D8D8CC" stroke-width="1.2"/>
+          <text x="15" y="25" font-family="'Plus Jakarta Sans', sans-serif" font-size="11" font-weight="700" fill="#D87943">PAIR 4: Tomato (Mitaboni, Medium Loam)</text>
+          <rect x="290" y="10" width="130" height="22" rx="4" fill="#ECFDF5" stroke="#059669" stroke-width="1"/>
+          <text x="355" y="24" font-family="'IBM Plex Mono', monospace" font-size="9" font-weight="700" fill="#059669" text-anchor="middle">TREATMENT: Zerthiva</text>
+          <rect x="435" y="10" width="130" height="22" rx="4" fill="#FAF8F5" stroke="#D8D8CC" stroke-width="1"/>
+          <text x="500" y="24" font-family="'IBM Plex Mono', monospace" font-size="9" font-weight="700" fill="#5A6258" text-anchor="middle">CONTROL: Traditional</text>
+        </g>
+
+        <!-- Pair 5: Tomato Wamunyu -->
+        <g transform="translate(0, 238)">
+          <rect x="0" y="0" width="580" height="42" rx="6" fill="#FFFFFF" stroke="#D8D8CC" stroke-width="1.2"/>
+          <text x="15" y="25" font-family="'Plus Jakarta Sans', sans-serif" font-size="11" font-weight="700" fill="#D87943">PAIR 5: Tomato (Wamunyu, Clay Loam)</text>
+          <rect x="290" y="10" width="130" height="22" rx="4" fill="#ECFDF5" stroke="#059669" stroke-width="1"/>
+          <text x="355" y="24" font-family="'IBM Plex Mono', monospace" font-size="9" font-weight="700" fill="#059669" text-anchor="middle">TREATMENT: Zerthiva</text>
+          <rect x="435" y="10" width="130" height="22" rx="4" fill="#FAF8F5" stroke="#D8D8CC" stroke-width="1"/>
+          <text x="500" y="24" font-family="'IBM Plex Mono', monospace" font-size="9" font-weight="700" fill="#5A6258" text-anchor="middle">CONTROL: Traditional</text>
+        </g>
+      </g>
+
+      <!-- Experimental Protocol Timeline (Right Box) -->
+      <g transform="translate(620, 20)">
+        <rect x="0" y="0" width="320" height="280" rx="8" fill="#FAF8F5" stroke="#142D25" stroke-width="1.8"/>
+        <rect x="0" y="0" width="320" height="28" rx="8" fill="#142D25"/>
+        <text x="160" y="18" font-family="'IBM Plex Mono', monospace" font-size="11" font-weight="700" fill="#F4F1E8" text-anchor="middle">14-WEEK TRIAL PROTOCOL</text>
+
+        <!-- Phase 1 -->
+        <circle cx="25" cy="55" r="10" fill="#142D25"/>
+        <text x="25" y="59" font-family="'IBM Plex Mono', monospace" font-size="9" font-weight="700" fill="#F4F1E8" text-anchor="middle">W0</text>
+        <text x="45" y="53" font-family="'Plus Jakarta Sans', sans-serif" font-size="10.5" font-weight="700" fill="#142D25">Pre-Trial Baseline & Lab Soil Paste</text>
+        <text x="45" y="68" font-family="'Plus Jakarta Sans', sans-serif" font-size="9" fill="#5A6258">Texture analysis, baseline ECe, probe settling</text>
+
+        <!-- Phase 2 -->
+        <circle cx="25" cy="115" r="10" fill="#059669"/>
+        <text x="25" y="119" font-family="'IBM Plex Mono', monospace" font-size="8" font-weight="700" fill="#F4F1E8" text-anchor="middle">W1–6</text>
+        <text x="45" y="113" font-family="'Plus Jakarta Sans', sans-serif" font-size="10.5" font-weight="700" fill="#059669">Vegetative Growth & Scheduling</text>
+        <text x="45" y="128" font-family="'Plus Jakarta Sans', sans-serif" font-size="9" fill="#5A6258">Weekly sensor download, farmer adherence logging</text>
+
+        <!-- Phase 3 -->
+        <circle cx="25" cy="175" r="10" fill="#D87943"/>
+        <text x="25" y="179" font-family="'IBM Plex Mono', monospace" font-size="8" font-weight="700" fill="#F4F1E8" text-anchor="middle">W7–12</text>
+        <text x="45" y="173" font-family="'Plus Jakarta Sans', sans-serif" font-size="10.5" font-weight="700" fill="#D87943">Flowering / Fruiting & Salt Leaching</text>
+        <text x="45" y="188" font-family="'Plus Jakarta Sans', sans-serif" font-size="9" fill="#5A6258">High water demand stage; leaching alerts triggered</text>
+
+        <!-- Phase 4 -->
+        <circle cx="25" cy="235" r="10" fill="#142D25"/>
+        <text x="25" y="239" font-family="'IBM Plex Mono', monospace" font-size="8" font-weight="700" fill="#F4F1E8" text-anchor="middle">W14</text>
+        <text x="45" y="233" font-family="'Plus Jakarta Sans', sans-serif" font-size="10.5" font-weight="700" fill="#142D25">Harvest Audit & Statistical Contrast</text>
+        <text x="45" y="248" font-family="'Plus Jakarta Sans', sans-serif" font-size="9" fill="#5A6258">Total marketable yield (kg/ha), water productivity</text>
+      </g>
+    </svg>
+  </div>
+</div>
+
+
             <ul>
                 <li><strong>Geographic Location:</strong> Central and Yatta sub-counties, Machakos County, Kenya. A contiguous agro-ecological corridor controls for macro-climatic rainfall, temperature, and regional geology.</li>
                 <li><strong>Sample Population & Crop Stratification (10 Farms Total):</strong>
@@ -3386,7 +4246,7 @@ EC_e_est ≈ EC_p × (θ_FC / θ_SP) ≈ 0.5 × EC_p (for typical loam soils)
             
             <h3><span class="sub-num">30.1</span> <strong>Unified 7-month master schedule</strong></h3>
             <p><span class="badge-spec">Design Specification</span> <em>Audit Finding Addressed:</em> All pilot activities are consolidated into a single master schedule covering a 7-month lifecycle:</p>
-            <table>
+            <div class="table-wrap"><table>
                 <thead>
                     <tr>
                         <th>Phase & Timing</th>
@@ -3411,7 +4271,7 @@ EC_e_est ≈ EC_p × (θ_FC / θ_SP) ≈ 0.5 × EC_p (for typical loam soils)
                         <td><strong>Gate 3 Passed:</strong> Complete matched-pair dataset published; effect size analysis finalized; pro forma audit dossier published.</td>
                     </tr>
                 </tbody>
-            </table>
+            </table></div>
         </section>
 
 <section id="section31">
@@ -3442,7 +4302,7 @@ EC_e_est ≈ EC_p × (θ_FC / θ_SP) ≈ 0.5 × EC_p (for typical loam soils)
             <h2><span class="sec-pill">SECTION 33</span> REGULATORY, LEGAL & ENVIRONMENTAL COMPLIANCE</h2>
             
             <h3><span class="sub-num">33.1</span> <strong>Kenyan statutory compliance register</strong></h3>
-            <table>
+            <div class="table-wrap"><table>
                 <thead>
                     <tr>
                         <th>Regulatory Authority</th>
@@ -3477,7 +4337,7 @@ EC_e_est ≈ EC_p × (θ_FC / θ_SP) ≈ 0.5 × EC_p (for typical loam soils)
                         <td>Formal takeback protocol partnering with WEEE Centre Nairobi for end-of-life battery recycling.</td>
                     </tr>
                 </tbody>
-            </table>
+            </table></div>
         </section>
 
 <section id="section34">
@@ -3496,7 +4356,7 @@ EC_e_est ≈ EC_p × (θ_FC / θ_SP) ≈ 0.5 × EC_p (for typical loam soils)
             
             <h3><span class="sub-num">35.1</span> <strong>Audited power budget arithmetic & operational autonomy</strong></h3>
             <p><span class="badge-bench">Bench-Tested Result</span> <em>Audit Finding Addressed:</em> All power calculations are rigorously reconciled based on empirical current measurements conducted on bench prototypes:</p>
-            <table>
+            <div class="table-wrap"><table>
                 <thead>
                     <tr>
                         <th>Operating State</th>
@@ -3557,7 +4417,7 @@ EC_e_est ≈ EC_p × (θ_FC / θ_SP) ≈ 0.5 × EC_p (for typical loam soils)
                         <td><strong>$13.285\text{ mAh/day}$</strong></td>
                     </tr>
                 </tbody>
-            </table>
+            </table></div>
 
             <h3><span class="sub-num">35.2</span> <strong>Reconciliation of autonomy figures</strong></h3>
             <p><span class="badge-bench">Bench-Tested Result</span> Operating from a single 2,400 mAh LiPo battery (derated to 80% usable capacity to prevent deep discharge degradation = $1,920\text{ mAh}$ net):</p>
@@ -3599,7 +4459,7 @@ EC_e_est ≈ EC_p × (θ_FC / θ_SP) ≈ 0.5 × EC_p (for typical loam soils)
             <h2><span class="sec-pill">SECTION 39</span> RISK REGISTER & MITIGATION MATRIX</h2>
             
             <h3><span class="sub-num">39.1</span> <strong>Comprehensive 15-point risk register</strong></h3>
-            <table>
+            <div class="table-wrap"><table>
                 <thead>
                     <tr>
                         <th>Risk ID</th>
@@ -3732,14 +4592,14 @@ EC_e_est ≈ EC_p × (θ_FC / θ_SP) ≈ 0.5 × EC_p (for typical loam soils)
                         <td>Statutory stop-order by regulator.</td>
                     </tr>
                 </tbody>
-            </table>
+            </table></div>
         </section>
 
 <section id="section40">
             <h2><span class="sec-pill">SECTION 40</span> FAILURE SCENARIOS & GRACEFUL DEGRADATION (PLAN B)</h2>
             
             <h3><span class="sub-num">40.1</span> <strong>Engineered fault matrix & graceful degradation</strong></h3>
-            <table>
+            <div class="table-wrap"><table>
                 <thead>
                     <tr>
                         <th>Fault Condition</th>
@@ -3786,7 +4646,7 @@ EC_e_est ≈ EC_p × (θ_FC / θ_SP) ≈ 0.5 × EC_p (for typical loam soils)
                         <td>System shuts down cleanly; auto-resumes when $V_{bat} > 3.7\text{ V}$.</td>
                     </tr>
                 </tbody>
-            </table>
+            </table></div>
         </section>
 
 <section id="section41">
@@ -3825,7 +4685,83 @@ EC_e_est ≈ EC_p × (θ_FC / θ_SP) ≈ 0.5 × EC_p (for typical loam soils)
             
             <h3><span class="sub-num">44.1</span> <strong>Decoupled aqueous calibration vs. soil model validation</strong></h3>
             <p><span class="badge-spec">Design Specification</span> <em>Audit Finding Addressed:</em> Testing rigorously separates aqueous electrical calibration from soil-specific model validation:</p>
-            <table>
+
+<div class="technical-diagram-card" id="fig-44-1">
+  <div class="diagram-header">
+    <div class="diagram-tag">FIGURE 44.1 · MULTI-TIER SYSTEM VERIFICATION & VALIDATION ROADMAP</div>
+    <div class="diagram-caption">Stage-gate validation progression from laboratory solution calibration to controlled soil-column trials, pilot feasibility, and peer-reviewed trials</div>
+  </div>
+  <div class="diagram-body">
+    <svg class="diagram-svg" viewBox="0 0 960 260" width="100%" height="auto" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <marker id="arr-h" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+          <path d="M 0 1 L 8 5 L 0 9 z" fill="#142D25" />
+        </marker>
+      </defs>
+
+      <!-- Tier 1: Bench Calibration -->
+      <g transform="translate(20, 30)">
+        <rect x="0" y="0" width="210" height="200" rx="8" fill="#ECFDF5" stroke="#059669" stroke-width="2"/>
+        <rect x="0" y="0" width="210" height="26" rx="8" fill="#059669"/>
+        <text x="105" y="17" font-family="'IBM Plex Mono', monospace" font-size="10" font-weight="800" fill="#FFFFFF" text-anchor="middle">TIER 1 · BENCH CALIBRATION</text>
+        <text x="15" y="48" font-family="'Plus Jakarta Sans', sans-serif" font-size="11" font-weight="700" fill="#142D25">Aqueous KCl Solutions</text>
+        <text x="15" y="66" font-family="'Plus Jakarta Sans', sans-serif" font-size="9.5" fill="#5A6258">• Standard 0.1, 1.0, 5.0, 10 dS/m</text>
+        <text x="15" y="84" font-family="'Plus Jakarta Sans', sans-serif" font-size="9.5" fill="#5A6258">• Temperature chamber: 15–40°C</text>
+        <text x="15" y="102" font-family="'Plus Jakarta Sans', sans-serif" font-size="9.5" fill="#5A6258">• Coefficient α verified: 0.0191</text>
+        <rect x="15" y="145" width="180" height="24" rx="4" fill="#059669"/>
+        <text x="105" y="161" font-family="'IBM Plex Mono', monospace" font-size="10" font-weight="800" fill="#FFFFFF" text-anchor="middle">STATUS: VERIFIED (BENCH)</text>
+      </g>
+
+      <line x1="235" y1="130" x2="265" y2="130" stroke="#142D25" stroke-width="2.5" marker-end="url(#arr-h)"/>
+
+      <!-- Tier 2: Controlled Soil Column -->
+      <g transform="translate(270, 30)">
+        <rect x="0" y="0" width="210" height="200" rx="8" fill="#ECFDF5" stroke="#059669" stroke-width="2"/>
+        <rect x="0" y="0" width="210" height="26" rx="8" fill="#059669"/>
+        <text x="105" y="17" font-family="'IBM Plex Mono', monospace" font-size="10" font-weight="800" fill="#FFFFFF" text-anchor="middle">TIER 2 · SOIL COLUMNS</text>
+        <text x="15" y="48" font-family="'Plus Jakarta Sans', sans-serif" font-size="11" font-weight="700" fill="#142D25">Controlled Tank Trials</text>
+        <text x="15" y="66" font-family="'Plus Jakarta Sans', sans-serif" font-size="9.5" fill="#5A6258">• Stepped salinity irrigation</text>
+        <text x="15" y="84" font-family="'Plus Jakarta Sans', sans-serif" font-size="9.5" fill="#5A6258">• Rhoades model calibration</text>
+        <text x="15" y="102" font-family="'Plus Jakarta Sans', sans-serif" font-size="9.5" fill="#5A6258">• Dry-soil threshold validation</text>
+        <rect x="15" y="145" width="180" height="24" rx="4" fill="#059669"/>
+        <text x="105" y="161" font-family="'IBM Plex Mono', monospace" font-size="10" font-weight="800" fill="#FFFFFF" text-anchor="middle">STATUS: VERIFIED (BENCH)</text>
+      </g>
+
+      <line x1="485" y1="130" x2="515" y2="130" stroke="#142D25" stroke-width="2.5" marker-end="url(#arr-h)"/>
+
+      <!-- Tier 3: Field Pre-Pilot Option A -->
+      <g transform="translate(520, 30)">
+        <rect x="0" y="0" width="210" height="200" rx="8" fill="#FAF8F5" stroke="#D87943" stroke-width="2"/>
+        <rect x="0" y="0" width="210" height="26" rx="8" fill="#D87943"/>
+        <text x="105" y="17" font-family="'IBM Plex Mono', monospace" font-size="10" font-weight="800" fill="#FFFFFF" text-anchor="middle">TIER 3 · PRE-PILOT TRIAL</text>
+        <text x="15" y="48" font-family="'Plus Jakarta Sans', sans-serif" font-size="11" font-weight="700" fill="#D87943">Option A: 10 Farms (Kenya)</text>
+        <text x="15" y="66" font-family="'Plus Jakarta Sans', sans-serif" font-size="9.5" fill="#5A6258">• 5 matched pairs (Maize/Tomato)</text>
+        <text x="15" y="84" font-family="'Plus Jakarta Sans', sans-serif" font-size="9.5" fill="#5A6258">• In-situ farmer usability test</text>
+        <text x="15" y="102" font-family="'Plus Jakarta Sans', sans-serif" font-size="9.5" fill="#5A6258">• Solar & battery reliability</text>
+        <rect x="15" y="145" width="180" height="24" rx="4" fill="#D87943"/>
+        <text x="105" y="161" font-family="'IBM Plex Mono', monospace" font-size="10" font-weight="800" fill="#FFFFFF" text-anchor="middle">STATUS: IN PROGRESS</text>
+      </g>
+
+      <line x1="735" y1="130" x2="765" y2="130" stroke="#142D25" stroke-width="2.5" marker-end="url(#arr-h)"/>
+
+      <!-- Tier 4: Multi-Season Agronomic Trial -->
+      <g transform="translate(770, 30)">
+        <rect x="0" y="0" width="170" height="200" rx="8" fill="#FAF8F5" stroke="#D8D8CC" stroke-width="1.5"/>
+        <rect x="0" y="0" width="170" height="26" rx="8" fill="#142D25"/>
+        <text x="85" y="17" font-family="'IBM Plex Mono', monospace" font-size="10" font-weight="800" fill="#F4F1E8" text-anchor="middle">TIER 4 · MULTI-SEASON</text>
+        <text x="12" y="48" font-family="'Plus Jakarta Sans', sans-serif" font-size="10.5" font-weight="700" fill="#242923">Peer-Reviewed Trial</text>
+        <text x="12" y="66" font-family="'Plus Jakarta Sans', sans-serif" font-size="9.5" fill="#5A6258">• 60+ farms randomized</text>
+        <text x="12" y="84" font-family="'Plus Jakarta Sans', sans-serif" font-size="9.5" fill="#5A6258">• Multi-season replication</text>
+        <text x="12" y="102" font-family="'Plus Jakarta Sans', sans-serif" font-size="9.5" fill="#5A6258">• Journal publication</text>
+        <rect x="12" y="145" width="146" height="24" rx="4" fill="#5A6258"/>
+        <text x="85" y="161" font-family="'IBM Plex Mono', monospace" font-size="10" font-weight="800" fill="#FFFFFF" text-anchor="middle">STATUS: ROADMAP</text>
+      </g>
+    </svg>
+  </div>
+</div>
+
+
+            <div class="table-wrap"><table>
                 <thead>
                     <tr>
                         <th>Calibration Stage</th>
@@ -3858,7 +4794,7 @@ EC_e_est ≈ EC_p × (θ_FC / θ_SP) ≈ 0.5 × EC_p (for typical loam soils)
                         <td><span class="badge-spec">Planned Milestone (Month 1-2)</span></td>
                     </tr>
                 </tbody>
-            </table>
+            </table></div>
         </section>
 
 <section id="section45">
@@ -3887,7 +4823,7 @@ EC_e_est ≈ EC_p × (θ_FC / θ_SP) ≈ 0.5 × EC_p (for typical loam soils)
             
             <h3><span class="sub-num">46.1</span> <strong>Distinguishing modeled projections from empirical hypotheses</strong></h3>
             <p><span class="badge-proj">Literature-Derived Projection</span> All performance improvements presented below represent modeled projections derived from agronomic literature (FAO-56, Maas-Hoffman, Ayers & Westcot) applied to baseline Machakos conditions. They are hypotheses to be tested during the pilot, not demonstrated historical results:</p>
-            <table>
+            <div class="table-wrap"><table>
                 <thead>
                     <tr>
                         <th>Outcome Parameter</th>
@@ -3922,7 +4858,7 @@ EC_e_est ≈ EC_p × (θ_FC / θ_SP) ≈ 0.5 × EC_p (for typical loam soils)
                         <td>Combined fuel savings from reduced pumping, lower fertilizer cost, and stabilized yield.</td>
                     </tr>
                 </tbody>
-            </table>
+            </table></div>
         </section>
 
 <section id="section47">
@@ -4043,7 +4979,7 @@ EC_e_est ≈ EC_p × (θ_FC / θ_SP) ≈ 0.5 × EC_p (for typical loam soils)
             <h2><span class="sec-pill">SECTION 55</span> UN SUSTAINABLE DEVELOPMENT GOAL (SDG) ALIGNMENT</h2>
             
             <h3><span class="sub-num">55.1</span> <strong>Direct contributions to UN Sustainable Development Goals</strong></h3>
-            <table>
+            <div class="table-wrap"><table>
                 <thead>
                     <tr>
                         <th>UN SDG</th>
@@ -4078,7 +5014,7 @@ EC_e_est ≈ EC_p × (θ_FC / θ_SP) ≈ 0.5 × EC_p (for typical loam soils)
                         <td>Preventing irreversible soil salinization in vulnerable irrigated alluvial basins.</td>
                     </tr>
                 </tbody>
-            </table>
+            </table></div>
         </section>
 
 <section id="section56">
@@ -4199,7 +5135,7 @@ EC_e_est ≈ EC_p × (θ_FC / θ_SP) ≈ 0.5 × EC_p (for typical loam soils)
             <h2><span class="annex-pill">ANNEX A</span> DOCUMENT CONTROL & AUDIT REVISION HISTORY</h2>
             
             <h3><span class="sub-num">A.1</span> <strong>Document control metadata</strong></h3>
-            <table>
+            <div class="table-wrap"><table>
                 <thead>
                     <tr>
                         <th>Metadata Field</th>
@@ -4232,11 +5168,11 @@ EC_e_est ≈ EC_p × (θ_FC / θ_SP) ≈ 0.5 × EC_p (for typical loam soils)
                         <td>Scientific validity ($EC_a$ vs. $EC_e$), pilot farm design harmonization (Option A: 10 farms), power budget arithmetic reconciliation ($0.00208\text{ mAh}$ LED pulse), SIM800L security specification, financial reconciliation ($3,500.00 balanced), and evidence classification.</td>
                     </tr>
                 </tbody>
-            </table>
+            </table></div>
 
             <h3><span class="sub-num">A.2</span> <strong>Comprehensive audit finding & contradiction closure register</strong></h3>
             <p><span class="badge-spec">Design Specification</span> All 7 Critical Findings (C1–C7) and 18 Cross-Section Contradictions (X01–X18) identified in the independent audit have been formally resolved:</p>
-            <table>
+            <div class="table-wrap"><table>
                 <thead>
                     <tr>
                         <th>Audit ID</th>
@@ -4374,14 +5310,14 @@ EC_e_est ≈ EC_p × (θ_FC / θ_SP) ≈ 0.5 × EC_p (for typical loam soils)
                         <td><span class="badge-evidence">CLOSED</span></td>
                     </tr>
                 </tbody>
-            </table>
+            </table></div>
         </section>
 
 <section id="annexB" class="annex-section">
             <h2><span class="annex-pill">ANNEX B</span> SCIENTIFIC REFERENCE REGISTER</h2>
             
             <p><span class="badge-evidence">Established Evidence</span> Every numerical threshold and agricultural equation is mapped to its authoritative primary source:</p>
-            <table>
+            <div class="table-wrap"><table>
                 <thead>
                     <tr>
                         <th>Primary Reference</th>
@@ -4422,7 +5358,7 @@ EC_e_est ≈ EC_p × (θ_FC / θ_SP) ≈ 0.5 × EC_p (for typical loam soils)
                         <td>Dielectric pore-water conductivity modeling; theoretical cross-reference for Rhoades.</td>
                     </tr>
                 </tbody>
-            </table>
+            </table></div>
         </section>
 
 <section id="annexC" class="annex-section">
@@ -4530,7 +5466,7 @@ ESP32 Microcontroller GPIO Allocation:
 <section id="annexF" class="annex-section">
             <h2><span class="annex-pill">ANNEX F</span> VERIFICATION, VALIDATION & REQUIREMENTS TRACEABILITY MATRIX</h2>
             
-            <table>
+            <div class="table-wrap"><table>
                 <thead>
                     <tr>
                         <th>Req ID</th>
@@ -4631,7 +5567,7 @@ ESP32 Microcontroller GPIO Allocation:
                         <td><span class="badge-bench">Bench-Tested (PASS)</span></td>
                     </tr>
                 </tbody>
-            </table>
+            </table></div>
         </section>
 
 <section id="annexG" class="annex-section">
@@ -4651,7 +5587,7 @@ ESP32 Microcontroller GPIO Allocation:
             <h2><span class="annex-pill">ANNEX H</span> RECONCILED FINANCIAL MODEL & SUPPLIER QUOTATION REGISTER</h2>
             
             <h3><span class="sub-num">H.1</span> <strong>Itemized prototype bill of materials ($34.80 BOM / $35.00 Budget)</strong></h3>
-            <table>
+            <div class="table-wrap"><table>
                 <thead>
                     <tr>
                         <th>Subsystem / Component</th>
@@ -4734,7 +5670,7 @@ ESP32 Microcontroller GPIO Allocation:
                         <td><strong>$35.00</strong></td>
                     </tr>
                 </tbody>
-            </table>
+            </table></div>
         </section>
 
 <section id="annexI" class="annex-section">
@@ -4769,13 +5705,14 @@ ESP32 Microcontroller GPIO Allocation:
         </div>
       </footer>
     </main>
-    <button id="back-to-top" class="back-to-top" aria-label="Back to top" title="Back to top">
-      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="18 15 12 9 6 15"></polyline></svg>
-    </button>
+  </div>
+  <button id="back-to-top" class="back-to-top" aria-label="Back to top" title="Back to top">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="18 15 12 9 6 15"></polyline></svg>
+  </button>
 
 <script>
 
-    // 1. Theme Switcher & Persistence
+    // 1. Theme Persistence
     function getStoredTheme() {
         try {
             return localStorage.getItem('zerthiva-theme') || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
@@ -4811,32 +5748,58 @@ ESP32 Microcontroller GPIO Allocation:
         applyTheme(next);
     }
 
-    // 2. Mobile Drawer Toggle
-    function toggleSidebar() {
+    // 2. Desktop Sidebar Collapse Toggle
+    function toggleDesktopSidebar() {
+        const layout = document.getElementById('site-layout');
+        if (!layout) return;
+        layout.classList.toggle('sidebar-collapsed');
+    }
+
+    // Keyboard Shortcut: Ctrl + B toggles sidebar
+    window.addEventListener('keydown', (e) => {
+        if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'b') {
+            e.preventDefault();
+            toggleDesktopSidebar();
+        }
+        if (e.key === 'Escape') {
+            closeMobileMenu();
+        }
+    });
+
+    // 3. Mobile Navigation Drawer Handlers
+    function openMobileMenu() {
         const sidebar = document.getElementById('sidebar');
         const backdrop = document.getElementById('sidebar-backdrop');
         if (!sidebar) return;
-        sidebar.classList.toggle('sidebar-open');
-        if (backdrop) backdrop.classList.toggle('active');
+        sidebar.classList.add('is-open');
+        if (backdrop) backdrop.classList.add('active');
+        document.body.classList.add('menu-open');
     }
 
-    // 3. Level Group Accordion Toggle
+    function closeMobileMenu() {
+        const sidebar = document.getElementById('sidebar');
+        const backdrop = document.getElementById('sidebar-backdrop');
+        if (!sidebar) return;
+        sidebar.classList.remove('is-open');
+        if (backdrop) backdrop.classList.remove('active');
+        document.body.classList.remove('menu-open');
+    }
+
+    // 4. Accordion Level Group Toggle
     function toggleLevelGroup(btn) {
-        const expanded = btn.getAttribute('aria-expanded') === 'true';
-        btn.setAttribute('aria-expanded', !expanded);
+        const isExp = btn.getAttribute('aria-expanded') === 'true';
+        btn.setAttribute('aria-expanded', !isExp);
     }
 
-    // 4. DOM Ready Handlers
+    // 5. DOM Initialization
     document.addEventListener('DOMContentLoaded', () => {
         // Init theme
         applyTheme(getStoredTheme());
 
         const themeToggleBtn = document.getElementById('theme-toggle');
-        if (themeToggleBtn) {
-            themeToggleBtn.addEventListener('click', toggleTheme);
-        }
+        if (themeToggleBtn) themeToggleBtn.addEventListener('click', toggleTheme);
 
-        // Reading Progress Bar
+        // Progress bar & Back to Top
         const progressBar = document.getElementById('reading-progress');
         const backToTop = document.getElementById('back-to-top');
 
@@ -4873,8 +5836,10 @@ ESP32 Microcontroller GPIO Allocation:
 
                 if (!query) {
                     navLinks.forEach(link => link.style.display = '');
-                    levelGroups.forEach(g => {
+                    levelGroups.forEach((g, idx) => {
                         g.style.display = '';
+                        const btn = g.querySelector('.nav-level-toggle');
+                        if (btn) btn.setAttribute('aria-expanded', idx === 0 ? 'true' : 'false');
                     });
                     return;
                 }
@@ -4912,7 +5877,7 @@ ESP32 Microcontroller GPIO Allocation:
             }
         }
 
-        // Active Link Scrollspy using IntersectionObserver
+        // Active Link Scrollspy & Breadcrumbs
         const targets = Array.from(document.querySelectorAll('#cover, section[id]'));
         const linkMap = new Map();
         navLinks.forEach(link => {
@@ -4921,6 +5886,8 @@ ESP32 Microcontroller GPIO Allocation:
                 linkMap.set(href.slice(1), link);
             }
         });
+
+        const breadcrumbSpan = document.getElementById('active-breadcrumb-section');
 
         let currentActiveId = null;
         const observer = new IntersectionObserver((entries) => {
@@ -4933,7 +5900,12 @@ ESP32 Microcontroller GPIO Allocation:
                         const activeLink = linkMap.get(id);
                         if (activeLink) {
                             activeLink.classList.add('active');
-                            // Ensure parent group is expanded
+                            // Update breadcrumb
+                            if (breadcrumbSpan) {
+                                const textSpan = activeLink.querySelector('.nav-text, .special-title');
+                                if (textSpan) breadcrumbSpan.textContent = textSpan.textContent.trim();
+                            }
+                            // Auto open parent group if closed
                             const parentGroup = activeLink.closest('.nav-level-group');
                             if (parentGroup) {
                                 const toggleBtn = parentGroup.querySelector('.nav-level-toggle');
@@ -4952,8 +5924,8 @@ ESP32 Microcontroller GPIO Allocation:
         // Auto close mobile drawer on link click
         navLinks.forEach(link => {
             link.addEventListener('click', () => {
-                if (window.innerWidth <= 1024) {
-                    toggleSidebar();
+                if (window.innerWidth <= 900) {
+                    closeMobileMenu();
                 }
             });
         });
