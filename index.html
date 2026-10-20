@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>ZERTHIVA // BENEATH THE LIVING EARTH · Immersive 3D Soil Intelligence Experience</title>
-  <meta name="description" content="A world-class interactive 3D scientific visualization of Zerthiva: Soil Intelligence System. Geological cutaway, maize plant anatomy dissection, subterranean fluid & ionic transport, hardware exploded engineering, and deterministic experimental test lab.">
+  <title>ZERTHIVA // BENEATH THE LIVING EARTH · Interactive 3D Soil Intelligence</title>
+  <meta name="description" content="Cinematic, high-fidelity real-time 3D soil intelligence visualization. Detailed maize plant anatomy, geological soil cutaway, root-zone electrochemical sensing, and autonomous agronomic simulation.">
 
   <!-- Typography -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -18,29 +18,21 @@
   <script src="https://unpkg.com/lucide@latest"></script>
 
   <style>
-    /* =========================================================================
-       DESIGN SYSTEM & COLOR TOKENS (Scientific Editorial & Lusion Inspired)
-       ========================================================================= */
     :root {
-      --bg-deep: #030806;
-      --bg-panel: rgba(6, 14, 10, 0.78);
-      --bg-panel-elevated: rgba(10, 22, 16, 0.9);
+      --bg-deep: #030705;
+      --bg-panel: rgba(5, 12, 8, 0.75);
+      --bg-panel-elevated: rgba(8, 18, 13, 0.92);
       --border-subtle: rgba(255, 255, 255, 0.08);
-      --border-accent: rgba(0, 255, 135, 0.28);
+      --border-accent: rgba(0, 255, 135, 0.3);
       
-      --text-main: #f2faf5;
-      --text-muted: #8fa89b;
-      --text-dim: #556b60;
+      --text-main: #f5fdf9;
+      --text-muted: #8ca396;
+      --text-dim: #50665b;
 
-      --water-cyan: #00e5ff;
-      --nutrient-amber: #ffb703;
-      --plant-green: #2ecc71;
-      --signal-white: #e0fbf0;
-      --alert-crimson: #ff2a5f;
-      --status-implemented: #00ff87;
-      --status-measured: #60efff;
-      --status-simulated: #ffd166;
-      --status-proposed: #c084fc;
+      --accent-emerald: #00ff87;
+      --accent-cyan: #00e5ff;
+      --accent-amber: #ffb703;
+      --accent-crimson: #ff2a5f;
 
       --font-display: 'Space Grotesk', -apple-system, sans-serif;
       --font-sans: 'Plus Jakarta Sans', sans-serif;
@@ -74,16 +66,16 @@
       z-index: 1;
     }
 
-    /* Cinematic Vignette */
-    .viewport-vignette {
+    /* Cinematic Film Vignette & Subtle Fog Gradient */
+    .film-vignette {
       position: absolute;
       inset: 0;
       pointer-events: none;
       z-index: 2;
-      background: radial-gradient(circle at 50% 50%, transparent 50%, rgba(2, 6, 4, 0.85) 100%);
+      background: radial-gradient(circle at 50% 45%, transparent 55%, rgba(2, 5, 3, 0.82) 100%);
     }
 
-    /* Top Command Header */
+    /* Top Minimalist Header */
     header.experience-header {
       position: absolute;
       top: 24px;
@@ -96,32 +88,32 @@
       pointer-events: none;
     }
 
-    .brand-group {
+    .brand-pill {
       pointer-events: auto;
       display: flex;
       align-items: center;
-      gap: 14px;
+      gap: 12px;
       background: var(--bg-panel);
       backdrop-filter: blur(24px);
       -webkit-backdrop-filter: blur(24px);
       border: 1px solid var(--border-subtle);
-      padding: 9px 20px;
+      padding: 8px 18px;
       border-radius: 999px;
       box-shadow: 0 10px 30px rgba(0,0,0,0.4);
     }
 
-    .brand-orb {
-      width: 12px;
-      height: 12px;
+    .brand-dot {
+      width: 10px;
+      height: 10px;
       border-radius: 50%;
-      background: var(--status-implemented);
-      box-shadow: 0 0 14px var(--status-implemented);
-      animation: pulseBrand 2.5s infinite;
+      background: var(--accent-emerald);
+      box-shadow: 0 0 12px var(--accent-emerald);
+      animation: pulseDot 2.4s infinite;
     }
 
-    @keyframes pulseBrand {
-      0%, 100% { transform: scale(0.9); opacity: 0.7; }
-      50% { transform: scale(1.25); opacity: 1; box-shadow: 0 0 20px var(--status-implemented); }
+    @keyframes pulseDot {
+      0%, 100% { transform: scale(0.9); opacity: 0.6; }
+      50% { transform: scale(1.3); opacity: 1; box-shadow: 0 0 18px var(--accent-emerald); }
     }
 
     .brand-title {
@@ -132,17 +124,17 @@
       color: #fff;
     }
 
-    .brand-subtitle {
+    .brand-sub {
       font-family: var(--font-mono);
       font-size: 0.65rem;
       color: var(--text-muted);
       letter-spacing: 0.08em;
       text-transform: uppercase;
       padding-left: 8px;
-      border-left: 1px solid rgba(255,255,255,0.15);
+      border-left: 1px solid rgba(255,255,255,0.12);
     }
 
-    .nav-actions {
+    .header-actions {
       pointer-events: auto;
       display: flex;
       align-items: center;
@@ -155,7 +147,7 @@
       -webkit-backdrop-filter: blur(24px);
       border: 1px solid var(--border-subtle);
       color: var(--text-main);
-      padding: 8px 18px;
+      padding: 8px 16px;
       border-radius: 999px;
       font-family: var(--font-mono);
       font-size: 0.72rem;
@@ -178,8 +170,8 @@
     }
 
     .btn-pill.btn-signature {
-      background: linear-gradient(135deg, rgba(0, 255, 135, 0.2), rgba(0, 229, 255, 0.25));
-      border-color: var(--status-implemented);
+      background: linear-gradient(135deg, rgba(0, 255, 135, 0.2), rgba(0, 229, 255, 0.2));
+      border-color: var(--accent-emerald);
       color: #fff;
       font-weight: 700;
     }
@@ -189,99 +181,94 @@
       transform: translateY(-2px) scale(1.02);
     }
 
-    /* Evidence Category Badges */
-    .badge-evidence {
-      font-family: var(--font-mono);
-      font-size: 0.6rem;
-      font-weight: 700;
-      padding: 2px 7px;
-      border-radius: 4px;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      display: inline-flex;
-      align-items: center;
-      gap: 4px;
-    }
-    .badge-implemented { background: rgba(0, 255, 135, 0.12); color: var(--status-implemented); border: 1px solid rgba(0, 255, 135, 0.3); }
-    .badge-measured { background: rgba(96, 239, 255, 0.12); color: var(--status-measured); border: 1px solid rgba(96, 239, 255, 0.3); }
-    .badge-simulated { background: rgba(255, 209, 102, 0.12); color: var(--status-simulated); border: 1px solid rgba(255, 209, 102, 0.3); }
-    .badge-proposed { background: rgba(192, 132, 252, 0.12); color: var(--status-proposed); border: 1px solid rgba(192, 132, 252, 0.3); }
-
-    /* Left Contextual Narrative & Telemetry Panel */
-    aside.narrative-dock {
+    /* Left Minimalist Contextual Card */
+    aside.contextual-dock {
       position: absolute;
       top: 96px;
       left: 32px;
-      width: 360px;
-      max-height: calc(100vh - 200px);
+      width: 340px;
+      max-height: calc(100vh - 190px);
       background: var(--bg-panel);
       backdrop-filter: blur(28px);
       -webkit-backdrop-filter: blur(28px);
       border: 1px solid var(--border-subtle);
-      border-radius: 20px;
-      padding: 22px;
+      border-radius: 18px;
+      padding: 20px;
       z-index: 20;
       display: flex;
       flex-direction: column;
-      gap: 16px;
+      gap: 14px;
       box-shadow: 0 20px 50px rgba(0,0,0,0.5);
       overflow-y: auto;
       scrollbar-width: thin;
-      scrollbar-color: var(--status-implemented) transparent;
-      transition: all 0.35s ease;
+      scrollbar-color: var(--accent-emerald) transparent;
+      transition: transform 0.4s ease, opacity 0.4s ease;
     }
 
-    .chapter-meta {
+    .chapter-tag-row {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      border-bottom: 1px solid rgba(255,255,255,0.08);
-      padding-bottom: 10px;
+      padding-bottom: 8px;
+      border-bottom: 1px solid rgba(255,255,255,0.06);
     }
 
     .chapter-tag {
       font-family: var(--font-mono);
       font-size: 0.65rem;
       letter-spacing: 0.12em;
-      color: var(--status-implemented);
+      color: var(--accent-emerald);
       text-transform: uppercase;
     }
 
-    .chapter-title {
+    .badge-evidence {
+      font-family: var(--font-mono);
+      font-size: 0.58rem;
+      font-weight: 700;
+      padding: 2px 6px;
+      border-radius: 4px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      background: rgba(0, 255, 135, 0.12);
+      color: var(--accent-emerald);
+      border: 1px solid rgba(0, 255, 135, 0.25);
+    }
+
+    .chapter-headline {
       font-family: var(--font-display);
       font-size: 1.25rem;
       font-weight: 700;
-      line-height: 1.2;
       color: #fff;
+      line-height: 1.25;
       letter-spacing: -0.02em;
     }
 
-    .chapter-desc {
+    .chapter-paragraph {
       font-size: 0.8rem;
       line-height: 1.55;
       color: var(--text-muted);
     }
 
-    /* Contextual Interactive Controls Container */
-    .contextual-actions {
+    /* Contextual Action Module */
+    .module-controls {
       display: flex;
       flex-direction: column;
-      gap: 10px;
-      background: rgba(0,0,0,0.25);
+      gap: 8px;
+      background: rgba(0,0,0,0.3);
       border: 1px solid rgba(255,255,255,0.05);
-      border-radius: 12px;
-      padding: 12px;
+      border-radius: 10px;
+      padding: 10px 12px;
     }
 
-    .action-row {
+    .module-row {
       display: flex;
       justify-content: space-between;
       align-items: center;
     }
 
-    .action-label {
+    .module-label {
       font-family: var(--font-mono);
-      font-size: 0.68rem;
+      font-size: 0.65rem;
       color: var(--text-muted);
       text-transform: uppercase;
     }
@@ -289,18 +276,18 @@
     .range-slider {
       width: 140px;
       height: 4px;
-      accent-color: var(--status-implemented);
+      accent-color: var(--accent-emerald);
       cursor: pointer;
     }
 
     .btn-action-small {
       background: rgba(255, 255, 255, 0.06);
-      border: 1px solid rgba(255, 255, 255, 0.12);
+      border: 1px solid rgba(255, 255, 255, 0.1);
       color: #fff;
       padding: 6px 12px;
       border-radius: 6px;
       font-family: var(--font-mono);
-      font-size: 0.68rem;
+      font-size: 0.65rem;
       cursor: pointer;
       display: inline-flex;
       align-items: center;
@@ -309,40 +296,38 @@
     }
     .btn-action-small:hover {
       background: rgba(0, 255, 135, 0.15);
-      border-color: var(--status-implemented);
+      border-color: var(--accent-emerald);
     }
 
-    /* Live Telemetry Readouts */
-    .telemetry-mini-grid {
+    /* Live Telemetry Cells */
+    .tele-grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
       gap: 8px;
     }
 
-    .tele-cell {
+    .tele-box {
       background: rgba(0,0,0,0.3);
-      border: 1px solid rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.05);
       border-radius: 8px;
       padding: 8px 10px;
     }
 
-    .tele-cell-label {
+    .tele-box-title {
       font-family: var(--font-mono);
       font-size: 0.6rem;
       color: var(--text-dim);
       margin-bottom: 2px;
-      display: flex;
-      justify-content: space-between;
     }
 
-    .tele-cell-val {
+    .tele-box-val {
       font-family: var(--font-display);
       font-size: 1.15rem;
       font-weight: 700;
       color: #fff;
     }
 
-    /* Right Chapter Scrubbing Deck (Chapters 01 to 10) */
+    /* Right Chapter Rail (10 Guided Narrative Nodes) */
     aside.chapter-rail {
       position: absolute;
       top: 50%;
@@ -369,7 +354,7 @@
       transform: translateX(-4px);
     }
 
-    .chapter-node-bullet {
+    .chapter-bullet {
       width: 22px;
       height: 22px;
       border-radius: 50%;
@@ -384,15 +369,15 @@
       transition: all 0.25s;
     }
 
-    .chapter-node.active .chapter-node-bullet {
-      background: var(--status-implemented);
-      border-color: var(--status-implemented);
+    .chapter-node.active .chapter-bullet {
+      background: var(--accent-emerald);
+      border-color: var(--accent-emerald);
       color: #000;
       font-weight: 700;
-      box-shadow: 0 0 14px var(--status-implemented);
+      box-shadow: 0 0 14px var(--accent-emerald);
     }
 
-    .chapter-node-name {
+    .chapter-name {
       font-family: var(--font-mono);
       font-size: 0.65rem;
       letter-spacing: 0.08em;
@@ -401,13 +386,13 @@
       white-space: nowrap;
     }
 
-    .chapter-node.active .chapter-node-name {
+    .chapter-node.active .chapter-name {
       color: #fff;
       font-weight: 600;
     }
 
-    /* Bottom Playback & Scrubber Controls */
-    .timeline-playback-bar {
+    /* Bottom Playback & Chapter Navigation */
+    .timeline-dock {
       position: absolute;
       bottom: 24px;
       left: 50%;
@@ -422,15 +407,15 @@
       box-shadow: 0 20px 50px rgba(0,0,0,0.6);
       display: flex;
       align-items: center;
-      gap: 14px;
+      gap: 12px;
     }
 
-    .playback-btn {
+    .nav-btn {
       width: 32px;
       height: 32px;
       border-radius: 50%;
       background: rgba(255, 255, 255, 0.06);
-      border: 1px solid rgba(255, 255, 255, 0.12);
+      border: 1px solid rgba(255, 255, 255, 0.1);
       color: #fff;
       display: flex;
       align-items: center;
@@ -439,13 +424,13 @@
       transition: all 0.2s;
     }
 
-    .playback-btn:hover {
+    .nav-btn:hover {
       background: rgba(0, 255, 135, 0.2);
-      border-color: var(--status-implemented);
+      border-color: var(--accent-emerald);
     }
 
-    .timeline-track {
-      width: 220px;
+    .timeline-bar {
+      width: 200px;
       height: 4px;
       background: rgba(255,255,255,0.1);
       border-radius: 999px;
@@ -453,25 +438,51 @@
       overflow: hidden;
     }
 
-    .timeline-progress {
+    .timeline-fill {
       height: 100%;
       width: 10%;
-      background: var(--status-implemented);
+      background: var(--accent-emerald);
       border-radius: 999px;
       transition: width 0.3s;
     }
 
-    .signature-badge {
+    .timeline-label {
       font-family: var(--font-mono);
       font-size: 0.65rem;
       letter-spacing: 0.08em;
-      color: var(--status-implemented);
+      color: var(--accent-emerald);
       text-transform: uppercase;
       font-weight: 700;
     }
 
+    /* Skip Opening Sequence Pill */
+    .skip-btn {
+      position: absolute;
+      top: 24px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: rgba(0, 0, 0, 0.7);
+      backdrop-filter: blur(16px);
+      border: 1px solid var(--border-accent);
+      color: #fff;
+      padding: 6px 14px;
+      border-radius: 999px;
+      font-family: var(--font-mono);
+      font-size: 0.65rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      cursor: pointer;
+      z-index: 40;
+      display: none;
+      transition: all 0.2s;
+    }
+    .skip-btn:hover {
+      background: rgba(0, 255, 135, 0.2);
+      box-shadow: 0 0 15px rgba(0, 255, 135, 0.3);
+    }
+
     /* Spatial Screen-Projected Pins */
-    .spatial-hotspot {
+    .spatial-pin {
       position: absolute;
       transform: translate(-50%, -50%);
       pointer-events: auto;
@@ -488,21 +499,21 @@
       transition: all 0.2s;
     }
 
-    .spatial-hotspot:hover {
-      border-color: var(--status-implemented);
+    .spatial-pin:hover {
+      border-color: var(--accent-emerald);
       transform: translate(-50%, -50%) scale(1.1);
       box-shadow: 0 0 20px rgba(0, 255, 135, 0.4);
     }
 
-    .hotspot-dot {
+    .pin-dot {
       width: 6px;
       height: 6px;
       border-radius: 50%;
-      background: var(--status-implemented);
-      box-shadow: 0 0 8px var(--status-implemented);
+      background: var(--accent-emerald);
+      box-shadow: 0 0 8px var(--accent-emerald);
     }
 
-    .hotspot-text {
+    .pin-text {
       font-family: var(--font-mono);
       font-size: 0.65rem;
       color: #fff;
@@ -547,31 +558,16 @@
       cursor: pointer;
     }
 
-    /* Event Log Box */
-    .event-log-container {
-      background: rgba(0,0,0,0.4);
-      border: 1px solid rgba(255,255,255,0.06);
-      border-radius: 8px;
-      padding: 10px;
-      font-family: var(--font-mono);
-      font-size: 0.65rem;
-      line-height: 1.45;
-      color: var(--text-muted);
-      max-height: 110px;
-      overflow-y: auto;
-    }
-
     /* Responsive */
     @media (max-width: 1080px) {
-      aside.narrative-dock {
+      aside.contextual-dock {
         width: 300px;
       }
       aside.chapter-rail {
         display: none;
       }
-      .timeline-playback-bar {
+      .timeline-dock {
         width: 92vw;
-        overflow-x: auto;
         justify-content: space-between;
       }
     }
@@ -579,26 +575,31 @@
 </head>
 <body>
 
-  <!-- 3D Canvas -->
+  <!-- WebGL Render Canvas -->
   <div id="webgl-canvas"></div>
-  <div class="viewport-vignette"></div>
+  <div class="film-vignette"></div>
+
+  <!-- Skip Opening Button -->
+  <button class="skip-btn" id="btn-skip-intro">
+    <i data-lucide="fast-forward" style="width: 12px; height: 12px; vertical-align: middle;"></i> Skip Opening Sequence
+  </button>
 
   <!-- Top Experience Header -->
   <header class="experience-header">
-    <div class="brand-group">
-      <div class="brand-orb"></div>
+    <div class="brand-pill">
+      <div class="brand-dot"></div>
       <div class="brand-title">ZERTHIVA</div>
-      <div class="brand-subtitle">BENEATH THE LIVING EARTH</div>
+      <div class="brand-sub">BENEATH THE LIVING EARTH</div>
     </div>
 
-    <div class="nav-actions">
+    <div class="header-actions">
       <!-- Signature Continuous Cutaway Sequence Trigger -->
-      <button class="btn-pill btn-signature" id="btn-signature-cutaway" title="Trigger 12-stage signature cinematic cutaway">
-        <i data-lucide="sparkles" style="width: 14px; height: 14px;"></i> Reveal Hidden System
+      <button class="btn-pill btn-signature" id="btn-signature-reveal" title="Trigger 12-stage signature cinematic cutaway">
+        <i data-lucide="sparkles" style="width: 13px; height: 13px;"></i> Reveal Hidden System
       </button>
 
       <!-- Reset View -->
-      <button class="btn-pill" id="btn-reset-view" title="Reset camera to default view">
+      <button class="btn-pill" id="btn-reset-view" title="Reset camera to default hero composition">
         <i data-lucide="rotate-ccw" style="width: 13px; height: 13px;"></i> Reset View
       </button>
 
@@ -607,139 +608,120 @@
         <i data-lucide="volume-2" id="icon-audio" style="width: 13px; height: 13px;"></i> Audio
       </button>
 
-      <!-- Master Documentation Link -->
+      <!-- Master Technical Dossier Link -->
       <a href="./Zerthiva_Full_Documentation.html" class="btn-pill" target="_blank" title="Open master 58-section dossier">
-        <i data-lucide="file-text" style="width: 13px; height: 13px;"></i> Technical Dossier
+        <i data-lucide="file-text" style="width: 13px; height: 13px;"></i> Master Specs
       </a>
     </div>
   </header>
 
   <!-- Left Contextual Narrative & Telemetry Panel -->
-  <aside class="narrative-dock" id="narrative-panel">
-    <div class="chapter-meta">
+  <aside class="contextual-dock" id="narrative-panel">
+    <div class="chapter-tag-row">
       <span class="chapter-tag" id="label-chapter-tag">CHAPTER 01 // SURFACE</span>
-      <span class="badge-evidence badge-implemented" id="badge-evidence-type">IMPLEMENTED</span>
+      <span class="badge-evidence" id="badge-evidence-type">IMPLEMENTED</span>
     </div>
 
-    <h2 class="chapter-title" id="text-chapter-title">The Living Surface</h2>
-    <p class="chapter-desc" id="text-chapter-desc">
-      What happens above the soil begins beneath it. A healthy maize plant (<em>Zea mays</em>) flourishes under ambient daylight. As we descend, the opaque ground opens into an explorable subterranean ecosystem.
+    <h2 class="chapter-headline" id="text-chapter-title">The Living Surface</h2>
+    <p class="chapter-paragraph" id="text-chapter-desc">
+      What happens above the soil begins beneath it. A mature maize plant (<em>Zea mays</em>) flourishes under ambient daylight. As we descend, the opaque ground opens into an explorable subterranean ecosystem.
     </p>
 
     <!-- Contextual Chapter Controls (Dynamically switched per chapter) -->
-    <div class="contextual-actions" id="contextual-controls">
+    <div class="module-controls" id="contextual-controls">
       <!-- Injected per chapter -->
     </div>
 
     <!-- Live Telemetry Stream Grid -->
-    <div class="telemetry-mini-grid">
-      <div class="tele-cell">
-        <div class="tele-cell-label">
-          <span>BULK EC₂₅</span>
-          <span style="color: var(--status-measured);">ADC1_CH6</span>
-        </div>
-        <div class="tele-cell-val" id="val-ec">1.42 <span style="font-size: 0.65rem; color: var(--text-dim);">dS/m</span></div>
+    <div class="tele-grid">
+      <div class="tele-box">
+        <div class="tele-box-title">BULK EC₂₅ (dS/m)</div>
+        <div class="tele-box-val" id="val-ec">1.42</div>
       </div>
 
-      <div class="tele-cell">
-        <div class="tele-cell-label">
-          <span>MOISTURE θ</span>
-          <span style="color: var(--status-measured);">ADC1_CH7</span>
-        </div>
-        <div class="tele-cell-val" id="val-moist">31.8 <span style="font-size: 0.65rem; color: var(--text-dim);">% VWC</span></div>
+      <div class="tele-box">
+        <div class="tele-box-title">MOISTURE θ (% VWC)</div>
+        <div class="tele-box-val" id="val-moist">31.8</div>
       </div>
 
-      <div class="tele-cell">
-        <div class="tele-cell-label">
-          <span>SOIL TEMP</span>
-          <span style="color: var(--status-measured);">1-WIRE D4</span>
-        </div>
-        <div class="tele-cell-val" id="val-temp">24.6 <span style="font-size: 0.65rem; color: var(--text-dim);">°C</span></div>
+      <div class="tele-box">
+        <div class="tele-box-title">SOIL TEMP (°C)</div>
+        <div class="tele-box-val" id="val-temp">24.6</div>
       </div>
 
-      <div class="tele-cell">
-        <div class="tele-cell-label">
-          <span>MAAS-HOFFMAN</span>
-          <span style="color: var(--status-implemented);">CRIT 1.70</span>
-        </div>
-        <div class="tele-cell-val" id="val-penalty" style="color: var(--status-implemented);">0.0 <span style="font-size: 0.65rem; color: var(--text-dim);">% LOSS</span></div>
+      <div class="tele-box">
+        <div class="tele-box-title">MAAS-HOFFMAN YIELD</div>
+        <div class="tele-box-val" id="val-penalty" style="color: var(--accent-emerald);">0.0% LOSS</div>
       </div>
-    </div>
-
-    <!-- Event Sequence Logger -->
-    <div class="event-log-container" id="event-log">
-      <div>[SYSTEM] Zerthiva SIS Edge Orchestrator active.</div>
-      <div>[SENSOR] Dual-ring EC probe & DS18B20 calibrated to 25°C.</div>
-      <div>[STATUS] Soil water balance nominal. Ready for exploration.</div>
     </div>
   </aside>
 
   <!-- Right Chapter Navigation Rail (10 Interactive Story Chapters) -->
   <aside class="chapter-rail">
     <div class="chapter-node active" data-chapter="0">
-      <div class="chapter-node-bullet">01</div>
-      <div class="chapter-node-name">The Living Surface</div>
+      <div class="chapter-bullet">01</div>
+      <div class="chapter-name">The Living Surface</div>
     </div>
     <div class="chapter-node" data-chapter="1">
-      <div class="chapter-node-bullet">02</div>
-      <div class="chapter-node-name">Descent Into Soil</div>
+      <div class="chapter-bullet">02</div>
+      <div class="chapter-name">Descent Into Soil</div>
     </div>
     <div class="chapter-node" data-chapter="2">
-      <div class="chapter-node-bullet">03</div>
-      <div class="chapter-node-name">Plant Dissection</div>
+      <div class="chapter-bullet">03</div>
+      <div class="chapter-name">Plant Dissection</div>
     </div>
     <div class="chapter-node" data-chapter="3">
-      <div class="chapter-node-bullet">04</div>
-      <div class="chapter-node-name">Hidden Water World</div>
+      <div class="chapter-bullet">04</div>
+      <div class="chapter-name">Hidden Water World</div>
     </div>
     <div class="chapter-node" data-chapter="4">
-      <div class="chapter-node-bullet">05</div>
-      <div class="chapter-node-name">Nutrient Chemistry</div>
+      <div class="chapter-bullet">05</div>
+      <div class="chapter-name">Nutrient Chemistry</div>
     </div>
     <div class="chapter-node" data-chapter="5">
-      <div class="chapter-node-bullet">06</div>
-      <div class="chapter-node-name">The Sensor Reveal</div>
+      <div class="chapter-bullet">06</div>
+      <div class="chapter-name">The Sensor Reveal</div>
     </div>
     <div class="chapter-node" data-chapter="6">
-      <div class="chapter-node-bullet">07</div>
-      <div class="chapter-node-name">Hardware Explosion</div>
+      <div class="chapter-bullet">07</div>
+      <div class="chapter-name">Hardware Explosion</div>
     </div>
     <div class="chapter-node" data-chapter="7">
-      <div class="chapter-node-bullet">08</div>
-      <div class="chapter-node-name">Monitoring Sequence</div>
+      <div class="chapter-bullet">08</div>
+      <div class="chapter-name">Monitoring Sequence</div>
     </div>
     <div class="chapter-node" data-chapter="8">
-      <div class="chapter-node-bullet">09</div>
-      <div class="chapter-node-name">Decision Engine</div>
+      <div class="chapter-bullet">09</div>
+      <div class="chapter-name">Decision Engine</div>
     </div>
     <div class="chapter-node" data-chapter="9">
-      <div class="chapter-node-bullet">10</div>
-      <div class="chapter-node-name">Experimental Lab</div>
+      <div class="chapter-bullet">10</div>
+      <div class="chapter-name">Experimental Lab</div>
     </div>
   </aside>
 
   <!-- Bottom Timeline & Storyboard Controls -->
-  <div class="timeline-playback-bar">
-    <button class="playback-btn" id="btn-prev-chapter" title="Previous chapter"><i data-lucide="chevron-left" style="width: 16px; height: 16px;"></i></button>
-    <button class="playback-btn" id="btn-play-tour" title="Autonomous narrative tour"><i data-lucide="play" id="icon-play-tour" style="width: 16px; height: 16px;"></i></button>
-    <button class="playback-btn" id="btn-next-chapter" title="Next chapter"><i data-lucide="chevron-right" style="width: 16px; height: 16px;"></i></button>
+  <div class="timeline-dock">
+    <button class="nav-btn" id="btn-prev-chapter" title="Previous chapter"><i data-lucide="chevron-left" style="width: 16px; height: 16px;"></i></button>
+    <button class="nav-btn" id="btn-play-tour" title="Play / pause autonomous narrative tour"><i data-lucide="play" id="icon-play-tour" style="width: 16px; height: 16px;"></i></button>
+    <button class="nav-btn" id="btn-next-chapter" title="Next chapter"><i data-lucide="chevron-right" style="width: 16px; height: 16px;"></i></button>
 
-    <div class="timeline-track">
-      <div class="timeline-progress" id="timeline-progress-bar"></div>
+    <div class="timeline-bar">
+      <div class="timeline-fill" id="timeline-progress-fill"></div>
     </div>
 
-    <span class="signature-badge" id="label-playback-status">CHAPTER 01 OF 10</span>
+    <span class="timeline-label" id="label-playback-status">CHAPTER 01 OF 10</span>
   </div>
 
   <!-- Screen-Projected Spatial Hotspots -->
-  <div id="hotspot-probe" class="spatial-hotspot" style="display: none;">
-    <div class="hotspot-dot"></div>
-    <span class="hotspot-text">EC & Dielectric Probe [15-25cm]</span>
+  <div id="hotspot-probe" class="spatial-pin" style="display: none;">
+    <div class="pin-dot"></div>
+    <span class="pin-text">EC & Dielectric Probe [15-25cm]</span>
   </div>
 
-  <div id="hotspot-node" class="spatial-hotspot" style="display: none;">
-    <div class="hotspot-dot" style="background: var(--water-cyan);"></div>
-    <span class="hotspot-text">ESP32 Edge Gateway & Solar Cap</span>
+  <div id="hotspot-node" class="spatial-pin" style="display: none;">
+    <div class="pin-dot" style="background: var(--accent-cyan);"></div>
+    <span class="pin-text">ESP32 Edge Gateway & Solar Cap</span>
   </div>
 
   <!-- Deep Inspector Modal -->
@@ -815,7 +797,6 @@
         if (!this.enabled) return;
         this.init();
         if (!this.ctx) return;
-        // Water drops pitter-patter
         for (let i = 0; i < 5; i++) {
           setTimeout(() => {
             if (!this.ctx) return;
@@ -871,15 +852,107 @@
     });
 
     /* =========================================================================
-       2. THREE.JS PHOTOREALISTIC & SCIENTIFIC SCENE ARCHITECTURE
+       2. PROCEDURAL HIGH-RESOLUTION PBR TEXTURE GENERATOR
+       Generates tactile soil, aggregates, and bump maps via HTML5 Canvas
+       ========================================================================= */
+    function generateSoilTexture(baseColorHex, grainContrast, hasAggregates) {
+      const c = document.createElement('canvas');
+      c.width = 512;
+      c.height = 512;
+      const ctx = c.getContext('2d');
+
+      ctx.fillStyle = baseColorHex;
+      ctx.fillRect(0, 0, 512, 512);
+
+      // Fine grain noise
+      const imgData = ctx.getImageData(0, 0, 512, 512);
+      const data = imgData.data;
+      for (let i = 0; i < data.length; i += 4) {
+        const noise = (Math.random() - 0.5) * grainContrast * 255;
+        data[i]     = Math.min(255, Math.max(0, data[i] + noise));
+        data[i + 1] = Math.min(255, Math.max(0, data[i + 1] + noise * 0.9));
+        data[i + 2] = Math.min(255, Math.max(0, data[i + 2] + noise * 0.7));
+      }
+      ctx.putImageData(imgData, 0, 0);
+
+      // Organic pebbles, stones, and soil aggregates
+      if (hasAggregates) {
+        for (let p = 0; p < 75; p++) {
+          const px = Math.random() * 512;
+          const py = Math.random() * 512;
+          const pr = 2 + Math.random() * 7;
+          const shade = (Math.random() > 0.5) ? 'rgba(30, 20, 15, 0.45)' : 'rgba(120, 95, 75, 0.4)';
+          ctx.beginPath();
+          ctx.ellipse(px, py, pr, pr * (0.6 + Math.random() * 0.4), Math.random() * Math.PI, 0, Math.PI * 2);
+          ctx.fillStyle = shade;
+          ctx.fill();
+        }
+      }
+
+      const tex = new THREE.CanvasTexture(c);
+      tex.wrapS = THREE.RepeatWrapping;
+      tex.wrapT = THREE.RepeatWrapping;
+      tex.repeat.set(1.5, 1.5);
+      return tex;
+    }
+
+    function generateSoilBumpMap() {
+      const c = document.createElement('canvas');
+      c.width = 512;
+      c.height = 512;
+      const ctx = c.getContext('2d');
+
+      ctx.fillStyle = '#808080';
+      ctx.fillRect(0, 0, 512, 512);
+
+      const imgData = ctx.getImageData(0, 0, 512, 512);
+      const data = imgData.data;
+      for (let i = 0; i < data.length; i += 4) {
+        const n = Math.random() * 80;
+        data[i] = n;
+        data[i+1] = n;
+        data[i+2] = n;
+      }
+      ctx.putImageData(imgData, 0, 0);
+
+      // Aggregate bumps
+      for (let b = 0; b < 60; b++) {
+        const bx = Math.random() * 512;
+        const by = Math.random() * 512;
+        const br = 4 + Math.random() * 8;
+        const grad = ctx.createRadialGradient(bx, by, 0, bx, by, br);
+        grad.addColorStop(0, '#ffffff');
+        grad.addColorStop(1, '#808080');
+        ctx.fillStyle = grad;
+        ctx.beginPath();
+        ctx.arc(bx, by, br, 0, Math.PI * 2);
+        ctx.fill();
+      }
+
+      const tex = new THREE.CanvasTexture(c);
+      tex.wrapS = THREE.RepeatWrapping;
+      tex.wrapT = THREE.RepeatWrapping;
+      tex.repeat.set(1.5, 1.5);
+      return tex;
+    }
+
+    const bumpMapSoil = generateSoilBumpMap();
+    const texHorizonO = generateSoilTexture('#263d24', 0.22, true);
+    const texHorizonA = generateSoilTexture('#362416', 0.25, true);
+    const texHorizonB = generateSoilTexture('#543922', 0.22, true);
+    const texHorizonC = generateSoilTexture('#262927', 0.28, true);
+
+    /* =========================================================================
+       3. THREE.JS SCENE SETUP & PROFESSIONAL LIGHTING PIPELINE
        ========================================================================= */
     const container = document.getElementById('webgl-canvas');
     const scene = new THREE.Scene();
-    scene.background = new THREE.Color(0x030806);
-    scene.fog = new THREE.FogExp2(0x030806, 0.035);
+    scene.background = new THREE.Color(0x030705);
+    scene.fog = new THREE.FogExp2(0x030705, 0.038);
 
-    const camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 100);
-    camera.position.set(0, 2.5, 7.8);
+    const camera = new THREE.PerspectiveCamera(42, window.innerWidth / window.innerHeight, 0.1, 100);
+    // Signature initial composition framing the entire plant and soil cutaway
+    camera.position.set(3.4, 0.6, 5.6);
 
     const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true, powerPreference: "high-performance" });
     renderer.setSize(window.innerWidth, window.innerHeight);
@@ -892,36 +965,48 @@
 
     const controls = new THREE.OrbitControls(camera, renderer.domElement);
     controls.enableDamping = true;
-    controls.dampingFactor = 0.05;
-    controls.maxPolarAngle = Math.PI / 2 + 0.12;
-    controls.minDistance = 2.0;
-    controls.maxDistance = 16.0;
-    controls.target.set(0, 0.2, 0);
+    controls.dampingFactor = 0.06;
+    controls.maxPolarAngle = Math.PI / 2 + 0.15;
+    controls.minDistance = 2.2;
+    controls.maxDistance = 14.0;
+    controls.target.set(0, -0.15, 0);
 
-    // Natural Agricultural Sunlight & Soft Atmospheric Fill
-    const ambientLight = new THREE.AmbientLight(0xdcf0e5, 0.55);
+    // Controlled 4-Point Cinematic Lighting Setup
+    // 1. Soft Warm Key Sunlight from above
+    const keySunLight = new THREE.DirectionalLight(0xfff5e6, 2.6);
+    keySunLight.position.set(6, 12, 5.5);
+    keySunLight.castShadow = true;
+    keySunLight.shadow.mapSize.width = 2048;
+    keySunLight.shadow.mapSize.height = 2048;
+    keySunLight.shadow.camera.near = 0.5;
+    keySunLight.shadow.camera.far = 28;
+    keySunLight.shadow.camera.left = -4.5;
+    keySunLight.shadow.camera.right = 4.5;
+    keySunLight.shadow.camera.top = 4.5;
+    keySunLight.shadow.camera.bottom = -4.5;
+    keySunLight.shadow.bias = -0.0003;
+    scene.add(keySunLight);
+
+    // 2. Cool Sky Fill Light from opposite angle
+    const skyFillLight = new THREE.DirectionalLight(0x8bc3ea, 0.85);
+    skyFillLight.position.set(-5, 6, -3);
+    scene.add(skyFillLight);
+
+    // 3. Subterranean Earthen Bounce Light (illuminates root cavities & cutaway)
+    const earthenBounce = new THREE.DirectionalLight(0x5c4028, 0.75);
+    earthenBounce.position.set(0, -6, 2);
+    scene.add(earthenBounce);
+
+    // 4. Subtle Foliage Rim Light (separates foliage from deep dark backdrop)
+    const rimLight = new THREE.DirectionalLight(0x80ffb0, 0.5);
+    rimLight.position.set(-6, 2, -6);
+    scene.add(rimLight);
+
+    const ambientLight = new THREE.AmbientLight(0xdcf0e5, 0.45);
     scene.add(ambientLight);
 
-    const sunLight = new THREE.DirectionalLight(0xfff6e6, 2.4);
-    sunLight.position.set(6, 12, 5);
-    sunLight.castShadow = true;
-    sunLight.shadow.mapSize.width = 2048;
-    sunLight.shadow.mapSize.height = 2048;
-    sunLight.shadow.camera.near = 0.5;
-    sunLight.shadow.camera.far = 28;
-    sunLight.shadow.camera.left = -4.5;
-    sunLight.shadow.camera.right = 4.5;
-    sunLight.shadow.camera.top = 4.5;
-    sunLight.shadow.camera.bottom = -4.5;
-    sunLight.shadow.bias = -0.0004;
-    scene.add(sunLight);
-
-    const subsoilRim = new THREE.DirectionalLight(0x00e5ff, 0.6);
-    subsoilRim.position.set(-5, -4, -4);
-    scene.add(subsoilRim);
-
     /* =========================================================================
-       3. GEOLOGICAL SOIL CUTAWAY (SEPARABLE HORIZONS O, A, B, C)
+       4. SCULPTED GEOLOGICAL SOIL CUTAWAY & STRATA HORIZONS
        ========================================================================= */
     const geologyGroup = new THREE.Group();
     scene.add(geologyGroup);
@@ -929,55 +1014,108 @@
     const blockW = 3.6;
     const blockD = 3.6;
 
-    // Horizon O: Organic litter & surface layer (0 - 3cm)
+    // Horizon O: Surface organic mulch with micro-mound around stem (0 - 3cm)
     const horizonOGroup = new THREE.Group();
     geologyGroup.add(horizonOGroup);
-    const matHorizonO = new THREE.MeshStandardMaterial({ color: 0x243320, roughness: 0.9, metalness: 0.05 });
-    const geoO = new THREE.BoxGeometry(blockW, 0.14, blockD);
+    const matHorizonO = new THREE.MeshStandardMaterial({
+      color: 0x243520,
+      map: texHorizonO,
+      bumpMap: bumpMapSoil,
+      bumpScale: 0.04,
+      roughness: 0.9,
+      metalness: 0.05
+    });
+    const geoO = new THREE.BoxGeometry(blockW, 0.16, blockD, 16, 2, 16);
+    // Deform top surface vertices for natural organic terrain contours
+    const posO = geoO.attributes.position;
+    for (let i = 0; i < posO.count; i++) {
+      if (posO.getY(i) > 0.05) {
+        const x = posO.getX(i);
+        const z = posO.getZ(i);
+        // Micro-mound at plant base + gentle undulations
+        const distToPlant = Math.sqrt((x - 0.35) ** 2 + (z - 0.2) ** 2);
+        const mound = Math.max(0, 0.08 * (1.0 - distToPlant / 0.8));
+        posO.setY(i, posO.getY(i) + mound + Math.sin(x * 3.0) * Math.cos(z * 3.0) * 0.02);
+      }
+    }
+    geoO.computeVertexNormals();
     const meshO = new THREE.Mesh(geoO, matHorizonO);
     meshO.position.y = 0;
     meshO.receiveShadow = true;
+    meshO.castShadow = true;
     horizonOGroup.add(meshO);
 
-    // Horizon A: Topsoil - Humus-rich root active zone (3 - 22cm)
+    // Horizon A: Topsoil Humus Layer (3 - 22cm)
     const horizonAGroup = new THREE.Group();
     geologyGroup.add(horizonAGroup);
-    const matHorizonA = new THREE.MeshStandardMaterial({ color: 0x332214, roughness: 0.95, metalness: 0.02 });
+    const matHorizonA = new THREE.MeshStandardMaterial({
+      color: 0x362416,
+      map: texHorizonA,
+      bumpMap: bumpMapSoil,
+      bumpScale: 0.05,
+      roughness: 0.92,
+      metalness: 0.02
+    });
     const geoA = new THREE.BoxGeometry(blockW, 0.95, blockD);
     const meshA = new THREE.Mesh(geoA, matHorizonA);
-    meshA.position.y = -0.54;
+    meshA.position.y = -0.55;
     meshA.receiveShadow = true;
     horizonAGroup.add(meshA);
 
-    // Horizon B: Subsoil - Mineral & clay illuviation accumulation zone (22 - 48cm)
+    // Horizon B: Compacted Clay Subsoil & Mineral Horizon (22 - 48cm)
     const horizonBGroup = new THREE.Group();
     geologyGroup.add(horizonBGroup);
-    const matHorizonB = new THREE.MeshStandardMaterial({ color: 0x4d3320, roughness: 0.9, metalness: 0.05 });
+    const matHorizonB = new THREE.MeshStandardMaterial({
+      color: 0x543922,
+      map: texHorizonB,
+      bumpMap: bumpMapSoil,
+      bumpScale: 0.04,
+      roughness: 0.88,
+      metalness: 0.04
+    });
     const geoB = new THREE.BoxGeometry(blockW, 0.95, blockD);
     const meshB = new THREE.Mesh(geoB, matHorizonB);
-    meshB.position.y = -1.49;
+    meshB.position.y = -1.50;
     meshB.receiveShadow = true;
     horizonBGroup.add(meshB);
 
-    // Horizon C: Bedrock & gravel percolation aquifer (48cm+)
+    // Horizon C: Gravel Drainage & Bedrock Aquifer (48cm+)
     const horizonCGroup = new THREE.Group();
     geologyGroup.add(horizonCGroup);
-    const matHorizonC = new THREE.MeshStandardMaterial({ color: 0x1f211f, roughness: 0.75, metalness: 0.2 });
+    const matHorizonC = new THREE.MeshStandardMaterial({
+      color: 0x222623,
+      map: texHorizonC,
+      bumpMap: bumpMapSoil,
+      bumpScale: 0.06,
+      roughness: 0.75,
+      metalness: 0.2
+    });
     const geoC = new THREE.BoxGeometry(blockW, 0.75, blockD);
     const meshC = new THREE.Mesh(geoC, matHorizonC);
-    meshC.position.y = -2.34;
+    meshC.position.y = -2.35;
     meshC.receiveShadow = true;
     horizonCGroup.add(meshC);
 
-    // Geological Cutaway Wireframe Accents
-    const edgesGeoA = new THREE.EdgesGeometry(geoA);
-    const wireMatA = new THREE.LineBasicMaterial({ color: 0x00ff87, transparent: true, opacity: 0.25 });
-    const wireA = new THREE.LineSegments(edgesGeoA, wireMatA);
-    wireA.position.y = -0.54;
-    horizonAGroup.add(wireA);
+    // Embedded 3D Soil Aggregates & Mineral Stones along the cutaway edge
+    const stoneGeo = new THREE.DodecahedronGeometry(0.045, 1);
+    const stoneMat = new THREE.MeshStandardMaterial({ color: 0x7a6b58, roughness: 0.85 });
+    const stoneInstanced = new THREE.InstancedMesh(stoneGeo, stoneMat, 45);
+    const dummyObj = new THREE.Object3D();
+    for (let s = 0; s < 45; s++) {
+      const sx = (Math.random() - 0.5) * (blockW - 0.3);
+      const sy = -0.15 - Math.random() * 2.2;
+      const sz = (blockD / 2) - 0.05 + (Math.random() - 0.5) * 0.1; // on the front cutaway face
+      dummyObj.position.set(sx, sy, sz);
+      dummyObj.scale.set(0.6 + Math.random() * 0.8, 0.4 + Math.random() * 0.5, 0.6 + Math.random() * 0.6);
+      dummyObj.rotation.set(Math.random() * Math.PI, Math.random() * Math.PI, 0);
+      dummyObj.updateMatrix();
+      stoneInstanced.setMatrixAt(s, dummyObj.matrix);
+    }
+    stoneInstanced.instanceMatrix.needsUpdate = true;
+    geologyGroup.add(stoneInstanced);
 
     /* =========================================================================
-       4. PROCEDURAL MAIZE PLANT (ZEA MAYS) WITH SEPARABLE ANATOMY
+       5. REALISTIC MAIZE PLANT (ZEA MAYS) WITH NATURAL FOLIAGE & ROOTS
        ========================================================================= */
     const plantGroup = new THREE.Group();
     plantGroup.position.set(0.35, 0.07, 0.2);
@@ -993,97 +1131,215 @@
     };
     Object.values(anatomyParts).forEach(g => plantGroup.add(g));
 
-    // Stalk Materials
-    const stemMat = new THREE.MeshStandardMaterial({ color: 0x3ca638, roughness: 0.65 });
-    const leafMat = new THREE.MeshStandardMaterial({ color: 0x2ea043, roughness: 0.55, side: THREE.DoubleSide });
-    const rootMat = new THREE.MeshStandardMaterial({ color: 0xded0ba, roughness: 0.7 });
-    const tipMat  = new THREE.MeshStandardMaterial({ color: 0x60efff, emissive: 0x00e5ff, emissiveIntensity: 0.6 });
+    // Realistic PBR Foliage & Stalk Materials
+    const stalkMat = new THREE.MeshStandardMaterial({
+      color: 0x3d9e38,
+      roughness: 0.55,
+      metalness: 0.08
+    });
 
-    // A. Main Stem
-    const stemCurve = new THREE.CatmullRomCurve3([
+    const leafPBRMat = new THREE.MeshStandardMaterial({
+      color: 0x2ea443,
+      roughness: 0.45,
+      metalness: 0.05,
+      side: THREE.DoubleSide
+    });
+
+    const rootMat = new THREE.MeshStandardMaterial({
+      color: 0xe0d4be,
+      roughness: 0.65,
+      metalness: 0.02
+    });
+
+    // A. Realistic Maize Stalk with Tapering and Node Collars
+    const stalkPoints = [
       new THREE.Vector3(0, 0, 0),
-      new THREE.Vector3(0.02, 0.6, -0.02),
-      new THREE.Vector3(-0.03, 1.3, 0.02),
-      new THREE.Vector3(0.01, 2.0, 0.0)
-    ]);
-    const stemGeo = new THREE.TubeGeometry(stemCurve, 24, 0.048, 8, false);
-    const stemMesh = new THREE.Mesh(stemGeo, stemMat);
-    stemMesh.castShadow = true;
-    anatomyParts.stem.add(stemMesh);
+      new THREE.Vector3(0.015, 0.5, -0.01),
+      new THREE.Vector3(-0.02, 1.1, 0.015),
+      new THREE.Vector3(0.01, 1.8, -0.01),
+      new THREE.Vector3(0.005, 2.25, 0.0)
+    ];
+    const stalkCurve = new THREE.CatmullRomCurve3(stalkPoints);
+    const stalkGeo = new THREE.TubeGeometry(stalkCurve, 32, 0.046, 12, false);
+    const stalkMesh = new THREE.Mesh(stalkGeo, stalkMat);
+    stalkMesh.castShadow = true;
+    stalkMesh.receiveShadow = true;
+    anatomyParts.stem.add(stalkMesh);
 
-    // B. Leaves (Broad arching maize leaves with parallel venation)
-    const leafList = [];
-    for (let l = 0; l < 8; l++) {
-      const shape = new THREE.Shape();
-      shape.moveTo(0, 0);
-      shape.quadraticCurveTo(0.18, 0.25, 0.65, 0.32);
-      shape.quadraticCurveTo(0.22, 0.05, 0, 0);
-
-      const leafGeo = new THREE.ShapeGeometry(shape);
-      const m = new THREE.Mesh(leafGeo, leafMat.clone());
-      const ht = 0.45 + (l / 8) * 1.35;
-      m.position.set(0, ht, 0);
-      m.rotation.y = l * 2.399; // Alternate phyllotaxis
-      m.rotation.x = 0.52 + (Math.random() - 0.5) * 0.15;
-      m.scale.setScalar(1.3 + Math.random() * 0.4);
-      m.castShadow = true;
-      anatomyParts.leaves.add(m);
-      leafList.push(m);
+    // Stalk Nodes / Sheaths
+    for (let node = 1; node <= 4; node++) {
+      const nodeRingGeo = new THREE.TorusGeometry(0.05, 0.009, 8, 24);
+      nodeRingGeo.rotateX(Math.PI / 2);
+      const nodeMesh = new THREE.Mesh(nodeRingGeo, stalkMat);
+      nodeMesh.position.set(0, node * 0.45, 0);
+      anatomyParts.stem.add(nodeMesh);
     }
 
-    // C. Crown Roots (Brace roots emerging at soil surface)
-    for (let c = 0; c < 6; c++) {
-      const angle = (c / 6) * Math.PI * 2;
-      const cCurve = new THREE.CatmullRomCurve3([
-        new THREE.Vector3(0, 0.12, 0),
-        new THREE.Vector3(Math.cos(angle) * 0.12, 0.05, Math.sin(angle) * 0.12),
-        new THREE.Vector3(Math.cos(angle) * 0.24, -0.15, Math.sin(angle) * 0.24)
+    // Maize Tassel (Flower spikelets at apex)
+    for (let t = 0; t < 7; t++) {
+      const angle = (t / 7) * Math.PI * 2;
+      const tCurve = new THREE.CatmullRomCurve3([
+        new THREE.Vector3(0, 2.2, 0),
+        new THREE.Vector3(Math.cos(angle) * 0.08, 2.35, Math.sin(angle) * 0.08),
+        new THREE.Vector3(Math.cos(angle) * 0.16, 2.45, Math.sin(angle) * 0.16)
       ]);
-      const cGeo = new THREE.TubeGeometry(cCurve, 10, 0.022, 6, false);
+      const tGeo = new THREE.TubeGeometry(tCurve, 8, 0.006, 5, false);
+      const tMesh = new THREE.Mesh(tGeo, new THREE.MeshStandardMaterial({ color: 0xd9c279, roughness: 0.6 }));
+      anatomyParts.stem.add(tMesh);
+    }
+
+    // B. Anatomically Plausible Maize Leaves: 3D Arching Ribbons with Central Midrib
+    const leafMeshes = [];
+
+    function createMaizeLeafRibbon(index, totalLeaves) {
+      const leafGroup = new THREE.Group();
+      const length = 1.35 + Math.random() * 0.4;
+      const maxWidth = 0.18 + Math.random() * 0.05;
+      const segments = 24;
+
+      // Parametric curve defining natural graceful arch and drooping tip
+      const curvePoints = [];
+      const archFactor = 0.35 + index * 0.06;
+      for (let i = 0; i <= segments; i++) {
+        const u = i / segments;
+        const x = Math.sin(u * Math.PI * 0.5) * length;
+        // Maize leaf emerges outward, arches upward, then droops downward under its weight
+        const y = Math.sin(u * Math.PI * 0.8) * archFactor - (u ** 2.2) * 0.55;
+        const z = Math.sin(u * Math.PI) * (0.04 * (Math.random() - 0.5)); // gentle twist
+        curvePoints.push(new THREE.Vector3(x, y, z));
+      }
+
+      // Generate quad strip mesh along curve with width taper and V-shaped center midrib
+      const geom = new THREE.BufferGeometry();
+      const vertices = [];
+      const normals = [];
+      const uvs = [];
+      const indices = [];
+
+      for (let i = 0; i <= segments; i++) {
+        const u = i / segments;
+        const p = curvePoints[i];
+        // Width taper: narrow at base sheath, widest at 35% length, tapering to sharp pointed tip
+        const w = Math.sin(u * Math.PI) * maxWidth * (1.0 - u * 0.4);
+
+        // Calculate tangent & normal vector for ribbon width offset
+        const tangent = (i < segments)
+          ? curvePoints[i + 1].clone().sub(p).normalize()
+          : p.clone().sub(curvePoints[i - 1]).normalize();
+        const side = new THREE.Vector3(0, 0, 1).cross(tangent).normalize();
+        if (side.lengthSq() < 0.001) side.set(0, 0, 1);
+
+        // V-shaped groove (central midrib sits slightly lower than outer edges)
+        const left = p.clone().add(side.clone().multiplyScalar(w * 0.5)).add(new THREE.Vector3(0, 0.012, 0));
+        const mid  = p.clone().add(new THREE.Vector3(0, -0.008, 0)); // midrib
+        const right = p.clone().sub(side.clone().multiplyScalar(w * 0.5)).add(new THREE.Vector3(0, 0.012, 0));
+
+        // 3 vertices per row for V-profile
+        vertices.push(left.x, left.y, left.z);
+        vertices.push(mid.x, mid.y, mid.z);
+        vertices.push(right.x, right.y, right.z);
+
+        uvs.push(0, u, 0.5, u, 1, u);
+
+        if (i < segments) {
+          const row = i * 3;
+          // Left quad
+          indices.push(row, row + 3, row + 1);
+          indices.push(row + 1, row + 3, row + 4);
+          // Right quad
+          indices.push(row + 1, row + 4, row + 2);
+          indices.push(row + 2, row + 4, row + 5);
+        }
+      }
+
+      geom.setAttribute('position', new THREE.Float32BufferAttribute(vertices, 3));
+      geom.setAttribute('uv', new THREE.Float32BufferAttribute(uvs, 2));
+      geom.setIndex(indices);
+      geom.computeVertexNormals();
+
+      const mesh = new THREE.Mesh(geom, leafPBRMat);
+      mesh.castShadow = true;
+      mesh.receiveShadow = true;
+
+      // Position leaf at stalk node
+      const nodeHeight = 0.35 + (index / totalLeaves) * 1.5;
+      leafGroup.position.set(0, nodeHeight, 0);
+
+      // Distichous / alternating phyllotaxis (~137.5° golden angle spiral)
+      leafGroup.rotation.y = (index * 2.399) + (Math.random() - 0.5) * 0.15;
+      leafGroup.add(mesh);
+
+      anatomyParts.leaves.add(leafGroup);
+      leafMeshes.push(leafGroup);
+    }
+
+    for (let l = 0; l < 9; l++) {
+      createMaizeLeafRibbon(l, 9);
+    }
+
+    // C. Crown / Brace Roots (Stilt roots emerging above soil line)
+    for (let c = 0; c < 7; c++) {
+      const angle = (c / 7) * Math.PI * 2;
+      const cPoints = [
+        new THREE.Vector3(0, 0.14, 0),
+        new THREE.Vector3(Math.cos(angle) * 0.14, 0.06, Math.sin(angle) * 0.14),
+        new THREE.Vector3(Math.cos(angle) * 0.28, -0.16, Math.sin(angle) * 0.28)
+      ];
+      const cCurve = new THREE.CatmullRomCurve3(cPoints);
+      const cGeo = new THREE.TubeGeometry(cCurve, 12, 0.022, 6, false);
       const cMesh = new THREE.Mesh(cGeo, rootMat);
+      cMesh.castShadow = true;
       anatomyParts.crown.add(cMesh);
     }
 
-    // D. Main Taproot & Primary Seminal Roots
-    const mainTapCurve = new THREE.CatmullRomCurve3([
+    // D. Main Seminal Taproots & Lateral Roots
+    const tapPoints = [
       new THREE.Vector3(0, 0, 0),
-      new THREE.Vector3(0.04, -0.6, -0.02),
-      new THREE.Vector3(-0.02, -1.2, 0.03),
-      new THREE.Vector3(0.01, -1.75, 0.0)
-    ]);
-    const mainTapGeo = new THREE.TubeGeometry(mainTapCurve, 20, 0.035, 6, false);
-    const mainTapMesh = new THREE.Mesh(mainTapGeo, rootMat);
-    anatomyParts.mainRoots.add(mainTapMesh);
+      new THREE.Vector3(0.04, -0.5, -0.02),
+      new THREE.Vector3(-0.03, -1.1, 0.03),
+      new THREE.Vector3(0.015, -1.75, 0.0)
+    ];
+    const tapCurve = new THREE.CatmullRomCurve3(tapPoints);
+    const tapGeo = new THREE.TubeGeometry(tapCurve, 24, 0.036, 8, false);
+    const tapMesh = new THREE.Mesh(tapGeo, rootMat);
+    tapMesh.castShadow = true;
+    anatomyParts.mainRoots.add(tapMesh);
 
-    // E. Lateral Roots & Root Tips
-    for (let r = 0; r < 18; r++) {
-      const angle = (r / 18) * Math.PI * 2 + Math.random() * 0.3;
-      const startDepth = -0.2 - (r / 18) * 1.2;
-      const reach = 0.45 + Math.random() * 0.75;
-      const endDepth = startDepth - 0.2 - Math.random() * 0.35;
+    // Lateral Feeder Roots branching into Horizons A and B
+    for (let r = 0; r < 24; r++) {
+      const angle = (r / 24) * Math.PI * 2 + (Math.random() - 0.5) * 0.4;
+      const startDepth = -0.15 - (r / 24) * 1.35;
+      const reach = 0.45 + Math.random() * 0.8;
+      const endDepth = startDepth - 0.22 - Math.random() * 0.35;
 
-      const pStart = new THREE.Vector3(0, startDepth, 0);
-      const pEnd = new THREE.Vector3(Math.cos(angle) * reach, endDepth, Math.sin(angle) * reach);
-      const pMid = new THREE.Vector3(
-        (pStart.x + pEnd.x) * 0.5 + (Math.random() - 0.5) * 0.15,
-        (pStart.y + pEnd.y) * 0.5,
-        (pStart.z + pEnd.z) * 0.5 + (Math.random() - 0.5) * 0.15
+      const p0 = new THREE.Vector3(0, startDepth, 0);
+      const p2 = new THREE.Vector3(Math.cos(angle) * reach, endDepth, Math.sin(angle) * reach);
+      const p1 = new THREE.Vector3(
+        (p0.x + p2.x) * 0.5 + (Math.random() - 0.5) * 0.18,
+        (p0.y + p2.y) * 0.5,
+        (p0.z + p2.z) * 0.5 + (Math.random() - 0.5) * 0.18
       );
 
-      const latCurve = new THREE.CatmullRomCurve3([pStart, pMid, pEnd]);
-      const latGeo = new THREE.TubeGeometry(latCurve, 12, 0.016, 5, false);
+      const latCurve = new THREE.CatmullRomCurve3([p0, p1, p2]);
+      const latGeo = new THREE.TubeGeometry(latCurve, 12, 0.014, 5, false);
       const latMesh = new THREE.Mesh(latGeo, rootMat);
       anatomyParts.lateralRoots.add(latMesh);
 
-      // Bioluminescent Root Tip
-      const tipGeo = new THREE.SphereGeometry(0.024, 8, 8);
+      // Glowing Cyan Root Tip (zone of cell division & active water absorption)
+      const tipGeo = new THREE.SphereGeometry(0.02, 6, 6);
+      const tipMat = new THREE.MeshStandardMaterial({
+        color: 0x00e5ff,
+        emissive: 0x00e5ff,
+        emissiveIntensity: 0.6
+      });
       const tipMesh = new THREE.Mesh(tipGeo, tipMat);
-      tipMesh.position.copy(pEnd);
+      tipMesh.position.copy(p2);
       anatomyParts.rootTips.add(tipMesh);
     }
 
     /* =========================================================================
-       5. PHYSICAL SENSING PROBES & ZERTHIVA $30 HARDWARE NODE
+       6. ZERTHIVA $30 HARDWARE ASSEMBLY & SENSOR SUITE
+       Modeled from actual documented inventory: ESP32, 18650, Solar, Probes
        ========================================================================= */
     const hardwareGroup = new THREE.Group();
     hardwareGroup.position.set(-0.55, 0.0, -0.35);
@@ -1099,14 +1355,14 @@
     };
     Object.values(hwParts).forEach(g => hardwareGroup.add(g));
 
-    // 1. Solar Cap (5W Monocrystal PV Wafer)
+    // 1. Monocrystal 5W Solar Collector Disc
     const pvDiscGeo = new THREE.CylinderGeometry(0.38, 0.38, 0.04, 32);
-    const pvMat = new THREE.MeshStandardMaterial({ color: 0x091b29, metalness: 0.9, roughness: 0.15 });
+    const pvMat = new THREE.MeshStandardMaterial({ color: 0x0a1622, metalness: 0.9, roughness: 0.18 });
     const pvDisc = new THREE.Mesh(pvDiscGeo, pvMat);
     hwParts.solarWafer.add(pvDisc);
     hwParts.solarWafer.position.y = 1.05;
 
-    // 2. 360° Sentry Visual LED Beacon (Common-Cathode RGB: GPIO25, 26, 27)
+    // 2. 360° Fresnel RGB LED Sentry Beacon (GPIO25, 26, 27)
     const sentryGeo = new THREE.TorusGeometry(0.28, 0.035, 12, 32);
     sentryGeo.rotateX(Math.PI / 2);
     const sentryMat = new THREE.MeshStandardMaterial({
@@ -1121,29 +1377,38 @@
     hwParts.sentryRing.add(sentryPointLight);
     hwParts.sentryRing.position.y = 0.94;
 
-    // 3. ASA Weatherproof Housing
+    // 3. ASA Weatherproof Enclosure Body
     const chassisGeo = new THREE.CylinderGeometry(0.26, 0.24, 0.65, 32);
-    const chassisMat = new THREE.MeshStandardMaterial({ color: 0x142d25, roughness: 0.4, metalness: 0.25 });
+    const chassisMat = new THREE.MeshStandardMaterial({ color: 0x142d25, roughness: 0.35, metalness: 0.2 });
     const chassisMesh = new THREE.Mesh(chassisGeo, chassisMat);
     chassisMesh.position.y = 0.52;
     chassisMesh.castShadow = true;
     hwParts.enclosure.add(chassisMesh);
 
-    // 4. ESP32-WROOM-32 Dev Module PCB (Dual-Core Xtensa 240MHz, 0.15mA deep sleep)
+    // Weatherproof seal rings
+    for (let r = 0; r < 2; r++) {
+      const sealGeo = new THREE.TorusGeometry(0.265, 0.014, 8, 32);
+      sealGeo.rotateX(Math.PI / 2);
+      const sealMesh = new THREE.Mesh(sealGeo, new THREE.MeshStandardMaterial({ color: 0x111, roughness: 0.6 }));
+      sealMesh.position.y = 0.4 + r * 0.22;
+      hwParts.enclosure.add(sealMesh);
+    }
+
+    // 4. ESP32-WROOM-32 Dev Module PCB (Dual-Core Xtensa 240MHz, 0.15mA sleep)
     const pcbGeo = new THREE.BoxGeometry(0.3, 0.48, 0.024);
-    const pcbMat = new THREE.MeshStandardMaterial({ color: 0x0a4d2c, metalness: 0.5, roughness: 0.35 });
+    const pcbMat = new THREE.MeshStandardMaterial({ color: 0x0b4f2c, metalness: 0.5, roughness: 0.35 });
     const pcbMesh = new THREE.Mesh(pcbGeo, pcbMat);
     pcbMesh.position.y = 0.52;
     hwParts.esp32Core.add(pcbMesh);
 
-    // 5. 18650 Li-ion Cell + TP4056 Solar Charge Controller
+    // 5. 18650 3.7V Li-ion Cell + TP4056 Solar Charge Controller
     const battGeo = new THREE.CylinderGeometry(0.065, 0.065, 0.38, 16);
     const battMat = new THREE.MeshStandardMaterial({ color: 0x00a8ff, metalness: 0.5, roughness: 0.3 });
     const battMesh = new THREE.Mesh(battGeo, battMat);
     battMesh.position.set(0.08, 0.5, -0.06);
     hwParts.batteryPack.add(battMesh);
 
-    // 6. Subsurface Probes (Actual Sensor Suite at 15-25cm Root Depth)
+    // 6. Subsurface Probes at 15-25cm Root Depth
     const probeStemGeo = new THREE.CylinderGeometry(0.08, 0.08, 0.55, 16);
     const darkStemMat = new THREE.MeshStandardMaterial({ color: 0x18201b, roughness: 0.5 });
     const probeStem = new THREE.Mesh(probeStemGeo, darkStemMat);
@@ -1177,15 +1442,15 @@
     hwParts.probeShaft.add(tipMesh);
 
     /* =========================================================================
-       6. FLUID & IONIC PARTICLE SYSTEM (WATER FLOW, NPK, MEASUREMENT SIGNALS)
+       7. WATER INFILTRATION & NUTRIENT TRANSPORT PARTICLES
        ========================================================================= */
-    // Water Particles (Cyan Infiltration & Capillary Moisture)
-    const waterParticleCount = 450;
+    // Water Infiltration Particles (Electric Cyan)
+    const waterCount = 380;
     const waterGeo = new THREE.BufferGeometry();
-    const waterPositions = new Float32Array(waterParticleCount * 3);
-    for (let i = 0; i < waterParticleCount; i++) {
+    const waterPositions = new Float32Array(waterCount * 3);
+    for (let i = 0; i < waterCount; i++) {
       waterPositions[i * 3]     = (Math.random() - 0.5) * (blockW - 0.4);
-      waterPositions[i * 3 + 1] = -0.15 - Math.random() * 1.8;
+      waterPositions[i * 3 + 1] = -0.1 - Math.random() * 1.9;
       waterPositions[i * 3 + 2] = (Math.random() - 0.5) * (blockD - 0.4);
     }
     waterGeo.setAttribute('position', new THREE.BufferAttribute(waterPositions, 3));
@@ -1193,20 +1458,20 @@
       color: 0x00e5ff,
       size: 0.042,
       transparent: true,
-      opacity: 0.65,
+      opacity: 0.7,
       blending: THREE.AdditiveBlending
     });
     const waterParticles = new THREE.Points(waterGeo, waterMat);
     geologyGroup.add(waterParticles);
 
-    // Nutrient Particles (Gold/Amber NPK Ions)
-    const nutrientCount = 200;
+    // Nutrient Ions (Amber NPK Particles)
+    const nutrientCount = 180;
     const nutrientGeo = new THREE.BufferGeometry();
     const nutrientPositions = new Float32Array(nutrientCount * 3);
     for (let i = 0; i < nutrientCount; i++) {
-      nutrientPositions[i * 3]     = (Math.random() - 0.5) * (blockW - 0.6);
+      nutrientPositions[i * 3]     = (Math.random() - 0.5) * (blockW - 0.5);
       nutrientPositions[i * 3 + 1] = -0.3 - Math.random() * 1.4;
-      nutrientPositions[i * 3 + 2] = (Math.random() - 0.5) * (blockD - 0.6);
+      nutrientPositions[i * 3 + 2] = (Math.random() - 0.5) * (blockD - 0.5);
     }
     nutrientGeo.setAttribute('position', new THREE.BufferAttribute(nutrientPositions, 3));
     const nutrientMat = new THREE.PointsMaterial({
@@ -1220,7 +1485,7 @@
     geologyGroup.add(nutrientParticles);
 
     /* =========================================================================
-       7. DETERMINISTIC EXPERIMENTAL SIMULATION & DECISION ENGINE
+       8. DETERMINISTIC SIMULATION & MAAS-HOFFMAN DECISION LOGIC
        ========================================================================= */
     const simState = {
       ecRaw: 1.42,
@@ -1229,26 +1494,16 @@
       ec25: 1.42,
       status: 'SAFE',
       yieldLoss: 0.0,
-      faultType: 'NONE', // NONE, DISCONNECTED, OUT_OF_RANGE, MISSING_DATA
+      faultType: 'NONE',
       currentChapter: 0,
       autoPlay: false,
       autoPlayTimer: null
     };
 
-    function logEvent(msg) {
-      const el = document.getElementById('event-log');
-      const row = document.createElement('div');
-      row.innerText = `[${new Date().toLocaleTimeString().split(' ')[0]}] ${msg}`;
-      el.appendChild(row);
-      el.scrollTop = el.scrollHeight;
-    }
-
     function calculateAgronomicEngine() {
-      // 1. Temperature Compensation Formula: EC_25 = EC_T / [1 + alpha * (T - 25)]
       const alpha = 0.0191;
       let ec25 = simState.ecRaw / (1 + alpha * (simState.tempRaw - 25.0));
 
-      // Handle injected faults
       if (simState.faultType === 'DISCONNECTED') {
         ec25 = 0.0;
         simState.vwcRaw = 0.0;
@@ -1258,8 +1513,7 @@
 
       simState.ec25 = ec25;
 
-      // 2. Maas-Hoffman Crop Salinity Model for Maize:
-      // Maize Threshold a = 1.7 dS/m, Yield Loss Slope b = 12.0% per dS/m
+      // Maize Maas-Hoffman: Threshold 1.70 dS/m, slope 12.0%/dS/m
       const maizeThreshold = 1.70;
       const bSlope = 12.0;
 
@@ -1271,21 +1525,20 @@
         simState.status = 'SAFE';
       }
 
-      // Update UI readouts
-      document.getElementById('val-ec').innerHTML = `${simState.ec25.toFixed(2)} <span style="font-size:0.65rem; color:var(--text-dim);">dS/m</span>`;
-      document.getElementById('val-moist').innerHTML = `${simState.vwcRaw.toFixed(1)} <span style="font-size:0.65rem; color:var(--text-dim);">% VWC</span>`;
-      document.getElementById('val-temp').innerHTML = `${simState.tempRaw.toFixed(1)} <span style="font-size:0.65rem; color:var(--text-dim);">°C</span>`;
+      document.getElementById('val-ec').innerText = simState.ec25.toFixed(2);
+      document.getElementById('val-moist').innerText = simState.vwcRaw.toFixed(1);
+      document.getElementById('val-temp').innerText = simState.tempRaw.toFixed(1);
 
       const penEl = document.getElementById('val-penalty');
       if (simState.yieldLoss > 0) {
-        penEl.innerHTML = `-${simState.yieldLoss.toFixed(1)} <span style="font-size:0.65rem; color:var(--text-dim);">% LOSS</span>`;
-        penEl.style.color = 'var(--alert-crimson)';
+        penEl.innerText = `-${simState.yieldLoss.toFixed(1)}% LOSS`;
+        penEl.style.color = 'var(--accent-crimson)';
         sentryMat.color.setHex(0xff2a5f);
         sentryMat.emissive.setHex(0xff2a5f);
         sentryPointLight.color.setHex(0xff2a5f);
       } else {
-        penEl.innerHTML = `0.0 <span style="font-size:0.65rem; color:var(--text-dim);">% LOSS</span>`;
-        penEl.style.color = 'var(--status-implemented)';
+        penEl.innerText = '0.0% LOSS';
+        penEl.style.color = 'var(--accent-emerald)';
         sentryMat.color.setHex(0x00ff87);
         sentryMat.emissive.setHex(0x00ff87);
         sentryPointLight.color.setHex(0x00ff87);
@@ -1293,45 +1546,45 @@
     }
 
     /* =========================================================================
-       8. THE 10 INTERACTIVE STORY CHAPTERS (DETAILED IMPLEMENTATION)
+       9. THE 10 INTERACTIVE CHAPTERS & SCENARIO CONTROLS
        ========================================================================= */
     const CHAPTERS = [
       {
-        tag: "CHAPTER 01 // THE LIVING SURFACE",
-        badge: { text: "IMPLEMENTED", class: "badge-implemented" },
+        tag: "CHAPTER 01 // SURFACE",
+        badge: "IMPLEMENTED",
         title: "The Living Surface",
-        desc: "What happens above the soil begins beneath it. A recognizable maize plant (<em>Zea mays</em>) grows in daylight. Rotate and inspect the above-ground canopy before the subterranean descent.",
-        camPos: new THREE.Vector3(0, 2.5, 7.8),
-        camTarget: new THREE.Vector3(0, 0.4, 0),
+        desc: "What happens above the soil begins beneath it. A healthy maize plant (<em>Zea mays</em>) grows in natural agricultural daylight. Rotate and inspect the above-ground canopy before the subterranean descent.",
+        camPos: new THREE.Vector3(3.4, 0.6, 5.6),
+        camTarget: new THREE.Vector3(0, -0.15, 0),
         setup: () => {
           collapseLayers();
           assembleAnatomy();
           assembleHardware();
           setContextualUI(`
-            <div class="action-row">
-              <span class="action-label">Surface Inspection</span>
-              <button class="btn-action-small" id="btn-begin-descent"><i data-lucide="arrow-down" style="width:12px; height:12px;"></i> Begin Descent</button>
+            <div class="module-row">
+              <span class="module-label">Descent Trigger</span>
+              <button class="btn-action-small" id="btn-begin-descent"><i data-lucide="arrow-down" style="width:12px; height:12px;"></i> Descend Below Ground</button>
             </div>
           `);
           document.getElementById('btn-begin-descent').addEventListener('click', () => setChapter(1));
         }
       },
       {
-        tag: "CHAPTER 02 // DESCENT INTO THE SOIL",
-        badge: { text: "IMPLEMENTED", class: "badge-implemented" },
+        tag: "CHAPTER 02 // GEOLOGICAL DESCENT",
+        badge: "IMPLEMENTED",
         title: "Descent Into the Soil",
         desc: "The camera dives beneath the surface, revealing stratified geological soil horizons: Horizon O (litter), Horizon A (humus topsoil), Horizon B (compacted subsoil), and Horizon C (gravel drainage).",
-        camPos: new THREE.Vector3(3.6, -0.6, 5.2),
-        camTarget: new THREE.Vector3(0, -0.8, 0),
+        camPos: new THREE.Vector3(3.8, -0.6, 4.8),
+        camTarget: new THREE.Vector3(0, -0.85, 0),
         setup: () => {
           setContextualUI(`
-            <div class="action-row">
-              <span class="action-label">Horizon Separation</span>
+            <div class="module-row">
+              <span class="module-label">Layer Separation</span>
               <input type="range" class="range-slider" id="slider-layers" min="0" max="100" value="0">
             </div>
-            <div class="action-row" style="margin-top:6px;">
+            <div class="module-row" style="margin-top:6px;">
               <button class="btn-action-small" id="btn-explode-layers">Explode Layers</button>
-              <button class="btn-action-small" id="btn-collapse-layers">Collapse Layers</button>
+              <button class="btn-action-small" id="btn-collapse-layers">Collapse</button>
             </div>
           `);
           const slider = document.getElementById('slider-layers');
@@ -1341,19 +1594,19 @@
         }
       },
       {
-        tag: "CHAPTER 03 // THE PLANT DISSECTION",
-        badge: { text: "IMPLEMENTED", class: "badge-implemented" },
+        tag: "CHAPTER 03 // PLANT DISSECTION",
+        badge: "IMPLEMENTED",
         title: "The Plant Dissection",
-        desc: "Anatomical decomposition of the maize organism into leaves, stem, crown brace roots, main taproot, lateral feeder roots, and active bioluminescent root tips.",
-        camPos: new THREE.Vector3(2.4, 0.4, 4.5),
-        camTarget: new THREE.Vector3(0.35, 0.1, 0.2),
+        desc: "Anatomical decomposition of the maize organism into leaves, stem, crown brace roots, main seminal roots, lateral feeder roots, and active bioluminescent root tips.",
+        camPos: new THREE.Vector3(2.4, 0.4, 4.4),
+        camTarget: new THREE.Vector3(0.35, 0.15, 0.2),
         setup: () => {
           setContextualUI(`
-            <div class="action-row">
-              <span class="action-label">Anatomy Explosion</span>
+            <div class="module-row">
+              <span class="module-label">Anatomy Separation</span>
               <input type="range" class="range-slider" id="slider-anatomy" min="0" max="100" value="0">
             </div>
-            <div class="action-row" style="margin-top:6px;">
+            <div class="module-row" style="margin-top:6px;">
               <button class="btn-action-small" id="btn-isolate-roots">Isolate Roots</button>
               <button class="btn-action-small" id="btn-reassemble-plant">Reassemble</button>
             </div>
@@ -1363,7 +1616,6 @@
           document.getElementById('btn-isolate-roots').addEventListener('click', () => {
             gsap.to(anatomyParts.leaves.position, { y: 2.2, duration: 0.8 });
             gsap.to(anatomyParts.stem.position, { y: 1.4, duration: 0.8 });
-            logEvent("Plant anatomy dissected: Subsoil roots isolated.");
           });
           document.getElementById('btn-reassemble-plant').addEventListener('click', () => {
             slider.value = 0;
@@ -1372,24 +1624,20 @@
         }
       },
       {
-        tag: "CHAPTER 04 // THE HIDDEN WATER WORLD",
-        badge: { text: "SIMULATED", class: "badge-simulated" },
+        tag: "CHAPTER 04 // WATER WORLD",
+        badge: "SIMULATED",
         title: "The Hidden Water World",
-        desc: "Visualization of irrigation infiltration, pore redistribution, and root xylem water uptake. Adjust input water volume and permeability to test hydraulic retention.",
+        desc: "Visualization of irrigation infiltration, pore redistribution, and root xylem water uptake. Adjust input water volume to observe hydration dynamics.",
         camPos: new THREE.Vector3(3.2, -0.4, 4.2),
         camTarget: new THREE.Vector3(0, -0.7, 0),
         setup: () => {
           collapseLayers();
           setContextualUI(`
-            <div class="action-row">
-              <span class="action-label">Water Input (mm)</span>
+            <div class="module-row">
+              <span class="module-label">Water Input (mm)</span>
               <input type="range" class="range-slider" id="slider-water-input" min="5" max="50" value="20">
             </div>
-            <div class="action-row">
-              <span class="action-label">Permeability</span>
-              <span style="font-family:var(--font-mono); font-size:0.7rem; color:var(--water-cyan);">Loam Matrix</span>
-            </div>
-            <div class="action-row" style="margin-top:6px;">
+            <div class="module-row" style="margin-top:6px;">
               <button class="btn-action-small" id="btn-trigger-irrigation" style="width:100%; justify-content:center;">
                 <i data-lucide="cloud-rain" style="width:12px; height:12px;"></i> Trigger Irrigation Pulse
               </button>
@@ -1404,77 +1652,68 @@
               duration: 1.8,
               onUpdate: calculateAgronomicEngine
             });
-            logEvent(`Irrigation delivered: +${mm}mm water. Moisture increased to ${simState.vwcRaw.toFixed(1)}%.`);
           });
         }
       },
       {
         tag: "CHAPTER 05 // NUTRIENT CHEMISTRY",
-        badge: { text: "SIMULATED", class: "badge-simulated" },
+        badge: "SIMULATED",
         title: "Nutrients & Soil Chemistry",
-        desc: "<strong>Scientific Clarification:</strong> Soil EC measures bulk dissolved electrical conductivity (total ions), NOT individual N, P, or K molecules. Nutrient pathways are displayed here as a conceptual educational model.",
+        desc: "<strong>Scientific Clarification:</strong> Soil EC measures bulk dissolved electrical conductivity (total ions), NOT individual N, P, or K molecules. Nutrient pathways are shown here as a conceptual educational model.",
         camPos: new THREE.Vector3(-2.8, -0.8, 3.8),
         camTarget: new THREE.Vector3(0, -0.9, 0),
         setup: () => {
           setContextualUI(`
-            <div class="action-row">
-              <span class="action-label">Highlight Ion</span>
-              <select id="select-nutrient-ion" style="background:#000; color:#fff; border:1px solid #333; padding:3px 6px; border-radius:4px; font-family:var(--font-mono); font-size:0.65rem;">
+            <div class="module-row">
+              <span class="module-label">Ion Transport Mode</span>
+              <select id="select-nutrient-ion" style="background:#000; color:#fff; border:1px solid #333; padding:4px 6px; border-radius:4px; font-family:var(--font-mono); font-size:0.65rem;">
                 <option value="ec">Bulk Electrical Conductivity (EC)</option>
                 <option value="n">Nitrogen (NO3- / Mass Flow)</option>
                 <option value="p">Phosphorus (H2PO4- / Diffusion)</option>
                 <option value="k">Potassium (K+ / Root Contact)</option>
               </select>
             </div>
-            <div class="action-row" style="margin-top:6px;">
-              <span style="font-size:0.68rem; color:var(--nutrient-amber);">*EC ≠ Soil Fertility. EC measures salinity stress.</span>
-            </div>
           `);
-          document.getElementById('select-nutrient-ion').addEventListener('change', (e) => {
-            sound.playPing(750);
-            logEvent(`Ion view switched: ${e.target.options[e.target.selectedIndex].text}`);
-          });
         }
       },
       {
-        tag: "CHAPTER 06 // THE SENSOR REVEAL",
-        badge: { text: "MEASURED", class: "badge-measured" },
+        tag: "CHAPTER 06 // SENSOR REVEAL",
+        badge: "MEASURED",
         title: "The Sensor Reveal",
         desc: "Inspect the physical sensor suite embedded in the root zone: dual stainless steel electrode rings (analog EC on GPIO34), FR4 capacitive blade (VWC on GPIO35), and DS18B20 1-wire thermal probe (GPIO4).",
         camPos: new THREE.Vector3(-0.55, -0.4, 2.0),
         camTarget: new THREE.Vector3(-0.55, -0.7, -0.35),
         setup: () => {
           setContextualUI(`
-            <div class="action-row">
-              <span class="action-label">Sample Sensor</span>
-              <button class="btn-action-small" id="btn-sample-sensors"><i data-lucide="zap" style="width:12px; height:12px;"></i> Read ADC (12-bit)</button>
+            <div class="module-row">
+              <span class="module-label">Sensor Sampling</span>
+              <button class="btn-action-small" id="btn-sample-sensors"><i data-lucide="zap" style="width:12px; height:12px;"></i> Read 12-Bit ADC</button>
             </div>
-            <div class="action-row" style="margin-top:6px;">
-              <span style="font-family:var(--font-mono); font-size:0.68rem; color:var(--water-cyan);">ADC1_CH6: 1840 | ADC1_CH7: 2110</span>
+            <div class="module-row" style="margin-top:6px;">
+              <span style="font-family:var(--font-mono); font-size:0.65rem; color:var(--accent-cyan);">ADC1_CH6: 1840 | ADC1_CH7: 2110</span>
             </div>
           `);
           document.getElementById('btn-sample-sensors').addEventListener('click', () => {
             sound.playPing(920);
-            logEvent("Sensor sampled: EC_ADC=1840, VWC_ADC=2110, TEMP=24.6°C.");
           });
         }
       },
       {
         tag: "CHAPTER 07 // HARDWARE EXPLOSION",
-        badge: { text: "IMPLEMENTED", class: "badge-implemented" },
+        badge: "IMPLEMENTED",
         title: "Hardware Assembly Explosion",
-        desc: "Cinematic vertical exploded view of the Zerthiva $30 Node: 5W solar wafer, 360° Fresnel LED sentry beacon, ASA housing, ESP32 dual-core MCU, 18650 Li-ion storage, and soil probe stem.",
+        desc: "Cinematic vertical exploded view of the Zerthiva $30 Node: 5W solar wafer, 360° Fresnel RGB beacon, ASA housing, ESP32 MCU, 18650 cell, and soil probe stem.",
         camPos: new THREE.Vector3(-0.55, 1.2, 2.8),
         camTarget: new THREE.Vector3(-0.55, 0.4, -0.35),
         setup: () => {
           setContextualUI(`
-            <div class="action-row">
-              <span class="action-label">Hardware Assembly</span>
+            <div class="module-row">
+              <span class="module-label">Hardware View</span>
               <button class="btn-action-small" id="btn-explode-hw">Explode Assembly</button>
               <button class="btn-action-small" id="btn-assemble-hw">Reassemble</button>
             </div>
-            <div class="action-row" style="margin-top:6px;">
-              <span style="font-family:var(--font-mono); font-size:0.68rem; color:var(--status-implemented);">TOTAL BOM: $30.00 EX-FACTORY</span>
+            <div class="module-row" style="margin-top:6px;">
+              <span style="font-family:var(--font-mono); font-size:0.65rem; color:var(--accent-emerald);">TOTAL BOM: $30.00 EX-FACTORY</span>
             </div>
           `);
           document.getElementById('btn-explode-hw').addEventListener('click', () => explodeHardware());
@@ -1484,7 +1723,7 @@
       },
       {
         tag: "CHAPTER 08 // MONITORING SEQUENCE",
-        badge: { text: "IMPLEMENTED", class: "badge-implemented" },
+        badge: "IMPLEMENTED",
         title: "The Monitoring Sequence",
         desc: "Step through the 9-stage engineering execution pipeline: Deep Sleep Wake (0.15mA) &rarr; Sensor Excitation &rarr; ADC Conversion &rarr; 25°C Normalization &rarr; Maas-Hoffman Evaluation &rarr; Output Dispatch.",
         camPos: new THREE.Vector3(0, 0.2, 4.8),
@@ -1492,11 +1731,11 @@
         setup: () => {
           assembleHardware();
           setContextualUI(`
-            <div class="action-row">
-              <span class="action-label">Sequence Stage</span>
-              <span id="label-seq-step" style="font-family:var(--font-mono); font-size:0.7rem; color:var(--status-implemented);">STAGE 1/9: WAKE</span>
+            <div class="module-row">
+              <span class="module-label">Pipeline Stage</span>
+              <span id="label-seq-step" style="font-family:var(--font-mono); font-size:0.68rem; color:var(--accent-emerald);">STAGE 1/9: WAKE</span>
             </div>
-            <div class="action-row" style="margin-top:6px;">
+            <div class="module-row" style="margin-top:6px;">
               <button class="btn-action-small" id="btn-step-sequence"><i data-lucide="play" style="width:12px; height:12px;"></i> Step Pipeline</button>
               <button class="btn-action-small" id="btn-auto-sequence">Run All</button>
             </div>
@@ -1509,14 +1748,13 @@
             "STAGE 4/9: DS18B20 1-WIRE TEMPERATURE READ",
             "STAGE 5/9: 25°C COMPENSATION (alpha=0.0191)",
             "STAGE 6/9: VWC% DIELECTRIC CALIBRATION",
-            "STAGE 7/9: MAAS-HOFFMAN MAIZE COMPARISON (1.70)",
+            "STAGE 7/9: MAAS-HOFFMAN COMPARISON (1.70)",
             "STAGE 8/9: TRI-COLOR BEACON & GSM DISPATCH",
             "STAGE 9/9: MICRO-SD SPI ROLLING LOG FLUSH"
           ];
           document.getElementById('btn-step-sequence').addEventListener('click', () => {
             sound.playPing(600 + seqIdx * 50);
             document.getElementById('label-seq-step').innerText = seqSteps[seqIdx - 1];
-            logEvent(`Pipeline executed: ${seqSteps[seqIdx - 1]}`);
             seqIdx = (seqIdx % 9) + 1;
           });
           document.getElementById('btn-auto-sequence').addEventListener('click', () => {
@@ -1525,42 +1763,41 @@
               if (seqIdx > 9) { clearInterval(timer); return; }
               sound.playPing(600 + seqIdx * 50);
               document.getElementById('label-seq-step').innerText = seqSteps[seqIdx - 1];
-              logEvent(`Pipeline: ${seqSteps[seqIdx - 1]}`);
               seqIdx++;
             }, 600);
           });
         }
       },
       {
-        tag: "CHAPTER 09 // THE DECISION ENGINE",
-        badge: { text: "IMPLEMENTED", class: "badge-implemented" },
+        tag: "CHAPTER 09 // DECISION ENGINE",
+        badge: "IMPLEMENTED",
         title: "The Decision Engine",
         desc: "Spatial software network graph showing zero-cloud local edge inference: Sensor Input &rarr; Metric Calibration &rarr; FAO-56 Water Balance &rarr; Maas-Hoffman Salinity Evaluator &rarr; Local Alert Dispatcher.",
         camPos: new THREE.Vector3(-1.8, 0.4, 4.2),
         camTarget: new THREE.Vector3(0, 0, 0),
         setup: () => {
           setContextualUI(`
-            <div class="action-row">
-              <span class="action-label">Decision Node</span>
-              <span style="font-family:var(--font-mono); font-size:0.7rem; color:var(--status-implemented);">MAAS_HOFFMAN_ENGINE</span>
+            <div class="module-row">
+              <span class="module-label">Edge Logic</span>
+              <span style="font-family:var(--font-mono); font-size:0.68rem; color:var(--accent-emerald);">MAAS_HOFFMAN_ENGINE</span>
             </div>
-            <div class="action-row" style="margin-top:6px;">
-              <span style="font-size:0.68rem; color:var(--text-muted);">Threshold: 1.70 dS/m | Yield slope: 12.0%/dS/m</span>
+            <div class="module-row" style="margin-top:6px;">
+              <span style="font-size:0.65rem; color:var(--text-muted);">Threshold: 1.70 dS/m | Yield slope: 12.0%/dS/m</span>
             </div>
           `);
         }
       },
       {
-        tag: "CHAPTER 10 // THE EXPERIMENTAL LAB",
-        badge: { text: "SIMULATED", class: "badge-simulated" },
+        tag: "CHAPTER 10 // EXPERIMENTAL LAB",
+        badge: "SIMULATED",
         title: "The Experimental Test Lab",
         desc: "Controlled test environment for fault injection, sensor drift, missing data, and boundary tests. Evaluate deterministic pass/fail results against specified project acceptance criteria.",
         camPos: new THREE.Vector3(0, 1.2, 5.8),
         camTarget: new THREE.Vector3(0, 0, 0),
         setup: () => {
           setContextualUI(`
-            <div class="action-row">
-              <span class="action-label">Test Scenario</span>
+            <div class="module-row">
+              <span class="module-label">Test Scenario</span>
               <select id="select-test-scenario" style="background:#000; color:#fff; border:1px solid #333; padding:4px 6px; border-radius:4px; font-family:var(--font-mono); font-size:0.65rem;">
                 <option value="normal">Scenario A: Normal Baseline (EC 1.42)</option>
                 <option value="dry">Scenario B: Dry Soil Drought (VWC 11%)</option>
@@ -1570,9 +1807,9 @@
                 <option value="boundary">Scenario F: Threshold Boundary (EC 1.70)</option>
               </select>
             </div>
-            <div class="action-row" style="margin-top:6px;">
-              <span class="action-label">Deterministic Result</span>
-              <span id="label-test-result" style="font-family:var(--font-mono); font-weight:700; color:var(--status-implemented);">PASS [STATUS: NOMINAL]</span>
+            <div class="module-row" style="margin-top:6px;">
+              <span class="module-label">Result</span>
+              <span id="label-test-result" style="font-family:var(--font-mono); font-weight:700; color:var(--accent-emerald);">PASS [STATUS: NOMINAL]</span>
             </div>
           `);
           document.getElementById('select-test-scenario').addEventListener('change', (e) => {
@@ -1580,27 +1817,26 @@
             const resEl = document.getElementById('label-test-result');
             if (sc === 'normal') {
               simState.faultType = 'NONE'; simState.ecRaw = 1.42; simState.vwcRaw = 31.8;
-              resEl.innerText = "PASS [NOMINAL]"; resEl.style.color = "var(--status-implemented)";
+              resEl.innerText = "PASS [NOMINAL]"; resEl.style.color = "var(--accent-emerald)";
             } else if (sc === 'dry') {
               simState.faultType = 'NONE'; simState.ecRaw = 1.55; simState.vwcRaw = 11.2;
-              resEl.innerText = "PASS [PWP WILT DETECTED]"; resEl.style.color = "var(--status-simulated)";
+              resEl.innerText = "PASS [PWP WILT DETECTED]"; resEl.style.color = "var(--accent-amber)";
             } else if (sc === 'moist') {
               simState.faultType = 'NONE'; simState.ecRaw = 1.20; simState.vwcRaw = 34.0;
-              resEl.innerText = "PASS [FIELD CAP]"; resEl.style.color = "var(--status-implemented)";
+              resEl.innerText = "PASS [FIELD CAP]"; resEl.style.color = "var(--accent-emerald)";
             } else if (sc === 'lockout') {
               simState.faultType = 'NONE'; simState.ecRaw = 3.40; simState.vwcRaw = 20.0;
-              resEl.innerText = "PASS [LOCKOUT ALERT SENT]"; resEl.style.color = "var(--alert-crimson)";
+              resEl.innerText = "PASS [LOCKOUT ALERT SENT]"; resEl.style.color = "var(--accent-crimson)";
               sound.playWarning();
             } else if (sc === 'disconnect') {
               simState.faultType = 'DISCONNECTED';
-              resEl.innerText = "PASS [FAULT HANDLED: ZERO_READ]"; resEl.style.color = "var(--alert-crimson)";
+              resEl.innerText = "PASS [FAULT HANDLED: ZERO_READ]"; resEl.style.color = "var(--accent-crimson)";
               sound.playWarning();
             } else if (sc === 'boundary') {
               simState.faultType = 'NONE'; simState.ecRaw = 1.70; simState.vwcRaw = 26.0;
-              resEl.innerText = "PASS [BOUNDARY LIMIT 1.70]"; resEl.style.color = "var(--status-simulated)";
+              resEl.innerText = "PASS [BOUNDARY LIMIT 1.70]"; resEl.style.color = "var(--accent-amber)";
             }
             calculateAgronomicEngine();
-            logEvent(`Test run: ${sc.toUpperCase()} -> ${resEl.innerText}`);
           });
         }
       }
@@ -1618,26 +1854,19 @@
 
       const ch = CHAPTERS[index];
 
-      // Update text
       document.getElementById('label-chapter-tag').innerText = ch.tag;
       document.getElementById('text-chapter-title').innerHTML = ch.title;
       document.getElementById('text-chapter-desc').innerHTML = ch.desc;
       document.getElementById('label-playback-status').innerText = `CHAPTER ${index + 1} OF 10`;
+      document.getElementById('badge-evidence-type').innerText = ch.badge;
 
-      const badge = document.getElementById('badge-evidence-type');
-      badge.className = `badge-evidence ${ch.badge.class}`;
-      badge.innerText = ch.badge.text;
-
-      // Update rail bullets
       document.querySelectorAll('.chapter-node').forEach((node, i) => {
         if (i === index) node.classList.add('active');
         else node.classList.remove('active');
       });
 
-      // Update progress bar
-      document.getElementById('timeline-progress-bar').style.width = `${((index + 1) / 10) * 100}%`;
+      document.getElementById('timeline-progress-fill').style.width = `${((index + 1) / 10) * 100}%`;
 
-      // Smooth camera transition
       gsap.to(camera.position, {
         x: ch.camPos.x,
         y: ch.camPos.y,
@@ -1653,17 +1882,13 @@
         ease: "power3.inOut"
       });
 
-      // Execute chapter setup
       ch.setup();
       calculateAgronomicEngine();
-      logEvent(`Navigated to ${ch.tag}`);
     }
 
-    // Rail bullet click handlers
     document.querySelectorAll('.chapter-node').forEach(node => {
       node.addEventListener('click', () => {
-        const c = parseInt(node.dataset.chapter);
-        setChapter(c);
+        setChapter(parseInt(node.dataset.chapter));
       });
     });
 
@@ -1675,13 +1900,12 @@
       setChapter(prev);
     });
 
-    // Reset View button
     document.getElementById('btn-reset-view').addEventListener('click', () => {
       sound.playPing(600);
       setChapter(0);
     });
 
-    // Autonomous Tour Toggle
+    // Autonomous Narrative Tour
     document.getElementById('btn-play-tour').addEventListener('click', () => {
       simState.autoPlay = !simState.autoPlay;
       const icon = document.getElementById('icon-play-tour');
@@ -1706,41 +1930,89 @@
     });
 
     /* =========================================================================
-       9. SIGNATURE CONTINUOUS INTERACTION: "REVEAL THE HIDDEN SYSTEM"
+       10. CINEMATIC OPENING CAMERA SEQUENCE (STEP 7)
        ========================================================================= */
-    document.getElementById('btn-signature-cutaway').addEventListener('click', () => {
-      sound.playPing(880);
-      logEvent(">>> SIGNATURE CUTAWAY SEQUENCE INITIATED <<<");
+    let openingTimeline = null;
+    const skipBtn = document.getElementById('btn-skip-intro');
 
-      const tl = gsap.timeline();
+    function startCinematicOpening() {
+      skipBtn.style.display = 'block';
 
-      // Stage 1 & 2: Camera descends toward plant & soil opens
-      tl.to(camera.position, { x: 3.8, y: -0.4, z: 5.5, duration: 2.0, ease: "power2.inOut" })
-        .to(controls.target, { x: 0, y: -0.6, z: 0, duration: 2.0, ease: "power2.inOut" }, "<")
+      // 1. Start far away showing the full plant in daylight
+      camera.position.set(0, 3.2, 7.8);
+      controls.target.set(0, 0.8, 0);
+      controls.enabled = false;
 
-      // Stage 3 & 4: Soil blocks separate vertically
-        .call(() => { applyLayerSeparation(0.85); sound.playPing(520); })
+      openingTimeline = gsap.timeline({
+        onComplete: () => {
+          finishOpeningSequence();
+        }
+      });
 
-      // Stage 5 & 6: Water & nutrient pathways illuminate
-        .to(waterMat, { opacity: 0.95, duration: 0.8 })
-        .to(nutrientMat, { opacity: 1.0, duration: 0.8 }, "<")
+      // 2. Approach plant gently
+      openingTimeline.to(camera.position, { x: 2.2, y: 1.4, z: 5.5, duration: 3.0, ease: "power2.inOut" })
+        .to(controls.target, { x: 0.2, y: 0.4, z: 0.1, duration: 3.0, ease: "power2.inOut" }, "<")
 
-      // Stage 7 & 8: Hardware explodes into product decomposition
-        .call(() => { explodeHardware(); sound.playPing(680); })
+      // 3. Rotate smoothly to reveal the geological soil cutaway
+        .to(camera.position, { x: 3.8, y: -0.3, z: 4.8, duration: 3.5, ease: "power2.inOut" })
+        .to(controls.target, { x: 0, y: -0.6, z: 0, duration: 3.5, ease: "power2.inOut" }, "<")
 
-      // Stage 9 & 10: Beacon pulses emerald & camera locks onto node
-        .to(camera.position, { x: -0.55, y: 0.8, z: 3.2, duration: 2.0, ease: "power3.inOut" })
-        .to(controls.target, { x: -0.55, y: 0.4, z: -0.35, duration: 2.0, ease: "power3.inOut" }, "<")
+      // 4. Descend beneath the surface & reveal root network
+        .to(camera.position, { x: 1.8, y: -0.7, z: 3.2, duration: 3.0, ease: "power2.inOut" })
+        .to(controls.target, { x: 0.2, y: -0.9, z: 0.1, duration: 3.0, ease: "power2.inOut" }, "<")
 
-      // Stage 11 & 12: Finish with clean technical telemetry display
+      // 5. Illuminate sensor probe at 15-25cm
         .call(() => {
-          sound.playPing(1046);
-          logEvent("Signature Reveal Complete: All 12 physiological & engineering stages exposed.");
-        });
+          sound.playPing(750);
+        })
+        .to(camera.position, { x: -0.55, y: -0.4, z: 2.2, duration: 2.5, ease: "power2.inOut" })
+        .to(controls.target, { x: -0.55, y: -0.65, z: -0.35, duration: 2.5, ease: "power2.inOut" }, "<")
+
+      // 6. Signal follows probe stem up to ESP32 node
+        .call(() => {
+          sound.playPing(920);
+        })
+        .to(camera.position, { x: -0.55, y: 0.9, z: 2.5, duration: 2.0, ease: "power2.inOut" })
+        .to(controls.target, { x: -0.55, y: 0.5, z: -0.35, duration: 2.0, ease: "power2.inOut" }, "<")
+
+      // 7. Settle smoothly into default hero composition
+        .to(camera.position, { x: 3.4, y: 0.6, z: 5.6, duration: 3.0, ease: "power3.inOut" })
+        .to(controls.target, { x: 0, y: -0.15, z: 0, duration: 3.0, ease: "power3.inOut" }, "<");
+    }
+
+    function finishOpeningSequence() {
+      if (openingTimeline) openingTimeline.kill();
+      skipBtn.style.display = 'none';
+      controls.enabled = true;
+      gsap.to(camera.position, { x: 3.4, y: 0.6, z: 5.6, duration: 1.0 });
+      gsap.to(controls.target, { x: 0, y: -0.15, z: 0, duration: 1.0 });
+      setChapter(0);
+    }
+
+    skipBtn.addEventListener('click', () => {
+      finishOpeningSequence();
     });
 
     /* =========================================================================
-       10. PHYSICAL ANIMATIONS: LAYERS, ANATOMY, AND HARDWARE EXPLOSION
+       11. SIGNATURE CONTINUOUS INTERACTION: "REVEAL THE HIDDEN SYSTEM"
+       ========================================================================= */
+    document.getElementById('btn-signature-reveal').addEventListener('click', () => {
+      sound.playPing(880);
+      const tl = gsap.timeline();
+
+      tl.to(camera.position, { x: 3.8, y: -0.4, z: 5.2, duration: 2.0, ease: "power2.inOut" })
+        .to(controls.target, { x: 0, y: -0.6, z: 0, duration: 2.0, ease: "power2.inOut" }, "<")
+        .call(() => { applyLayerSeparation(0.8); sound.playPing(520); })
+        .to(waterMat, { opacity: 0.95, duration: 0.8 })
+        .to(nutrientMat, { opacity: 1.0, duration: 0.8 }, "<")
+        .call(() => { explodeHardware(); sound.playPing(680); })
+        .to(camera.position, { x: -0.55, y: 0.8, z: 3.2, duration: 2.0, ease: "power2.inOut" })
+        .to(controls.target, { x: -0.55, y: 0.4, z: -0.35, duration: 2.0, ease: "power2.inOut" }, "<")
+        .call(() => { sound.playPing(1046); });
+    });
+
+    /* =========================================================================
+       12. GEOLOGICAL & HARDWARE PHYSICAL ANIMATIONS
        ========================================================================= */
     function applyLayerSeparation(val) {
       gsap.to(horizonOGroup.position, { y: val * 0.45, duration: 0.4 });
@@ -1776,7 +2048,6 @@
       gsap.to(hwParts.esp32Core.position,   { x: -0.5, y: 0.6, duration: dur, ease });
       gsap.to(hwParts.batteryPack.position, { x: 0.5, y: 0.6, duration: dur, ease });
       gsap.to(hwParts.probeShaft.position,  { y: -0.85, duration: dur, ease });
-      logEvent("Hardware exploded: ESP32, Solar Cap, 18650, and Probes separated.");
     }
 
     function assembleHardware() {
@@ -1791,7 +2062,7 @@
     }
 
     /* =========================================================================
-       11. MODAL INSPECTOR FOR SPATIAL HOTSPOTS
+       13. MODAL INSPECTOR
        ========================================================================= */
     const modal = document.getElementById('inspector-modal');
     const modalBody = document.getElementById('modal-body-content');
@@ -1803,16 +2074,13 @@
     document.getElementById('hotspot-probe').addEventListener('click', () => {
       sound.playPing(880);
       modalBody.innerHTML = `
-        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
-          <h3 style="font-family:var(--font-display); font-size:1.3rem; color:var(--status-implemented);">
-            EC & Capacitive Root Probe
-          </h3>
-          <span class="badge-evidence badge-implemented">IMPLEMENTED</span>
-        </div>
+        <h3 style="font-family:var(--font-display); font-size:1.3rem; color:var(--accent-emerald); margin-bottom:8px;">
+          EC & Dielectric Subsurface Probe
+        </h3>
         <p style="font-size:0.82rem; line-height:1.55; color:var(--text-muted); margin-bottom:12px;">
           Positioned directly at the 15–25cm maize active root horizon. Employs 10 kHz AC waveform excitation to avoid electrolysis polarization while calculating temperature-normalized bulk Electrical Conductivity.
         </p>
-        <div style="background:rgba(0,0,0,0.4); padding:10px 14px; border-radius:8px; font-family:var(--font-mono); font-size:0.72rem; color:var(--water-cyan); margin-bottom:10px;">
+        <div style="background:rgba(0,0,0,0.4); padding:10px 14px; border-radius:8px; font-family:var(--font-mono); font-size:0.72rem; color:var(--accent-cyan); margin-bottom:10px;">
           EC₂₅ = EC_T / [1 + 0.0191 × (T_soil - 25)]
         </div>
         <div style="font-size:0.75rem; color:var(--text-dim);">
@@ -1825,12 +2093,9 @@
     document.getElementById('hotspot-node').addEventListener('click', () => {
       sound.playPing(880);
       modalBody.innerHTML = `
-        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
-          <h3 style="font-family:var(--font-display); font-size:1.3rem; color:var(--water-cyan);">
-            Zerthiva $30 Edge Gateway
-          </h3>
-          <span class="badge-evidence badge-implemented">IMPLEMENTED</span>
-        </div>
+        <h3 style="font-family:var(--font-display); font-size:1.3rem; color:var(--accent-cyan); margin-bottom:8px;">
+          Zerthiva $30 Edge Gateway
+        </h3>
         <p style="font-size:0.82rem; line-height:1.55; color:var(--text-muted); margin-bottom:12px;">
           100% off-grid autonomous edge computer engineered for zero-cloud rural deployment. Runs local MicroPython/PlatformIO firmware with Maas-Hoffman and FAO-56 decision logic.
         </p>
@@ -1845,7 +2110,7 @@
     });
 
     /* =========================================================================
-       12. RENDER LOOP (60 FPS) & DYNAMIC PARTICLES
+       14. ANIMATION & RENDER LOOP (60 FPS)
        ========================================================================= */
     const clock = new THREE.Clock();
 
@@ -1870,12 +2135,12 @@
 
       const t = clock.getElapsedTime();
 
-      // Subtle breeze swaying the maize leaves
-      leafList.forEach((leaf, i) => {
-        leaf.rotation.z = Math.sin(t * 1.8 + i) * 0.035;
+      // Natural organic leaf motion in gentle agricultural breeze
+      leafMeshes.forEach((leafGroup, i) => {
+        leafGroup.rotation.z = Math.sin(t * 1.6 + i * 0.8) * 0.025;
       });
 
-      // Beacon LED soft oscillation
+      // Beacon LED soft pulse
       if (simState.status === 'SAFE') {
         const pulse = 1.2 + Math.sin(t * 3.5) * 0.35;
         sentryMat.emissiveIntensity = pulse;
@@ -1886,24 +2151,24 @@
         sentryPointLight.intensity = strobe * 2.5;
       }
 
-      // Animate Water Particles downwards
+      // Water Infiltration Particles
       const wPos = waterGeo.attributes.position.array;
-      for (let i = 0; i < waterParticleCount; i++) {
-        wPos[i * 3 + 1] -= 0.004;
+      for (let i = 0; i < waterCount; i++) {
+        wPos[i * 3 + 1] -= 0.005;
         if (wPos[i * 3 + 1] < -2.4) {
           wPos[i * 3 + 1] = -0.15;
         }
       }
       waterGeo.attributes.position.needsUpdate = true;
 
-      // Animate Nutrient Particles drifting gently
+      // Nutrient Ions subtle brownian motion
       const nPos = nutrientGeo.attributes.position.array;
       for (let i = 0; i < nutrientCount; i++) {
-        nPos[i * 3 + 1] += Math.sin(t * 2.0 + i) * 0.001;
+        nPos[i * 3 + 1] += Math.sin(t * 2.2 + i) * 0.0008;
       }
       nutrientGeo.attributes.position.needsUpdate = true;
 
-      // Update projected screen hotspots
+      // Hotspot projections
       updateHotspotPosition('hotspot-probe', new THREE.Vector3(-0.55, -0.65, -0.35));
       updateHotspotPosition('hotspot-node', new THREE.Vector3(-0.55, 0.95, -0.35));
 
@@ -1911,15 +2176,14 @@
       renderer.render(scene, camera);
     }
 
-    // Resize Handler
     window.addEventListener('resize', () => {
       camera.aspect = window.innerWidth / window.innerHeight;
       camera.updateProjectionMatrix();
       renderer.setSize(window.innerWidth, window.innerHeight);
     });
 
-    // Initialize Chapter 01
-    setChapter(0);
+    // Start with the opening cinematic camera sweep
+    startCinematicOpening();
     animate();
   </script>
 </body>
