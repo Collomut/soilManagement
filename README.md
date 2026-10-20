@@ -1,12 +1,12 @@
-# 🌱 SoilGuard: Soil Intelligence System (SIS)
+# 🌱 Zerthiva: Soil Intelligence System (SIS)
 > *"Know Your Soil. Feed Your Field."*
 
-[![Competition](https://img.shields.io/badge/Innovation_Competition-Master_Submission-059669?style=for-the-badge)](./SoilGuard_Full_Documentation.html)
-[![Stage](https://img.shields.io/badge/Project_Stage-Prototype-d97706?style=for-the-badge)](./SoilGuard_Full_Documentation.html)
-[![Hardware](https://img.shields.io/badge/Hardware_Cost-$30_Node-0284c7?style=for-the-badge)](./SoilGuard_Full_Documentation.html)
-[![Offline](https://img.shields.io/badge/Operation-100%25_Offline-10b981?style=for-the-badge)](./SoilGuard_Full_Documentation.html)
+[![Competition](https://img.shields.io/badge/Innovation_Competition-Master_Submission-059669?style=for-the-badge)](./Zerthiva_Full_Documentation.html)
+[![Stage](https://img.shields.io/badge/Project_Stage-Prototype-d97706?style=for-the-badge)](./Zerthiva_Full_Documentation.html)
+[![Hardware](https://img.shields.io/badge/Hardware_Cost-$30_Node-0284c7?style=for-the-badge)](./Zerthiva_Full_Documentation.html)
+[![Offline](https://img.shields.io/badge/Operation-100%25_Offline-10b981?style=for-the-badge)](./Zerthiva_Full_Documentation.html)
 
-**SoilGuard** is an affordable, field-deployed soil intelligence system that monitors soil salinity (Electrical Conductivity) in real time, provides precision irrigation timing, and calculates crop-specific fertilizer dosages, stopping irreversible soil degradation and crop loss before it occurs.
+**Zerthiva** is an affordable, field-deployed soil intelligence system that monitors soil salinity (Electrical Conductivity) in real time, provides precision irrigation timing, and calculates crop-specific fertilizer dosages, stopping irreversible soil degradation and crop loss before it occurs.
 
 ---
 
@@ -14,10 +14,10 @@
 
 This repository contains the complete 58-section master project plan and technical dossier:
 
-* 🌐 **[Interactive Web Documentation (SoilGuard_Full_Documentation.html)](./SoilGuard_Full_Documentation.html)**  
+* 🌐 **[Interactive Web Documentation (Zerthiva_Full_Documentation.html)](./Zerthiva_Full_Documentation.html)**  
   *The full self-contained master document featuring live real-time position scrollspy, categorized 5-tier sidebar navigation, dynamic reading progress bar, bold topic hierarchy, and responsive data tables.*
 * 🖨️ **Print & PDF Export:**  
-  *Open `SoilGuard_Full_Documentation.html` in Chrome or Edge and press `Ctrl+P` (Save as PDF). Built-in `@media print` rules automatically format the document into a clean, 74-page master submission with section page breaks, edge-to-edge margins, and hidden navigation.*
+  *Open `Zerthiva_Full_Documentation.html` in Chrome or Edge and press `Ctrl+P` (Save as PDF). Built-in `@media print` rules automatically format the document into a clean, 74-page master submission with section page breaks, edge-to-edge margins, and hidden navigation.*
 
 ---
 
@@ -36,7 +36,7 @@ Globally, soil salinization destroys **1.5 million hectares of arable land annua
 
 ## 🛠️ The Solution & System Architecture
 
-SoilGuard resolves this with a **$30.00 modular field node**:
+Zerthiva resolves this with a **$30.00 modular field node**:
 
 ```
  [ Field Soil ] 
@@ -63,7 +63,7 @@ SoilGuard resolves this with a **$30.00 modular field node**:
 
 ## 📊 Summary of Impact Targets
 
-| Parameter | Traditional Baseline | SoilGuard Managed Target | Verification Method |
+| Parameter | Traditional Baseline | Zerthiva Managed Target | Verification Method |
 |---|---|---|---|
 | **Irrigation Water Use** | ~8,000 m³/ha/season | 5,000–6,000 m³/ha/season (**30–50% saved**) | Flow meter & pump runtime logs |
 | **Fertilizer Consumption** | ~200 kg/ha/season | 130–160 kg/ha/season (**25–40% saved**) | Purchase receipts & field logs |
@@ -76,7 +76,7 @@ SoilGuard resolves this with a **$30.00 modular field node**:
 
 ## 🏛️ Master Plan Architecture (58 Sections)
 
-The full documentation in `SoilGuard_Full_Documentation.html` is structured into five levels:
+The full documentation in `Zerthiva_Full_Documentation.html` is structured into five levels:
 
 1. **Level 1: Foundations & Context (Sections 1–10):** Project Identity, Executive Summary, Agricultural Context, Problem Statement, 5-Whys Root Cause Analysis, Evidence Base, Case Studies (iCow, Proximity Designs, failed World Bank IoT), Competitor Matrix, and The Unaddressed Gap.
 2. **Level 2: Solution Architecture & Science (Sections 11–19):** Top-to-Bottom Hardware/Firmware Design, 3-Persona User Journeys, Technology Justification, System Flow Architecture, Data Governance, Phase 2 AI/ML Strategy, Agronomic Science (FAO-56, Osmosis, Leaching Fractions), and 10-Stage Crop Process Models.
@@ -94,10 +94,10 @@ The full documentation in `SoilGuard_Full_Documentation.html` is structured into
    cd soilManagement
    ```
 2. **Open the interactive documentation:**
-   Simply double-click `SoilGuard_Full_Documentation.html` or open it with any web browser:
+   Simply double-click `Zerthiva_Full_Documentation.html` or open it with any web browser:
    ```bash
    # Windows PowerShell
-   Start-Process .\SoilGuard_Full_Documentation.html
+   Start-Process .\Zerthiva_Full_Documentation.html
    ```
 
 ---
