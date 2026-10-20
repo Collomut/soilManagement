@@ -2166,75 +2166,128 @@
     const hydrologyGroup = new THREE.Group();
     scene.add(hydrologyGroup);
 
-    // 18 Streamlines tracing natural gravitational infiltration & xylem uptake
+    // Streamline curves collection & mesh registry
     const streamlineCurves = [];
     const streamlineMeshes = [];
+    const pulseMeshes = [];
 
-    for (let s = 0; s < 18; s++) {
-      const sAngle = (s / 18) * Math.PI * 2;
-      const sRad = 0.4 + Math.random() * 0.9;
-      // Infiltration point on soil surface
-      const pSurf = new THREE.Vector3(Math.cos(sAngle) * sRad + 0.35, 0.05, Math.sin(sAngle) * sRad + 0.2);
-      
-      // Target lateral root tip
-      const targetTip = rootTipPositions[s % rootTipPositions.length] || new THREE.Vector3(0.35, -0.8, 0.2);
+    // Materials for Rhizosphere Absorption vs Deep Gravitational Drainage
+    const rhizoLineMat = new THREE.MeshStandardMaterial({
+      color: 0x38bdf8,
+      emissive: 0x0369a1,
+      transparent: true,
+      opacity: 0.58,
+      roughness: 0.28
+    });
+
+    const drainageLineMat = new THREE.MeshStandardMaterial({
+      color: 0x2563eb,
+      emissive: 0x1e3a8a,
+      transparent: true,
+      opacity: 0.42,
+      roughness: 0.35
+    });
+
+    const pulseMat = new THREE.MeshStandardMaterial({
+      color: 0x7dd3fc,
+      emissive: 0x0284c7,
+      emissiveIntensity: 1.2,
+      roughness: 0.2
+    });
+
+    const drainagePulseMat = new THREE.MeshStandardMaterial({
+      color: 0x60a5fa,
+      emissive: 0x1d4ed8,
+      emissiveIntensity: 0.9,
+      roughness: 0.25
+    });
+
+    // A. 24 Rhizosphere Absorption Streamlines (Converging from surface to calyptra root caps & xylem)
+    for (let s = 0; s < 24; s++) {
+      const sAngle = (s / 24) * Math.PI * 2 + (Math.random() - 0.5) * 0.2;
+      const sRad = 0.35 + Math.random() * 0.75;
+      const pSurf = new THREE.Vector3(
+        Math.cos(sAngle) * sRad + 0.35,
+        0.045,
+        Math.sin(sAngle) * sRad + 0.20
+      );
+
+      // Connect to active root cap coordinates
+      const targetTip = rootTipPositions[s % rootTipPositions.length] || new THREE.Vector3(0.35, -0.65, 0.20);
       const pRhizo = targetTip.clone().add(plantGroup.position);
 
-      // Convergence into stalk base
-      const pStem = plantGroup.position.clone().add(new THREE.Vector3(0, 0.15, 0));
-      const pCanopy = plantGroup.position.clone().add(new THREE.Vector3(0, 0.85, 0));
+      // Transpirational xylem flow into stalk & lower canopy
+      const pStem = plantGroup.position.clone().add(new THREE.Vector3(0, 0.15 + (s % 4) * 0.05, 0));
+      const pCanopy = plantGroup.position.clone().add(new THREE.Vector3((Math.random() - 0.5) * 0.15, 0.75 + (s % 6) * 0.18, (Math.random() - 0.5) * 0.15));
 
       const curve = new THREE.CatmullRomCurve3([
         pSurf,
-        new THREE.Vector3(pSurf.x * 0.8 + pRhizo.x * 0.2, -0.2, pSurf.z * 0.8 + pRhizo.z * 0.2),
+        new THREE.Vector3(pSurf.x * 0.75 + pRhizo.x * 0.25, -0.15 - (s % 3) * 0.08, pSurf.z * 0.75 + pRhizo.z * 0.25),
+        new THREE.Vector3(pSurf.x * 0.35 + pRhizo.x * 0.65, pRhizo.y + 0.08, pSurf.z * 0.35 + pRhizo.z * 0.65),
         pRhizo,
         pStem,
         pCanopy
       ]);
       streamlineCurves.push(curve);
 
-      // Thin scientific flow line
-      const lineGeo = new THREE.TubeGeometry(curve, 32, 0.005, 5, false);
-      const lineMat = new THREE.MeshStandardMaterial({
-        color: 0x4aa3df,
-        emissive: 0x1b4e75,
-        transparent: true,
-        opacity: 0.55,
-        roughness: 0.3
-      });
-      const lineMesh = new THREE.Mesh(lineGeo, lineMat);
-      lineMesh.userData = { id: 'hydro-streamline', name: 'Rhizosphere Hydraulic Streamline', type: 'HYDROLOGY', badge: 'SIMULATED' };
+      const lineGeo = new THREE.TubeGeometry(curve, 36, 0.0048, 5, false);
+      const lineMesh = new THREE.Mesh(lineGeo, rhizoLineMat);
+      lineMesh.userData = { id: 'hydro-streamline-rhizo', name: `Rhizosphere Capillary Streamline #${s+1}`, type: 'HYDROLOGY', badge: 'SIMULATED' };
       hydrologyGroup.add(lineMesh);
       streamlineMeshes.push(lineMesh);
     }
 
-    // Moving water pulses along streamlines
-    const pulseCount = 36;
-    const pulseGeo = new THREE.SphereGeometry(0.016, 6, 6);
-    const pulseMat = new THREE.MeshStandardMaterial({
-      color: 0x66c8ff,
-      emissive: 0x0088cc,
-      emissiveIntensity: 0.8
-    });
-    const pulseMeshes = [];
-    for (let p = 0; p < pulseCount; p++) {
-      const pm = new THREE.Mesh(pulseGeo, pulseMat);
-      pm.userData = { curveIdx: p % streamlineCurves.length, offset: Math.random() };
+    // B. 8 Gravitational Deep Drainage Streamlines (Percolating past roots into Horizon C gravel)
+    for (let d = 0; d < 8; d++) {
+      const dAngle = (d / 8) * Math.PI * 2 + 0.35;
+      const dRad = 0.85 + Math.random() * 0.55;
+      const pSurf = new THREE.Vector3(
+        Math.cos(dAngle) * dRad + 0.35,
+        0.045,
+        Math.sin(dAngle) * dRad + 0.20
+      );
+      const pMidA = new THREE.Vector3(pSurf.x * 0.9, -0.65, pSurf.z * 0.9);
+      const pMidB = new THREE.Vector3(pSurf.x * 0.85, -1.45, pSurf.z * 0.85);
+      const pDeepC = new THREE.Vector3(pSurf.x * 0.8, -2.45, pSurf.z * 0.8);
+
+      const dCurve = new THREE.CatmullRomCurve3([pSurf, pMidA, pMidB, pDeepC]);
+      streamlineCurves.push(dCurve);
+
+      const dGeo = new THREE.TubeGeometry(dCurve, 28, 0.0055, 5, false);
+      const dMesh = new THREE.Mesh(dGeo, drainageLineMat);
+      dMesh.userData = { id: 'hydro-streamline-drain', name: `Deep Gravitational Drainage Pathway #${d+1}`, type: 'HYDROLOGY', badge: 'SIMULATED' };
+      hydrologyGroup.add(dMesh);
+      streamlineMeshes.push(dMesh);
+    }
+
+    // C. Animated Water Flux Pulse Packets along Coherent Streamlines (56 pulses)
+    const pulseGeo = new THREE.SphereGeometry(0.015, 6, 6);
+    for (let p = 0; p < 56; p++) {
+      const cIdx = p % streamlineCurves.length;
+      const isDrainage = (cIdx >= 24);
+      const pm = new THREE.Mesh(pulseGeo, isDrainage ? drainagePulseMat : pulseMat);
+      pm.userData = {
+        curveIdx: cIdx,
+        offset: Math.random(),
+        speedMult: 0.85 + Math.random() * 0.3
+      };
       hydrologyGroup.add(pm);
       pulseMeshes.push(pm);
     }
 
-    // Volumetric Soil Moisture Saturation Plume
-    const plumeGeo = new THREE.CylinderGeometry(0.65, 0.85, 1.4, 16);
+    // D. Volumetric Rhizosphere Wetting Front (Dynamic Infiltration Bulb)
+    const plumeGeo = new THREE.SphereGeometry(0.85, 20, 16);
+    plumeGeo.scale(1.0, 1.45, 0.95);
     const plumeMat = new THREE.MeshStandardMaterial({
-      color: 0x224433,
+      color: 0x0284c7,
       transparent: true,
-      opacity: 0.18,
-      roughness: 0.5
+      opacity: 0.22,
+      roughness: 0.42,
+      metalness: 0.05
     });
     const plumeMesh = new THREE.Mesh(plumeGeo, plumeMat);
-    plumeMesh.position.set(0.35, -0.85, 0.2);
-    plumeMesh.userData = { id: 'hydro-plume', name: 'Root Zone Hydration Plume', type: 'HYDROLOGY', badge: 'SIMULATED' };
+    plumeMesh.position.set(0.35, -0.70, 0.20);
+    plumeMesh.userData = { id: 'hydro-plume', name: 'Rhizosphere Infiltration Wetting Envelope', type: 'HYDROLOGY', badge: 'SIMULATED' };
     hydrologyGroup.add(plumeMesh);
 
     /* =========================================================================
@@ -2250,7 +2303,72 @@
       faultType: 'NONE',
       currentChapter: 0,
       autoPlay: false,
-      autoPlayTimer: null
+      autoPlayTimer: null,
+      // Hydrology & visual synchronization state
+      isHydrologyPaused: false,
+      flowSpeed: 1.0,
+      matricPotential: '-33 kPa',
+      hydrationState: 'Optimal Field Capacity',
+      currentScenarioId: 'optimal'
+    };
+
+    const HYDRATION_SCENARIOS = {
+      optimal: {
+        id: 'optimal',
+        name: 'Optimal Field Capacity',
+        desc: 'Pore water held at ideal matric suction (-33 kPa). Uniform capillary flux into root caps without hypoxia.',
+        vwc: 31.8,
+        ec: 1.42,
+        temp: 24.5,
+        matric: '-33 kPa',
+        statusText: 'OPTIMAL FIELD CAPACITY',
+        flowSpeed: 1.0,
+        plumeScale: 1.0,
+        plumeOpacity: 0.22,
+        badge: 'OPTIMAL'
+      },
+      drought: {
+        id: 'drought',
+        name: 'Severe Drought Deficit',
+        desc: 'Matric suction exceeds root extraction capacity (-1500 kPa PWP). Capillary flow arrested; thin water films.',
+        vwc: 11.4,
+        ec: 1.85,
+        temp: 28.5,
+        matric: '-1500 kPa (PWP)',
+        statusText: 'PERMANENT WILTING DEFICIT',
+        flowSpeed: 0.25,
+        plumeScale: 0.65,
+        plumeOpacity: 0.06,
+        badge: 'DROUGHT'
+      },
+      saturation: {
+        id: 'saturation',
+        name: 'Waterlogging & Deep Drainage',
+        desc: 'Soil exceeds saturation capacity (0 kPa). Rapid gravitational percolation past Horizon B into Horizon C gravel.',
+        vwc: 42.5,
+        ec: 1.05,
+        temp: 21.0,
+        matric: '0 to -10 kPa',
+        statusText: 'HYPOXIC SATURATION & DRAINAGE',
+        flowSpeed: 1.85,
+        plumeScale: 1.42,
+        plumeOpacity: 0.45,
+        badge: 'WATERLOGGED'
+      },
+      saline: {
+        id: 'saline',
+        name: 'Saline Osmotic Lockout',
+        desc: 'High salt concentration creates negative osmotic pressure (ψ_s). Roots suffer physiological drought despite physical moisture.',
+        vwc: 28.5,
+        ec: 3.45,
+        temp: 25.0,
+        matric: '-45 kPa (Matric) / -124 kPa (Osmotic)',
+        statusText: 'OSMOTIC DROUGHT LOCKOUT',
+        flowSpeed: 0.40,
+        plumeScale: 0.95,
+        plumeOpacity: 0.20,
+        badge: 'SALINE STRESS'
+      }
     };
 
     function calculateAgronomicEngine() {
@@ -2278,33 +2396,69 @@
         simState.status = 'SAFE';
       }
 
-      document.getElementById('val-ec').innerText = simState.ec25.toFixed(2);
-      document.getElementById('val-moist').innerText = simState.vwcRaw.toFixed(1);
-      document.getElementById('val-temp').innerText = simState.tempRaw.toFixed(1);
+      // Synchronize HUD Metric Readouts
+      const elEc = document.getElementById('val-ec');
+      const elMoist = document.getElementById('val-moist');
+      const elTemp = document.getElementById('val-temp');
+      const elPen = document.getElementById('val-penalty');
 
-      const penEl = document.getElementById('val-penalty');
-      if (simState.yieldLoss > 0) {
-        penEl.innerText = `-${simState.yieldLoss.toFixed(1)}% LOSS`;
-        penEl.style.color = 'var(--accent-crimson)';
-        sentryMat.color.setHex(0xff2a5f);
-        sentryMat.emissive.setHex(0xff2a5f);
-        sentryPointLight.color.setHex(0xff2a5f);
-      } else {
-        penEl.innerText = '0.0% LOSS';
-        penEl.style.color = 'var(--accent-emerald)';
-        sentryMat.color.setHex(0x00ff87);
-        sentryMat.emissive.setHex(0x00ff87);
-        sentryPointLight.color.setHex(0x00ff87);
+      if (elEc) elEc.innerText = simState.ec25.toFixed(2);
+      if (elMoist) elMoist.innerText = simState.vwcRaw.toFixed(1);
+      if (elTemp) elTemp.innerText = simState.tempRaw.toFixed(1);
+
+      if (elPen) {
+        if (simState.yieldLoss > 0) {
+          elPen.innerText = `-${simState.yieldLoss.toFixed(1)}% LOSS`;
+          elPen.style.color = 'var(--accent-crimson)';
+          sentryMat.color.setHex(0xff2a5f);
+          sentryMat.emissive.setHex(0xff2a5f);
+          sentryPointLight.color.setHex(0xff2a5f);
+        } else {
+          elPen.innerText = '0.0% LOSS';
+          elPen.style.color = 'var(--accent-emerald)';
+          sentryMat.color.setHex(0x00ff87);
+          sentryMat.emissive.setHex(0x00ff87);
+          sentryPointLight.color.setHex(0x00ff87);
+        }
       }
 
-      // Soil hydration appearance modulation
+      // Soil Hydration Appearance & PBR Sheen Modulation
       const moistureRatio = Math.max(0, Math.min(1.0, (simState.vwcRaw - 10) / 32));
       matHorizonA.roughness = 0.94 - moistureRatio * 0.35;
       matHorizonB.roughness = 0.88 - moistureRatio * 0.32;
-      plumeMat.opacity = 0.08 + moistureRatio * 0.28;
+
+      // Wetting Front Plume Scale & Opacity
+      const targetOpacity = 0.06 + moistureRatio * 0.36;
+      plumeMat.opacity = targetOpacity;
+      const targetScale = 0.65 + moistureRatio * 0.75;
+      plumeMesh.scale.set(targetScale, targetScale * 1.45, targetScale * 0.95);
+
+      // Synchronize contextual status tags if present
+      const elMatric = document.getElementById('hydro-matric-val');
+      const elHydroStatus = document.getElementById('hydro-status-badge');
+      if (elMatric) elMatric.innerText = simState.matricPotential;
+      if (elHydroStatus) elHydroStatus.innerText = simState.hydrationState;
     }
 
-    /* =========================================================================
+    function applyHydrationScenario(scenarioKey) {
+      const sc = HYDRATION_SCENARIOS[scenarioKey] || HYDRATION_SCENARIOS.optimal;
+      simState.currentScenarioId = sc.id;
+      simState.matricPotential = sc.matric;
+      simState.hydrationState = sc.statusText;
+      simState.flowSpeed = sc.flowSpeed;
+
+      sound.playPing(sc.id === 'optimal' ? 680 : sc.id === 'drought' ? 440 : sc.id === 'saturation' ? 780 : 380);
+
+      gsap.to(simState, {
+        vwcRaw: sc.vwc,
+        ecRaw: sc.ec,
+        tempRaw: sc.temp,
+        duration: 1.2,
+        ease: 'power2.out',
+        onUpdate: calculateAgronomicEngine
+      });
+    }
+/* =========================================================================
        9. LAYER VISIBILITY CONTROLS
        ========================================================================= */
     const visibilityToggles = {
@@ -2434,9 +2588,15 @@
       } else if (data.id?.includes('esp32')) {
         desc = 'Dual-core Xtensa 32-bit LX7 processor running zero-cloud local edge inference with 0.15mA deep sleep.';
         meta = 'ESP32-S3 | 240MHz, 8MB PSRAM, RTC Timer Wake, 12-Bit ADC';
-      } else if (data.id?.includes('streamline') || data.id?.includes('plume')) {
-        desc = 'Soil hydrologic matrix flux moving through pore networks towards root absorption surfaces.';
-        meta = 'Darcy Matrix Flow | Matric Potential: -33 kPa | Active Uptake';
+      } else if (data.id === 'hydro-streamline-rhizo') {
+        desc = 'Rhizosphere Hydraulic Streamline: Illustrative macroscopic path of capillary pore water moving under matric potential gradient toward active calyptra and xylem transpirational sinks.';
+        meta = 'Darcy-Buckingham Matrix Flux | Matric Suction: ' + (simState.matricPotential || '-33 kPa') + ' | S_sink: Active';
+      } else if (data.id === 'hydro-streamline-drain') {
+        desc = 'Deep Gravitational Drainage Streamline: Excess soil water percolating vertically past the root zone into Horizon C saprolite gravel (leaching loss).';
+        meta = 'Gravitational Flow | Horizon B -> Horizon C | Deep Percolation';
+      } else if (data.id?.includes('plume')) {
+        desc = 'Wetted Infiltration Bulb: Volumetric envelope of plant-available soil moisture surrounding the maize root system.';
+        meta = 'Current VWC: ' + simState.vwcRaw.toFixed(1) + '% | Status: ' + (simState.hydrationState || 'Field Capacity');
       }
 
       document.getElementById('card-desc').innerText = desc;
@@ -2547,32 +2707,138 @@
         tag: "CHAPTER 04 // WATER WORLD",
         badge: "SIMULATED",
         title: "The Hidden Water World",
-        desc: "Visualization of irrigation infiltration, matric pore redistribution, and root xylem water uptake. Adjust input water volume to observe hydration dynamics.",
+        desc: "Interactive scientific visualization of Darcy-Buckingham unsaturated matrix flux, rhizosphere suction gradients, and root xylem water absorption.",
         camPos: new THREE.Vector3(3.2, -0.4, 4.2),
-        camTarget: new THREE.Vector3(0, -0.7, 0),
+        camTarget: new THREE.Vector3(0.35, -0.7, 0.2),
         setup: () => {
           collapseLayers();
           setContextualUI(`
             <div class="module-row">
-              <span class="module-label">Water Input (mm)</span>
-              <input type="range" class="range-slider" id="slider-water-input" min="5" max="50" value="20">
+              <span class="module-label">Hydration Scenario</span>
+              <select id="select-hydration-scenario" style="background:#0a1218; color:#7dd3fc; border:1px solid rgba(56,189,248,0.3); padding:4px 6px; border-radius:4px; font-family:var(--font-mono); font-size:0.65rem; width:100%;">
+                <option value="optimal">Scenario 1: Optimal Field Capacity (-33 kPa)</option>
+                <option value="drought">Scenario 2: Severe Drought Deficit (-1500 kPa PWP)</option>
+                <option value="saturation">Scenario 3: Waterlogging & Deep Drainage (0 kPa)</option>
+                <option value="saline">Scenario 4: Saline Osmotic Lockout (High EC)</option>
+              </select>
             </div>
-            <div class="module-row" style="margin-top:6px;">
-              <button class="btn-action-small" id="btn-trigger-irrigation" style="width:100%; justify-content:center;">
-                <i data-lucide="cloud-rain" style="width:12px; height:12px;"></i> Trigger Irrigation Pulse
+
+            <div class="module-row" style="margin-top:6px; display:flex; gap:6px;">
+              <button class="btn-action-small" id="btn-hydro-pause" style="flex:1; justify-content:center;">
+                <i data-lucide="pause" style="width:12px; height:12px;"></i> Pause
+              </button>
+              <button class="btn-action-small" id="btn-hydro-reset" style="flex:1; justify-content:center;">
+                <i data-lucide="rotate-ccw" style="width:12px; height:12px;"></i> Reset
+              </button>
+              <button class="btn-action-small" id="btn-trigger-irrigation" style="flex:1.2; justify-content:center;">
+                <i data-lucide="cloud-rain" style="width:12px; height:12px;"></i> Infiltration Pulse
               </button>
             </div>
+
+            <div class="module-row" style="margin-top:6px;">
+              <span class="module-label">Flow Velocity</span>
+              <input type="range" class="range-slider" id="slider-hydro-speed" min="20" max="250" value="100">
+            </div>
+
+            <div class="module-row" style="margin-top:6px; padding:6px 8px; background:rgba(10,24,36,0.6); border-radius:4px; border:1px solid rgba(56,189,248,0.15);">
+              <div style="font-size:0.62rem; color:#94a3b8; display:flex; justify-content:space-between;">
+                <span>MATRIC SUCTION: <strong id="hydro-matric-val" style="color:#38bdf8;">-33 kPa</strong></span>
+                <span id="hydro-status-badge" style="color:#00ff87; font-weight:700;">FIELD CAPACITY</span>
+              </div>
+            </div>
+
+            <div class="module-row" style="margin-top:6px;">
+              <button class="btn-action-small" id="btn-toggle-legend" style="width:100%; justify-content:center; background:rgba(20,35,50,0.5); font-size:0.62rem;">
+                <i data-lucide="info" style="width:11px; height:11px;"></i> Scientific Legend & Modeling Notes
+              </button>
+            </div>
+
+            <div id="hydro-legend-box" style="display:none; margin-top:6px; padding:8px; background:#070d12; border-radius:4px; border:1px solid #1e3a5f; font-size:0.60rem; line-height:1.4; color:#94a3b8;">
+              <div style="font-weight:700; color:#38bdf8; margin-bottom:4px;">HYDROLOGIC LEGEND</div>
+              <div style="display:flex; align-items:center; gap:6px; margin-bottom:3px;">
+                <span style="display:inline-block; width:12px; height:3px; background:#38bdf8; border-radius:2px;"></span>
+                <span><strong>Cyan Streamlines:</strong> Capillary Darcy matrix flow converging to calyptra root caps & xylem.</span>
+              </div>
+              <div style="display:flex; align-items:center; gap:6px; margin-bottom:3px;">
+                <span style="display:inline-block; width:12px; height:3px; background:#2563eb; border-radius:2px;"></span>
+                <span><strong>Cobalt Streamlines:</strong> Gravitational deep percolation past Horizon B into Horizon C gravel.</span>
+              </div>
+              <div style="display:flex; align-items:center; gap:6px; margin-bottom:3px;">
+                <span style="display:inline-block; width:8px; height:8px; background:#0284c7; opacity:0.4; border-radius:50%;"></span>
+                <span><strong>Infiltration Bulb:</strong> Dynamic volumetric rhizosphere soil wetting front (VWC).</span>
+              </div>
+              <div style="margin-top:6px; padding-top:4px; border-top:1px solid rgba(255,255,255,0.08); font-size:0.56rem; color:#cbd5e1;">
+                <strong>Pedological Modeling Note:</strong> Illustrates macroscopic Darcy-Buckingham unsaturated flux lines for educational visualization. Not an uncalibrated finite-element solver.
+              </div>
+              <div style="margin-top:3px; font-size:0.56rem; color:#f59e0b;">
+                <strong>Sensor Note:</strong> Bulk EC (σ_a) reflects total dissolved salinity and pore solution conductivity, NOT individual N, P, or K nutrient concentrations.
+              </div>
+            </div>
           `);
-          document.getElementById('btn-trigger-irrigation').addEventListener('click', () => {
-            sound.playWaterInfiltration();
-            const mm = document.getElementById('slider-water-input').value;
-            gsap.to(simState, {
-              vwcRaw: Math.min(42.0, simState.vwcRaw + mm * 0.45),
-              ecRaw: Math.max(0.8, simState.ecRaw * 0.9),
-              duration: 1.8,
-              onUpdate: calculateAgronomicEngine
+
+          // Event Listeners
+          const selScenario = document.getElementById('select-hydration-scenario');
+          if (selScenario) {
+            selScenario.addEventListener('change', (e) => applyHydrationScenario(e.target.value));
+          }
+
+          const btnPause = document.getElementById('btn-hydro-pause');
+          if (btnPause) {
+            btnPause.addEventListener('click', () => {
+              simState.isHydrologyPaused = !simState.isHydrologyPaused;
+              btnPause.innerHTML = simState.isHydrologyPaused
+                ? '<i data-lucide="play" style="width:12px; height:12px;"></i> Resume'
+                : '<i data-lucide="pause" style="width:12px; height:12px;"></i> Pause';
+              lucide.createIcons();
             });
-          });
+          }
+
+          const btnReset = document.getElementById('btn-hydro-reset');
+          if (btnReset) {
+            btnReset.addEventListener('click', () => {
+              if (selScenario) selScenario.value = 'optimal';
+              applyHydrationScenario('optimal');
+              const sliderSpeed = document.getElementById('slider-hydro-speed');
+              if (sliderSpeed) sliderSpeed.value = 100;
+              simState.flowSpeed = 1.0;
+              simState.isHydrologyPaused = false;
+              if (btnPause) {
+                btnPause.innerHTML = '<i data-lucide="pause" style="width:12px; height:12px;"></i> Pause';
+                lucide.createIcons();
+              }
+            });
+          }
+
+          const sliderSpeed = document.getElementById('slider-hydro-speed');
+          if (sliderSpeed) {
+            sliderSpeed.addEventListener('input', (e) => {
+              simState.flowSpeed = (e.target.value / 100);
+            });
+          }
+
+          const btnTrigger = document.getElementById('btn-trigger-irrigation');
+          if (btnTrigger) {
+            btnTrigger.addEventListener('click', () => {
+              sound.playWaterInfiltration();
+              gsap.to(simState, {
+                vwcRaw: Math.min(42.0, simState.vwcRaw + 6.5),
+                ecRaw: Math.max(0.85, simState.ecRaw * 0.94),
+                duration: 1.6,
+                ease: 'power2.out',
+                onUpdate: calculateAgronomicEngine
+              });
+            });
+          }
+
+          const btnLegend = document.getElementById('btn-toggle-legend');
+          const boxLegend = document.getElementById('hydro-legend-box');
+          if (btnLegend && boxLegend) {
+            btnLegend.addEventListener('click', () => {
+              const isOpen = (boxLegend.style.display !== 'none');
+              boxLegend.style.display = isOpen ? 'none' : 'block';
+              btnLegend.style.color = isOpen ? '' : '#38bdf8';
+            });
+          }
         }
       },
       {
@@ -3120,9 +3386,10 @@
       }
 
       // Animate water pulses along hydraulic streamlines
-      if (hydrologyGroup.visible) {
+      if (hydrologyGroup.visible && !simState.isHydrologyPaused) {
+        const speed = (simState.flowSpeed || 1.0) * 0.0035;
         pulseMeshes.forEach(pm => {
-          pm.userData.offset = (pm.userData.offset + 0.0035) % 1.0;
+          pm.userData.offset = (pm.userData.offset + speed * (pm.userData.speedMult || 1.0)) % 1.0;
           const curve = streamlineCurves[pm.userData.curveIdx];
           if (curve) {
             const pt = curve.getPointAt(pm.userData.offset);

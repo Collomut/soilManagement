@@ -35,22 +35,42 @@ A world-class real-time 3D interactive scientific visualization of **Zerthiva**,
   - **Horizon B (Compacted Illuvial Clay Subsoil, 25–60cm):** Munsell 7.5YR 4/4 terracotta/ochre clay tone (\#62391a\), bulk density 1.45 g/cm³, subangular blocky to prismatic ped fractures, 35 ferruginous clay nodules/concretions, and 12 vertical seminal root fissures.
   - **Horizon C (Parent Substratum & Saprolite, 60cm+):** Munsell 10YR 5/2 cool slate mineral gray (\#363836\), saprolite rock fractures, quartzite mineral speckles, 45 angular slate gravel clods, and deep macro-drainage matrix.
 - **Anti-Tiling Multi-Scale Vertex Color Modulation:** Built-in procedural vertex color modulation eliminates visible texture tiling across the 3.5m cutaway monolith.
-- **Layer Separation & Explosion Controls:** In Chapter 02, the Layer Separation slider smoothly expands all 4 horizon blocks vertically with GSAP physics, revealing the internal horizontal contact surfaces and embedded stones.
+- **Layer Separation & Explosion Controls:** In Chapter 02, the Layer Separation slider smoothly expands all 4 horizon blocks vertically with GSAP physics, revealing internal horizontal contact surfaces and embedded stones.
 
-### 3. Poly Haven CC0 PBR Textures & Autumn Field HDRI
+### 3. Interactive Water, Root, and Soil Visualization (Upgrade 4)
+- **Coherent Darcy-Buckingham Flow Lines:**
+  - **24 Rhizosphere Capillary Streamlines (Cyan \#38bdf8\):** Follow unsaturated matric potential gradients $\nabla \psi = \nabla (\psi_m + z)$ from surface infiltration down through Horizon A, converging onto the 48 active calyptra root caps, and ascending through root xylem into the stalk and canopy.
+  - **8 Deep Gravitational Drainage Streamlines (Cobalt \#2563eb\):** Demonstrate gravitational percolation loss past Horizon B into Horizon C gravel when soil moisture exceeds field capacity.
+  - **56 Animated Water Flux Pulse Packets:** Travel along coherent streamlines with velocity dynamically coupled to soil hydraulic conductivity ($).
+- **Dynamic Volumetric Wetting Front (Infiltration Bulb):** Translucent rhizosphere hydration bulb dynamically expanding/contracting and shifting opacity (.06 \to 0.45$) based on Volumetric Water Content (VWC).
+- **Synchronized Hydraulic Scenarios:**
+  - **Scenario 1: Optimal Field Capacity:** -33 kPa matric suction, VWC 31.8%, EC 1.42 dS/m, steady Darcy flux, healthy green sentry pulse, 0% penalty.
+  - **Scenario 2: Severe Drought Deficit:** -1500 kPa permanent wilting point, VWC 11.4%, EC 1.85 dS/m, thin bound water films, slow trickling flow.
+  - **Scenario 3: Waterlogging & Deep Drainage:** 0 to -10 kPa, VWC 42.5%, EC 1.05 dS/m, hypoxic saturation, rapid deep percolation into Horizon C gravel.
+  - **Scenario 4: Saline Osmotic Lockout:** -45 kPa matric / -124 kPa osmotic, VWC 28.5%, EC 3.45 dS/m, physiological drought due to osmotic back-pressure, crimson alert.
+- **Interactive Transport Controls:**
+  - **Pause / Resume Toggle:** Freezes and resumes water pulse flow.
+  - **Reset Button:** Restores optimal baseline parameters.
+  - **Infiltration Pulse Button:** Triggers a dynamic irrigation wavefront pulse with synthesized audio feedback.
+  - **Flow Velocity Slider:** Adjusts macroscopic visual flux speed (\% \to 250\%$).
+- **Scientific Modeling Disclaimers:**
+  - *Pedological Modeling Disclosure:* The particle animations and streamlines illustrate macroscopic Darcy-Buckingham unsaturated flux lines and matric potential gradients for educational visualization. It is not an uncalibrated finite-element solver or predictive numerical PDE transport model.
+  - *Electrical Conductivity Disclosure:* Bulk apparent electrical conductivity ($\sigma_a$) measures total dissolved salinity and pore solution ionic strength, **NOT individual nitrogen (N), phosphorus (P), or potassium (K) nutrient concentrations**.
+
+### 4. Poly Haven CC0 PBR Textures & Autumn Field HDRI
 - **Dirt 1K PBR Set:** Diffuse, normal, and roughness maps on Horizons O and A.
 - **Brown Mud 02 1K PBR Set:** Diffuse, normal, and roughness maps on Horizons B and C.
 - **Autumn Field 1K Equirectangular HDRI:** Image-Based Lighting (IBL) providing realistic reflections on brushed stainless steel EC electrodes, monocrystal silicon PV discs, and waxy foliage cuticles.
 
-### 4. Genuine Xiao ESP32-S3 3D CAD Assembly
+### 5. Genuine Xiao ESP32-S3 3D CAD Assembly
 - Real 3D GLB model of the Seeed Studio / Xiao ESP32-S3 module (dual-core Xtensa 240MHz, 0.15mA sleep) loaded dynamically via \GLTFLoader\.
 - Exploded view isolating solar collector wafer, 360° Fresnel RGB sentry ring, ASA enclosure, ESP32 board, 18650 Li-ion cell, and soil probe stem.
 
-### 5. 10 Interactive Guided Chapters
+### 6. 10 Interactive Guided Chapters
 - **01 // The Living Surface:** Above-ground canopy inspection and daylight ambiance.
 - **02 // Descent Into Soil:** Subterranean descent revealing soil horizons O/A/B/C with layer separation slider.
 - **03 // Plant Dissection:** Exploded plant anatomy with independent layer explosion and root isolation.
-- **04 // Hidden Water World:** Infiltration, pore redistribution, and root xylem water uptake.
+- **04 // Hidden Water World:** Interactive Darcy-Buckingham streamlines, scenario switching, pause/reset, and scientific legend.
 - **05 // Nutrient Chemistry:** Ion pathways (NO3-, H2PO4-, K+) with scientific distinction on bulk EC vs fertility.
 - **06 // The Sensor Reveal:** Subsurface probe inspection (dual EC electrode rings on GPIO34, FR4 capacitive blade on GPIO35, DS18B20 tip on GPIO4).
 - **07 // Hardware Assembly Explosion:** Exploded view of the $30 node.
@@ -58,10 +78,10 @@ A world-class real-time 3D interactive scientific visualization of **Zerthiva**,
 - **09 // The Decision Engine:** Zero-cloud local edge execution of Maas-Hoffman and FAO-56 algorithms.
 - **10 // The Experimental Test Lab:** Scenario testing with fault injection and deterministic pass/fail results.
 
-### 6. Interactive 3D Raycaster & Tooltips
-- Raycasting hover and click inspection on every biological organ (sheath, leaf blade, node collar, culm, tassel rachis, ear husks, corn silk, brace roots, crown roots, seminal taproot, lateral feeder roots, calyptra root caps) and soil element (Horizons O, A, B, C, mulch debris, pebbles, clay nodules, saprolite rock clods, and rootlets).
+### 7. Interactive 3D Raycaster & Tooltips
+- Raycasting hover and click inspection on every biological organ, soil horizon, mineral pebble, capillary rootlet, and hydraulic streamline.
 
-### 7. Synthesized Web Audio Engine
+### 8. Synthesized Web Audio Engine
 - Real-time Web Audio API synthesizer (earthen drone, telemetry pings, water infiltration soundscapes, acoustic warnings).
 
 ---
