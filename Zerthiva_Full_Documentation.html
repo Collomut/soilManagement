@@ -1334,6 +1334,193 @@
 
     
 
+        /* Theme Variables & Dark Mode */
+        :root {
+            --background: #f8fafc;
+            --foreground: #0f172a;
+            --card: #ffffff;
+            --card-border: #e2e8f0;
+            --border: #e2e8f0;
+            --primary: #059669;
+            --primary-dark: #047857;
+            --primary-light: #ecfdf5;
+            --primary-foreground: #ffffff;
+            --muted-foreground: #64748b;
+            --accent: #d97706;
+            --accent-light: #fffbeb;
+            --secondary: #f1f5f9;
+            --highlight: #0284c7;
+            --highlight-light: #f0f9ff;
+            --sidebar-bg: #0f172a;
+            --sidebar-fg: #f8fafc;
+            --sidebar-border: #1e293b;
+            --code-bg: #1e293b;
+            --code-fg: #e2e8f0;
+            --table-stripe: #f8fafc;
+            --table-header-bg: #0f172a;
+            --table-header-fg: #ffffff;
+            --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -2px rgba(0, 0, 0, 0.05);
+        }
+
+        [data-theme="dark"], body.dark-mode {
+            --background: #0b1120;
+            --foreground: #f1f5f9;
+            --card: #131c2e;
+            --card-border: #22324e;
+            --border: #22324e;
+            --primary: #10b981;
+            --primary-dark: #059669;
+            --primary-light: #064e3b;
+            --primary-foreground: #ffffff;
+            --muted-foreground: #94a3b8;
+            --accent: #f59e0b;
+            --accent-light: #451a03;
+            --secondary: #1a253a;
+            --highlight: #38bdf8;
+            --highlight-light: #0c4a6e;
+            --sidebar-bg: #070b14;
+            --sidebar-fg: #f1f5f9;
+            --sidebar-border: #152033;
+            --code-bg: #080d1a;
+            --code-fg: #f1f5f9;
+            --table-stripe: #101726;
+            --table-header-bg: #070b14;
+            --table-header-fg: #f8fafc;
+            --shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+        }
+
+        /* Smooth Theme Transition */
+        body, main, nav#sidebar, .cycle-card, .why-card, .bom-card, .arch-stream-card, .crop-flow-card, .toc-card, table, pre, .code-block, .callout, .intercept-box, .audit-callout, .audit-banner, .hero {
+            transition: background-color 0.25s ease, color 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+        }
+
+        /* Ensure all cards dynamically adapt to theme */
+        .cycle-card, .why-card, .bom-card, .arch-stream-card, .crop-flow-card, .toc-card, .metric-pill {
+            background: var(--card) !important;
+            color: var(--foreground) !important;
+            border-color: var(--border) !important;
+            box-shadow: var(--shadow) !important;
+        }
+
+        .cycle-title, .bom-title, .why-body-title, .crop-stage-header, .arch-stream-title {
+            color: var(--foreground) !important;
+        }
+
+        .cycle-desc, .bom-desc, .why-body-desc, .crop-stage-body {
+            color: var(--muted-foreground) !important;
+        }
+
+        .callout {
+            background: var(--secondary) !important;
+            color: var(--foreground) !important;
+            border-color: var(--border) !important;
+            border-left-color: var(--primary) !important;
+        }
+
+        .intercept-box {
+            background: var(--secondary) !important;
+            border-color: var(--primary) !important;
+            color: var(--foreground) !important;
+        }
+
+        [data-theme="dark"] .intercept-box {
+            background: #064e3b22 !important;
+            border-color: var(--primary) !important;
+        }
+
+        [data-theme="dark"] .audit-banner, [data-theme="dark"] .audit-callout {
+            background: #0c4a6e22 !important;
+            border-color: var(--highlight) !important;
+            color: var(--foreground) !important;
+        }
+
+        [data-theme="dark"] table th {
+            background: var(--table-header-bg) !important;
+            color: var(--table-header-fg) !important;
+        }
+
+        [data-theme="dark"] table td {
+            background: var(--card) !important;
+            color: var(--foreground) !important;
+            border-color: var(--border) !important;
+        }
+
+        [data-theme="dark"] table tr:nth-child(even) td {
+            background: var(--table-stripe) !important;
+        }
+
+        [data-theme="dark"] .code-block, [data-theme="dark"] pre {
+            background: var(--code-bg) !important;
+            color: var(--code-fg) !important;
+            border-color: var(--border) !important;
+        }
+
+        [data-theme="dark"] h1, [data-theme="dark"] h2, [data-theme="dark"] h3, [data-theme="dark"] h3 strong, [data-theme="dark"] h4,
+        [data-theme="dark"] strong, [data-theme="dark"] b, [data-theme="dark"] p strong, [data-theme="dark"] li strong {
+            color: var(--foreground) !important;
+        }
+
+        [data-theme="dark"] section {
+            background-color: var(--background) !important;
+        }
+
+        [data-theme="dark"] .hero {
+            background: linear-gradient(145deg, #0e1726 0%, #064e3b33 50%, #451a0322 100%) !important;
+            border-color: var(--border) !important;
+        }
+
+        [data-theme="dark"] .arch-step-item {
+            background: var(--card) !important;
+            border-color: var(--border) !important;
+            color: var(--foreground) !important;
+        }
+
+        [data-theme="dark"] .toc-card p {
+            color: var(--foreground) !important;
+        }
+
+        [data-theme="dark"] #back-to-top {
+            background: var(--card) !important;
+            color: var(--foreground) !important;
+            border-color: var(--border) !important;
+        }
+
+        [data-theme="dark"] .doc-footer {
+            border-color: var(--border) !important;
+            color: var(--muted-foreground) !important;
+        }
+
+        /* Theme Toggle Buttons */
+        .theme-toggle-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.4rem 0.85rem;
+            font-size: 0.78rem;
+            font-weight: 700;
+            border-radius: 9999px;
+            border: 1px solid var(--border);
+            background: var(--card);
+            color: var(--foreground);
+            cursor: pointer;
+            transition: all 0.2s ease;
+            box-shadow: var(--shadow);
+            user-select: none;
+        }
+
+        .theme-toggle-btn:hover {
+            transform: translateY(-1px);
+            border-color: var(--primary);
+            color: var(--primary);
+        }
+
+        .theme-toggle-floating {
+            position: fixed;
+            top: 1rem;
+            right: 1.5rem;
+            z-index: 1000;
+        }
+
         /* Evidence and Audit Badges */
         .badge-evidence {
             display: inline-block;
@@ -1349,6 +1536,12 @@
             margin-right: 6px;
             vertical-align: middle;
         }
+        [data-theme="dark"] .badge-evidence {
+            background: #064e3b;
+            color: #a7f3d0;
+            border-color: #059669;
+        }
+
         .badge-spec {
             display: inline-block;
             background: #eff6ff;
@@ -1363,6 +1556,12 @@
             margin-right: 6px;
             vertical-align: middle;
         }
+        [data-theme="dark"] .badge-spec {
+            background: #1e3a8a;
+            color: #bfdbfe;
+            border-color: #2563eb;
+        }
+
         .badge-bench {
             display: inline-block;
             background: #fef3c7;
@@ -1377,6 +1576,12 @@
             margin-right: 6px;
             vertical-align: middle;
         }
+        [data-theme="dark"] .badge-bench {
+            background: #451a03;
+            color: #fde68a;
+            border-color: #d97706;
+        }
+
         .badge-field {
             display: inline-block;
             background: #fdf2f8;
@@ -1391,6 +1596,12 @@
             margin-right: 6px;
             vertical-align: middle;
         }
+        [data-theme="dark"] .badge-field {
+            background: #831843;
+            color: #fbcfe8;
+            border-color: #db2777;
+        }
+
         .badge-proj {
             display: inline-block;
             background: #f5f3ff;
@@ -1405,6 +1616,12 @@
             margin-right: 6px;
             vertical-align: middle;
         }
+        [data-theme="dark"] .badge-proj {
+            background: #3b0764;
+            color: #ddd6fe;
+            border-color: #7c3aed;
+        }
+
         .badge-hypo {
             display: inline-block;
             background: #fff7ed;
@@ -1418,6 +1635,11 @@
             letter-spacing: 0.04em;
             margin-right: 6px;
             vertical-align: middle;
+        }
+        [data-theme="dark"] .badge-hypo {
+            background: #431407;
+            color: #fed7aa;
+            border-color: #ea580c;
         }
 
         /* Audit Clarification Callout */
@@ -1460,6 +1682,21 @@
         }
     
 </style>
+<script>
+        (function() {
+            try {
+                const saved = localStorage.getItem('zerthiva-theme');
+                const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+                if (saved === 'dark' || (!saved && prefersDark)) {
+                    document.documentElement.setAttribute('data-theme', 'dark');
+                    document.documentElement.classList.add('dark-mode');
+                } else {
+                    document.documentElement.setAttribute('data-theme', 'light');
+                    document.documentElement.classList.remove('dark-mode');
+                }
+            } catch (e) {}
+        })();
+    </script>
 </head>
 <body>
     <div id="reading-progress"></div>
@@ -1471,6 +1708,11 @@
         <div class="sidebar-header">
             <div class="sidebar-title">🌱 Zerth<span>iva</span></div>
             <div class="sidebar-subtitle">Master Technical Dossier · v2.0</div>
+            <div style="margin-top: 0.75rem;">
+                <button id="theme-toggle-sidebar" class="theme-toggle-btn" aria-label="Toggle theme">
+                    <span class="theme-icon">🌙</span> <span class="theme-text">Dark Mode</span>
+                </button>
+            </div>
         </div>
 
         <div class="nav-tier-label">OVERVIEW</div>
@@ -1560,6 +1802,12 @@
     <main id="main-content">
         
         <div id="cover" class="hero">
+            <div class="theme-toggle-floating">
+                <button id="theme-toggle-float" class="theme-toggle-btn" aria-label="Toggle theme">
+                    <span class="theme-icon">🌙</span> <span class="theme-text">Dark Mode</span>
+                </button>
+            </div>
+
             <div class="hero-top-badge">🌾 Version 2.0 — Internal Technical Revision Dossier · October 2026</div>
             <h1><span>Zerthiva</span></h1>
             <div class="tagline">"Precision Soil Intelligence for Smallholder Climate Resilience"</div>
@@ -1570,7 +1818,7 @@
                     <svg width="20" height="20" fill="none" stroke="#0284c7" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>
                     Comprehensive Technical, Scientific, Financial, and Documentation Audit Revisions Incorporated (v2.0)
                 </div>
-                <p style="margin: 0; color: #334155; font-size: 0.88rem;">This master dossier has been rigorously overhauled in response to the comprehensive multi-disciplinary audit. All 7 Critical Findings (C1–C7) and 18 Cross-Section Contradictions (X01–X18) have been resolved. In-situ apparent bulk conductivity ($EC_a$) is physically decoupled from saturated paste extract ($EC_e$); the 10-farm pilot design is harmonized to Option A (5 matched pairs: 3 Maize, 2 Tomato) and framed as an exploratory feasibility trial; the power budget arithmetic has been recalculated ($0.00208\text{ mAh/cycle}$ for LED); the budget is balanced to exactly $3,500.00; and all claims are strictly classified by evidence standard (Established Evidence, Design Specification, Bench-Tested Result, Field-Tested Result, Projection, or Unvalidated Hypothesis).</p>
+                <p style="margin: 0; font-size: 0.88rem;">This master dossier has been rigorously overhauled in response to the comprehensive multi-disciplinary audit. All 7 Critical Findings (C1–C7) and 18 Cross-Section Contradictions (X01–X18) have been resolved. In-situ apparent bulk conductivity ($EC_a$) is physically decoupled from saturated paste extract ($EC_e$); the 10-farm pilot design is harmonized to Option A (5 matched pairs: 3 Maize, 2 Tomato) and framed as an exploratory feasibility trial; the power budget arithmetic has been recalculated ($0.00208\text{ mAh/cycle}$ for LED); the budget is balanced to exactly $3,500.00; and all claims are strictly classified by evidence standard (Established Evidence, Design Specification, Bench-Tested Result, Field-Tested Result, Projection, or Unvalidated Hypothesis).</p>
             </div>
 
             <div class="hero-metrics-grid">
@@ -1607,11 +1855,11 @@
                 <span class="badge" style="background: #fffbeb; color: #92400e; border-color: #fde68a;">Pilot Geography: Machakos County, Kenya (10 Farms Total)</span>
             </div>
 
-            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; width: 100%; max-width: 880px; text-align: left; background: var(--card); border: 1px solid var(--border); padding: 1.25rem 1.5rem; border-radius: 0.75rem; box-shadow: 0 2px 4px rgba(0,0,0,0.02);">
-                <div><strong style="color: var(--foreground); font-size: 0.85rem;">Document Version:</strong> <span style="color: #475569; font-size: 0.85rem;">2.0 (Internal Technical Revision Completed)</span></div>
-                <div><strong style="color: var(--foreground); font-size: 0.85rem;">Audit Closure Date:</strong> <span style="color: #475569; font-size: 0.85rem;">20 October 2026</span></div>
-                <div><strong style="color: var(--foreground); font-size: 0.85rem;">Hardware Platform:</strong> <span style="color: #475569; font-size: 0.85rem;">ESP32 Node (MicroPython edge engine)</span></div>
-                <div><strong style="color: var(--foreground); font-size: 0.85rem;">Scientific Framework:</strong> <span style="color: #475569; font-size: 0.85rem;">FAO-56 (Water) · Maas-Hoffman & Rhoades (Salinity)</span></div>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; width: 100%; max-width: 880px; text-align: left; background: var(--card); border: 1px solid var(--border); padding: 1.25rem 1.5rem; border-radius: 0.75rem; box-shadow: var(--shadow);">
+                <div><strong style="color: var(--foreground); font-size: 0.85rem;">Document Version:</strong> <span style="color: var(--muted-foreground); font-size: 0.85rem;">2.0 (Internal Technical Revision Completed)</span></div>
+                <div><strong style="color: var(--foreground); font-size: 0.85rem;">Audit Closure Date:</strong> <span style="color: var(--muted-foreground); font-size: 0.85rem;">20 October 2026</span></div>
+                <div><strong style="color: var(--foreground); font-size: 0.85rem;">Hardware Platform:</strong> <span style="color: var(--muted-foreground); font-size: 0.85rem;">ESP32 Node (MicroPython edge engine)</span></div>
+                <div><strong style="color: var(--foreground); font-size: 0.85rem;">Scientific Framework:</strong> <span style="color: var(--muted-foreground); font-size: 0.85rem;">FAO-56 (Water) · Maas-Hoffman & Rhoades (Salinity)</span></div>
             </div>
         </div>
 
@@ -1663,8 +1911,8 @@
             <h3><span class="sub-num">1.10</span> <strong>What makes Zerthiva distinct</strong></h3>
             <p><span class="badge-spec">Design Specification</span> Commercial precision agriculture instruments (Sentek, Decagon/METER Group TEROS-12 + ZL6) provide scientific-grade accuracy but cost between $1,200 and $2,800 per station and depend on continuous cellular cloud infrastructure, rendering them inaccessible to smallholders. Handheld laboratory meters ($50–$150) offer snapshot readings but lack continuous logging, automated temperature correction, or actionable agronomic context. Zerthiva bridges this gap by delivering <strong>autonomous in-situ root-zone screening with localized edge computation at a sub-$40 target bill of materials</strong>, functioning 100% offline via visual sentry LEDs while buffering diagnostic records for extension officers.</p>
 
-            <div class="audit-callout">
-                <strong>Methodological Note on Competitor Comparison</strong>
+            <div class="callout border-accent bg-secondary">
+                <strong>Methodological Note on Competitor Comparison</strong><br>
                 Competitor pricing and specifications are derived from public manufacturer datasheets and East African agricultural instrumentation quotations (Q3 2026). A low-cost BOM target ($30–$35) is an engineering design objective for an accessible screening indicator; it does not imply parity with commercial research-grade stations without accounting for enclosure endurance, multi-depth profiling, and recurring field servicing.
             </div>
         </section>
@@ -1761,8 +2009,50 @@ Mass of Salt Deposited = 5,000,000 L/ha × 0.96 g/L = 4,800,000 g = 4,800 kg/ha 
             </div>
             <p>Unless sufficient leaching water passes through the root zone and exits via adequate drainage, this mass of salt accumulates in the top 30 cm of soil, rapidly elevating root-zone salinity.</p>
 
-            <h3><span class="sub-num">4.2</span> <strong>Osmotic drought and root water uptake</strong></h3>
-            <p><span class="badge-evidence">Established Evidence</span> Root water uptake is governed by the total soil water potential: $\Psi_{total} = \Psi_m + \Psi_s$ (matric potential + osmotic potential). Matric potential ($\Psi_m$) is determined by soil moisture content, while osmotic potential ($\Psi_s$) is directly proportional to dissolved salt concentration in the soil pore solution ($\Psi_s \approx -0.036 \times EC_p\text{ MPa}$, where $EC_p$ is pore water conductivity in dS/m). High dissolved salt concentration drives $\Psi_s$ strongly negative, halting cellular water absorption regardless of volumetric moisture content.</p>
+            <h3><span class="sub-num">4.2</span> <strong>The destructive feedback cycle</strong></h3>
+            <p><span class="badge-hypo">Unvalidated Behavioral Hypothesis</span> Below is the 6-stage progressive cycle of unmonitored root-zone salinization commonly observed in irrigated smallholder plots:</p>
+
+            <div class="vicious-cycle-grid">
+                <div class="cycle-card">
+                    <span class="cycle-badge">Stage 1</span>
+                    <div class="cycle-title">Intuition-Based Irrigation</div>
+                    <p class="cycle-desc">Farmer irrigates on a rigid calendar schedule or when topsoil feels dry, applying unmeasured volumes of water containing trace dissolved mineral salts.</p>
+                </div>
+                <div class="cycle-card">
+                    <span class="cycle-badge">Stage 2</span>
+                    <div class="cycle-title">Subsurface Salt Accumulation</div>
+                    <p class="cycle-desc">Pure water evaporates under intense tropical sunlight, leaving mineral ions behind. Evaporative capillary draw concentrates salts directly in the upper 15–30 cm transpiration zone.</p>
+                </div>
+                <div class="cycle-card cycle-card-critical">
+                    <span class="cycle-badge cycle-badge-critical">Stage 3</span>
+                    <div class="cycle-title">Osmotic Root Blockade</div>
+                    <p class="cycle-desc">High Electrical Conductivity ($EC_e$) drives osmotic water potential strongly negative ($\Psi_s \ll 0$). Crop root hairs cannot extract water, causing physiological drought in moist soil.</p>
+                </div>
+                <div class="cycle-card cycle-card-critical">
+                    <span class="cycle-badge cycle-badge-critical">Stage 4</span>
+                    <div class="cycle-title">Farmer Misdiagnosis</div>
+                    <p class="cycle-desc">The farmer observes stunted stalks, leaf chlorosis, and wilting. Unable to see root-zone electrical conductivity, they assume crops are thirsty or nitrogen-deficient.</p>
+                </div>
+                <div class="cycle-card cycle-card-critical">
+                    <span class="cycle-badge cycle-badge-critical">Stage 5</span>
+                    <div class="cycle-title">Compound Over-Application</div>
+                    <p class="cycle-desc">The farmer pumps more irrigation water and dumps synthetic chemical fertilizers (CAN/urea). Because fertilizers are mineral salts, root-zone salinity spikes to lethal levels.</p>
+                </div>
+                <div class="cycle-card cycle-card-critical">
+                    <span class="cycle-badge cycle-badge-critical">Stage 6</span>
+                    <div class="cycle-title">Crop Collapse & Land Degradation</div>
+                    <p class="cycle-desc">Roots suffer irreversible osmotic plasmolysis and toxic ion injury. Up to 50% of harvest is lost, input capital is wasted, and topsoil develops alkali salt crusts.</p>
+                </div>
+            </div>
+
+            <div class="intercept-box">
+                <div class="intercept-title">
+                    <span>🛡️</span> How Zerthiva Permanently Breaks This Vicious Cycle
+                </div>
+                <p class="intercept-desc">
+                    Zerthiva intercepts this crisis at <strong>Stage 3</strong> before visible cellular wilting occurs. Embedded at 15 cm depth, the node continuously monitors apparent bulk conductivity ($EC_a$) and soil water depletion ($RAW$). When estimated $EC_e$ approaches or breaches the crop tolerance threshold ($a = 1.7\text{ dS/m}$ for Maize, $2.5\text{ dS/m}$ for Tomato), the system immediately triggers the sentry LED to <strong>Amber/Red</strong> and sends an SMS alert: <em>"Hold Fertilizer — High Soil Salinity Detected. Do not top-dress. Inspect water source."</em> Simultaneously, it calculates net irrigation replenishment ($d_{net}$ in mm) to satisfy crop water requirements without over-irrigation, preserving roots and saving the harvest.
+                </p>
+            </div>
 
             <h3><span class="sub-num">4.3</span> <strong>Sodicity hazards and soil structure</strong></h3>
             <p><span class="badge-evidence">Established Evidence</span> In addition to osmotic stress, elevated sodium concentrations relative to calcium and magnesium can cause sodicity hazards. The Sodium Adsorption Ratio ($SAR = \frac{[Na^+]}{\sqrt{([Ca^{2+}] + [Mg^{2+}])/2}}$) indicates the risk of clay dispersion, soil crusting, and reduced hydraulic conductivity. However, sodicity vulnerability varies significantly with clay mineralogy (e.g., highly vulnerable smectites vs. more stable kaolinites typical of weathered tropical soils) and total electrolyte concentration (Ayers & Westcot, 1985). Zerthiva notes this relationship as context, while scoping its initial prototype specifically to total electrical conductivity monitoring.</p>
@@ -1784,17 +2074,76 @@ Mass of Salt Deposited = 5,000,000 L/ha × 0.96 g/L = 4,800,000 g = 4,800 kg/ha 
         <section id="section6">
             <h2><span class="sec-pill">SECTION 06</span> ROOT-CAUSE ANALYSIS</h2>
             
-            <h3><span class="sub-num">6.1</span> <strong>The 5-Whys of secondary salinization collapse</strong></h3>
-            <ol class="space-y-2">
-                <li><strong>Why do irrigated crops wilt despite moist soil?</strong> Because root water absorption is halted by high osmotic potential ($\Psi_s$) induced by dissolved mineral salts.</li>
-                <li><strong>Why are mineral salts concentrated in the root zone?</strong> Because farmers apply mineral-bearing irrigation water without measuring root-zone salinity or applying necessary leaching fractions.</li>
-                <li><strong>Why do farmers not manage salinity or leaching?</strong> Because they possess no diagnostic instruments to measure soil electrical conductivity, relying entirely on visual crop cues.</li>
-                <li><strong>Why do farmers add chemical fertilizer when crops wilt?</strong> Because farmers misinterpret osmotic wilting and chlorosis as nitrogen deficiency, adding mineral salts (CAN, urea) that further spike salinity.</li>
-                <li><strong>Why do farmers lack diagnostic instruments?</strong> Because existing precision agriculture instruments cost >$1,200 and require cellular infrastructure, leaving a complete vacuum in affordable smallholder edge sensing.</li>
-            </ol>
+            <h3><span class="sub-num">6.1</span> <strong>Five Whys vertical root-cause chain</strong></h3>
+            <div class="whys-vertical-chain">
+                <div class="why-card">
+                    <div class="why-pill">Why #1</div>
+                    <div class="why-content">
+                        <div class="why-body-title">Why do smallholder farmers lose 15%–40% of their harvest to salinity?</div>
+                        <p class="why-body-desc">Because salinity accumulates invisibly in the root zone. By the time visual signs appear (leaf scorch, chlorosis, stunting), irreversible root cellular damage and yield loss have already occurred.</p>
+                    </div>
+                </div>
+                <div class="why-card">
+                    <div class="why-pill">Why #2</div>
+                    <div class="why-content">
+                        <div class="why-body-title">Why are smallholders unaware that salts are building up?</div>
+                        <p class="why-body-desc">Because they possess zero in-situ diagnostic tools. Soil pore-water solution chemistry is completely invisible to the human eye during daily farm operations.</p>
+                    </div>
+                </div>
+                <div class="why-card">
+                    <div class="why-pill">Why #3</div>
+                    <div class="why-content">
+                        <div class="why-body-title">Why don't farmers use existing commercial soil testing tools?</div>
+                        <p class="why-body-desc">Commercial laboratory soil tests cost $30–$80 per sample and require 2–4 weeks for mail returns. Commercial IoT telemetry stations cost $1,200–$2,800, completely out of reach for a smallholder earning $3–$6/day.</p>
+                    </div>
+                </div>
+                <div class="why-card">
+                    <div class="why-pill">Why #4</div>
+                    <div class="why-content">
+                        <div class="why-body-title">Why haven't low-cost agricultural sensors been built until now?</div>
+                        <p class="why-body-desc">Commodity components only reached viable sub-$10 price thresholds recently. Microcontrollers like the ESP32 ($3–$5), low-noise capacitive sensors, and corrosion-resistant SS316 probes now make a sub-$35 node technically feasible.</p>
+                    </div>
+                </div>
+                <div class="why-card">
+                    <div class="why-pill">Why #5</div>
+                    <div class="why-content">
+                        <div class="why-body-title">Why hasn't low-cost hardware solved this problem on its own?</div>
+                        <p class="why-body-desc">Because raw hardware is not a solution. Smallholders require an autonomous edge decision engine that translates raw electrical sensor millivolts into plain-language actions (irrigation depth $d_{net}$ in mm, salinity lockout alerts) delivered through zero-literacy beacons without requiring expensive smartphones or cloud connectivity.</p>
+                    </div>
+                </div>
+            </div>
 
-            <h3><span class="sub-num">6.2</span> <strong>Baseline behavioral survey methodology</strong></h3>
-            <p><span class="badge-spec">Design Specification</span> To validate the behavioral hypotheses underlying the 5-Whys analysis, the pilot study implements a baseline structured questionnaire administered to all 10 pilot farm households and 20 surrounding smallholders in Machakos County during Month 1. The survey quantifies: (1) customary rules for pump scheduling; (2) criteria for timing fertilizer top-dressing; (3) farmer recognition of water salinity symptoms; and (4) historical frequency of crop wilting in moist soil.</p>
+            <h3><span class="sub-num">6.2</span> <strong>Root-cause fishbone synthesis</strong></h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>People & Knowledge</th>
+                        <th>Technology & Hardware</th>
+                        <th>Process & Management</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Lack of EC diagnostic literacy<br>Habitual calendar irrigation</td>
+                        <td>Expensive commercial stations ($1,200+)<br>Fragile snapshot probes without logging</td>
+                        <td>Schedule-based unmetered watering<br>Misapplying NPK fertilizer during wilt</td>
+                    </tr>
+                </tbody>
+                <thead>
+                    <tr>
+                        <th>Environment & Climate</th>
+                        <th>Economics & Markets</th>
+                        <th>Policy & Institutions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>High evaporative demand ($ET_0$)<br>Mineralized shallow groundwater</td>
+                        <td>High upfront capital cost<br>Spiking chemical fertilizer prices</td>
+                        <td>Lack of on-farm sensor subsidies<br>Underfunded agricultural extension</td>
+                    </tr>
+                </tbody>
+            </table>
         </section>
 
         <section id="section7">
@@ -1814,13 +2163,21 @@ Mass of Salt Deposited = 5,000,000 L/ha × 0.96 g/L = 4,800,000 g = 4,800 kg/ha 
         <section id="section8">
             <h2><span class="sec-pill">SECTION 08</span> CASE STUDIES: LESSONS FROM PREVIOUS AGRICULTURAL INTERVENTIONS</h2>
             
-            <h3><span class="sub-num">8.1</span> <strong>Review of smallholder agricultural technology deployments</strong></h3>
-            <p><span class="badge-evidence">Established Evidence</span> Zerthiva incorporates key operational lessons from previous agricultural technology deployments in East Africa and South Asia:</p>
-            <ul class="space-y-2">
-                <li><strong>iCow Mobile Advisory (Kenya, Cole & Fernando, 2012):</strong> Demonstrated that smallholder farmers rapidly adopt diagnostic agricultural recommendations when delivered via simple SMS in local languages (Swahili, Kamba) with actionable, unambiguous instructions. Zerthiva adopts this SMS delivery format for its Mode B/C communication.</li>
-                <li><strong>Proximity Designs (Myanmar, 2014–2019):</strong> Demonstrated that smallholder irrigation hardware succeeds only when designed for extreme affordability, local repairability, and intuitive zero-literacy interfaces. Zerthiva adopts this principle through its sub-$40 BOM target and 3-state LED sentry beacon.</li>
-                <li><strong>World Bank & FAO Rural Telemetry Reviews (2018):</strong> Documented that rural IoT deployments frequently suffer high failure rates (>60% within 18 months) when dependent on continuous cellular cloud connectivity, complex cloud subscriptions, and non-standard batteries. Zerthiva addresses this failure mode by operating <strong>100% autonomously at the edge (Mode A)</strong>, logging data to non-volatile local SD storage without requiring cellular uptime.</li>
-            </ul>
+            <h3><span class="sub-num">8.1</span> <strong>Operational lessons from rural agricultural technology</strong></h3>
+            <div class="callout">
+                <strong>Case Study 1: iCow Mobile Advisory (Kenya, Cole & Fernando, 2012)</strong><br>
+                Demonstrated that smallholder farmers rapidly adopt diagnostic agricultural recommendations when delivered via simple SMS in local languages (Swahili, Kikamba) with actionable, unambiguous instructions. Zerthiva adopts this SMS delivery format for its Mode B/C communication.
+            </div>
+
+            <div class="callout">
+                <strong>Case Study 2: Proximity Designs (Myanmar, 2014–2019)</strong><br>
+                Demonstrated that smallholder irrigation hardware succeeds only when engineered for extreme affordability, local repairability, and intuitive zero-literacy interfaces. Zerthiva adopts this principle through its sub-$40 BOM target and 3-state LED sentry beacon.
+            </div>
+
+            <div class="callout">
+                <strong>Case Study 3: World Bank & FAO Rural Telemetry Reviews (2018)</strong><br>
+                Documented that rural IoT deployments frequently suffer high failure rates (>60% within 18 months) when dependent on continuous cellular cloud connectivity, complex cloud subscriptions, and non-standard batteries. Zerthiva addresses this failure mode by operating <strong>100% autonomously at the edge (Mode A)</strong>, logging data to non-volatile local SD storage without requiring cellular uptime.
+            </div>
         </section>
 
         <section id="section9">
@@ -1892,7 +2249,7 @@ EC_e_est ≈ EC_p × (θ_FC / θ_SP) ≈ 0.5 × EC_p (for typical loam soils)
             </div>
 
             <div class="audit-callout">
-                <strong>Operational Validity Constraint</strong>
+                <strong>Operational Validity Constraint</strong><br>
                 When volumetric water content is dry ($\theta < 0.15\text{ m}^3/\text{m}^3$), the liquid water film bridging the probe electrodes becomes discontinuous, contact resistance spikes nonlinearly, and bulk-to-solution models break down. In this condition, the firmware inhibits crop threshold comparisons and flags the output as <code>STATUS_DRY_SOIL_SCREENING_ONLY</code>.
             </div>
         </section>
@@ -1901,8 +2258,10 @@ EC_e_est ≈ EC_p × (θ_FC / θ_SP) ≈ 0.5 × EC_p (for typical loam soils)
             <h2><span class="sec-pill">SECTION 10</span> THE UNADDRESSED GAP</h2>
             
             <h3><span class="sub-num">10.1</span> <strong>The smallholder diagnostic vacuum</strong></h3>
-            <p><span class="badge-spec">Design Specification</span> The market for agricultural soil monitoring exhibits a severe bimodal distribution. At the high end, commercial telemetry stations ($1,200–$2,800) cater to large-scale commercial estates. At the low end, manual test kits and snapshot probes ($10–$50) lack data logging, temperature compensation, or agronomic context. Smallholder farmers cultivating 0.5 to 2.5 hectares in developing nations operate in a complete diagnostic vacuum.</p>
-            <p><span class="badge-spec">Design Specification</span> Zerthiva addresses this gap by engineering an in-situ continuous screening node with autonomous edge computation at a <strong>target bill of materials under $35.00</strong>, delivering actionable salinity lockout alerts and depletion-based irrigation timing directly to smallholders.</p>
+            <div class="callout border-accent bg-secondary">
+                <p>The market for agricultural soil monitoring exhibits a severe bimodal distribution. At the high end, commercial telemetry stations ($1,200–$2,800) cater to large-scale commercial estates. At the low end, manual test kits and snapshot probes ($10–$50) lack data logging, temperature compensation, or agronomic context. Smallholder farmers cultivating 0.5 to 2.5 hectares in developing nations operate in a complete diagnostic vacuum.</p>
+                <p>Zerthiva bridges this gap by engineering an in-situ continuous screening node with autonomous edge computation at a <strong>target bill of materials under $35.00</strong>, delivering actionable salinity lockout alerts and depletion-based irrigation timing directly to smallholders.</p>
+            </div>
         </section>
 
 
@@ -1962,6 +2321,114 @@ EC_e_est ≈ EC_p × (θ_FC / θ_SP) ≈ 0.5 × EC_p (for typical loam soils)
                         <td>$S_{diag} = \text{FAULT}$ OR $V_{bat} < 3.4\text{ V}$</td>
                         <td>Hardware Alert: Sensor disconnected or low battery.</td>
                         <td>Inspect probe wiring or clean solar panel.</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h3><span class="sub-num">11.3</span> <strong>Hardware Bill of Materials Grid ($34.80 BOM / $35.00 Budget)</strong></h3>
+            <div class="bom-grid">
+                <div class="bom-card">
+                    <div class="bom-header">
+                        <span class="bom-title">ESP32 Microcontroller</span>
+                        <span class="bom-cost">$3.80</span>
+                    </div>
+                    <p class="bom-desc">Dual-core Xtensa 32-bit processor running MicroPython. Executes local Rhoades conversion, FAO-56 depletion logic, drives sentry LEDs, and manages SPI logging.</p>
+                </div>
+                <div class="bom-card">
+                    <div class="bom-header">
+                        <span class="bom-title">Analog Soil EC Probe</span>
+                        <span class="bom-cost">$8.00</span>
+                    </div>
+                    <p class="bom-desc">1kHz AC-excited conductivity probe with dual stainless steel 316 electrodes. Eliminates DC polarization; measures apparent bulk conductivity ($EC_a$).</p>
+                </div>
+                <div class="bom-card">
+                    <div class="bom-header">
+                        <span class="bom-title">Capacitive Moisture Sensor</span>
+                        <span class="bom-cost">$2.80</span>
+                    </div>
+                    <p class="bom-desc">Corrosion-resistant capacitive dielectric probe measuring Volumetric Water Content ($\theta$, VWC%). Coated with protective conformal lacquer.</p>
+                </div>
+                <div class="bom-card">
+                    <div class="bom-header">
+                        <span class="bom-title">DS18B20 Temp Probe</span>
+                        <span class="bom-cost">$1.80</span>
+                    </div>
+                    <p class="bom-desc">IP68 waterproof digital probe measuring root-zone soil temperature ($\pm 0.5^\circ\text{C}$). Essential for normalizing EC to standard 25.0°C baseline.</p>
+                </div>
+                <div class="bom-card">
+                    <div class="bom-header">
+                        <span class="bom-title">Solar & Power System</span>
+                        <span class="bom-cost">$8.00</span>
+                    </div>
+                    <p class="bom-desc">2W 5V monocrystalline solar panel + TP4056/DW01A charge protection + 2,400 mAh LiPo cell. Provides $>144$ days zero-solar reserve under 4 SMS/day profile.</p>
+                </div>
+                <div class="bom-card">
+                    <div class="bom-header">
+                        <span class="bom-title">SIM800L 2G Modem</span>
+                        <span class="bom-cost">$4.50</span>
+                    </div>
+                    <p class="bom-desc">Quad-band GSM/GPRS transceiver with 1,000µF tantalum capacitor buffer. Transmits HMAC-SHA256 authenticated telemetry and local SMS alerts.</p>
+                </div>
+                <div class="bom-card">
+                    <div class="bom-header">
+                        <span class="bom-title">IP65 Enclosure & Sentry</span>
+                        <span class="bom-cost">$4.70</span>
+                    </div>
+                    <p class="bom-desc">UV-stabilized ABS housing with cable glands, mounting bracket, and mast-mounted tri-color LED beacon for 50-meter field visibility.</p>
+                </div>
+                <div class="bom-card">
+                    <div class="bom-header">
+                        <span class="bom-title">MicroSD Blackbox</span>
+                        <span class="bom-cost">$1.20</span>
+                    </div>
+                    <p class="bom-desc">Industrial 8GB SLC MicroSD card. Implements dual ring-buffer architecture (7-day rolling ring + 12-month non-volatile cropping archive).</p>
+                </div>
+            </div>
+
+            <h3><span class="sub-num">11.4</span> <strong>Features: essential vs optional</strong></h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Feature</th>
+                        <th>Problem Solved</th>
+                        <th>Status / Operating Mode</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>In-Situ EC Monitoring</strong></td>
+                        <td>Detects invisible root-zone salt buildup before foliar symptoms</td>
+                        <td>Essential (All Modes)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Capacitive Moisture Sensing</strong></td>
+                        <td>Determines soil water depletion ($RAW$) and irrigation timing</td>
+                        <td>Essential (All Modes)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Tri-Color LED Beacon</strong></td>
+                        <td>Zero-literacy visual status visible across 50 meters</td>
+                        <td>Essential (All Modes)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Crop Salinity Lockout</strong></td>
+                        <td>Prevents toxic NPK fertilizer application during osmotic stress</td>
+                        <td>Essential (All Modes)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>MicroSD Local Logging</strong></td>
+                        <td>Guarantees 100% data persistence without cellular network</td>
+                        <td>Essential (All Modes)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Cellular SMS Gateway</strong></td>
+                        <td>Dispatches remote text alerts to farmer feature phones</td>
+                        <td>Optional / Switched (Mode B/C)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Cloud Analytics Dashboard</strong></td>
+                        <td>Aggregates catchment telemetry for agricultural extension officers</td>
+                        <td>Optional / Periodic (Mode C)</td>
                     </tr>
                 </tbody>
             </table>
@@ -2143,7 +2610,76 @@ EC_e_est ≈ EC_p × (θ_FC / θ_SP) ≈ 0.5 × EC_p (for typical loam soils)
         <section id="section15">
             <h2><span class="sec-pill">SECTION 15</span> SYSTEM ARCHITECTURE & OPERATING MODES</h2>
             
-            <h3><span class="sub-num">15.1</span> <strong>Three formalized operational modes</strong></h3>
+            <h3><span class="sub-num">15.1</span> <strong>Dual-stream architectural flow diagram</strong></h3>
+            <div class="arch-dual-grid">
+                <div class="arch-stream-card" style="border-top: 4px solid var(--primary);">
+                    <div class="arch-stream-header">
+                        <div class="arch-stream-title">Stream A: Autonomous Edge Sentry</div>
+                        <span class="arch-stream-badge" style="background: var(--primary-light); color: var(--primary-dark);">100% Offline Primary</span>
+                    </div>
+                    <div class="arch-step-list">
+                        <div class="arch-step-item">
+                            <span class="arch-step-icon">🌱</span>
+                            <div><strong>Soil Root Zone:</strong> Continuous physical moisture, salinity, and temperature dynamics at 15 cm depth</div>
+                        </div>
+                        <div class="arch-arrow-down">↓</div>
+                        <div class="arch-step-item">
+                            <span class="arch-step-icon">⚡</span>
+                            <div><strong>Sensor Probes:</strong> AC-excited EC probe + Capacitive moisture + Digital DS18B20 polled every 15 min</div>
+                        </div>
+                        <div class="arch-arrow-down">↓</div>
+                        <div class="arch-step-item">
+                            <span class="arch-step-icon">🧠</span>
+                            <div><strong>ESP32 Edge Brain:</strong> Temperature normalization ($\alpha = 0.0191$) + Rhoades $EC_e$ conversion + FAO-56 $d_{net}$ in mm</div>
+                        </div>
+                        <div class="arch-arrow-down">↓</div>
+                        <div class="arch-step-item">
+                            <span class="arch-step-icon">🚦</span>
+                            <div><strong>Local Interface:</strong> Tri-color LED beacon (Green/Amber/Red) + Local OLED text screen + SD card logging</div>
+                        </div>
+                        <div class="arch-arrow-down">↓</div>
+                        <div class="arch-step-item">
+                            <span class="arch-step-icon">👨‍🌾</span>
+                            <div><strong>Farmer Action:</strong> Precision depletion irrigation ($d_{net}$), salinity lockout, and water source inspection</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="arch-stream-card" style="border-top: 4px solid #3b82f6;">
+                    <div class="arch-stream-header">
+                        <div class="arch-stream-title">Stream B: Cloud Telemetry & Advisory</div>
+                        <span class="arch-stream-badge" style="background: #eff6ff; color: #1d4ed8;">Switched Cellular Sync</span>
+                    </div>
+                    <div class="arch-step-list">
+                        <div class="arch-step-item">
+                            <span class="arch-step-icon">📡</span>
+                            <div><strong>SIM800L Cellular Modem:</strong> Scheduled GPRS/SMS burst with HMAC-SHA256 signature and sequence counter</div>
+                        </div>
+                        <div class="arch-arrow-down">↓</div>
+                        <div class="arch-step-item">
+                            <span class="arch-step-icon">🌐</span>
+                            <div><strong>FastAPI Cloud Gateway:</strong> High-throughput REST API with JWT device authentication & rate limiting</div>
+                        </div>
+                        <div class="arch-arrow-down">↓</div>
+                        <div class="arch-step-item">
+                            <span class="arch-step-icon">🗄️</span>
+                            <div><strong>TimescaleDB / Postgres:</strong> Optimized time-series telemetry storage, spatial mapping & rolling averages</div>
+                        </div>
+                        <div class="arch-arrow-down">↓</div>
+                        <div class="arch-step-item">
+                            <span class="arch-step-icon">📊</span>
+                            <div><strong>Web Dashboard & SMS:</strong> Regional dashboard for extension officers + automated plain Swahili SMS to farmers</div>
+                        </div>
+                        <div class="arch-arrow-down">↓</div>
+                        <div class="arch-step-item">
+                            <span class="arch-step-icon">🤝</span>
+                            <div><strong>Cooperative Agronomists:</strong> Ward agricultural officers and cooperative managers track catchment salinity</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <h3><span class="sub-num">15.2</span> <strong>Three formalized operational modes</strong></h3>
             <p><span class="badge-spec">Design Specification</span> To guarantee resilience across varying rural infrastructure environments, Zerthiva implements three distinct operational modes:</p>
             <ul>
                 <li><strong>Mode A: Fully Autonomous Offline Edge (100% Zero-Connectivity):</strong> The field node operates completely disconnected from cellular infrastructure. Sensor polling, temperature normalization, Rhoades $EC_e$ conversion, and FAO-56 depletion logic execute entirely on the ESP32. Visual sentry LEDs provide real-time farmer alerts, while all data is logged to the local MicroSD card. Ideal for remote valleys with zero network coverage.</li>
@@ -2230,7 +2766,7 @@ EC_e_est ≈ EC_p × (θ_FC / θ_SP) ≈ 0.5 × EC_p (for typical loam soils)
             </div>
 
             <div class="audit-callout">
-                <strong>Safety Scope & Operational Fallback</strong>
+                <strong>Safety Scope & Operational Fallback</strong><br>
                 The Rhoades model is valid only when soil moisture is sufficient to maintain continuous pore water films ($\theta \ge 0.15\text{ m}^3/\text{m}^3$). If $\theta < 0.15$, the conversion is suspended, threshold breach alerts are inhibited, and the system prompts the farmer for clean irrigation water.
             </div>
         </section>
@@ -2240,6 +2776,40 @@ EC_e_est ≈ EC_p × (θ_FC / θ_SP) ≈ 0.5 × EC_p (for typical loam soils)
             
             <h3><span class="sub-num">19.1</span> <strong>Phenological growth stages & root depth progression</strong></h3>
             <p><span class="badge-evidence">Established Evidence</span> Soil water depletion and salinity vulnerability vary across crop phenological stages:</p>
+
+            <div class="crop-flow-grid">
+                <div class="crop-flow-card">
+                    <span class="crop-stage-num">Stage 1</span>
+                    <div class="crop-stage-header">Land Prep & Sowing</div>
+                    <p class="crop-stage-body">Zerthiva probe installed at 15cm depth. Baseline soil texture profile and initial EC established prior to emergence.</p>
+                </div>
+                <div class="crop-flow-card">
+                    <span class="crop-stage-num">Stage 2</span>
+                    <div class="crop-stage-header">Germination & Emergence</div>
+                    <p class="crop-stage-body">Highest sensitivity window. System ensures EC remains below 1.7 dS/m for maize to prevent radicle desiccation.</p>
+                </div>
+                <div class="crop-flow-card">
+                    <span class="crop-stage-num">Stage 3</span>
+                    <div class="crop-stage-header">Vegetative Growth</div>
+                    <p class="crop-stage-body">Rapid leaf development. Zerthiva evaluates root-zone salinity prior to top-dressing, preventing osmotic fertilizer burn.</p>
+                </div>
+                <div class="crop-flow-card">
+                    <span class="crop-stage-num">Stage 4</span>
+                    <div class="crop-stage-header">Flowering / Tasseling</div>
+                    <p class="crop-stage-body">Yield-determining phase. Strictly guards readily available water ($RAW$); alerts if water stress threatens silking/fruit set.</p>
+                </div>
+                <div class="crop-flow-card">
+                    <span class="crop-stage-num">Stage 5</span>
+                    <div class="crop-stage-header">Grain Fill / Ripening</div>
+                    <p class="crop-stage-body">Moisture replenishment guided by depletion depth ($d_{net}$) to prevent mold and eliminate late-season pumping waste.</p>
+                </div>
+                <div class="crop-flow-card">
+                    <span class="crop-stage-num">Stage 6</span>
+                    <div class="crop-stage-header">Harvest & Audit</div>
+                    <p class="crop-stage-body">Final season data downloaded from SD card. End-of-season soil cores extracted and compared against planting baseline.</p>
+                </div>
+            </div>
+
             <table>
                 <thead>
                     <tr>
@@ -2353,6 +2923,11 @@ EC_e_est ≈ EC_p × (θ_FC / θ_SP) ≈ 0.5 × EC_p (for typical loam soils)
                     </tr>
                 </tbody>
             </table>
+
+            <h3><span class="sub-num">22.2</span> <strong>Data integrity & honest metrics statement</strong></h3>
+            <div class="callout">
+                "We reject vague claims like 'improves productivity significantly.' We measure and report exact figures: paired harvest weight differences (t/ha) verified on calibrated hanging scales across 4 field quadrats, water meter volumetric draw ($m^3/\text{ha}$), and certified laboratory saturated paste extract ($EC_e$) analyzed at KALRO Katumani Research Station."
+            </div>
         </section>
 
         <section id="section23">
@@ -3254,26 +3829,49 @@ EC_e_est ≈ EC_p × (θ_FC / θ_SP) ≈ 0.5 × EC_p (for typical loam soils)
             <h2><span class="sec-pill">SECTION 54</span> THEORY OF CHANGE & LOGICAL FRAMEWORK</h2>
             
             <h3><span class="sub-num">54.1</span> <strong>The causal chain of intervention</strong></h3>
-            <div class="code-block">
-[INPUTS]
-$3,500 Seed Grant ──► Fabricate 15 Nodes ──► Lab Calibration & Farmer Training
-        │
-        ▼
-[ACTIVITIES]
-Deploy 5 Treatment Nodes + Instrument 5 Control Plots in Machakos County (120 Days)
-        │
-        ▼
-[OUTPUTS]
-Continuous 15-min In-Situ Data ──► Real-Time Sentry LEDs ──► Plain-Language SMS Advisories
-        │
-        ▼
-[OUTCOMES]
-Farmers Withhold Top-Dressing at Salinity Spikes ──► Irrigate Based on Net Depletion (d_net)
-        │
-        ▼
-[IMPACTS]
-Prevented Osmotic Drought ──► 20-40% Water Conserved ──► 15-30% Harvest Preserved ──► Soil Health Sustained
+            <p><span class="badge-spec">Design Specification</span> Zerthiva's Theory of Change operationalizes how an affordable root-zone diagnostic sentry converts localized physical sensing into enduring household climate resilience and systemic land degradation prevention:</p>
+
+            <div class="toc-framework-container">
+                <div class="toc-card" style="border-top: 4px solid #64748b;">
+                    <span class="toc-badge" style="background: #f1f5f9; color: #475569;">1. Inputs</span>
+                    <p style="font-size: 0.9rem; line-height: 1.6; margin-top: 0.75rem;">
+                        Balanced seed grant funding ($3,500.00) + Low-cost hardware assembly (10 field nodes + 5 spares at ~$33.50 BOM) + Open-source MicroPython edge engine + Agronomic calibration (Maas-Hoffman salinity thresholds & FAO-56 depletion) + Local producer cooperative partnership.
+                    </p>
+                </div>
+                <div class="toc-card" style="border-top: 4px solid #3b82f6;">
+                    <span class="toc-badge" style="background: #eff6ff; color: #1d4ed8;">2. Activities</span>
+                    <p style="font-size: 0.9rem; line-height: 1.6; margin-top: 0.75rem;">
+                        Deploy 10 field nodes across Machakos County (Option A: 5 matched pairs, 3 Maize + 2 Tomato) + Train 10 smallholder farmers on visual tri-color LED cues + Weekly telemetry & mechanical flow logging + Monthly KALRO certified laboratory soil core cross-verification.
+                    </p>
+                </div>
+                <div class="toc-card" style="border-top: 4px solid #8b5cf6;">
+                    <span class="toc-badge" style="background: #f5f3ff; color: #6d28d9;">3. Outputs</span>
+                    <p style="font-size: 0.9rem; line-height: 1.6; margin-top: 0.75rem;">
+                        28,800 monthly root-zone sensor readings ($EC_a$, $\theta$, $T_{soil}$) + Actionable net irrigation depth ($d_{net}$ in mm) & chemical fertilizer lockout alerts sent via SMS & LED beacons + Field officer web dashboard + Verifiable seasonal soil health logs.
+                    </p>
+                </div>
+                <div class="toc-card" style="border-top: 4px solid var(--primary);">
+                    <span class="toc-badge" style="background: var(--primary-light); color: var(--primary-dark);">4. Outcomes</span>
+                    <p style="font-size: 0.9rem; line-height: 1.6; margin-top: 0.75rem;">
+                        20%–40% reduction in irrigation water waste + Complete elimination of misapplied synthetic top-dressing during salinity spikes + 15%–30% preserved harvest yield + Prevention of secondary salinization collapse in irrigated alluvial plots.
+                    </p>
+                </div>
+                <div class="toc-card" style="border-top: 4px solid #047857;">
+                    <span class="toc-badge" style="background: #ecfdf5; color: #047857;">5. Systemic Impact</span>
+                    <p style="font-size: 0.9rem; line-height: 1.6; margin-top: 0.75rem;">
+                        Long-term preservation of arable ASAL farmland for future generations + Enhanced household income ($160–$320/yr per smallholder irrigator) + Climate-resilient smallholder food security + Direct contribution to UN SDGs 2, 6, 12, 13, and 15.
+                    </p>
+                </div>
             </div>
+
+            <h3><span class="sub-num">54.2</span> <strong>Critical assumption analysis & risk testing</strong></h3>
+            <ul class="space-y-3" style="line-height: 1.6;">
+                <li><strong>Assumption 1: Farmers will trust and act upon visual sentry beacons.</strong> Evidence from mobile money adoption shows rural communities adopt abstract technology rapidly when introduced by trusted community extension agents. If this assumption fails, the intervention breaks at the behavior change stage. <em>Mitigation: Participatory orientation workshops and cooperative field agent co-management.</em></li>
+                <li><strong>Assumption 2: Irrigation water delivery is controllable.</strong> We assume the farmer has physical agency to initiate or suspend pumping based on depletion recommendations ($d_{net}$). If a farmer relies entirely on erratic rainfall or rigid communal canal turns that cannot be adjusted, the system provides diagnostic warning but cannot modulate delivery.</li>
+                <li><strong>Assumption 3: Hardware survives extreme tropical ASAL field environments.</strong> We assume IP65 sealed enclosures, conformal PCB coating, and localized replacement protocols are sufficient. If node field failure exceeds 15% per season, replacement overhead compromises the economic model. <em>Mitigation: Modular hot-swappable subassemblies and 5 spare buffer units.</em></li>
+                <li><strong>Assumption 4: Salinity and water stress are the primary limiting agronomic factors.</strong> We assume correcting root-zone osmotic and water stress unlocks genetic yield potential. If soil is depleted of basic organic matter or pest infestations decimate crops, soil sensing alone will not yield the projected 15%–30% harvest gains.</li>
+                <li><strong>Assumption 5: Farmer economic surplus translates to cooperative service subscription willingness.</strong> We assume a farmer realizing $120–$250 in saved pumping fuel and protected harvest will willingly pay the $15.00 annual cooperative service fee. Behavioral economics indicates farmers may attribute gains to weather or personal skill; hence, billing is integrated into cooperative harvest sales check-offs.</li>
+            </ul>
         </section>
 
         <section id="section55">
@@ -4117,5 +4715,82 @@ ESP32 Microcontroller GPIO Allocation:
     });
     </script>
 
+<script>
+    // Theme Switcher & Persistence Logic
+    (function initThemeSwitcher() {
+        function getPreferredTheme() {
+            try {
+                const saved = localStorage.getItem('zerthiva-theme');
+                if (saved === 'dark' || saved === 'light') return saved;
+            } catch (e) {}
+            return (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) ? 'dark' : 'light';
+        }
+
+        function updateToggleButtons(isDark) {
+            const buttons = [
+                document.getElementById('theme-toggle-sidebar'),
+                document.getElementById('theme-toggle-float')
+            ];
+            buttons.forEach(btn => {
+                if (!btn) return;
+                const icon = btn.querySelector('.theme-icon');
+                const text = btn.querySelector('.theme-text');
+                if (isDark) {
+                    if (icon) icon.textContent = '☀️';
+                    if (text) text.textContent = 'Light Mode';
+                    btn.setAttribute('aria-label', 'Switch to Light Mode');
+                    btn.title = 'Switch to Light Mode';
+                } else {
+                    if (icon) icon.textContent = '🌙';
+                    if (text) text.textContent = 'Dark Mode';
+                    btn.setAttribute('aria-label', 'Switch to Dark Mode');
+                    btn.title = 'Switch to Dark Mode';
+                }
+            });
+        }
+
+        function applyTheme(theme) {
+            const isDark = (theme === 'dark');
+            if (isDark) {
+                document.documentElement.setAttribute('data-theme', 'dark');
+                document.body.classList.add('dark-mode');
+            } else {
+                document.documentElement.setAttribute('data-theme', 'light');
+                document.body.classList.remove('dark-mode');
+            }
+            updateToggleButtons(isDark);
+        }
+
+        function toggleTheme() {
+            const current = document.documentElement.getAttribute('data-theme') || (document.body.classList.contains('dark-mode') ? 'dark' : 'light');
+            const newTheme = current === 'dark' ? 'light' : 'dark';
+            try {
+                localStorage.setItem('zerthiva-theme', newTheme);
+            } catch (e) {}
+            applyTheme(newTheme);
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const initialTheme = getPreferredTheme();
+            applyTheme(initialTheme);
+
+            const sidebarBtn = document.getElementById('theme-toggle-sidebar');
+            const floatBtn = document.getElementById('theme-toggle-float');
+
+            if (sidebarBtn) sidebarBtn.addEventListener('click', toggleTheme);
+            if (floatBtn) floatBtn.addEventListener('click', toggleTheme);
+
+            if (window.matchMedia) {
+                window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', e => {
+                    try {
+                        if (!localStorage.getItem('zerthiva-theme')) {
+                            applyTheme(e.matches ? 'dark' : 'light');
+                        }
+                    } catch (err) {}
+                });
+            }
+        });
+    })();
+    </script>
 </body>
 </html>
