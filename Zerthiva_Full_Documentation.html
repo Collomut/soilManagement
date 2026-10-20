@@ -1689,16 +1689,74 @@
             border-bottom-color: #1f1f26 !important;
         }
 
+        /* Issue 3: Distinct, Large, Prominent Brand Title */
+        .sidebar-brand-wrapper {
+            margin-bottom: 1.25rem;
+            padding: 0.65rem 0.5rem 1.25rem 0.5rem;
+            border-bottom: 2px solid var(--border);
+            display: flex;
+            flex-direction: column;
+            gap: 0.25rem;
+        }
+
         .sidebar-title {
-            font-size: 1.75rem !important;
+            font-size: 1.95rem !important;
             font-weight: 950 !important;
-            letter-spacing: -0.04em !important;
+            letter-spacing: -0.045em !important;
             color: var(--foreground) !important;
-            line-height: 1.15 !important;
-            margin: 0 0 0.35rem 0 !important;
+            line-height: 1.1 !important;
+            margin: 0 0 0.4rem 0 !important;
             display: flex;
             align-items: center;
-            gap: 0.4rem;
+            gap: 0.45rem;
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+        }
+
+        .sidebar-title .brand-icon {
+            font-size: 1.85rem;
+            line-height: 1;
+            filter: drop-shadow(0 2px 4px rgba(16, 185, 129, 0.2));
+        }
+
+        .sidebar-title span {
+            color: var(--primary);
+        }
+
+        [data-theme="dark"] .sidebar-title {
+            color: #ffffff !important;
+        }
+
+        [data-theme="dark"] .sidebar-title span {
+            color: #10b981 !important;
+        }
+
+        .sidebar-tagline {
+            font-size: 0.74rem !important;
+            font-weight: 700 !important;
+            letter-spacing: 0.08em !important;
+            text-transform: uppercase !important;
+            color: var(--muted-foreground) !important;
+            margin-bottom: 0.45rem !important;
+        }
+
+        .sidebar-version-pill {
+            align-self: flex-start;
+            font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+            font-size: 0.65rem;
+            font-weight: 800;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+            padding: 0.2rem 0.55rem;
+            border-radius: 9999px;
+            background: #ecfdf5;
+            color: #047857;
+            border: 1px solid #a7f3d0;
+        }
+
+        [data-theme="dark"] .sidebar-version-pill {
+            background: #081d13 !important;
+            color: #34d399 !important;
+            border: 1px solid #164e2f !important;
         }
 
         .sidebar-title span {
@@ -2300,8 +2358,8 @@
     
     <nav id="sidebar">
         <div class="sidebar-brand-wrapper">
-            <div class="sidebar-title">🌱 Zerth<span>iva</span></div>
-            <div class="sidebar-tagline">Soil Intelligence System (SIS)</div>
+            <div class="sidebar-title"><span class="brand-icon">🌱</span> Zerth<span>iva</span></div>
+            <div class="sidebar-tagline">Precision Soil Intelligence System</div>
             <div class="sidebar-version-pill">Master Dossier · v2.0</div>
         </div>
 
