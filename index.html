@@ -799,6 +799,510 @@
             color: #FFFFFF !important;
         }
 
+        
+        /* ============================================================
+           PHOTOGRAPHIC FARM HERO COVER (#cover)
+           ============================================================ */
+        .hero-cover {
+            position: relative;
+            border-radius: 14px;
+            overflow: hidden;
+            margin-bottom: 2.5rem;
+            background-color: var(--forest-green);
+            box-shadow: var(--shadow-md);
+            border: 1px solid var(--border-neutral);
+        }
+
+        .hero-backdrop {
+            position: absolute;
+            inset: 0;
+            z-index: 1;
+            overflow: hidden;
+        }
+
+        .hero-bg-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: 40% center;
+            filter: brightness(0.8);
+            transform: scale(1.02);
+            transition: transform 0.6s ease;
+        }
+
+        .hero-overlay-gradient {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(105deg, rgba(14, 32, 26, 0.96) 0%, rgba(20, 45, 37, 0.88) 45%, rgba(20, 45, 37, 0.6) 75%, rgba(20, 45, 37, 0.35) 100%);
+        }
+
+        [data-theme="dark"] .hero-overlay-gradient {
+            background: linear-gradient(105deg, rgba(5, 7, 5, 0.98) 0%, rgba(8, 12, 9, 0.92) 48%, rgba(8, 12, 9, 0.7) 78%, rgba(8, 12, 9, 0.45) 100%);
+        }
+
+        .hero-container {
+            position: relative;
+            z-index: 2;
+            display: grid;
+            grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.85fr);
+            gap: 2.25rem;
+            align-items: center;
+            padding: clamp(2rem, 3.5vw, 3.25rem);
+        }
+
+        .hero-content-col {
+            display: flex;
+            flex-direction: column;
+            gap: 0.85rem;
+        }
+
+        .hero-eyebrow {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.35rem 0.75rem;
+            background: rgba(255, 255, 255, 0.12);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 20px;
+            font-family: var(--font-mono);
+            font-size: 0.68rem;
+            font-weight: 700;
+            color: var(--sage-green);
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            width: fit-content;
+            backdrop-filter: blur(6px);
+        }
+
+        .eyebrow-pulse {
+            width: 7px;
+            height: 7px;
+            border-radius: 50%;
+            background: #68D391;
+            box-shadow: 0 0 8px #68D391;
+        }
+
+        .hero-title {
+            font-family: var(--font-serif);
+            font-size: clamp(2.8rem, 5.5vw, 4.4rem);
+            font-weight: 800;
+            line-height: 1.05;
+            color: #FFFFFF !important;
+            letter-spacing: -0.03em;
+            margin: 0;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.35);
+        }
+
+        .hero-subtitle {
+            font-family: var(--font-sans);
+            font-size: clamp(1.05rem, 1.8vw, 1.35rem);
+            font-weight: 600;
+            color: var(--sage-green);
+            line-height: 1.35;
+            margin: 0;
+        }
+
+        .hero-core-quote {
+            font-family: var(--font-serif);
+            font-size: 1.1rem;
+            font-style: italic;
+            color: #FAF8F5;
+            border-left: 3px solid var(--clay-orange);
+            padding-left: 0.9rem;
+            margin: 0.4rem 0;
+            line-height: 1.45;
+        }
+
+        .hero-description {
+            color: #E2E8F0;
+            font-size: 0.95rem;
+            line-height: 1.65;
+            margin: 0 0 0.75rem 0;
+            max-width: 600px;
+        }
+
+        .hero-actions {
+            display: flex;
+            align-items: center;
+            gap: 0.85rem;
+            flex-wrap: wrap;
+            margin-top: 0.5rem;
+        }
+
+        .hero-actions .btn-primary {
+            background: var(--clay-orange);
+            color: #FFFFFF !important;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            font-weight: 700;
+            padding: 0.7rem 1.35rem;
+            border-radius: 8px;
+            box-shadow: 0 4px 14px rgba(216, 121, 67, 0.4);
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            text-decoration: none !important;
+            transition: all 0.2s ease;
+        }
+
+        .hero-actions .btn-primary:hover {
+            background: #C46835;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(216, 121, 67, 0.55);
+        }
+
+        .hero-actions .btn-secondary {
+            background: rgba(255, 255, 255, 0.12);
+            color: #FFFFFF !important;
+            border: 1px solid rgba(255, 255, 255, 0.35);
+            font-weight: 600;
+            padding: 0.7rem 1.35rem;
+            border-radius: 8px;
+            backdrop-filter: blur(8px);
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            text-decoration: none !important;
+            transition: all 0.2s ease;
+        }
+
+        .hero-actions .btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.22);
+            transform: translateY(-2px);
+        }
+
+        .hero-metadata-row {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+            gap: 0.65rem;
+            margin-top: 1.5rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.18);
+        }
+
+        .meta-pill {
+            background: rgba(14, 25, 20, 0.65);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            border-radius: 6px;
+            padding: 0.5rem 0.65rem;
+            display: flex;
+            flex-direction: column;
+            gap: 0.2rem;
+            backdrop-filter: blur(6px);
+        }
+
+        .meta-label {
+            font-family: var(--font-mono);
+            font-size: 0.62rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            color: var(--sage-green);
+            letter-spacing: 0.04em;
+        }
+
+        .meta-val {
+            font-family: var(--font-sans);
+            font-size: 0.78rem;
+            font-weight: 700;
+            color: #FFFFFF;
+        }
+
+        .meta-val.highlight-val {
+            color: #FBD38D;
+        }
+
+        /* Right Column System Illustration Card */
+        .system-illustration-card {
+            background: rgba(255, 255, 255, 0.98);
+            border: 1px solid var(--border-neutral);
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
+            transition: all 0.3s ease;
+        }
+
+        [data-theme="dark"] .system-illustration-card {
+            background: #111512;
+            border-color: #263326;
+        }
+
+        .system-illustration-card .illustration-header {
+            padding: 0.75rem 1rem;
+            background: #142D25;
+            display: flex;
+            flex-direction: column;
+            gap: 0.15rem;
+        }
+
+        .system-illustration-card .illustration-tag {
+            font-family: var(--font-mono);
+            font-size: 0.68rem;
+            font-weight: 800;
+            color: #B7CC8A;
+            letter-spacing: 0.05em;
+        }
+
+        .system-illustration-card .illustration-caption {
+            font-size: 0.72rem;
+            color: #E2E8F0;
+        }
+
+        .system-illustration-card .illustration-body {
+            padding: 0.5rem;
+            background: #FAF8F5;
+        }
+
+        [data-theme="dark"] .system-illustration-card .illustration-body {
+            background: #0A0D0B;
+        }
+
+        /* ============================================================
+           PROJECT STATUS PANEL
+           ============================================================ */
+        .project-status-panel {
+            background: var(--bg-surface);
+            border: 1px solid var(--border-neutral);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-bottom: 2.5rem;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .status-panel-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-bottom: 1px solid var(--border-neutral);
+            padding-bottom: 0.85rem;
+            margin-bottom: 1.25rem;
+            flex-wrap: wrap;
+            gap: 0.75rem;
+        }
+
+        .status-panel-title-wrapper {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .status-indicator-dot {
+            width: 9px;
+            height: 9px;
+            border-radius: 50%;
+            background: #48BB78;
+            box-shadow: 0 0 8px #48BB78;
+        }
+
+        .status-panel-title {
+            font-family: var(--font-mono);
+            font-size: 0.88rem;
+            font-weight: 800;
+            letter-spacing: 0.06em;
+            color: var(--forest-green);
+            margin: 0;
+        }
+
+        .status-panel-badge {
+            font-family: var(--font-mono);
+            font-size: 0.68rem;
+            font-weight: 800;
+            padding: 0.25rem 0.6rem;
+            border-radius: 20px;
+            background: var(--sage-green-bg);
+            color: var(--forest-green);
+            border: 1px solid var(--sage-green);
+        }
+
+        .status-panel-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1rem;
+        }
+
+        .status-item {
+            background: var(--bg-surface-warm);
+            border: 1px solid var(--border-neutral);
+            border-radius: 8px;
+            padding: 1rem;
+            display: flex;
+            flex-direction: column;
+            gap: 0.4rem;
+        }
+
+        .status-item-full {
+            grid-column: 1 / -1;
+        }
+
+        .status-item-label {
+            font-family: var(--font-mono);
+            font-size: 0.65rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            color: var(--ink-muted);
+            letter-spacing: 0.04em;
+        }
+
+        .status-item-val {
+            font-family: var(--font-sans);
+            font-size: 0.88rem;
+            font-weight: 700;
+            color: var(--ink);
+        }
+
+        .status-item-desc {
+            font-size: 0.78rem;
+            color: var(--ink-muted);
+            margin: 0;
+            line-height: 1.45;
+        }
+
+        /* Evidence Badges Standardized */
+        .badge-implemented {
+            background: #E8F5E9;
+            color: #1B5E20;
+            border: 1px solid #A5D6A7;
+            font-family: var(--font-mono);
+            font-size: 0.62rem;
+            font-weight: 800;
+            padding: 0.15rem 0.45rem;
+            border-radius: 4px;
+            letter-spacing: 0.04em;
+            display: inline-flex;
+            align-items: center;
+            width: fit-content;
+        }
+
+        .badge-measured {
+            background: #EEF3E4;
+            color: #385E1E;
+            border: 1px solid #B7CC8A;
+            font-family: var(--font-mono);
+            font-size: 0.62rem;
+            font-weight: 800;
+            padding: 0.15rem 0.45rem;
+            border-radius: 4px;
+            letter-spacing: 0.04em;
+            display: inline-flex;
+            align-items: center;
+            width: fit-content;
+        }
+
+        .badge-spec {
+            background: #EAEFF1;
+            color: #142D25;
+            border: 1px solid #B0BEC5;
+            font-family: var(--font-mono);
+            font-size: 0.62rem;
+            font-weight: 800;
+            padding: 0.15rem 0.45rem;
+            border-radius: 4px;
+            letter-spacing: 0.04em;
+            display: inline-flex;
+            align-items: center;
+            width: fit-content;
+        }
+
+        .badge-proj {
+            background: #FBEFE8;
+            color: #A34816;
+            border: 1px solid #E8B496;
+            font-family: var(--font-mono);
+            font-size: 0.62rem;
+            font-weight: 800;
+            padding: 0.15rem 0.45rem;
+            border-radius: 4px;
+            letter-spacing: 0.04em;
+            display: inline-flex;
+            align-items: center;
+            width: fit-content;
+        }
+
+        .badge-hypo {
+            background: #FEF9E7;
+            color: #8D6B0A;
+            border: 1px solid #F9E79F;
+            font-family: var(--font-mono);
+            font-size: 0.62rem;
+            font-weight: 800;
+            padding: 0.15rem 0.45rem;
+            border-radius: 4px;
+            letter-spacing: 0.04em;
+            display: inline-flex;
+            align-items: center;
+            width: fit-content;
+        }
+
+        .badge-planned {
+            background: #EBF3F8;
+            color: #1D587A;
+            border: 1px solid #A9CCE3;
+            font-family: var(--font-mono);
+            font-size: 0.62rem;
+            font-weight: 800;
+            padding: 0.15rem 0.45rem;
+            border-radius: 4px;
+            letter-spacing: 0.04em;
+            display: inline-flex;
+            align-items: center;
+            width: fit-content;
+        }
+
+        .badge-failed {
+            background: #FDF2F2;
+            color: #C53030;
+            border: 1px solid #FEB2B2;
+            font-family: var(--font-mono);
+            font-size: 0.62rem;
+            font-weight: 800;
+            padding: 0.15rem 0.45rem;
+            border-radius: 4px;
+            letter-spacing: 0.04em;
+            display: inline-flex;
+            align-items: center;
+            width: fit-content;
+        }
+
+        [data-theme="dark"] .badge-implemented {
+            background: #102414;
+            color: #81C784;
+            border-color: #1E3D24;
+        }
+        [data-theme="dark"] .badge-measured {
+            background: #142013;
+            color: #A3C97E;
+            border-color: #23361E;
+        }
+        [data-theme="dark"] .badge-spec {
+            background: #151E1C;
+            color: #B0BEC5;
+            border-color: #253330;
+        }
+        [data-theme="dark"] .badge-proj {
+            background: #24140B;
+            color: #E89874;
+            border-color: #3D2214;
+        }
+        [data-theme="dark"] .badge-hypo {
+            background: #231B08;
+            color: #F9E79F;
+            border-color: #3D3012;
+        }
+        [data-theme="dark"] .badge-planned {
+            background: #0E1B24;
+            color: #90CAF9;
+            border-color: #1A3040;
+        }
+        [data-theme="dark"] .badge-failed {
+            background: #240E0E;
+            color: #EF9A9A;
+            border-color: #3D1A1A;
+        }
+
+        @media (max-width: 1024px) {
+            .hero-container {
+                grid-template-columns: 1fr;
+            }
+        }
+
         /* ============================================================
            HERO SECTION (#cover)
            ============================================================ */
@@ -2045,341 +2549,335 @@
         </div>
       </div>
 
-        <div id="cover" class="hero">
-          <div class="hero-eyebrow">
-            <span class="eyebrow-dot"></span>
-            AGRITECH / SOIL INTELLIGENCE / 2026 RESEARCH DOSSIER
-          </div>
-          
-          <h1 class="hero-title">Zerthiva</h1>
-          <div class="hero-subtitle">Precision Soil Intelligence for Smallholder Climate Resilience</div>
-          
-          <p class="hero-description">
-            Zerthiva is an autonomous root-zone sensing and edge decision-support platform engineered to monitor apparent bulk soil electrical conductivity (<span class="math-inline">EC_a</span>), volumetric moisture (<span class="math-inline">\theta_v</span>), and osmotic drought dynamics in real time. Calibrated against FAO-56 evapotranspiration physics and the Rhoades salinity transfer model, Zerthiva runs 100% offline via an ultra-low-power ESP32 edge node to assist smallholders in preventing osmotic crop failure and optimizing irrigation leaching.
-          </p>
-
-          <!-- Hero Action Buttons -->
-          <div class="hero-actions">
-            <a href="#section11" class="btn btn-primary">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>
-              Explore the System
-            </a>
-            <a href="#section1" class="btn btn-secondary">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
-              Read the Technical Dossier
-            </a>
+        <section id="cover" class="hero-cover">
+          <!-- Full-width Farm Photographic Background with Gradient Overlay -->
+          <div class="hero-backdrop">
+            <picture>
+              <source srcset="assets/images/farm-hero.webp" type="image/webp">
+              <img src="assets/images/farm-hero.jpg" alt="Panoramic maize farm in Kenya with healthy crop rows and rich soil" class="hero-bg-img" loading="eager" fetchpriority="high">
+            </picture>
+            <div class="hero-overlay-gradient"></div>
           </div>
 
-          <!-- Hero Custom Soil-Profile Illustration -->
-          <div class="hero-illustration-card">
-            <div class="illustration-header">
-              <div class="illustration-tag">FIGURE 0.1 · SOIL HYDRAULIC & SENSING ARCHITECTURE</div>
-              <div class="illustration-caption">Multi-depth in-situ sensing ($EC_a, \theta_v, T_s$) coupled with autonomous edge FAO-56 & Rhoades decision loop</div>
+          <div class="hero-container">
+            <!-- Left Column: Editorial Identity & Value Proposition -->
+            <div class="hero-content-col">
+              <div class="hero-eyebrow">
+                <span class="eyebrow-pulse"></span>
+                <span>AGRITECH / SOIL INTELLIGENCE / 2026</span>
+              </div>
+              
+              <h1 class="hero-title">Zerthiva</h1>
+              <div class="hero-subtitle">Precision Soil Intelligence for Smallholder Climate Resilience</div>
+
+              <div class="hero-core-quote">
+                “Grounded in science. Built for real farms. Designed for a more resilient future.”
+              </div>
+              
+              <p class="hero-description">
+                Zerthiva combines soil sensing, embedded computing, and intelligent data analysis to support better agricultural decisions. The system is designed to help smallholder farmers understand soil conditions, improve water-management decisions, and build more resilient crop-production practices.
+              </p>
+
+              <!-- Hero Action Buttons -->
+              <div class="hero-actions">
+                <a href="#section11" class="btn btn-primary">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>
+                  <span>Explore the System</span>
+                </a>
+                <a href="#section1" class="btn btn-secondary">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line></svg>
+                  <span>Read the Technical Documentation</span>
+                </a>
+              </div>
+
+              <!-- Compact Project Metadata Row -->
+              <div class="hero-metadata-row">
+                <div class="meta-pill">
+                  <span class="meta-label">Version</span>
+                  <span class="meta-val">2.0</span>
+                </div>
+                <div class="meta-pill">
+                  <span class="meta-label">Development Stage</span>
+                  <span class="meta-val">Functional Bench Prototype</span>
+                </div>
+                <div class="meta-pill">
+                  <span class="meta-label">Target Crop</span>
+                  <span class="meta-val">Maize (Zea mays)</span>
+                </div>
+                <div class="meta-pill">
+                  <span class="meta-label">Target Study Location</span>
+                  <span class="meta-val">Machakos County, Kenya</span>
+                </div>
+                <div class="meta-pill">
+                  <span class="meta-label">Core Technologies</span>
+                  <span class="meta-val">ESP32, MicroPython, RS-485 Sensing</span>
+                </div>
+                <div class="meta-pill">
+                  <span class="meta-label">Validation Status</span>
+                  <span class="meta-val highlight-val">Pre-pilot bench calibration</span>
+                </div>
+              </div>
             </div>
-            <div class="illustration-body">
-              <svg class="soil-profile-svg" viewBox="0 0 1000 480" width="100%" height="auto" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Zerthiva Root-Zone Sensing and Soil Hydraulic Architecture Diagram">
+
+            <!-- Right Column: Visual Explanation Illustration -->
+            <div class="hero-visual-col">
+              <div class="system-illustration-card">
+                <div class="illustration-header">
+                  <span class="illustration-tag">FIGURE 0.1 · SOIL & SENSING ARCHITECTURE</span>
+                  <span class="illustration-caption">In-situ root-zone measurement and offline edge decision loop</span>
+                </div>
+                <div class="illustration-body">
+                  <svg class="hero-system-svg" viewBox="0 0 540 520" width="100%" height="auto" xmlns="http://www.w3.org/2000/svg">
   <defs>
-    <!-- Soil Horizon Gradients -->
-    <linearGradient id="skyGrad" x1="0" y1="0" x2="0" y2="1">
-      <stop offset="0%" stop-color="#EBF1EC" stop-opacity="0.8"/>
-      <stop offset="100%" stop-color="#F4F1E8" stop-opacity="0.3"/>
+    <!-- Gradients -->
+    <linearGradient id="sky-grad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#EBF3F0" stop-opacity="0.8"/>
+      <stop offset="100%" stop-color="#FAF8F5" stop-opacity="0.2"/>
     </linearGradient>
-    <linearGradient id="horizonA" x1="0" y1="0" x2="0" y2="1">
-      <stop offset="0%" stop-color="#4A3B2C" stop-opacity="0.12"/>
-      <stop offset="100%" stop-color="#4A3B2C" stop-opacity="0.22"/>
+    <linearGradient id="topsoil-grad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#B89B7E" stop-opacity="0.35"/>
+      <stop offset="100%" stop-color="#A58466" stop-opacity="0.45"/>
     </linearGradient>
-    <linearGradient id="horizonB" x1="0" y1="0" x2="0" y2="1">
-      <stop offset="0%" stop-color="#D87943" stop-opacity="0.14"/>
-      <stop offset="100%" stop-color="#4A3B2C" stop-opacity="0.28"/>
+    <linearGradient id="subsoil-grad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#8C6B4D" stop-opacity="0.5"/>
+      <stop offset="100%" stop-color="#735336" stop-opacity="0.6"/>
     </linearGradient>
-    <linearGradient id="horizonC" x1="0" y1="0" x2="0" y2="1">
-      <stop offset="0%" stop-color="#4A3B2C" stop-opacity="0.30"/>
-      <stop offset="100%" stop-color="#242923" stop-opacity="0.45"/>
+    <linearGradient id="leaf-grad" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#78A05B"/>
+      <stop offset="100%" stop-color="#4D7336"/>
     </linearGradient>
-    <radialGradient id="moistureBulb" cx="340" cy="190" r="140" gradientUnits="userSpaceOnUse">
-      <stop offset="0%" stop-color="#B7CC8A" stop-opacity="0.55"/>
-      <stop offset="60%" stop-color="#B7CC8A" stop-opacity="0.25"/>
-      <stop offset="100%" stop-color="#B7CC8A" stop-opacity="0"/>
-    </radialGradient>
-    <!-- Pattern for Soil Strata -->
-    <pattern id="soilGrid" width="40" height="40" patternUnits="userSpaceOnUse">
-      <path d="M 40 0 L 0 0 0 40" fill="none" stroke="#D8D8CC" stroke-width="0.5" stroke-dasharray="2 2" opacity="0.6"/>
-    </pattern>
+    <filter id="card-shadow" x="-8%" y="-8%" width="116%" height="116%">
+      <feDropShadow dx="0" dy="4" stdDeviation="6" flood-color="#000000" flood-opacity="0.12"/>
+    </filter>
   </defs>
 
-  <!-- Background Sky & Atmospheric Zone (y: 0 - 150) -->
-  <rect x="0" y="0" width="1000" height="150" fill="url(#skyGrad)"/>
-  <rect x="0" y="0" width="1000" height="480" fill="url(#soilGrid)"/>
-
-  <!-- Atmospheric Solar & Transpiration Vectors -->
-  <g class="atmospheric-flux" opacity="0.85">
-    <!-- Sun / Solar Radiation Icon -->
-    <circle cx="120" cy="50" r="18" fill="#D87943" opacity="0.25"/>
-    <circle cx="120" cy="50" r="10" fill="#D87943"/>
-    <path d="M120 22V32M120 68V78M92 50H102M138 50H148M100 30L108 38M132 62L140 70M100 70L108 62M132 38L140 30" stroke="#D87943" stroke-width="2" stroke-linecap="round"/>
-    <text x="120" y="92" font-family="'IBM Plex Mono', monospace" font-size="11" font-weight="600" fill="#5A6258" text-anchor="middle">SOLAR FLUX (Rs)</text>
-
-    <!-- Atmospheric Evaporative Demand Arrow (ET0) -->
-    <path d="M260 95 C255 70, 275 60, 270 35" fill="none" stroke="#D87943" stroke-width="2" stroke-dasharray="4 3"/>
-    <polygon points="270,30 265,40 275,40" fill="#D87943"/>
-    <text x="270" y="20" font-family="'IBM Plex Mono', monospace" font-size="11" font-weight="700" fill="#D87943" text-anchor="middle">DEMAND: ET₀</text>
-
-    <!-- Transpiration Stream (Tr) -->
-    <path d="M380 95 C375 75, 395 65, 390 40" fill="none" stroke="#142D25" stroke-width="2" stroke-dasharray="4 3"/>
-    <polygon points="390,35 385,45 395,45" fill="#142D25"/>
-    <text x="390" y="25" font-family="'IBM Plex Mono', monospace" font-size="11" font-weight="700" fill="#142D25" text-anchor="middle">TRANSPIRATION (Tr)</text>
+  <!-- Atmospheric Sky Zone -->
+  <rect x="10" y="10" width="520" height="210" rx="8" fill="url(#sky-grad)" stroke="#D8D8CC" stroke-width="1"/>
+  
+  <!-- Sun & ET Evapotranspiration -->
+  <g transform="translate(45, 30)">
+    <circle cx="16" cy="16" r="12" fill="#E8A663" opacity="0.85"/>
+    <circle cx="16" cy="16" r="16" stroke="#E8A663" stroke-width="1.5" stroke-dasharray="3 3" fill="none" opacity="0.6"/>
+    <text x="40" y="16" font-family="'Plus Jakarta Sans', sans-serif" font-size="10" font-weight="700" fill="#242923">Solar Radiance</text>
+    <text x="40" y="27" font-family="'IBM Plex Mono', monospace" font-size="9" fill="#5A6258">FAO-56 ET₀ Driving Force</text>
   </g>
 
-  <!-- Ground Line / Soil Surface (y = 150) -->
-  <line x1="0" y1="150" x2="1000" y2="150" stroke="#142D25" stroke-width="2.5"/>
-  <rect x="0" y="147" width="1000" height="4" fill="#B7CC8A" opacity="0.4"/>
+  <!-- Ground Surface Line (y = 220) -->
+  <line x1="10" y1="220" x2="530" y2="220" stroke="#142D25" stroke-width="2.5" stroke-linecap="round"/>
+  <rect x="20" y="212" width="70" height="15" rx="3" fill="#142D25"/>
+  <text x="55" y="223" font-family="'IBM Plex Mono', monospace" font-size="8.5" font-weight="700" fill="#F4F1E8" text-anchor="middle">SOIL SURFACE</text>
 
-  <!-- Soil Horizons -->
-  <!-- Horizon A: 0 - 15 cm (y: 150 - 240) -->
-  <rect x="0" y="150" width="1000" height="90" fill="url(#horizonA)"/>
-  <line x1="0" y1="240" x2="1000" y2="240" stroke="#D8D8CC" stroke-width="1.2" stroke-dasharray="6 4"/>
+  <!-- Topsoil Horizon (220 to 340, depth: 0-20 cm) -->
+  <rect x="10" y="221" width="520" height="120" fill="url(#topsoil-grad)"/>
+  <text x="25" y="245" font-family="'IBM Plex Mono', monospace" font-size="9" font-weight="700" fill="#5A6258">TOPSOIL HORIZON (0–20 cm)</text>
+  <text x="25" y="258" font-family="'Plus Jakarta Sans', sans-serif" font-size="8" fill="#5A6258">High biological activity · Root crown</text>
 
-  <!-- Horizon B: 15 - 45 cm Active Root Zone (y: 240 - 380) -->
-  <rect x="0" y="240" width="1000" height="140" fill="url(#horizonB)"/>
-  <line x1="0" y1="380" x2="1000" y2="380" stroke="#D8D8CC" stroke-width="1.2" stroke-dasharray="6 4"/>
+  <!-- Subsoil Horizon (340 to 510, depth: 20-50 cm) -->
+  <rect x="10" y="341" width="520" height="169" rx="0 0 8 8" fill="url(#subsoil-grad)"/>
+  <line x1="10" y1="341" x2="530" y2="341" stroke="#8C6B4D" stroke-width="1.2" stroke-dasharray="4 3"/>
+  <text x="25" y="365" font-family="'IBM Plex Mono', monospace" font-size="9" font-weight="700" fill="#FAF8F5">SUBSOIL / LEACHING ZONE (20–50 cm)</text>
+  <text x="25" y="378" font-family="'Plus Jakarta Sans', sans-serif" font-size="8" fill="#E5E7E4">Salt accumulation zone · Water reserve</text>
 
-  <!-- Horizon C: Deep Subsoil / Drainage (y: 380 - 480) -->
-  <rect x="0" y="380" width="1000" height="100" fill="url(#horizonC)"/>
+  <!-- MAIZE PLANT (Center-Left: x = 165) -->
+  <!-- Stalk -->
+  <path d="M165 220 Q167 150 165 80" stroke="#5C8542" stroke-width="7" stroke-linecap="round" fill="none"/>
+  <!-- Leaves -->
+  <path d="M165 190 Q120 180 90 205 Q125 170 165 185" fill="url(#leaf-grad)"/>
+  <path d="M166 160 Q215 150 240 175 Q205 140 166 155" fill="url(#leaf-grad)"/>
+  <path d="M165 130 Q110 115 85 140 Q120 110 165 125" fill="url(#leaf-grad)"/>
+  <path d="M166 105 Q210 95 235 115 Q200 90 166 100" fill="url(#leaf-grad)"/>
+  <!-- Tassel / Flower at Top -->
+  <path d="M165 80 L165 50 M165 65 L155 45 M165 65 L175 45 M165 60 L150 52 M165 60 L180 52" stroke="#D1B85D" stroke-width="2" stroke-linecap="round"/>
+  <!-- Developing Maize Ear -->
+  <path d="M168 145 C176 142 186 148 184 165 C180 172 172 168 167 155 Z" fill="#D1B85D" stroke="#5C8542" stroke-width="1.5"/>
+  <text x="192" y="156" font-family="'Plus Jakarta Sans', sans-serif" font-size="9" font-weight="700" fill="#242923">Zea mays</text>
+  <text x="192" y="167" font-family="'IBM Plex Mono', monospace" font-size="8" fill="#5A6258">Target Crop</text>
 
-  <!-- Moisture Bulb from Drip Irrigation -->
-  <circle cx="340" cy="190" r="130" fill="url(#moistureBulb)"/>
-  <ellipse cx="340" cy="220" rx="90" ry="60" fill="#B7CC8A" opacity="0.25"/>
+  <!-- ROOT ARCHITECTURE (x = 165, y = 220 downward) -->
+  <!-- Primary Tap & Brace Roots -->
+  <path d="M165 220 Q160 270 155 320 Q150 370 148 420" stroke="#FAF8F5" stroke-width="3" fill="none" opacity="0.9"/>
+  <path d="M165 220 Q175 270 185 330 Q190 390 195 440" stroke="#FAF8F5" stroke-width="2.8" fill="none" opacity="0.9"/>
+  <!-- Lateral Roots (Upper Zone: z1) -->
+  <path d="M162 250 Q130 265 105 280" stroke="#FAF8F5" stroke-width="1.8" fill="none" opacity="0.8"/>
+  <path d="M168 260 Q205 275 235 290" stroke="#FAF8F5" stroke-width="1.8" fill="none" opacity="0.8"/>
+  <path d="M160 285 Q125 305 95 315" stroke="#FAF8F5" stroke-width="1.5" fill="none" opacity="0.75"/>
+  <!-- Lateral Roots (Lower Zone: z2) -->
+  <path d="M158 335 Q120 360 100 390" stroke="#FAF8F5" stroke-width="1.4" fill="none" opacity="0.7"/>
+  <path d="M182 345 Q215 375 240 405" stroke="#FAF8F5" stroke-width="1.4" fill="none" opacity="0.7"/>
+  <path d="M152 385 Q130 420 115 450" stroke="#FAF8F5" stroke-width="1.2" fill="none" opacity="0.6"/>
 
-  <!-- Soil Horizon Labels on Left Edge -->
-  <g class="depth-scale" font-family="'IBM Plex Mono', monospace" font-size="10" fill="#5A6258" font-weight="600">
-    <text x="15" y="145">0 cm (SURFACE)</text>
-    <text x="15" y="195">TOP-SOIL (0–15 cm)</text>
-    <text x="15" y="235">-15 cm</text>
-    <text x="15" y="310">ACTIVE ROOT ZONE (15–45 cm)</text>
-    <text x="15" y="375">-45 cm</text>
-    <text x="15" y="430">DEEP DRAINAGE HORIZON (45+ cm)</text>
+  <!-- SENSOR 1: UPPER ROOT ZONE (z1 = 15 cm, y = 290, x = 230) -->
+  <g transform="translate(230, 280)">
+    <rect x="0" y="0" width="45" height="18" rx="4" fill="#142D25" stroke="#B7CC8A" stroke-width="1.2"/>
+    <!-- Probes -->
+    <line x1="45" y1="5" x2="65" y2="5" stroke="#D87943" stroke-width="2" stroke-linecap="round"/>
+    <line x1="45" y1="9" x2="68" y2="9" stroke="#D87943" stroke-width="2" stroke-linecap="round"/>
+    <line x1="45" y1="13" x2="65" y2="13" stroke="#D87943" stroke-width="2" stroke-linecap="round"/>
+    <text x="22" y="12.5" font-family="'IBM Plex Mono', monospace" font-size="8.5" font-weight="700" fill="#FFFFFF" text-anchor="middle">z₁: 15cm</text>
+  </g>
+  <!-- Sensor 1 Annotation Card -->
+  <g transform="translate(320, 260)" filter="url(#card-shadow)">
+    <rect x="0" y="0" width="195" height="52" rx="6" fill="#FFFFFF" stroke="#D8D8CC" stroke-width="1"/>
+    <rect x="0" y="0" width="4" height="52" rx="2 0 0 2" fill="#142D25"/>
+    <text x="12" y="16" font-family="'IBM Plex Mono', monospace" font-size="9" font-weight="700" fill="#142D25">1. UPPER SENSING POINT (z₁)</text>
+    <text x="12" y="30" font-family="'Plus Jakarta Sans', sans-serif" font-size="8.5" font-weight="600" fill="#242923">Root-Zone Bulk EC (ECₐ) & θᵥ</text>
+    <text x="12" y="44" font-family="'IBM Plex Mono', monospace" font-size="8" fill="#D87943">Active water uptake & salinity</text>
+    <!-- Pointer Line -->
+    <path d="M0 26 L-25 30" stroke="#142D25" stroke-width="1.2" stroke-dasharray="2 2" fill="none"/>
   </g>
 
-  <!-- Drip Irrigation Lateral & Emitter -->
-  <rect x="250" y="144" width="220" height="5" rx="2" fill="#242923"/>
-  <circle cx="340" cy="146" r="5" fill="#D87943"/>
-  <!-- Drip droplet -->
-  <path d="M340 152 C338 156, 337 160, 340 164 C343 160, 342 156, 340 152 Z" fill="#142D25"/>
-  <text x="340" y="136" font-family="'IBM Plex Mono', monospace" font-size="10" font-weight="700" fill="#D87943" text-anchor="middle">DRIP EMITTER (I)</text>
-
-  <!-- Crop Plant Foliage & Root Network -->
-  <g class="crop-plant">
-    <!-- Foliage / Stem -->
-    <path d="M340 150 V80" stroke="#142D25" stroke-width="4" stroke-linecap="round"/>
-    <path d="M340 120 C320 110, 305 115, 295 105 C310 95, 335 105, 340 115" fill="#B7CC8A" stroke="#142D25" stroke-width="1.5"/>
-    <path d="M340 100 C360 85, 380 90, 390 80 C375 75, 350 85, 340 95" fill="#142D25" stroke="#142D25" stroke-width="1.5"/>
-    <path d="M340 80 C325 65, 315 50, 320 40 C335 45, 340 60, 340 75" fill="#B7CC8A" stroke="#142D25" stroke-width="1.5"/>
-    <path d="M340 75 C355 60, 370 50, 365 40 C350 45, 342 60, 340 70" fill="#142D25" stroke="#142D25" stroke-width="1.5"/>
-
-    <!-- Taproot and Lateral Root Network in Soil -->
-    <path d="M340 150 Q342 220, 345 320 Q343 350, 340 375" fill="none" stroke="#D87943" stroke-width="3" stroke-linecap="round"/>
-    <!-- Primary Lateral Roots -->
-    <path d="M342 180 Q300 200, 260 215" fill="none" stroke="#D87943" stroke-width="2" stroke-linecap="round"/>
-    <path d="M342 195 Q380 215, 415 230" fill="none" stroke="#D87943" stroke-width="2" stroke-linecap="round"/>
-    <path d="M343 230 Q290 250, 250 270" fill="none" stroke="#D87943" stroke-width="1.8" stroke-linecap="round"/>
-    <path d="M344 250 Q390 275, 420 300" fill="none" stroke="#D87943" stroke-width="1.8" stroke-linecap="round"/>
-    <path d="M344 285 Q310 310, 275 330" fill="none" stroke="#D87943" stroke-width="1.5" stroke-linecap="round"/>
-    <path d="M345 315 Q375 340, 405 355" fill="none" stroke="#D87943" stroke-width="1.5" stroke-linecap="round"/>
-    <!-- Fine Rootlets -->
-    <path d="M260 215 Q245 225, 235 240 M415 230 Q435 245, 445 260 M250 270 Q235 285, 225 305 M420 300 Q435 315, 440 335" fill="none" stroke="#D87943" stroke-width="1" stroke-dasharray="2 2" opacity="0.8"/>
+  <!-- SENSOR 2: LOWER DRAINAGE ZONE (z2 = 35 cm, y = 410, x = 230) -->
+  <g transform="translate(230, 400)">
+    <rect x="0" y="0" width="45" height="18" rx="4" fill="#142D25" stroke="#B7CC8A" stroke-width="1.2"/>
+    <!-- Probes -->
+    <line x1="45" y1="5" x2="65" y2="5" stroke="#D87943" stroke-width="2" stroke-linecap="round"/>
+    <line x1="45" y1="9" x2="68" y2="9" stroke="#D87943" stroke-width="2" stroke-linecap="round"/>
+    <line x1="45" y1="13" x2="65" y2="13" stroke="#D87943" stroke-width="2" stroke-linecap="round"/>
+    <text x="22" y="12.5" font-family="'IBM Plex Mono', monospace" font-size="8.5" font-weight="700" fill="#FFFFFF" text-anchor="middle">z₂: 35cm</text>
+  </g>
+  <!-- Sensor 2 Annotation Card -->
+  <g transform="translate(320, 385)" filter="url(#card-shadow)">
+    <rect x="0" y="0" width="195" height="52" rx="6" fill="#FFFFFF" stroke="#D8D8CC" stroke-width="1"/>
+    <rect x="0" y="0" width="4" height="52" rx="2 0 0 2" fill="#D87943"/>
+    <text x="12" y="16" font-family="'IBM Plex Mono', monospace" font-size="9" font-weight="700" fill="#D87943">2. LOWER SENSING POINT (z₂)</text>
+    <text x="12" y="30" font-family="'Plus Jakarta Sans', sans-serif" font-size="8.5" font-weight="600" fill="#242923">Leaching & Drainage Front</text>
+    <text x="12" y="44" font-family="'IBM Plex Mono', monospace" font-size="8" fill="#5A6258">Verifies salt flush past root zone</text>
+    <!-- Pointer Line -->
+    <path d="M0 26 L-25 25" stroke="#D87943" stroke-width="1.2" stroke-dasharray="2 2" fill="none"/>
   </g>
 
-  <!-- SENSOR ARRAY PROBES (Stainless Steel 316 / Epoxy Potting) -->
-  <!-- Sensor Node 1 at 15 cm -->
-  <g class="sensor-probe-shallow" transform="translate(470, 210)">
-    <!-- Probe Body -->
-    <rect x="-10" y="-15" width="20" height="30" rx="4" fill="#142D25" stroke="#B7CC8A" stroke-width="1.5"/>
-    <!-- Stainless Prongs (3 prongs) -->
-    <line x1="-6" y1="15" x2="-6" y2="40" stroke="#D8D8CC" stroke-width="2.2" stroke-linecap="round"/>
-    <line x1="0" y1="15" x2="0" y2="44" stroke="#D8D8CC" stroke-width="2.2" stroke-linecap="round"/>
-    <line x1="6" y1="15" x2="6" y2="40" stroke="#D8D8CC" stroke-width="2.2" stroke-linecap="round"/>
-    <!-- Measurement field lines -->
-    <circle cx="0" cy="30" r="18" fill="none" stroke="#B7CC8A" stroke-width="1" stroke-dasharray="3 2" opacity="0.8"/>
-    <!-- Signal Indicator Dot -->
-    <circle cx="0" cy="0" r="3" fill="#D87943"/>
+  <!-- ESP32 CONTROLLER ENCLOSURE & SOLAR HARVESTING (Top-Right: x = 360, y = 35) -->
+  <!-- Mounting Pole -->
+  <line x1="390" y1="90" x2="390" y2="220" stroke="#718096" stroke-width="4" stroke-linecap="round"/>
+  <!-- Solar Mini-Panel -->
+  <polygon points="365,42 425,32 435,50 375,60" fill="#1A365D" stroke="#A0AEC0" stroke-width="1.2"/>
+  <line x1="385" y1="39" x2="395" y2="57" stroke="#CBD5E0" stroke-width="0.8"/>
+  <line x1="405" y1="36" x2="415" y2="54" stroke="#CBD5E0" stroke-width="0.8"/>
+  <!-- Weatherproof Enclosure Box -->
+  <g transform="translate(355, 75)" filter="url(#card-shadow)">
+    <rect x="0" y="0" width="70" height="60" rx="6" fill="#FFFFFF" stroke="#142D25" stroke-width="2"/>
+    <rect x="0" y="0" width="70" height="16" rx="6 6 0 0" fill="#142D25"/>
+    <text x="35" y="11.5" font-family="'IBM Plex Mono', monospace" font-size="8" font-weight="700" fill="#F4F1E8" text-anchor="middle">ESP32 NODE</text>
+    <!-- Microcontroller Chip Inside Representation -->
+    <rect x="18" y="24" width="34" height="26" rx="3" fill="#FAF8F5" stroke="#CBD5E0" stroke-width="1"/>
+    <circle cx="26" cy="37" r="3" fill="#8CA365"/>
+    <text x="35" y="40" font-family="'IBM Plex Mono', monospace" font-size="7.5" font-weight="700" fill="#142D25">MCU</text>
   </g>
 
-  <!-- Sensor Node 2 at 35 cm (Deep Root Horizon) -->
-  <g class="sensor-probe-deep" transform="translate(470, 335)">
-    <!-- Probe Body -->
-    <rect x="-10" y="-15" width="20" height="30" rx="4" fill="#142D25" stroke="#B7CC8A" stroke-width="1.5"/>
-    <!-- Stainless Prongs (3 prongs) -->
-    <line x1="-6" y1="15" x2="-6" y2="40" stroke="#D8D8CC" stroke-width="2.2" stroke-linecap="round"/>
-    <line x1="0" y1="15" x2="0" y2="44" stroke="#D8D8CC" stroke-width="2.2" stroke-linecap="round"/>
-    <line x1="6" y1="15" x2="6" y2="40" stroke="#D8D8CC" stroke-width="2.2" stroke-linecap="round"/>
-    <!-- Measurement field lines -->
-    <circle cx="0" cy="30" r="18" fill="none" stroke="#D87943" stroke-width="1" stroke-dasharray="3 2" opacity="0.8"/>
-    <!-- Signal Indicator Dot -->
-    <circle cx="0" cy="0" r="3" fill="#B7CC8A"/>
-  </g>
+  <!-- RS-485 Modbus Cable from Probes to ESP32 Node -->
+  <path d="M230 289 C200 289 200 130 355 110" stroke="#142D25" stroke-width="1.8" stroke-dasharray="4 3" fill="none"/>
+  <path d="M230 409 C185 409 185 135 355 120" stroke="#D87943" stroke-width="1.8" stroke-dasharray="4 3" fill="none"/>
 
-  <!-- RS-485 / ADC Signal Bus Cable -->
-  <path d="M470 320 V195 Q470 160, 520 150 L680 150 V115" fill="none" stroke="#142D25" stroke-width="2.5" stroke-linejoin="round"/>
-  <path d="M470 195 H470" fill="none" stroke="#142D25" stroke-width="2"/>
-
-  <!-- Sensor Callout Cards -->
-  <g class="sensor-callout-1" transform="translate(510, 195)">
-    <rect x="0" y="0" width="180" height="48" rx="6" fill="#FFFFFF" stroke="#142D25" stroke-width="1.5" filter="drop-shadow(0 2px 6px rgba(0,0,0,0.06))"/>
-    <text x="12" y="18" font-family="'IBM Plex Mono', monospace" font-size="11" font-weight="700" fill="#142D25">PROBE 1 (z = 15 cm)</text>
-    <text x="12" y="34" font-family="'Plus Jakarta Sans', sans-serif" font-size="10" font-weight="600" fill="#5A6258">θv (Moisture) · ECa (Bulk EC)</text>
-    <circle cx="165" cy="14" r="4" fill="#B7CC8A"/>
-  </g>
-
-  <g class="sensor-callout-2" transform="translate(510, 320)">
-    <rect x="0" y="0" width="180" height="48" rx="6" fill="#FFFFFF" stroke="#D87943" stroke-width="1.5" filter="drop-shadow(0 2px 6px rgba(0,0,0,0.06))"/>
-    <text x="12" y="18" font-family="'IBM Plex Mono', monospace" font-size="11" font-weight="700" fill="#D87943">PROBE 2 (z = 35 cm)</text>
-    <text x="12" y="34" font-family="'Plus Jakarta Sans', sans-serif" font-size="10" font-weight="600" fill="#5A6258">Deep Salinity · Depletion</text>
-    <circle cx="165" cy="14" r="4" fill="#D87943"/>
-  </g>
-
-  <!-- FIELD CONTROLLER & HARVESTING STATION (Right side) -->
-  <g class="field-station" transform="translate(680, 20)">
-    <!-- Mounting Mast / Pole -->
-    <rect x="38" y="90" width="6" height="150" fill="#242923"/>
-    
-    <!-- IP65 Enclosure Box -->
-    <rect x="15" y="65" width="52" height="60" rx="5" fill="#142D25" stroke="#B7CC8A" stroke-width="2"/>
-    <rect x="23" y="73" width="36" height="22" rx="3" fill="#0D1F19"/>
-    
-    <!-- Multi-Color Agronomic LED Beacon -->
-    <circle cx="31" cy="84" r="3" fill="#B7CC8A"/>
-    <circle cx="41" cy="84" r="3" fill="#D87943"/>
-    <circle cx="51" cy="84" r="3" fill="#0284C7"/>
-    
-    <!-- Solar Micro-PV Panel (6V 2W) -->
-    <polygon points="10,25 72,15 78,50 16,60" fill="#142D25" stroke="#D8D8CC" stroke-width="1.5"/>
-    <line x1="28" y1="22" x2="34" y2="57" stroke="#B7CC8A" stroke-width="1"/>
-    <line x1="46" y1="19" x2="52" y2="54" stroke="#B7CC8A" stroke-width="1"/>
-    <line x1="64" y1="16" x2="70" y2="51" stroke="#B7CC8A" stroke-width="1"/>
-    <line x1="13" y1="42" x2="75" y2="32" stroke="#B7CC8A" stroke-width="1"/>
-
-    <!-- Stub Antenna & Telemetry Waves -->
-    <line x1="41" y1="65" x2="41" y2="40" stroke="#242923" stroke-width="2"/>
-    <path d="M47 38 C51 35, 51 29, 47 26" fill="none" stroke="#D87943" stroke-width="1.5" stroke-linecap="round"/>
-    <path d="M52 41 C58 37, 58 27, 52 23" fill="none" stroke="#D87943" stroke-width="1.2" stroke-linecap="round"/>
-
-    <!-- Controller Callout Box -->
-    <g transform="translate(75, 45)">
-      <rect x="0" y="0" width="220" height="96" rx="8" fill="#FFFFFF" stroke="#142D25" stroke-width="1.5" filter="drop-shadow(0 4px 10px rgba(0,0,0,0.07))"/>
-      <text x="14" y="22" font-family="'IBM Plex Mono', monospace" font-size="12" font-weight="700" fill="#142D25">ZERTHIVA EDGE ENGINE</text>
-      <text x="14" y="40" font-family="'Plus Jakarta Sans', sans-serif" font-size="10.5" font-weight="700" fill="#D87943">ESP32 · MicroPython · 100% Offline</text>
-      <text x="14" y="58" font-family="'Plus Jakarta Sans', sans-serif" font-size="10" font-weight="500" fill="#5A6258">• FAO-56 Daily Root-Zone Water Balance</text>
-      <text x="14" y="72" font-family="'Plus Jakarta Sans', sans-serif" font-size="10" font-weight="500" fill="#5A6258">• Rhoades ECe Salinity Conversion</text>
-      <text x="14" y="86" font-family="'Plus Jakarta Sans', sans-serif" font-size="10" font-weight="600" fill="#142D25">• Local Tri-Color Decision LED + GSM Uplink</text>
-    </g>
-  </g>
-
-  <!-- Deep Drainage Percolation Arrow -->
-  <g class="percolation-arrow" transform="translate(340, 400)">
-    <path d="M0 0 V40" fill="none" stroke="#5A6258" stroke-width="2" stroke-dasharray="4 3"/>
-    <polygon points="0,48 -5,38 5,38" fill="#5A6258"/>
-    <text x="15" y="28" font-family="'IBM Plex Mono', monospace" font-size="10" font-weight="600" fill="#5A6258">DEEP PERCOLATION (DP)</text>
+  <!-- EDGE LOGIC & RECOMMENDATION BADGE (Overlaid at Bottom Right) -->
+  <g transform="translate(260, 455)" filter="url(#card-shadow)">
+    <rect x="0" y="0" width="260" height="50" rx="8" fill="#142D25" stroke="#8CA365" stroke-width="1.5"/>
+    <circle cx="16" cy="25" r="5" fill="#8CA365"/>
+    <text x="30" y="20" font-family="'IBM Plex Mono', monospace" font-size="9" font-weight="700" fill="#F4F1E8">AUTONOMOUS EDGE DECISION</text>
+    <text x="30" y="34" font-family="'Plus Jakarta Sans', sans-serif" font-size="8.5" fill="#B7CC8A">100% Offline FAO-56 & Rhoades Leaching Loop</text>
+    <text x="30" y="44" font-family="'IBM Plex Mono', monospace" font-size="7.5" fill="#E8A663">→ Recommendation: Infiltration Adequate</text>
   </g>
 </svg>
+                </div>
+              </div>
             </div>
           </div>
+        </section>
 
-          <!-- Project Metadata Strip -->
-          <div class="project-metadata-grid">
-            <div class="metadata-item">
-              <span class="metadata-label">DOCUMENT VERSION</span>
-              <span class="metadata-val">v2.0 (Post-Audit Master Dossier)</span>
+        <!-- PROJECT STATUS PANEL -->
+        <div class="project-status-panel" id="project-status">
+          <div class="status-panel-header">
+            <div class="status-panel-title-wrapper">
+              <div class="status-indicator-dot"></div>
+              <h2 class="status-panel-title">SYSTEM STATUS & VERIFICATION REGISTER</h2>
             </div>
-            <div class="metadata-item">
-              <span class="metadata-label">DEVELOPMENT MATURITY</span>
-              <span class="metadata-val">TRL-4 (Functional Bench Prototype)</span>
-            </div>
-            <div class="metadata-item">
-              <span class="metadata-label">PILOT SCOPE</span>
-              <span class="metadata-val">Option A (5 Matched Pairs: 3 Maize, 2 Tomato)</span>
-            </div>
-            <div class="metadata-item">
-              <span class="metadata-label">TARGET GEOGRAPHY</span>
-              <span class="metadata-val">Machakos & Makueni ASALs, Kenya</span>
-            </div>
-            <div class="metadata-item">
-              <span class="metadata-label">EDGE COMPUTE</span>
-              <span class="metadata-val">100% Autonomous Offline Execution (ESP32)</span>
-            </div>
-            <div class="metadata-item">
-              <span class="metadata-label">SCIENTIFIC BASES</span>
-              <span class="metadata-val">FAO-56 Water Balance · Rhoades ECe Conversion</span>
-            </div>
+            <span class="status-panel-badge">TRL-4 BENCH PROTOTYPE</span>
           </div>
 
-          <!-- Post-Audit Resolution Banner -->
-          <div class="audit-resolution-banner">
-            <div class="audit-resolution-title">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
-              Rigorous Multi-Disciplinary Audit Revisions Incorporated (v2.0)
+          <div class="status-panel-grid">
+            <div class="status-item">
+              <div class="status-item-label">Development Stage</div>
+              <div class="status-item-val">TRL-4 (Functional Bench Prototype)</div>
+              <div class="status-item-badge badge-implemented">IMPLEMENTED</div>
+              <p class="status-item-desc">Hardware and edge firmware validated in bench environment; end-to-end signal conversion verified.</p>
             </div>
-            <p>
-              This master dossier incorporates full corrective resolutions for all 7 Critical Findings (C1–C7) and 18 Cross-Section Contradictions (X01–X18). In-situ apparent bulk conductivity (<span class="math-inline">EC_a</span>) is physically decoupled from saturated paste extract (<span class="math-inline">EC_e</span>); the 10-farm pilot design is harmonized to Option A (5 matched pairs) as an exploratory feasibility trial; the power budget arithmetic has been recalculated ($0.00208\text{ mAh/cycle}$ for status LED); the pre-pilot budget is balanced to exactly $3,500.00; and all claims are strictly classified by evidence standard.
-            </p>
-          </div>
 
-          <!-- Redesigned Metric Cards Grid -->
-          <div class="hero-metrics-grid">
-            <div class="metric-pill">
-              <span class="metric-val">$30–$35</span>
-              <span class="metric-lbl">Target Hardware BOM</span>
-              <span class="metric-status-tag tag-spec">DESIGN SPECIFICATION</span>
+            <div class="status-item">
+              <div class="status-item-label">Hardware Implementation</div>
+              <div class="status-item-val">Dual-depth RS-485 Array + ESP32</div>
+              <div class="status-item-badge badge-implemented">IMPLEMENTED</div>
+              <p class="status-item-desc">ESP32 DevKitC v4, RS-485 Modbus transceiver, 15cm & 35cm probes, solar PMIC with LiFePO₄ storage.</p>
             </div>
-            <div class="metric-pill">
-              <span class="metric-val">20%–40%</span>
-              <span class="metric-lbl">Modeled Water Savings</span>
-              <span class="metric-status-tag tag-proj">MODELED PROJECTION</span>
+
+            <div class="status-item">
+              <div class="status-item-label">Calibration Status</div>
+              <div class="status-item-val">Bench Calibrated (0.01M KCl)</div>
+              <div class="status-item-badge badge-measured">MEASURED</div>
+              <p class="status-item-desc">Electrical conductivity calibrated against standard KCl solution; gravimetric soil moisture calibration bench-tested.</p>
             </div>
-            <div class="metric-pill">
-              <span class="metric-val">15%–30%</span>
-              <span class="metric-lbl">Projected Yield Recovery</span>
-              <span class="metric-status-tag tag-proj">MODELED PROJECTION</span>
+
+            <div class="status-item">
+              <div class="status-item-label">Software Implementation</div>
+              <div class="status-item-val">FreeRTOS Dual-Task Firmware</div>
+              <div class="status-item-badge badge-implemented">IMPLEMENTED</div>
+              <p class="status-item-desc">100% offline edge execution of FAO-56 dual crop-coefficient and Rhoades bulk-to-extract EC conversion models.</p>
             </div>
-            <div class="metric-pill">
-              <span class="metric-val">100% Offline</span>
-              <span class="metric-lbl">Autonomous Edge Engine</span>
-              <span class="metric-status-tag tag-spec">DESIGN SPECIFICATION</span>
+
+            <div class="status-item">
+              <div class="status-item-label">Field-Testing Status</div>
+              <div class="status-item-val">Pre-Pilot Protocol Approved</div>
+              <div class="status-item-badge badge-planned">PLANNED (OPTION A)</div>
+              <p class="status-item-desc">Field deployment scheduled for 10-farm (5 matched pairs) exploratory trial in Machakos ASAL; no in-field claims demonstrated yet.</p>
             </div>
-            <div class="metric-pill">
-              <span class="metric-val">10 Farms Total</span>
-              <span class="metric-lbl">Exploratory Matched Pairs</span>
-              <span class="metric-status-tag tag-hypo">FEASIBILITY TRIAL</span>
+
+            <div class="status-item">
+              <div class="status-item-label">Known Limitations</div>
+              <div class="status-item-val">Bulk EC Texture Dependence</div>
+              <div class="status-item-badge badge-spec">DESIGN CONSTRAINT</div>
+              <p class="status-item-desc">Apparent bulk EC (ECₐ) requires soil texture calibration to derive saturated extract (ECₑ); cellular telemetry optional.</p>
             </div>
-            <div class="metric-pill">
-              <span class="metric-val">58 Sec + 9 Annexes</span>
-              <span class="metric-lbl">Complete Technical Dossier</span>
-              <span class="metric-status-tag tag-verif">PEER-AUDITED</span>
+
+            <div class="status-item status-item-full">
+              <div class="status-item-label">Next Validation Milestones</div>
+              <div class="status-item-val">M1: ASAL Deployment (Machakos) · M2: 60/120-Day Sensor Drift Audit · M3: Agronomic Matched-Pair Comparison</div>
+              <div class="status-item-badge badge-planned">MILESTONE ROADMAP</div>
             </div>
           </div>
+        </div>
 
-          <!-- Evidence Classification Legend -->
-          <div class="evidence-legend-card">
-            <div class="evidence-legend-header">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
-              <span>SCIENTIFIC & TECHNICAL EVIDENCE CLASSIFICATION STANDARD</span>
+        <!-- Evidence Classification Legend -->
+        <div class="evidence-legend-card">
+          <div class="evidence-legend-header">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+            <span>SCIENTIFIC & TECHNICAL EVIDENCE CLASSIFICATION STANDARD</span>
+          </div>
+          <div class="evidence-legend-grid">
+            <div class="legend-item">
+              <span class="badge-implemented">IMPLEMENTED</span>
+              <p>Functionality confirmed and operating in the current hardware/firmware build.</p>
             </div>
-            <div class="evidence-legend-grid">
-              <div class="legend-item">
-                <span class="badge-evidence">Established Evidence / Verified</span>
-                <p>Supported by authoritative peer-reviewed literature, ISO/FAO standards, or verified bench test.</p>
-              </div>
-              <div class="legend-item">
-                <span class="badge-spec">Design Specification</span>
-                <p>An engineered architectural target or operational capability the proposed system is specified to meet.</p>
-              </div>
-              <div class="legend-item">
-                <span class="badge-proj">Modeled Projection</span>
-                <p>An estimate derived from mathematical simulations (FAO-56 water balance, Rhoades salinity transfer) with stated assumptions.</p>
-              </div>
-              <div class="legend-item">
-                <span class="badge-hypo">Unvalidated Hypothesis</span>
-                <p>A scientific or behavioral proposition under active empirical test in the Option A field pilot.</p>
-              </div>
+            <div class="legend-item">
+              <span class="badge-measured">MEASURED</span>
+              <p>A physical value obtained through a documented measurement or bench test.</p>
+            </div>
+            <div class="legend-item">
+              <span class="badge-spec">DESIGN SPECIFICATION</span>
+              <p>A planned or specified architectural characteristic the system is engineered to meet.</p>
+            </div>
+            <div class="legend-item">
+              <span class="badge-proj">MODELED PROJECTION</span>
+              <p>A modeled estimate derived from mathematical simulations (FAO-56 water balance, Rhoades salinity transfer) with stated assumptions.</p>
+            </div>
+            <div class="legend-item">
+              <span class="badge-hypo">HYPOTHESIS</span>
+              <p>A scientific proposition requiring active field validation in the Option A trial.</p>
+            </div>
+            <div class="legend-item">
+              <span class="badge-planned">PLANNED</span>
+              <p>An upcoming development milestone or field protocol not yet deployed.</p>
+            </div>
+            <div class="legend-item">
+              <span class="badge-failed">FAILED TEST</span>
+              <p>A documented test or experimental trial that did not meet its pass criteria.</p>
             </div>
           </div>
         </div>
