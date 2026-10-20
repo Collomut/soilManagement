@@ -1334,7 +1334,7 @@
 
     
 
-        /* Theme Variables & Dark Mode */
+        /* Theme Variables & Dark Mode (Pure OLED / Jet Black - Zero Blue Hue) */
         :root {
             --background: #f8fafc;
             --foreground: #0f172a;
@@ -1349,11 +1349,11 @@
             --accent: #d97706;
             --accent-light: #fffbeb;
             --secondary: #f1f5f9;
-            --highlight: #0284c7;
-            --highlight-light: #f0f9ff;
-            --sidebar-bg: #0f172a;
-            --sidebar-fg: #f8fafc;
-            --sidebar-border: #1e293b;
+            --highlight: #059669;
+            --highlight-light: #ecfdf5;
+            --sidebar-bg: #ffffff;
+            --sidebar-fg: #0f172a;
+            --sidebar-border: #e2e8f0;
             --code-bg: #1e293b;
             --code-fg: #e2e8f0;
             --table-stripe: #f8fafc;
@@ -1362,31 +1362,32 @@
             --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -2px rgba(0, 0, 0, 0.05);
         }
 
+        /* Pure Jet Black / OLED Dark Mode - Zero Blue Hue */
         [data-theme="dark"], body.dark-mode {
-            --background: #0b1120;
-            --foreground: #f1f5f9;
-            --card: #131c2e;
-            --card-border: #22324e;
-            --border: #22324e;
+            --background: #000000;
+            --foreground: #f4f4f5;
+            --card: #0a0a0a;
+            --card-border: #222222;
+            --border: #222222;
             --primary: #10b981;
             --primary-dark: #059669;
-            --primary-light: #064e3b;
+            --primary-light: #052e16;
             --primary-foreground: #ffffff;
-            --muted-foreground: #94a3b8;
+            --muted-foreground: #a1a1aa;
             --accent: #f59e0b;
-            --accent-light: #451a03;
-            --secondary: #1a253a;
-            --highlight: #38bdf8;
-            --highlight-light: #0c4a6e;
-            --sidebar-bg: #070b14;
-            --sidebar-fg: #f1f5f9;
-            --sidebar-border: #152033;
-            --code-bg: #080d1a;
-            --code-fg: #f1f5f9;
-            --table-stripe: #101726;
-            --table-header-bg: #070b14;
-            --table-header-fg: #f8fafc;
-            --shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+            --accent-light: #271705;
+            --secondary: #121212;
+            --highlight: #10b981;
+            --highlight-light: #052e16;
+            --sidebar-bg: #000000;
+            --sidebar-fg: #f4f4f5;
+            --sidebar-border: #1a1a1a;
+            --code-bg: #030303;
+            --code-fg: #f4f4f5;
+            --table-stripe: #050505;
+            --table-header-bg: #000000;
+            --table-header-fg: #ffffff;
+            --shadow: 0 4px 20px rgba(0, 0, 0, 0.85);
         }
 
         /* Smooth Theme Transition */
@@ -1394,7 +1395,119 @@
             transition: background-color 0.25s ease, color 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
         }
 
-        /* Ensure all cards dynamically adapt to theme */
+        /* Dark Mode Global Black Overrides */
+        [data-theme="dark"] body {
+            background-color: #000000 !important;
+            color: #f4f4f5 !important;
+        }
+
+        [data-theme="dark"] main#main-content {
+            background-color: #000000 !important;
+        }
+
+        [data-theme="dark"] section {
+            background-color: #000000 !important;
+            border-bottom: 1px solid #1a1a1a !important;
+        }
+
+        [data-theme="dark"] h1, [data-theme="dark"] h2, [data-theme="dark"] h3, [data-theme="dark"] h3 strong, [data-theme="dark"] h4,
+        [data-theme="dark"] strong, [data-theme="dark"] b, [data-theme="dark"] p strong, [data-theme="dark"] li strong {
+            color: #ffffff !important;
+        }
+
+        [data-theme="dark"] p, [data-theme="dark"] li {
+            color: #d4d4d8;
+        }
+
+        [data-theme="dark"] h2 {
+            border-bottom: 2px solid #222222 !important;
+        }
+
+        [data-theme="dark"] .sec-pill {
+            background: #18181b !important;
+            color: #e4e4e7 !important;
+            border: 1px solid #27272a !important;
+        }
+
+        [data-theme="dark"] .sub-num {
+            color: #10b981 !important;
+        }
+
+        [data-theme="dark"] .hero {
+            background: #000000 !important;
+            background-image: radial-gradient(circle at 50% 0%, #064e3b22 0%, #000000 70%) !important;
+            border-color: #222222 !important;
+        }
+
+        [data-theme="dark"] .hero-top-badge {
+            background: #18181b !important;
+            color: #34d399 !important;
+            border-color: #27272a !important;
+        }
+
+        [data-theme="dark"] .tagline {
+            color: #a1a1aa !important;
+        }
+
+        [data-theme="dark"] .description {
+            color: #d4d4d8 !important;
+        }
+
+        /* Sidebar in Deep Pure Black */
+        [data-theme="dark"] #sidebar {
+            background: #000000 !important;
+            border-right: 1px solid #1a1a1a !important;
+        }
+
+        [data-theme="dark"] .sidebar-header {
+            background: #000000 !important;
+            border-bottom: 1px solid #1a1a1a !important;
+        }
+
+        [data-theme="dark"] .sidebar-title {
+            color: #ffffff !important;
+        }
+
+        [data-theme="dark"] .sidebar-subtitle {
+            color: #71717a !important;
+        }
+
+        [data-theme="dark"] .nav-tier-label {
+            color: #71717a !important;
+        }
+
+        [data-theme="dark"] #sidebar a.nav-link {
+            color: #a1a1aa !important;
+        }
+
+        [data-theme="dark"] #sidebar a.nav-link .nav-sec-num {
+            background: #18181b !important;
+            color: #71717a !important;
+        }
+
+        [data-theme="dark"] #sidebar a.nav-link:hover {
+            background: #111111 !important;
+            color: #34d399 !important;
+        }
+
+        [data-theme="dark"] #sidebar a.nav-link:hover .nav-sec-num {
+            background: #052e16 !important;
+            color: #6ee7b7 !important;
+        }
+
+        [data-theme="dark"] #sidebar a.nav-link.active {
+            background: #052317 !important;
+            color: #6ee7b7 !important;
+            border-left: 4px solid #10b981 !important;
+            box-shadow: 0 4px 12px rgba(16, 185, 129, 0.2) !important;
+        }
+
+        [data-theme="dark"] #sidebar a.nav-link.active .nav-sec-num {
+            background: #10b981 !important;
+            color: #000000 !important;
+        }
+
+        /* Cards and Components in Pure Charcoal / Black */
         .cycle-card, .why-card, .bom-card, .arch-stream-card, .crop-flow-card, .toc-card, .metric-pill {
             background: var(--card) !important;
             color: var(--foreground) !important;
@@ -1410,6 +1523,69 @@
             color: var(--muted-foreground) !important;
         }
 
+        [data-theme="dark"] .cycle-card,
+        [data-theme="dark"] .why-card,
+        [data-theme="dark"] .bom-card,
+        [data-theme="dark"] .arch-stream-card,
+        [data-theme="dark"] .crop-flow-card,
+        [data-theme="dark"] .toc-card,
+        [data-theme="dark"] .metric-pill,
+        [data-theme="dark"] .arch-step-item {
+            background: #0a0a0a !important;
+            border-color: #222222 !important;
+            color: #f4f4f5 !important;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.85) !important;
+        }
+
+        [data-theme="dark"] .cycle-card-critical {
+            background: #120404 !important;
+            border-color: #551313 !important;
+        }
+
+        [data-theme="dark"] .cycle-card-critical .cycle-title {
+            color: #fca5a5 !important;
+        }
+
+        [data-theme="dark"] .cycle-card-critical .cycle-desc {
+            color: #f87171 !important;
+        }
+
+        [data-theme="dark"] .intercept-box {
+            background: #041a10 !important;
+            border: 2px solid #10b981 !important;
+            color: #f4f4f5 !important;
+        }
+
+        [data-theme="dark"] .why-pill {
+            background: #18181b !important;
+            color: #f4f4f5 !important;
+            border-color: #27272a !important;
+        }
+
+        [data-theme="dark"] .bom-title,
+        [data-theme="dark"] .why-body-title,
+        [data-theme="dark"] .crop-stage-header,
+        [data-theme="dark"] .arch-stream-title {
+            color: #ffffff !important;
+        }
+
+        [data-theme="dark"] .bom-desc,
+        [data-theme="dark"] .why-body-desc,
+        [data-theme="dark"] .crop-stage-body {
+            color: #a1a1aa !important;
+        }
+
+        [data-theme="dark"] .toc-card p {
+            color: #d4d4d8 !important;
+        }
+
+        [data-theme="dark"] .toc-badge,
+        [data-theme="dark"] .arch-stream-badge {
+            background: #18181b !important;
+            color: #f4f4f5 !important;
+            border: 1px solid #27272a !important;
+        }
+
         .callout {
             background: var(--secondary) !important;
             color: var(--foreground) !important;
@@ -1417,111 +1593,120 @@
             border-left-color: var(--primary) !important;
         }
 
-        .intercept-box {
-            background: var(--secondary) !important;
-            border-color: var(--primary) !important;
-            color: var(--foreground) !important;
+        [data-theme="dark"] .callout {
+            background: #0d0d0d !important;
+            border: 1px solid #222222 !important;
+            border-left: 4px solid #10b981 !important;
+            color: #f4f4f5 !important;
         }
 
-        [data-theme="dark"] .intercept-box {
-            background: #064e3b22 !important;
-            border-color: var(--primary) !important;
+        [data-theme="dark"] .audit-callout, [data-theme="dark"] .audit-banner {
+            background: #0d0d0d !important;
+            border: 1px solid #222222 !important;
+            border-left: 4px solid #10b981 !important;
+            color: #f4f4f5 !important;
         }
 
-        [data-theme="dark"] .audit-banner, [data-theme="dark"] .audit-callout {
-            background: #0c4a6e22 !important;
-            border-color: var(--highlight) !important;
-            color: var(--foreground) !important;
+        [data-theme="dark"] .audit-banner-title {
+            color: #34d399 !important;
+        }
+
+        [data-theme="dark"] .audit-banner-title svg {
+            stroke: #34d399 !important;
+        }
+
+        /* Tables & Code in Deep Black */
+        [data-theme="dark"] table {
+            background: #050505 !important;
+            border-color: #222222 !important;
         }
 
         [data-theme="dark"] table th {
-            background: var(--table-header-bg) !important;
-            color: var(--table-header-fg) !important;
+            background: #000000 !important;
+            color: #ffffff !important;
+            border-color: #222222 !important;
         }
 
         [data-theme="dark"] table td {
-            background: var(--card) !important;
-            color: var(--foreground) !important;
-            border-color: var(--border) !important;
+            background: #0a0a0a !important;
+            color: #f4f4f5 !important;
+            border-color: #222222 !important;
         }
 
         [data-theme="dark"] table tr:nth-child(even) td {
-            background: var(--table-stripe) !important;
+            background: #050505 !important;
         }
 
         [data-theme="dark"] .code-block, [data-theme="dark"] pre {
-            background: var(--code-bg) !important;
-            color: var(--code-fg) !important;
-            border-color: var(--border) !important;
+            background: #030303 !important;
+            color: #34d399 !important;
+            border: 1px solid #222222 !important;
         }
 
-        [data-theme="dark"] h1, [data-theme="dark"] h2, [data-theme="dark"] h3, [data-theme="dark"] h3 strong, [data-theme="dark"] h4,
-        [data-theme="dark"] strong, [data-theme="dark"] b, [data-theme="dark"] p strong, [data-theme="dark"] li strong {
-            color: var(--foreground) !important;
-        }
-
-        [data-theme="dark"] section {
-            background-color: var(--background) !important;
-        }
-
-        [data-theme="dark"] .hero {
-            background: linear-gradient(145deg, #0e1726 0%, #064e3b33 50%, #451a0322 100%) !important;
-            border-color: var(--border) !important;
-        }
-
-        [data-theme="dark"] .arch-step-item {
-            background: var(--card) !important;
-            border-color: var(--border) !important;
-            color: var(--foreground) !important;
-        }
-
-        [data-theme="dark"] .toc-card p {
-            color: var(--foreground) !important;
+        [data-theme="dark"] #section58 h3 {
+            background: #080808 !important;
+            border-color: #222222 !important;
+            border-left: 4px solid #10b981 !important;
+            color: #ffffff !important;
         }
 
         [data-theme="dark"] #back-to-top {
-            background: var(--card) !important;
-            color: var(--foreground) !important;
-            border-color: var(--border) !important;
+            background: #000000 !important;
+            color: #ffffff !important;
+            border: 1px solid #27272a !important;
         }
 
         [data-theme="dark"] .doc-footer {
-            border-color: var(--border) !important;
-            color: var(--muted-foreground) !important;
+            border-top: 1px solid #1f1f1f !important;
+            color: #71717a !important;
         }
 
-        /* Theme Toggle Buttons */
+        /* Single Theme Toggle Button (Fixed Top-Right) */
+        .theme-toggle-fixed {
+            position: fixed;
+            top: 1.15rem;
+            right: 1.75rem;
+            z-index: 1000;
+        }
+
         .theme-toggle-btn {
             display: inline-flex;
             align-items: center;
             gap: 0.5rem;
-            padding: 0.4rem 0.85rem;
-            font-size: 0.78rem;
+            padding: 0.45rem 0.95rem;
+            font-size: 0.8rem;
             font-weight: 700;
             border-radius: 9999px;
             border: 1px solid var(--border);
             background: var(--card);
             color: var(--foreground);
             cursor: pointer;
-            transition: all 0.2s ease;
-            box-shadow: var(--shadow);
+            transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
             user-select: none;
+            backdrop-filter: blur(8px);
         }
 
         .theme-toggle-btn:hover {
-            transform: translateY(-1px);
+            transform: translateY(-2px);
             border-color: var(--primary);
             color: var(--primary);
+            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
         }
 
-        .theme-toggle-floating {
-            position: fixed;
-            top: 1rem;
-            right: 1.5rem;
-            z-index: 1000;
+        [data-theme="dark"] .theme-toggle-btn {
+            background: #000000 !important;
+            border-color: #27272a !important;
+            color: #f4f4f5 !important;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.85) !important;
         }
 
-        /* Evidence and Audit Badges */
+        [data-theme="dark"] .theme-toggle-btn:hover {
+            border-color: #10b981 !important;
+            color: #10b981 !important;
+        }
+
+        /* Evidence and Audit Badges (Dark Mode - Zero Blue) */
         .badge-evidence {
             display: inline-block;
             background: #ecfdf5;
@@ -1537,9 +1722,9 @@
             vertical-align: middle;
         }
         [data-theme="dark"] .badge-evidence {
-            background: #064e3b;
-            color: #a7f3d0;
-            border-color: #059669;
+            background: #052e16 !important;
+            color: #6ee7b7 !important;
+            border-color: #059669 !important;
         }
 
         .badge-spec {
@@ -1557,9 +1742,9 @@
             vertical-align: middle;
         }
         [data-theme="dark"] .badge-spec {
-            background: #1e3a8a;
-            color: #bfdbfe;
-            border-color: #2563eb;
+            background: #18181b !important;
+            color: #e4e4e7 !important;
+            border-color: #3f3f46 !important;
         }
 
         .badge-bench {
@@ -1577,9 +1762,9 @@
             vertical-align: middle;
         }
         [data-theme="dark"] .badge-bench {
-            background: #451a03;
-            color: #fde68a;
-            border-color: #d97706;
+            background: #271705 !important;
+            color: #fde68a !important;
+            border-color: #b45309 !important;
         }
 
         .badge-field {
@@ -1597,9 +1782,9 @@
             vertical-align: middle;
         }
         [data-theme="dark"] .badge-field {
-            background: #831843;
-            color: #fbcfe8;
-            border-color: #db2777;
+            background: #2b0b1a !important;
+            color: #fbcfe8 !important;
+            border-color: #9d174d !important;
         }
 
         .badge-proj {
@@ -1617,9 +1802,9 @@
             vertical-align: middle;
         }
         [data-theme="dark"] .badge-proj {
-            background: #3b0764;
-            color: #ddd6fe;
-            border-color: #7c3aed;
+            background: #1c0b2b !important;
+            color: #ddd6fe !important;
+            border-color: #6d28d9 !important;
         }
 
         .badge-hypo {
@@ -1637,15 +1822,15 @@
             vertical-align: middle;
         }
         [data-theme="dark"] .badge-hypo {
-            background: #431407;
-            color: #fed7aa;
-            border-color: #ea580c;
+            background: #2b1105 !important;
+            color: #fed7aa !important;
+            border-color: #c2410c !important;
         }
 
         /* Audit Clarification Callout */
         .audit-callout {
             background: #f8fafc;
-            border-left: 4px solid #0284c7;
+            border-left: 4px solid #059669;
             padding: 12px 16px;
             margin: 16px 0;
             border-radius: 0 6px 6px 0;
@@ -1653,7 +1838,7 @@
             color: #334155;
         }
         .audit-callout strong {
-            color: #0369a1;
+            color: #047857;
             display: block;
             margin-bottom: 4px;
             text-transform: uppercase;
@@ -1669,8 +1854,8 @@
         }
         .annex-pill {
             display: inline-block;
-            background: #334155;
-            color: #f8fafc;
+            background: #18181b;
+            color: #f4f4f5;
             padding: 4px 10px;
             border-radius: 9999px;
             font-size: 0.75rem;
@@ -1679,6 +1864,11 @@
             text-transform: uppercase;
             margin-right: 8px;
             vertical-align: middle;
+        }
+        [data-theme="dark"] .annex-pill {
+            background: #27272a !important;
+            color: #ffffff !important;
+            border: 1px solid #3f3f46 !important;
         }
     
 </style>
@@ -1708,11 +1898,6 @@
         <div class="sidebar-header">
             <div class="sidebar-title">🌱 Zerth<span>iva</span></div>
             <div class="sidebar-subtitle">Master Technical Dossier · v2.0</div>
-            <div style="margin-top: 0.75rem;">
-                <button id="theme-toggle-sidebar" class="theme-toggle-btn" aria-label="Toggle theme">
-                    <span class="theme-icon">🌙</span> <span class="theme-text">Dark Mode</span>
-                </button>
-            </div>
         </div>
 
         <div class="nav-tier-label">OVERVIEW</div>
@@ -1802,8 +1987,8 @@
     <main id="main-content">
         
         <div id="cover" class="hero">
-            <div class="theme-toggle-floating">
-                <button id="theme-toggle-float" class="theme-toggle-btn" aria-label="Toggle theme">
+            <div class="theme-toggle-fixed">
+                <button id="theme-toggle" class="theme-toggle-btn" aria-label="Toggle dark mode" title="Toggle dark mode">
                     <span class="theme-icon">🌙</span> <span class="theme-text">Dark Mode</span>
                 </button>
             </div>
@@ -1815,7 +2000,7 @@
             
             <div class="audit-banner" style="text-align: left; max-width: 880px; width: 100%;">
                 <div class="audit-banner-title">
-                    <svg width="20" height="20" fill="none" stroke="#0284c7" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>
+                    <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>
                     Comprehensive Technical, Scientific, Financial, and Documentation Audit Revisions Incorporated (v2.0)
                 </div>
                 <p style="margin: 0; font-size: 0.88rem;">This master dossier has been rigorously overhauled in response to the comprehensive multi-disciplinary audit. All 7 Critical Findings (C1–C7) and 18 Cross-Section Contradictions (X01–X18) have been resolved. In-situ apparent bulk conductivity ($EC_a$) is physically decoupled from saturated paste extract ($EC_e$); the 10-farm pilot design is harmonized to Option A (5 matched pairs: 3 Maize, 2 Tomato) and framed as an exploratory feasibility trial; the power budget arithmetic has been recalculated ($0.00208\text{ mAh/cycle}$ for LED); the budget is balanced to exactly $3,500.00; and all claims are strictly classified by evidence standard (Established Evidence, Design Specification, Bench-Tested Result, Field-Tested Result, Projection, or Unvalidated Hypothesis).</p>
@@ -1849,10 +2034,10 @@
             </div>
 
             <div style="display: flex; gap: 0.75rem; flex-wrap: wrap; justify-content: center; margin-bottom: 1.75rem;">
-                <span class="badge" style="background: #eff6ff; color: #1e40af; border-color: #bfdbfe;">Status: Functional Bench Prototype (TRL 4)</span>
-                <span class="badge" style="background: #f5f3ff; color: #6b21a8; border-color: #ddd6fe;">Validation Stage: Pre-Pilot Bench Calibration & Exploratory Field Trial</span>
-                <span class="badge" style="background: #ecfdf5; color: #047857; border-color: #a7f3d0;">Target Crops: Maize (3 pairs) & Tomato (2 pairs)</span>
-                <span class="badge" style="background: #fffbeb; color: #92400e; border-color: #fde68a;">Pilot Geography: Machakos County, Kenya (10 Farms Total)</span>
+                <span class="badge" style="background: #18181b; color: #f4f4f5; border: 1px solid #27272a;">Status: Functional Bench Prototype (TRL 4)</span>
+                <span class="badge" style="background: #1c0b2b; color: #ddd6fe; border: 1px solid #6d28d9;">Validation Stage: Pre-Pilot Bench Calibration & Exploratory Field Trial</span>
+                <span class="badge" style="background: #052e16; color: #6ee7b7; border: 1px solid #059669;">Target Crops: Maize (3 pairs) & Tomato (2 pairs)</span>
+                <span class="badge" style="background: #271705; color: #fde68a; border: 1px solid #b45309;">Pilot Geography: Machakos County, Kenya (10 Farms Total)</span>
             </div>
 
             <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; width: 100%; max-width: 880px; text-align: left; background: var(--card); border: 1px solid var(--border); padding: 1.25rem 1.5rem; border-radius: 0.75rem; box-shadow: var(--shadow);">
@@ -4716,7 +4901,7 @@ ESP32 Microcontroller GPIO Allocation:
     </script>
 
 <script>
-    // Theme Switcher & Persistence Logic
+    // Single Theme Switcher & Persistence Logic
     (function initThemeSwitcher() {
         function getPreferredTheme() {
             try {
@@ -4726,27 +4911,22 @@ ESP32 Microcontroller GPIO Allocation:
             return (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) ? 'dark' : 'light';
         }
 
-        function updateToggleButtons(isDark) {
-            const buttons = [
-                document.getElementById('theme-toggle-sidebar'),
-                document.getElementById('theme-toggle-float')
-            ];
-            buttons.forEach(btn => {
-                if (!btn) return;
-                const icon = btn.querySelector('.theme-icon');
-                const text = btn.querySelector('.theme-text');
-                if (isDark) {
-                    if (icon) icon.textContent = '☀️';
-                    if (text) text.textContent = 'Light Mode';
-                    btn.setAttribute('aria-label', 'Switch to Light Mode');
-                    btn.title = 'Switch to Light Mode';
-                } else {
-                    if (icon) icon.textContent = '🌙';
-                    if (text) text.textContent = 'Dark Mode';
-                    btn.setAttribute('aria-label', 'Switch to Dark Mode');
-                    btn.title = 'Switch to Dark Mode';
-                }
-            });
+        function updateToggleButton(isDark) {
+            const btn = document.getElementById('theme-toggle');
+            if (!btn) return;
+            const icon = btn.querySelector('.theme-icon');
+            const text = btn.querySelector('.theme-text');
+            if (isDark) {
+                if (icon) icon.textContent = '☀️';
+                if (text) text.textContent = 'Light Mode';
+                btn.setAttribute('aria-label', 'Switch to Light Mode');
+                btn.title = 'Switch to Light Mode';
+            } else {
+                if (icon) icon.textContent = '🌙';
+                if (text) text.textContent = 'Dark Mode';
+                btn.setAttribute('aria-label', 'Switch to Dark Mode');
+                btn.title = 'Switch to Dark Mode';
+            }
         }
 
         function applyTheme(theme) {
@@ -4758,7 +4938,7 @@ ESP32 Microcontroller GPIO Allocation:
                 document.documentElement.setAttribute('data-theme', 'light');
                 document.body.classList.remove('dark-mode');
             }
-            updateToggleButtons(isDark);
+            updateToggleButton(isDark);
         }
 
         function toggleTheme() {
@@ -4774,11 +4954,8 @@ ESP32 Microcontroller GPIO Allocation:
             const initialTheme = getPreferredTheme();
             applyTheme(initialTheme);
 
-            const sidebarBtn = document.getElementById('theme-toggle-sidebar');
-            const floatBtn = document.getElementById('theme-toggle-float');
-
-            if (sidebarBtn) sidebarBtn.addEventListener('click', toggleTheme);
-            if (floatBtn) floatBtn.addEventListener('click', toggleTheme);
+            const btn = document.getElementById('theme-toggle');
+            if (btn) btn.addEventListener('click', toggleTheme);
 
             if (window.matchMedia) {
                 window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', e => {
