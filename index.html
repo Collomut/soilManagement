@@ -255,9 +255,9 @@
             position: sticky;
             top: 1.25rem;
             align-self: start;
+            height: calc(100dvh - 2.5rem);
             max-height: calc(100dvh - 2.5rem);
-            overflow-y: auto;
-            overflow-x: hidden;
+            overflow: hidden;
             min-width: 0;
             width: 260px;
             background-color: var(--sidebar-bg);
@@ -681,6 +681,9 @@
         }
 
         .article-top-bar {
+            position: sticky;
+            top: 0.75rem;
+            z-index: 45;
             display: flex;
             align-items: center;
             justify-content: space-between;
@@ -689,9 +692,17 @@
             background: var(--bg-surface);
             border: 1px solid var(--border-neutral);
             border-radius: 8px;
-            box-shadow: var(--shadow-sm);
+            box-shadow: var(--shadow-md);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
             flex-wrap: wrap;
             gap: 0.75rem;
+            transition: all 0.2s ease;
+        }
+
+        [data-theme="dark"] .article-top-bar {
+            background: rgba(14, 15, 14, 0.95);
+            border-color: var(--border-neutral);
         }
 
         .desktop-sidebar-expand-btn {
@@ -1547,6 +1558,94 @@
             color: var(--ink-subtle) !important;
         }
 
+        
+        /* Floating Navigation Toggle Button (Visible when sidebar collapsed anywhere on page) */
+        .floating-nav-btn {
+            display: none;
+            position: fixed;
+            bottom: 2rem;
+            left: 2rem;
+            z-index: 95;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.58rem 1rem;
+            background: var(--forest-green);
+            color: #F4F1E8;
+            border: 1px solid var(--forest-green-dark);
+            border-radius: 30px;
+            box-shadow: var(--shadow-lg);
+            cursor: pointer;
+            font-family: var(--font-sans);
+            font-size: 0.8rem;
+            font-weight: 700;
+            transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .floating-nav-btn:hover {
+            background: var(--forest-green-dark);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.35);
+        }
+
+        .floating-kbd {
+            font-family: var(--font-mono);
+            font-size: 0.65rem;
+            padding: 0.15rem 0.35rem;
+            background: rgba(255, 255, 255, 0.18);
+            border-radius: 4px;
+            letter-spacing: 0.02em;
+        }
+
+        [data-theme="dark"] .floating-nav-btn {
+            background: #141B13;
+            color: var(--sage-green);
+            border-color: #283626;
+        }
+
+        [data-theme="dark"] .floating-kbd {
+            background: rgba(255, 255, 255, 0.08);
+            color: var(--ink-muted);
+        }
+
+        /* Show floating nav button on desktop whenever sidebar is collapsed */
+        @media (min-width: 901px) {
+            .site-layout.sidebar-collapsed + .floating-nav-btn,
+            .site-layout.sidebar-collapsed ~ .floating-nav-btn {
+                display: inline-flex;
+            }
+        }
+
+        .sidebar-footer-collapse-btn {
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.4rem;
+            padding: 0.38rem;
+            margin-top: 0.4rem;
+            background: transparent;
+            border: 1px dashed var(--border-neutral);
+            border-radius: 6px;
+            font-family: var(--font-sans);
+            font-size: 0.72rem;
+            font-weight: 600;
+            color: var(--ink-muted);
+            cursor: pointer;
+            transition: all 0.15s ease;
+        }
+
+        .sidebar-footer-collapse-btn:hover {
+            background: var(--sage-green-bg);
+            border-color: var(--forest-green);
+            color: var(--forest-green);
+        }
+
+        [data-theme="dark"] .sidebar-footer-collapse-btn:hover {
+            background: #141A13;
+            border-color: var(--sage-green);
+            color: var(--sage-green);
+        }
+
         /* Floating Back to Top Button */
         .back-to-top {
             position: fixed;
@@ -1921,6 +2020,10 @@
         <button id="theme-toggle" class="theme-toggle-btn" aria-label="Toggle light or dark theme" title="Toggle theme">
           <span class="theme-toggle-icon">🌙</span>
           <span class="theme-toggle-text">DARK MODE</span>
+        </button>
+        <button id="sidebar-footer-collapse-btn" class="sidebar-footer-collapse-btn" title="Collapse navigation sidebar (Ctrl+B)" aria-label="Collapse sidebar" onclick="toggleDesktopSidebar()">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><line x1="9" y1="3" x2="9" y2="21"></line><path d="M14 15l-3-3 3-3"></path></svg>
+          <span>Collapse Sidebar</span>
         </button>
       </div>
     </aside>
@@ -5767,6 +5870,11 @@ ESP32 Microcontroller GPIO Allocation:
       </footer>
     </main>
   </div>
+  <button id="floating-nav-btn" class="floating-nav-btn" title="Open navigation sidebar (Ctrl+B)" aria-label="Open navigation sidebar" onclick="toggleDesktopSidebar()">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><line x1="9" y1="3" x2="9" y2="21"></line><path d="M13 9l3 3-3 3"></path></svg>
+    <span>Open Navigation</span>
+    <span class="floating-kbd">Ctrl+B</span>
+  </button>
   <button id="back-to-top" class="back-to-top" aria-label="Back to top" title="Back to top">
     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="18 15 12 9 6 15"></polyline></svg>
   </button>
