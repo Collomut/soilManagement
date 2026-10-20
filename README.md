@@ -6,7 +6,7 @@
 [![Hardware](https://img.shields.io/badge/Hardware_Cost-$30_Node-0284c7?style=for-the-badge)](./Zerthiva_Full_Documentation.html)
 [![Offline](https://img.shields.io/badge/Operation-100%25_Offline-10b981?style=for-the-badge)](./Zerthiva_Full_Documentation.html)
 
-**Zerthiva** is an affordable, field-deployed soil intelligence system that monitors soil salinity (Electrical Conductivity) in real time, provides precision irrigation timing, and calculates crop-specific fertilizer dosages, stopping irreversible soil degradation and crop loss before it occurs.
+**Zerthiva** is an affordable, field-deployed soil intelligence system that monitors soil salinity (apparent bulk Electrical Conductivity) and volumetric moisture in real time, provides precision irrigation timing guidance based on soil water depletion, and issues crop-specific salinity lockout and leaching alerts to prevent osmotic drought and irreversible soil degradation.
 
 ---
 
@@ -47,7 +47,7 @@ Zerthiva resolves this with a **$30.00 modular field node**:
        ▼
  [ ESP32 Microcontroller (~$5) ] ── (Solar Panel + LiPo Battery (~$8))
        │
-       ├─► [ Local Edge Decision Engine ] (FAO-56 Lookup + Leaching Fraction Formula)
+       ├─► [ Local Edge Decision Engine ] (FAO-56 Water Balance + Maas-Hoffman Salinity Engine)
        │         │
        │         ├─► [ 3-State LED Beacon ] (Green = Safe, Yellow = Warning, Red = Action)
        │         ├─► [ Local Micro-OLED ] (Plain-language 10-word guidance)
@@ -71,6 +71,8 @@ Zerthiva resolves this with a **$30.00 modular field node**:
 | **Root Zone Soil EC** | Unmonitored (escalating) | Maintained below crop threshold | 3-point reference EC soil sampling |
 | **Input Cost Savings** | ~$180–$200/ha/season | ~$120–$140/ha/season (+$60/ha saved) | Financial logbook |
 | **Node Payback Period** | N/A | **< 1 full growing season** | Economic analysis |
+
+> *Note: Projections are derived from literature models (FAO-56, Maas-Hoffman 1977, Ayers & Westcot 1985) and are subject to empirical bench calibration and the 10-farm Machakos County pilot trial verification.*
 
 ---
 
@@ -109,4 +111,4 @@ The full documentation in `Zerthiva_Full_Documentation.html` is structured into 
 * **Data Ownership:** Farmer field data remains the sovereign property of the individual farmer.
 
 ---
-*Created for the Agricultural Technology & Innovation Competition · September 2026*
+*Created for the Agricultural Technology & Innovation Competition · October 2026 (Comprehensive Audit Reconciled Dossier)*
