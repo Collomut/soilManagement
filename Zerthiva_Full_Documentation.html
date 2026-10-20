@@ -1334,10 +1334,13 @@
 
     
 
-        /* Theme Variables & Dark Mode (Pure OLED / Jet Black - Zero Blue Hue) */
+        /* ============================================================
+           AWWWARDS FUTURISTIC DESIGN SYSTEM · PURE BLACK OLED & GLASS
+           ============================================================ */
+
         :root {
             --background: #f8fafc;
-            --foreground: #0f172a;
+            --foreground: #09090b;
             --card: #ffffff;
             --card-border: #e2e8f0;
             --border: #e2e8f0;
@@ -1354,62 +1357,72 @@
             --sidebar-bg: #ffffff;
             --sidebar-fg: #0f172a;
             --sidebar-border: #e2e8f0;
-            --code-bg: #1e293b;
-            --code-fg: #e2e8f0;
+            --code-bg: #09090b;
+            --code-fg: #00ff88;
             --table-stripe: #f8fafc;
             --table-header-bg: #0f172a;
             --table-header-fg: #ffffff;
             --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -2px rgba(0, 0, 0, 0.05);
+            --neon-glow: rgba(5, 150, 105, 0.25);
+            --cyber-green: #059669;
         }
 
-        /* Pure Jet Black / OLED Dark Mode - Zero Blue Hue */
+        /* 100% PURE JET BLACK / OLED DARK MODE (ZERO BLUE / ZERO SLATE) */
         [data-theme="dark"], body.dark-mode {
             --background: #000000;
             --foreground: #f4f4f5;
-            --card: #0a0a0a;
-            --card-border: #222222;
-            --border: #222222;
-            --primary: #10b981;
+            --card: #08080a;
+            --card-border: #1c1c20;
+            --border: #1c1c20;
+            --primary: #00ff88;
             --primary-dark: #059669;
             --primary-light: #052e16;
-            --primary-foreground: #ffffff;
+            --primary-foreground: #000000;
             --muted-foreground: #a1a1aa;
             --accent: #f59e0b;
             --accent-light: #271705;
-            --secondary: #121212;
-            --highlight: #10b981;
+            --secondary: #0d0d10;
+            --highlight: #00ff88;
             --highlight-light: #052e16;
             --sidebar-bg: #000000;
             --sidebar-fg: #f4f4f5;
-            --sidebar-border: #1a1a1a;
-            --code-bg: #030303;
-            --code-fg: #f4f4f5;
-            --table-stripe: #050505;
+            --sidebar-border: #18181c;
+            --code-bg: #030304;
+            --code-fg: #00ff88;
+            --table-stripe: #050506;
             --table-header-bg: #000000;
             --table-header-fg: #ffffff;
-            --shadow: 0 4px 20px rgba(0, 0, 0, 0.85);
+            --shadow: 0 10px 40px rgba(0, 0, 0, 0.9);
+            --neon-glow: rgba(0, 255, 136, 0.35);
+            --cyber-green: #00ff88;
         }
 
-        /* Smooth Theme Transition */
-        body, main, nav#sidebar, .cycle-card, .why-card, .bom-card, .arch-stream-card, .crop-flow-card, .toc-card, table, pre, .code-block, .callout, .intercept-box, .audit-callout, .audit-banner, .hero {
-            transition: background-color 0.25s ease, color 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+        /* Ambient Cyber Grid Background */
+        body {
+            background-color: var(--background);
+            transition: background-color 0.3s ease, color 0.3s ease;
         }
 
-        /* Dark Mode Global Black Overrides */
         [data-theme="dark"] body {
             background-color: #000000 !important;
+            background-image: 
+                radial-gradient(rgba(255, 255, 255, 0.07) 1px, transparent 1px),
+                radial-gradient(circle at 50% 0%, rgba(0, 255, 136, 0.08) 0%, transparent 60%) !important;
+            background-size: 32px 32px, 100% 100% !important;
+            background-attachment: fixed !important;
             color: #f4f4f5 !important;
         }
 
         [data-theme="dark"] main#main-content {
-            background-color: #000000 !important;
+            background-color: transparent !important;
         }
 
         [data-theme="dark"] section {
-            background-color: #000000 !important;
-            border-bottom: 1px solid #1a1a1a !important;
+            background-color: transparent !important;
+            border-bottom: 1px solid #141418 !important;
         }
 
+        /* Typography & Cyber Heads */
         [data-theme="dark"] h1, [data-theme="dark"] h2, [data-theme="dark"] h3, [data-theme="dark"] h3 strong, [data-theme="dark"] h4,
         [data-theme="dark"] strong, [data-theme="dark"] b, [data-theme="dark"] p strong, [data-theme="dark"] li strong {
             color: #ffffff !important;
@@ -1420,107 +1433,112 @@
         }
 
         [data-theme="dark"] h2 {
-            border-bottom: 2px solid #222222 !important;
+            border-bottom: 2px solid #1c1c20 !important;
+            letter-spacing: -0.03em !important;
+        }
+
+        .sec-pill {
+            font-family: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace;
+            font-size: 0.72rem;
+            letter-spacing: 0.08em;
+            font-weight: 800;
         }
 
         [data-theme="dark"] .sec-pill {
-            background: #18181b !important;
-            color: #e4e4e7 !important;
-            border: 1px solid #27272a !important;
+            background: #121216 !important;
+            color: #00ff88 !important;
+            border: 1px solid rgba(0, 255, 136, 0.3) !important;
+            box-shadow: 0 0 12px rgba(0, 255, 136, 0.15) !important;
         }
 
         [data-theme="dark"] .sub-num {
-            color: #10b981 !important;
+            color: #00ff88 !important;
+            font-family: ui-monospace, monospace;
+        }
+
+        /* Cinematic Hero Section */
+        .hero {
+            position: relative;
+            overflow: hidden;
+            border-radius: 20px;
         }
 
         [data-theme="dark"] .hero {
             background: #000000 !important;
-            background-image: radial-gradient(circle at 50% 0%, #064e3b22 0%, #000000 70%) !important;
-            border-color: #222222 !important;
+            background-image: 
+                radial-gradient(circle at 50% -20%, rgba(0, 255, 136, 0.15) 0%, transparent 60%),
+                radial-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px) !important;
+            background-size: 100% 100%, 28px 28px !important;
+            border: 1px solid #1c1c20 !important;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.95), inset 0 1px 0 rgba(255, 255, 255, 0.1) !important;
+        }
+
+        .hero h1 {
+            font-size: 4.8rem !important;
+            font-weight: 950 !important;
+            letter-spacing: -0.05em !important;
+            line-height: 1.05 !important;
+        }
+
+        [data-theme="dark"] .hero h1 span {
+            background: linear-gradient(135deg, #ffffff 0%, #34d399 50%, #00ff88 100%) !important;
+            -webkit-background-clip: text !important;
+            -webkit-text-fill-color: transparent !important;
+            filter: drop-shadow(0 0 35px rgba(0, 255, 136, 0.35)) !important;
+        }
+
+        .hero-top-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-family: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace;
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            padding: 0.45rem 1.15rem;
+            border-radius: 9999px;
         }
 
         [data-theme="dark"] .hero-top-badge {
-            background: #18181b !important;
-            color: #34d399 !important;
-            border-color: #27272a !important;
+            background: rgba(0, 255, 136, 0.08) !important;
+            border: 1px solid rgba(0, 255, 136, 0.35) !important;
+            color: #00ff88 !important;
+            box-shadow: 0 0 20px rgba(0, 255, 136, 0.2) !important;
+        }
+
+        .pulse-beacon {
+            display: inline-block;
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: #00ff88;
+            box-shadow: 0 0 0 0 rgba(0, 255, 136, 0.7);
+            animation: pulse-ring 1.8s infinite cubic-bezier(0.66, 0, 0, 1);
+        }
+
+        @keyframes pulse-ring {
+            0% { box-shadow: 0 0 0 0 rgba(0, 255, 136, 0.7); }
+            70% { box-shadow: 0 0 0 10px rgba(0, 255, 136, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(0, 255, 136, 0); }
         }
 
         [data-theme="dark"] .tagline {
             color: #a1a1aa !important;
+            font-family: ui-monospace, monospace;
+            font-size: 1.15rem !important;
         }
 
         [data-theme="dark"] .description {
             color: #d4d4d8 !important;
         }
 
-        /* Sidebar in Deep Pure Black */
-        [data-theme="dark"] #sidebar {
-            background: #000000 !important;
-            border-right: 1px solid #1a1a1a !important;
-        }
-
-        [data-theme="dark"] .sidebar-header {
-            background: #000000 !important;
-            border-bottom: 1px solid #1a1a1a !important;
-        }
-
-        [data-theme="dark"] .sidebar-title {
-            color: #ffffff !important;
-        }
-
-        [data-theme="dark"] .sidebar-subtitle {
-            color: #71717a !important;
-        }
-
-        [data-theme="dark"] .nav-tier-label {
-            color: #71717a !important;
-        }
-
-        [data-theme="dark"] #sidebar a.nav-link {
-            color: #a1a1aa !important;
-        }
-
-        [data-theme="dark"] #sidebar a.nav-link .nav-sec-num {
-            background: #18181b !important;
-            color: #71717a !important;
-        }
-
-        [data-theme="dark"] #sidebar a.nav-link:hover {
-            background: #111111 !important;
-            color: #34d399 !important;
-        }
-
-        [data-theme="dark"] #sidebar a.nav-link:hover .nav-sec-num {
-            background: #052e16 !important;
-            color: #6ee7b7 !important;
-        }
-
-        [data-theme="dark"] #sidebar a.nav-link.active {
-            background: #052317 !important;
-            color: #6ee7b7 !important;
-            border-left: 4px solid #10b981 !important;
-            box-shadow: 0 4px 12px rgba(16, 185, 129, 0.2) !important;
-        }
-
-        [data-theme="dark"] #sidebar a.nav-link.active .nav-sec-num {
-            background: #10b981 !important;
-            color: #000000 !important;
-        }
-
-        /* Cards and Components in Pure Charcoal / Black */
+        /* Awwwards Glassmorphic Cards with Neon Spotlight Glow */
         .cycle-card, .why-card, .bom-card, .arch-stream-card, .crop-flow-card, .toc-card, .metric-pill {
-            background: var(--card) !important;
-            color: var(--foreground) !important;
-            border-color: var(--border) !important;
-            box-shadow: var(--shadow) !important;
-        }
-
-        .cycle-title, .bom-title, .why-body-title, .crop-stage-header, .arch-stream-title {
-            color: var(--foreground) !important;
-        }
-
-        .cycle-desc, .bom-desc, .why-body-desc, .crop-stage-body {
-            color: var(--muted-foreground) !important;
+            position: relative;
+            border-radius: 14px !important;
+            overflow: hidden;
+            transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.3s ease, border-color 0.3s ease !important;
         }
 
         [data-theme="dark"] .cycle-card,
@@ -1530,16 +1548,58 @@
         [data-theme="dark"] .crop-flow-card,
         [data-theme="dark"] .toc-card,
         [data-theme="dark"] .metric-pill,
+        [data-theme="dark"] .callout,
         [data-theme="dark"] .arch-step-item {
-            background: #0a0a0a !important;
-            border-color: #222222 !important;
+            background: rgba(10, 10, 14, 0.8) !important;
+            backdrop-filter: blur(20px) !important;
+            -webkit-backdrop-filter: blur(20px) !important;
+            border: 1px solid rgba(255, 255, 255, 0.08) !important;
+            box-shadow: inset 0 1px 0 0 rgba(255, 255, 255, 0.1), 0 10px 30px rgba(0, 0, 0, 0.8) !important;
             color: #f4f4f5 !important;
-            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.85) !important;
+        }
+
+        [data-theme="dark"] .cycle-card:hover,
+        [data-theme="dark"] .why-card:hover,
+        [data-theme="dark"] .bom-card:hover,
+        [data-theme="dark"] .arch-stream-card:hover,
+        [data-theme="dark"] .crop-flow-card:hover,
+        [data-theme="dark"] .toc-card:hover,
+        [data-theme="dark"] .metric-pill:hover {
+            transform: translateY(-4px) !important;
+            border-color: rgba(0, 255, 136, 0.5) !important;
+            box-shadow: inset 0 1px 0 0 rgba(255, 255, 255, 0.25), 0 16px 45px rgba(0, 255, 136, 0.15) !important;
+        }
+
+        /* Reactive Cursor Spotlight Overlay */
+        [data-theme="dark"] .cycle-card::before,
+        [data-theme="dark"] .why-card::before,
+        [data-theme="dark"] .bom-card::before,
+        [data-theme="dark"] .arch-stream-card::before,
+        [data-theme="dark"] .crop-flow-card::before,
+        [data-theme="dark"] .toc-card::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            border-radius: inherit;
+            background: radial-gradient(350px circle at var(--mouse-x, -500px) var(--mouse-y, -500px), rgba(0, 255, 136, 0.12), transparent 45%);
+            pointer-events: none;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        [data-theme="dark"] .cycle-card:hover::before,
+        [data-theme="dark"] .why-card:hover::before,
+        [data-theme="dark"] .bom-card:hover::before,
+        [data-theme="dark"] .arch-stream-card:hover::before,
+        [data-theme="dark"] .crop-flow-card:hover::before,
+        [data-theme="dark"] .toc-card:hover::before {
+            opacity: 1;
         }
 
         [data-theme="dark"] .cycle-card-critical {
-            background: #120404 !important;
-            border-color: #551313 !important;
+            background: rgba(22, 5, 8, 0.85) !important;
+            border-color: rgba(239, 68, 68, 0.4) !important;
+            box-shadow: 0 0 25px rgba(239, 68, 68, 0.15) !important;
         }
 
         [data-theme="dark"] .cycle-card-critical .cycle-title {
@@ -1551,15 +1611,18 @@
         }
 
         [data-theme="dark"] .intercept-box {
-            background: #041a10 !important;
-            border: 2px solid #10b981 !important;
+            background: rgba(4, 26, 16, 0.9) !important;
+            border: 2px solid #00ff88 !important;
+            box-shadow: 0 0 35px rgba(0, 255, 136, 0.25) !important;
             color: #f4f4f5 !important;
+            border-radius: 14px;
         }
 
         [data-theme="dark"] .why-pill {
-            background: #18181b !important;
-            color: #f4f4f5 !important;
-            border-color: #27272a !important;
+            background: #121216 !important;
+            color: #00ff88 !important;
+            border-color: rgba(0, 255, 136, 0.3) !important;
+            font-family: ui-monospace, monospace;
         }
 
         [data-theme="dark"] .bom-title,
@@ -1567,6 +1630,7 @@
         [data-theme="dark"] .crop-stage-header,
         [data-theme="dark"] .arch-stream-title {
             color: #ffffff !important;
+            font-weight: 800;
         }
 
         [data-theme="dark"] .bom-desc,
@@ -1581,132 +1645,283 @@
 
         [data-theme="dark"] .toc-badge,
         [data-theme="dark"] .arch-stream-badge {
-            background: #18181b !important;
+            background: #141418 !important;
             color: #f4f4f5 !important;
             border: 1px solid #27272a !important;
+            font-family: ui-monospace, monospace;
         }
 
+        /* Glassmorphic Callouts & Command Center Audit Banner */
         .callout {
+            border-radius: 12px;
             background: var(--secondary) !important;
             color: var(--foreground) !important;
-            border-color: var(--border) !important;
-            border-left-color: var(--primary) !important;
+            border: 1px solid var(--border) !important;
+            border-left: 4px solid var(--primary) !important;
         }
 
         [data-theme="dark"] .callout {
-            background: #0d0d0d !important;
-            border: 1px solid #222222 !important;
-            border-left: 4px solid #10b981 !important;
+            background: rgba(12, 12, 16, 0.8) !important;
+            border: 1px solid rgba(255, 255, 255, 0.08) !important;
+            border-left: 4px solid #00ff88 !important;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.8) !important;
             color: #f4f4f5 !important;
         }
 
         [data-theme="dark"] .audit-callout, [data-theme="dark"] .audit-banner {
-            background: #0d0d0d !important;
-            border: 1px solid #222222 !important;
-            border-left: 4px solid #10b981 !important;
+            background: rgba(8, 14, 12, 0.85) !important;
+            border: 1px solid rgba(0, 255, 136, 0.3) !important;
+            border-left: 4px solid #00ff88 !important;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.9), 0 0 25px rgba(0, 255, 136, 0.1) !important;
             color: #f4f4f5 !important;
+            border-radius: 14px;
         }
 
         [data-theme="dark"] .audit-banner-title {
-            color: #34d399 !important;
+            color: #00ff88 !important;
+            font-family: ui-monospace, monospace;
+            letter-spacing: 0.05em;
         }
 
         [data-theme="dark"] .audit-banner-title svg {
-            stroke: #34d399 !important;
+            stroke: #00ff88 !important;
+            filter: drop-shadow(0 0 8px rgba(0, 255, 136, 0.6));
         }
 
-        /* Tables & Code in Deep Black */
+        /* High-Tech HUD Sidebar */
+        [data-theme="dark"] #sidebar {
+            background: #000000 !important;
+            border-right: 1px solid rgba(255, 255, 255, 0.08) !important;
+            box-shadow: 10px 0 40px rgba(0, 0, 0, 0.95) !important;
+        }
+
+        .sidebar-hud-tag {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.45rem;
+            font-family: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace;
+            font-size: 0.68rem;
+            font-weight: 800;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            padding: 0.25rem 0.65rem;
+            border-radius: 9999px;
+            margin-bottom: 0.65rem;
+            background: rgba(5, 150, 105, 0.1);
+            color: #059669;
+            border: 1px solid rgba(5, 150, 105, 0.25);
+        }
+
+        [data-theme="dark"] .sidebar-hud-tag {
+            background: rgba(0, 255, 136, 0.08) !important;
+            color: #00ff88 !important;
+            border-color: rgba(0, 255, 136, 0.3) !important;
+            box-shadow: 0 0 15px rgba(0, 255, 136, 0.2) !important;
+        }
+
+        [data-theme="dark"] .sidebar-header {
+            background: #000000 !important;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08) !important;
+            padding: 1.25rem 1rem !important;
+        }
+
+        [data-theme="dark"] .sidebar-title {
+            color: #ffffff !important;
+            font-weight: 900 !important;
+            letter-spacing: -0.02em !important;
+        }
+
+        [data-theme="dark"] .sidebar-title span {
+            color: #00ff88 !important;
+            text-shadow: 0 0 15px rgba(0, 255, 136, 0.6) !important;
+        }
+
+        [data-theme="dark"] .sidebar-subtitle {
+            color: #71717a !important;
+            font-size: 0.72rem !important;
+            letter-spacing: 0.04em !important;
+        }
+
+        [data-theme="dark"] .nav-tier-label {
+            color: #52525b !important;
+            font-family: ui-monospace, monospace;
+            font-size: 0.68rem !important;
+            letter-spacing: 0.12em !important;
+        }
+
+        [data-theme="dark"] #sidebar a.nav-link {
+            color: #a1a1aa !important;
+            border-radius: 8px !important;
+            transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1) !important;
+        }
+
+        [data-theme="dark"] #sidebar a.nav-link .nav-sec-num {
+            background: #121216 !important;
+            color: #71717a !important;
+            font-family: ui-monospace, monospace;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        [data-theme="dark"] #sidebar a.nav-link:hover {
+            background: rgba(255, 255, 255, 0.05) !important;
+            color: #00ff88 !important;
+            transform: translateX(4px) !important;
+        }
+
+        [data-theme="dark"] #sidebar a.nav-link:hover .nav-sec-num {
+            background: #052e16 !important;
+            color: #00ff88 !important;
+            border-color: rgba(0, 255, 136, 0.3) !important;
+        }
+
+        [data-theme="dark"] #sidebar a.nav-link.active {
+            background: linear-gradient(90deg, rgba(0, 255, 136, 0.12) 0%, rgba(0, 255, 136, 0.02) 100%) !important;
+            color: #00ff88 !important;
+            border-left: 3px solid #00ff88 !important;
+            box-shadow: 0 4px 20px rgba(0, 255, 136, 0.15) !important;
+            font-weight: 800 !important;
+        }
+
+        [data-theme="dark"] #sidebar a.nav-link.active .nav-sec-num {
+            background: #00ff88 !important;
+            color: #000000 !important;
+            font-weight: 900 !important;
+            box-shadow: 0 0 10px rgba(0, 255, 136, 0.5) !important;
+        }
+
+        /* Futuristic Tables & Code Terminals */
         [data-theme="dark"] table {
-            background: #050505 !important;
-            border-color: #222222 !important;
+            background: #050507 !important;
+            border-color: #1c1c20 !important;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.8) !important;
         }
 
         [data-theme="dark"] table th {
             background: #000000 !important;
             color: #ffffff !important;
-            border-color: #222222 !important;
+            border-color: #1c1c20 !important;
+            font-family: ui-monospace, monospace;
+            font-size: 0.78rem;
+            letter-spacing: 0.05em;
         }
 
         [data-theme="dark"] table td {
-            background: #0a0a0a !important;
+            background: #08080b !important;
             color: #f4f4f5 !important;
-            border-color: #222222 !important;
+            border-color: #141418 !important;
         }
 
         [data-theme="dark"] table tr:nth-child(even) td {
-            background: #050505 !important;
+            background: #050507 !important;
         }
 
         [data-theme="dark"] .code-block, [data-theme="dark"] pre {
-            background: #030303 !important;
-            color: #34d399 !important;
-            border: 1px solid #222222 !important;
+            background: #020203 !important;
+            color: #00ff88 !important;
+            border: 1px solid #1c1c20 !important;
+            box-shadow: inset 0 2px 10px rgba(0, 0, 0, 0.9), 0 0 25px rgba(0, 255, 136, 0.06) !important;
+            border-radius: 12px;
+            font-family: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace !important;
         }
 
         [data-theme="dark"] #section58 h3 {
-            background: #080808 !important;
-            border-color: #222222 !important;
-            border-left: 4px solid #10b981 !important;
+            background: rgba(10, 10, 14, 0.9) !important;
+            border-color: #1c1c20 !important;
+            border-left: 4px solid #00ff88 !important;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.8) !important;
             color: #ffffff !important;
+            border-radius: 10px;
         }
 
         [data-theme="dark"] #back-to-top {
-            background: #000000 !important;
-            color: #ffffff !important;
-            border: 1px solid #27272a !important;
+            background: rgba(10, 10, 14, 0.85) !important;
+            color: #00ff88 !important;
+            border: 1px solid rgba(0, 255, 136, 0.35) !important;
+            box-shadow: 0 0 20px rgba(0, 255, 136, 0.2) !important;
+            backdrop-filter: blur(12px);
         }
 
         [data-theme="dark"] .doc-footer {
-            border-top: 1px solid #1f1f1f !important;
+            border-top: 1px solid #18181c !important;
             color: #71717a !important;
+            font-family: ui-monospace, monospace;
         }
 
-        /* Single Theme Toggle Button (Fixed Top-Right) */
+        /* ============================================================
+           AWWWARDS CYBER TOGGLE SWITCH (EXACTLY ONE BUTTON)
+           ============================================================ */
         .theme-toggle-fixed {
             position: fixed;
-            top: 1.15rem;
-            right: 1.75rem;
+            top: 1.25rem;
+            right: 2rem;
             z-index: 1000;
         }
 
-        .theme-toggle-btn {
+        .cyber-toggle-btn {
             display: inline-flex;
             align-items: center;
-            gap: 0.5rem;
-            padding: 0.45rem 0.95rem;
-            font-size: 0.8rem;
-            font-weight: 700;
+            gap: 0.65rem;
+            padding: 0.45rem 1.15rem;
+            font-family: ui-monospace, SFMono-Regular, "SF Mono", Menlo, monospace;
+            font-size: 0.74rem;
+            font-weight: 800;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
             border-radius: 9999px;
-            border: 1px solid var(--border);
-            background: var(--card);
-            color: var(--foreground);
             cursor: pointer;
-            transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
             user-select: none;
-            backdrop-filter: blur(8px);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
         }
 
-        .theme-toggle-btn:hover {
+        /* Light Mode Cyber Button */
+        [data-theme="light"] .cyber-toggle-btn, body:not(.dark-mode) .cyber-toggle-btn {
+            background: rgba(255, 255, 255, 0.9);
+            border: 1px solid rgba(0, 0, 0, 0.12);
+            color: #0f172a;
+        }
+
+        [data-theme="light"] .cyber-toggle-btn:hover, body:not(.dark-mode) .cyber-toggle-btn:hover {
+            border-color: #059669;
+            color: #059669;
             transform: translateY(-2px);
-            border-color: var(--primary);
-            color: var(--primary);
-            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
+            box-shadow: 0 8px 25px rgba(5, 150, 105, 0.15);
         }
 
-        [data-theme="dark"] .theme-toggle-btn {
-            background: #000000 !important;
-            border-color: #27272a !important;
+        /* Dark Mode Cyber Button (Neon Edge Bloom) */
+        [data-theme="dark"] .cyber-toggle-btn, body.dark-mode .cyber-toggle-btn {
+            background: rgba(8, 8, 12, 0.9) !important;
+            border: 1px solid rgba(0, 255, 136, 0.4) !important;
             color: #f4f4f5 !important;
-            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.85) !important;
+            box-shadow: 0 0 25px rgba(0, 255, 136, 0.25), inset 0 1px 0 rgba(255, 255, 255, 0.15) !important;
         }
 
-        [data-theme="dark"] .theme-toggle-btn:hover {
-            border-color: #10b981 !important;
-            color: #10b981 !important;
+        [data-theme="dark"] .cyber-toggle-btn:hover, body.dark-mode .cyber-toggle-btn:hover {
+            border-color: #00ff88 !important;
+            color: #00ff88 !important;
+            transform: translateY(-2px);
+            box-shadow: 0 0 35px rgba(0, 255, 136, 0.45), inset 0 1px 0 rgba(255, 255, 255, 0.25) !important;
         }
 
-        /* Evidence and Audit Badges (Dark Mode - Zero Blue) */
+        .cyber-toggle-indicator {
+            width: 7px;
+            height: 7px;
+            border-radius: 50%;
+            background: #10b981;
+            box-shadow: 0 0 8px #10b981;
+            transition: all 0.3s ease;
+        }
+
+        [data-theme="dark"] .cyber-toggle-indicator {
+            background: #00ff88 !important;
+            box-shadow: 0 0 12px #00ff88 !important;
+        }
+
+        /* Evidence Badges (Dark Mode - Zero Blue) */
         .badge-evidence {
             display: inline-block;
             background: #ecfdf5;
@@ -1723,8 +1938,9 @@
         }
         [data-theme="dark"] .badge-evidence {
             background: #052e16 !important;
-            color: #6ee7b7 !important;
-            border-color: #059669 !important;
+            color: #00ff88 !important;
+            border-color: rgba(0, 255, 136, 0.4) !important;
+            box-shadow: 0 0 10px rgba(0, 255, 136, 0.15) !important;
         }
 
         .badge-spec {
@@ -1742,9 +1958,9 @@
             vertical-align: middle;
         }
         [data-theme="dark"] .badge-spec {
-            background: #18181b !important;
+            background: #141418 !important;
             color: #e4e4e7 !important;
-            border-color: #3f3f46 !important;
+            border-color: #27272a !important;
         }
 
         .badge-bench {
@@ -1866,9 +2082,34 @@
             vertical-align: middle;
         }
         [data-theme="dark"] .annex-pill {
-            background: #27272a !important;
-            color: #ffffff !important;
-            border: 1px solid #3f3f46 !important;
+            background: #1c1c22 !important;
+            color: #00ff88 !important;
+            border: 1px solid rgba(0, 255, 136, 0.3) !important;
+        }
+
+        /* Neon Reading Progress Bar */
+        #reading-progress {
+            height: 4px !important;
+            background: linear-gradient(90deg, #059669 0%, #00ff88 50%, #f59e0b 100%) !important;
+            box-shadow: 0 0 12px rgba(0, 255, 136, 0.6) !important;
+        }
+
+        /* Custom Futuristic Scrollbar */
+        ::-webkit-scrollbar {
+            width: 7px;
+            height: 7px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #000000;
+        }
+        [data-theme="dark"] ::-webkit-scrollbar-thumb {
+            background: #1c1c22;
+            border-radius: 9999px;
+            border: 1px solid rgba(0, 255, 136, 0.2);
+        }
+        [data-theme="dark"] ::-webkit-scrollbar-thumb:hover {
+            background: #00ff88;
+            box-shadow: 0 0 10px #00ff88;
         }
     
 </style>
@@ -1896,8 +2137,9 @@
     
     <nav id="sidebar">
         <div class="sidebar-header">
+            <div class="sidebar-hud-tag"><span class="pulse-beacon"></span> SYS: ONLINE · TRL-4</div>
             <div class="sidebar-title">🌱 Zerth<span>iva</span></div>
-            <div class="sidebar-subtitle">Master Technical Dossier · v2.0</div>
+            <div class="sidebar-subtitle">Precision Soil Intelligence System</div>
         </div>
 
         <div class="nav-tier-label">OVERVIEW</div>
@@ -1988,12 +2230,14 @@
         
         <div id="cover" class="hero">
             <div class="theme-toggle-fixed">
-                <button id="theme-toggle" class="theme-toggle-btn" aria-label="Toggle dark mode" title="Toggle dark mode">
-                    <span class="theme-icon">🌙</span> <span class="theme-text">Dark Mode</span>
+                <button id="theme-toggle" class="cyber-toggle-btn" aria-label="Toggle theme mode" title="Toggle theme mode">
+                    <span class="cyber-toggle-indicator"></span>
+                    <span class="theme-icon">🌙</span>
+                    <span class="theme-text">DARK MODE</span>
                 </button>
             </div>
 
-            <div class="hero-top-badge">🌾 Version 2.0 — Internal Technical Revision Dossier · October 2026</div>
+            <div class="hero-top-badge"><span class="pulse-beacon"></span> TRL-4 BENCH-VALIDATED · 15m SENTRY RADAR · VERSION 2.0</div>
             <h1><span>Zerthiva</span></h1>
             <div class="tagline">"Precision Soil Intelligence for Smallholder Climate Resilience"</div>
             <p class="description">Zerthiva is an affordable, field-deployed root-zone sensing and decision-support system designed to monitor apparent bulk soil electrical conductivity ($EC_a$), volumetric moisture, and soil temperature in real time. It assists smallholder farmers in detecting invisible root-zone salinity accumulation and managing soil water depletion to prevent osmotic drought and input misallocation.</p>
@@ -2034,13 +2278,13 @@
             </div>
 
             <div style="display: flex; gap: 0.75rem; flex-wrap: wrap; justify-content: center; margin-bottom: 1.75rem;">
-                <span class="badge" style="background: #18181b; color: #f4f4f5; border: 1px solid #27272a;">Status: Functional Bench Prototype (TRL 4)</span>
-                <span class="badge" style="background: #1c0b2b; color: #ddd6fe; border: 1px solid #6d28d9;">Validation Stage: Pre-Pilot Bench Calibration & Exploratory Field Trial</span>
-                <span class="badge" style="background: #052e16; color: #6ee7b7; border: 1px solid #059669;">Target Crops: Maize (3 pairs) & Tomato (2 pairs)</span>
-                <span class="badge" style="background: #271705; color: #fde68a; border: 1px solid #b45309;">Pilot Geography: Machakos County, Kenya (10 Farms Total)</span>
+                <span class="badge" style="background: rgba(255, 255, 255, 0.05); color: #f4f4f5; border: 1px solid rgba(255, 255, 255, 0.12); font-family: ui-monospace, monospace;">Status: Functional Bench Prototype (TRL 4)</span>
+                <span class="badge" style="background: rgba(168, 85, 247, 0.1); color: #d8b4fe; border: 1px solid rgba(168, 85, 247, 0.3); font-family: ui-monospace, monospace;">Validation Stage: Pre-Pilot Calibration & Feasibility Trial</span>
+                <span class="badge" style="background: rgba(0, 255, 136, 0.1); color: #00ff88; border: 1px solid rgba(0, 255, 136, 0.35); font-family: ui-monospace, monospace;">Target Crops: Maize (3 pairs) & Tomato (2 pairs)</span>
+                <span class="badge" style="background: rgba(245, 158, 11, 0.1); color: #fde68a; border: 1px solid rgba(245, 158, 11, 0.35); font-family: ui-monospace, monospace;">Pilot Geography: Machakos County, Kenya (10 Farms Total)</span>
             </div>
 
-            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; width: 100%; max-width: 880px; text-align: left; background: var(--card); border: 1px solid var(--border); padding: 1.25rem 1.5rem; border-radius: 0.75rem; box-shadow: var(--shadow);">
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; width: 100%; max-width: 880px; text-align: left; background: var(--card); border: 1px solid var(--border); padding: 1.25rem 1.5rem; border-radius: 14px; box-shadow: var(--shadow);">
                 <div><strong style="color: var(--foreground); font-size: 0.85rem;">Document Version:</strong> <span style="color: var(--muted-foreground); font-size: 0.85rem;">2.0 (Internal Technical Revision Completed)</span></div>
                 <div><strong style="color: var(--foreground); font-size: 0.85rem;">Audit Closure Date:</strong> <span style="color: var(--muted-foreground); font-size: 0.85rem;">20 October 2026</span></div>
                 <div><strong style="color: var(--foreground); font-size: 0.85rem;">Hardware Platform:</strong> <span style="color: var(--muted-foreground); font-size: 0.85rem;">ESP32 Node (MicroPython edge engine)</span></div>
@@ -4918,12 +5162,12 @@ ESP32 Microcontroller GPIO Allocation:
             const text = btn.querySelector('.theme-text');
             if (isDark) {
                 if (icon) icon.textContent = '☀️';
-                if (text) text.textContent = 'Light Mode';
+                if (text) text.textContent = 'LIGHT MODE';
                 btn.setAttribute('aria-label', 'Switch to Light Mode');
                 btn.title = 'Switch to Light Mode';
             } else {
                 if (icon) icon.textContent = '🌙';
-                if (text) text.textContent = 'Dark Mode';
+                if (text) text.textContent = 'DARK MODE';
                 btn.setAttribute('aria-label', 'Switch to Dark Mode');
                 btn.title = 'Switch to Dark Mode';
             }
@@ -4956,6 +5200,16 @@ ESP32 Microcontroller GPIO Allocation:
 
             const btn = document.getElementById('theme-toggle');
             if (btn) btn.addEventListener('click', toggleTheme);
+
+            // Awwwards Interactive Card Spotlight
+            const cards = document.querySelectorAll('.cycle-card, .why-card, .bom-card, .arch-stream-card, .crop-flow-card, .toc-card, .hero');
+            cards.forEach(card => {
+                card.addEventListener('mousemove', e => {
+                    const rect = card.getBoundingClientRect();
+                    card.style.setProperty('--mouse-x', (e.clientX - rect.left) + 'px');
+                    card.style.setProperty('--mouse-y', (e.clientY - rect.top) + 'px');
+                });
+            });
 
             if (window.matchMedia) {
                 window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', e => {
