@@ -1038,7 +1038,7 @@
        2. ASSET LOADING & PROGRESS MANAGER
        ========================================================================= */
     let loadedAssets = 0;
-    const totalAssets = 7;
+    const totalAssets = 8;
     function updateLoadingProgress(stepName) {
       loadedAssets++;
       const pct = Math.min(100, Math.round((loadedAssets / totalAssets) * 100));
@@ -1129,8 +1129,9 @@
        ========================================================================= */
     const container = document.getElementById('webgl-canvas');
     const scene = new THREE.Scene();
-    scene.background = new THREE.Color(0x030705);
-    scene.fog = new THREE.FogExp2(0x030705, 0.038);
+    scene.background = new THREE.Color(0x06100c);
+    // Linear fog tuned for crisp foreground foliage and soft subterranean horizon depth
+    scene.fog = new THREE.Fog(0x06100c, 7.5, 22.0);
 
     const camera = new THREE.PerspectiveCamera(42, window.innerWidth / window.innerHeight, 0.1, 100);
     camera.position.set(3.4, 0.6, 5.6);
@@ -1141,7 +1142,7 @@
     renderer.shadowMap.enabled = true;
     renderer.shadowMap.type = THREE.PCFSoftShadowMap;
     renderer.toneMapping = THREE.ACESFilmicToneMapping;
-    renderer.toneMappingExposure = 1.25;
+    renderer.toneMappingExposure = 1.28;
     container.appendChild(renderer.domElement);
 
     // Poly Haven CC0 HDRI Environment Map via RGBELoader + PMREMGenerator
@@ -1164,42 +1165,43 @@
     controls.enableDamping = true;
     controls.dampingFactor = 0.06;
     controls.maxPolarAngle = Math.PI / 2 + 0.15;
-    controls.minDistance = 1.8;
+    controls.minDistance = 1.2;
     controls.maxDistance = 14.0;
     controls.target.set(0, -0.15, 0);
 
-    // Controlled 4-Point Cinematic Lighting Setup
+    // Controlled 4-Point Cinematic Lighting Setup with tight shadow frustum
     // 1. Soft Warm Key Sunlight from above
-    const keySunLight = new THREE.DirectionalLight(0xfff5e6, 2.6);
-    keySunLight.position.set(6, 12, 5.5);
+    const keySunLight = new THREE.DirectionalLight(0xfff6ea, 3.1);
+    keySunLight.position.set(5.5, 11, 4.8);
     keySunLight.castShadow = true;
     keySunLight.shadow.mapSize.width = 2048;
     keySunLight.shadow.mapSize.height = 2048;
-    keySunLight.shadow.camera.near = 0.5;
-    keySunLight.shadow.camera.far = 28;
-    keySunLight.shadow.camera.left = -4.5;
-    keySunLight.shadow.camera.right = 4.5;
-    keySunLight.shadow.camera.top = 4.5;
-    keySunLight.shadow.camera.bottom = -4.5;
-    keySunLight.shadow.bias = -0.0003;
+    keySunLight.shadow.camera.near = 1.0;
+    keySunLight.shadow.camera.far = 22;
+    keySunLight.shadow.camera.left = -2.6;
+    keySunLight.shadow.camera.right = 2.6;
+    keySunLight.shadow.camera.top = 3.6;
+    keySunLight.shadow.camera.bottom = -3.6;
+    keySunLight.shadow.bias = -0.00015;
+    keySunLight.shadow.normalBias = 0.025;
     scene.add(keySunLight);
 
     // 2. Cool Sky Fill Light from opposite angle
-    const skyFillLight = new THREE.DirectionalLight(0x8bc3ea, 0.85);
-    skyFillLight.position.set(-5, 6, -3);
+    const skyFillLight = new THREE.DirectionalLight(0x93c5fd, 0.95);
+    skyFillLight.position.set(-4.5, 5.5, -2.5);
     scene.add(skyFillLight);
 
     // 3. Subterranean Earthen Bounce Light (illuminates root cavities & cutaway)
-    const earthenBounce = new THREE.DirectionalLight(0x5c4028, 0.75);
-    earthenBounce.position.set(0, -6, 2);
+    const earthenBounce = new THREE.DirectionalLight(0x784a28, 0.85);
+    earthenBounce.position.set(0, -5, 2.5);
     scene.add(earthenBounce);
 
     // 4. Subtle Foliage Rim Light (separates foliage from deep dark backdrop)
-    const rimLight = new THREE.DirectionalLight(0x80ffb0, 0.5);
-    rimLight.position.set(-6, 2, -6);
+    const rimLight = new THREE.DirectionalLight(0x6ee7b7, 0.65);
+    rimLight.position.set(-5, 2.5, -5);
     scene.add(rimLight);
 
-    const ambientLight = new THREE.AmbientLight(0xdcf0e5, 0.45);
+    const ambientLight = new THREE.AmbientLight(0xdcfce7, 0.40);
     scene.add(ambientLight);
 
     /* =========================================================================
@@ -1459,7 +1461,7 @@
       ]);
       const rGeo = new THREE.TubeGeometry(rCurve, 8, 0.0035, 4, false);
       const rMesh = new THREE.Mesh(rGeo, rootletMat);
-      rMesh.userData = { id: `soil-rootlet-a-${r+1}`, name: 'Rhizosphere Feeder Capillary Rootlet', type: 'BOTANY', badge: 'MEASURED' };
+      rMesh.userData = { id: `soil-rootlet-a-${r+1}`, name: 'Rhizosphere Feeder Capillary Rootlet', type: 'BOTANY', badge: 'PHYSIOLOGY' };
       horizonAGroup.add(rMesh);
     }
 
@@ -1515,7 +1517,7 @@
       ]);
       const rGeo = new THREE.TubeGeometry(rCurve, 8, 0.005, 4, false);
       const rMesh = new THREE.Mesh(rGeo, rootletMat);
-      rMesh.userData = { id: `soil-rootlet-b-${r+1}`, name: 'Deep Subsoil Seminal Root Cleavage Axis', type: 'BOTANY', badge: 'MEASURED' };
+      rMesh.userData = { id: `soil-rootlet-b-${r+1}`, name: 'Deep Subsoil Seminal Root Cleavage Axis', type: 'BOTANY', badge: 'PHYSIOLOGY' };
       horizonBGroup.add(rMesh);
     }
 
@@ -1611,22 +1613,28 @@
     const leafMatUpper = new THREE.MeshStandardMaterial({
       color: 0x4fae3b,
       map: leafTexture,
-      roughness: 0.32,
-      metalness: 0.03,
+      roughness: 0.30,
+      metalness: 0.02,
+      emissive: 0x0c2a09,
+      emissiveIntensity: 0.22,
       side: THREE.DoubleSide
     });
     const leafMatMid = new THREE.MeshStandardMaterial({
       color: 0x277824,
       map: leafTexture,
-      roughness: 0.36,
-      metalness: 0.04,
+      roughness: 0.34,
+      metalness: 0.03,
+      emissive: 0x071e06,
+      emissiveIntensity: 0.18,
       side: THREE.DoubleSide
     });
     const leafMatLower = new THREE.MeshStandardMaterial({
       color: 0x316f2b,
       map: leafTexture,
-      roughness: 0.44,
-      metalness: 0.05,
+      roughness: 0.42,
+      metalness: 0.04,
+      emissive: 0x051604,
+      emissiveIntensity: 0.14,
       side: THREE.DoubleSide
     });
     const sheathMat = new THREE.MeshStandardMaterial({
@@ -1649,7 +1657,7 @@
     const stalkMesh = new THREE.Mesh(stalkGeo, stalkMat);
     stalkMesh.castShadow = true;
     stalkMesh.receiveShadow = true;
-    stalkMesh.userData = { id: 'plant-stem', name: 'Zea Mays Culm (Stalk Internodes)', type: 'BOTANY', badge: 'MEASURED' };
+    stalkMesh.userData = { id: 'plant-stem', name: 'Zea Mays Culm (Stalk Internodes)', type: 'BOTANY', badge: 'PHYSIOLOGY' };
     anatomyParts.stem.add(stalkMesh);
 
     // Node Collars along the Culm
@@ -1659,7 +1667,7 @@
       nodeGeo.rotateX(Math.PI / 2);
       const nodeMesh = new THREE.Mesh(nodeGeo, stalkMat);
       nodeMesh.position.set(0, nh, 0);
-      nodeMesh.userData = { id: `culm-node-${idx+1}`, name: `Culm Node Collar #${idx+1}`, type: 'BOTANY', badge: 'MEASURED' };
+      nodeMesh.userData = { id: `culm-node-${idx+1}`, name: `Culm Node Collar #${idx+1}`, type: 'BOTANY', badge: 'PHYSIOLOGY' };
       anatomyParts.stem.add(nodeMesh);
     });
 
@@ -1670,7 +1678,7 @@
     ]), 8, 0.008, 6, false);
     const tasselMat = new THREE.MeshStandardMaterial({ color: 0xd4be6a, roughness: 0.65 });
     const spikeMesh = new THREE.Mesh(tasselSpike, tasselMat);
-    spikeMesh.userData = { id: 'tassel-central', name: 'Tassel Central Rachis (Inflorescence)', type: 'BOTANY', badge: 'MEASURED' };
+    spikeMesh.userData = { id: 'tassel-central', name: 'Tassel Central Rachis (Inflorescence)', type: 'BOTANY', badge: 'PHYSIOLOGY' };
     anatomyParts.stem.add(spikeMesh);
 
     for (let t = 0; t < 10; t++) {
@@ -1683,7 +1691,7 @@
       ]);
       const tGeo = new THREE.TubeGeometry(tCurve, 8, 0.005, 5, false);
       const tMesh = new THREE.Mesh(tGeo, tasselMat);
-      tMesh.userData = { id: `tassel-branch-${t+1}`, name: `Tassel Spikelet Branch #${t+1}`, type: 'BOTANY', badge: 'MEASURED' };
+      tMesh.userData = { id: `tassel-branch-${t+1}`, name: `Tassel Spikelet Branch #${t+1}`, type: 'BOTANY', badge: 'PHYSIOLOGY' };
       anatomyParts.stem.add(tMesh);
     }
 
@@ -1706,7 +1714,7 @@
       sheathGeo.translate(0, -sheathLen * 0.45, 0);
       const sheathMesh = new THREE.Mesh(sheathGeo, sheathMat);
       sheathMesh.castShadow = true;
-      sheathMesh.userData = { id: `sheath-${index+1}`, name: `Leaf Sheath #${index+1} (Clasping Collar)`, type: 'BOTANY', badge: 'MEASURED' };
+      sheathMesh.userData = { id: `sheath-${index+1}`, name: `Leaf Sheath #${index+1} (Clasping Collar)`, type: 'BOTANY', badge: 'PHYSIOLOGY' };
       anatomyParts.sheaths.add(sheathMesh);
 
       // 2. Leaf Blade with 7-Point Profile, V-Groove, and Undulating Fluted Margins
@@ -1797,7 +1805,7 @@
       const mesh = new THREE.Mesh(geom, chosenMat);
       mesh.castShadow = true;
       mesh.receiveShadow = true;
-      mesh.userData = { id: `leaf-${index + 1}`, name: `Maize Leaf Blade #${index + 1}`, type: 'BOTANY', badge: 'MEASURED' };
+      mesh.userData = { id: `leaf-${index + 1}`, name: `Maize Leaf Blade #${index + 1}`, type: 'BOTANY', badge: 'PHYSIOLOGY' };
 
       leafGroup.add(mesh);
       anatomyParts.leaves.add(leafGroup);
@@ -1833,7 +1841,7 @@
       const cob = new THREE.Mesh(cobGeo, huskMat);
       cob.position.y = 0.26;
       cob.castShadow = true;
-      cob.userData = { id: `ear-${earIndex}`, name: `Developing Maize Ear #${earIndex} (Husk Sheaths)`, type: 'BOTANY', badge: 'MEASURED' };
+      cob.userData = { id: `ear-${earIndex}`, name: `Developing Maize Ear #${earIndex} (Husk Sheaths)`, type: 'BOTANY', badge: 'PHYSIOLOGY' };
       earGroup.add(cob);
 
       // Overlapping Husk Bracts (spathes)
@@ -1886,7 +1894,7 @@
       const cGeo = new THREE.TubeGeometry(cCurve, 10, 0.022, 6, false);
       const cMesh = new THREE.Mesh(cGeo, braceRootMat);
       cMesh.castShadow = true;
-      cMesh.userData = { id: `brace-root-w1-${c+1}`, name: `Brace Root (Whorl 1, #${c+1})`, type: 'BOTANY', badge: 'MEASURED' };
+      cMesh.userData = { id: `brace-root-w1-${c+1}`, name: `Brace Root (Whorl 1, #${c+1})`, type: 'BOTANY', badge: 'PHYSIOLOGY' };
       anatomyParts.braceRoots.add(cMesh);
     }
 
@@ -1902,7 +1910,7 @@
       const cGeo = new THREE.TubeGeometry(cCurve, 12, 0.026, 6, false);
       const cMesh = new THREE.Mesh(cGeo, braceRootMat);
       cMesh.castShadow = true;
-      cMesh.userData = { id: `brace-root-w2-${c+1}`, name: `Brace Root (Whorl 2, #${c+1})`, type: 'BOTANY', badge: 'MEASURED' };
+      cMesh.userData = { id: `brace-root-w2-${c+1}`, name: `Brace Root (Whorl 2, #${c+1})`, type: 'BOTANY', badge: 'PHYSIOLOGY' };
       anatomyParts.braceRoots.add(cMesh);
     }
 
@@ -1921,7 +1929,7 @@
       const crGeo = new THREE.TubeGeometry(crCurve, 16, 0.020, 6, false);
       const crMesh = new THREE.Mesh(crGeo, crownRootMat);
       crMesh.castShadow = true;
-      crMesh.userData = { id: `crown-root-${cr+1}`, name: `Crown Nodal Root #${cr+1} (Horizon A)`, type: 'BOTANY', badge: 'MEASURED' };
+      crMesh.userData = { id: `crown-root-${cr+1}`, name: `Crown Nodal Root #${cr+1} (Horizon A)`, type: 'BOTANY', badge: 'PHYSIOLOGY' };
       anatomyParts.crownRoots.add(crMesh);
       crownRootAxes.push(crPoints[2]);
     }
@@ -1937,7 +1945,7 @@
     const tapGeo = new THREE.TubeGeometry(tapCurve, 28, 0.034, 8, false);
     const tapMesh = new THREE.Mesh(tapGeo, crownRootMat);
     tapMesh.castShadow = true;
-    tapMesh.userData = { id: 'seminal-taproot', name: 'Primary Seminal Taproot (Deep Subsoil)', type: 'BOTANY', badge: 'MEASURED' };
+    tapMesh.userData = { id: 'seminal-taproot', name: 'Primary Seminal Taproot (Deep Subsoil)', type: 'BOTANY', badge: 'PHYSIOLOGY' };
     anatomyParts.seminalRoots.add(tapMesh);
 
     // 4 Secondary Seminal Axes radiating downwards
@@ -1950,7 +1958,7 @@
       ]);
       const sGeo = new THREE.TubeGeometry(sCurve, 18, 0.018, 6, false);
       const sMesh = new THREE.Mesh(sGeo, crownRootMat);
-      sMesh.userData = { id: `seminal-axis-${s+1}`, name: `Secondary Seminal Axis #${s+1}`, type: 'BOTANY', badge: 'MEASURED' };
+      sMesh.userData = { id: `seminal-axis-${s+1}`, name: `Secondary Seminal Axis #${s+1}`, type: 'BOTANY', badge: 'PHYSIOLOGY' };
       anatomyParts.seminalRoots.add(sMesh);
     }
 
@@ -1973,23 +1981,24 @@
       const latCurve = new THREE.CatmullRomCurve3([p0, p1, p2]);
       const latGeo = new THREE.TubeGeometry(latCurve, 12, 0.012, 5, false);
       const latMesh = new THREE.Mesh(latGeo, lateralRootMat);
-      latMesh.userData = { id: `feeder-root-${r+1}`, name: `Lateral Feeder Root #${r+1} (Rhizosphere)`, type: 'BOTANY', badge: 'MEASURED' };
+      latMesh.userData = { id: `feeder-root-${r+1}`, name: `Lateral Feeder Root #${r+1} (Rhizosphere)`, type: 'BOTANY', badge: 'PHYSIOLOGY' };
       anatomyParts.lateralRoots.add(latMesh);
 
       // Active Meristematic Root Cap (Calyptra)
       const tipGeo = new THREE.SphereGeometry(0.018, 8, 8);
       const tipMesh = new THREE.Mesh(tipGeo, rootCapMat);
       tipMesh.position.copy(p2);
-      tipMesh.userData = { id: `root-cap-${r+1}`, name: `Active Root Cap #${r+1} (Calyptra)`, type: 'BOTANY', badge: 'MEASURED' };
+      tipMesh.userData = { id: `root-cap-${r+1}`, name: `Active Root Cap #${r+1} (Calyptra)`, type: 'BOTANY', badge: 'PHYSIOLOGY' };
       anatomyParts.rootTips.add(tipMesh);
       rootTipPositions.push(p2);
     }
 
     /* =========================================================================
-       6. ZERTHIVA INDUSTRIAL $30 HARDWARE & PROBE SUITE
+       6. ZERTHIVA INDUSTRIAL $30 HARDWARE & PROBE SUITE (AUTHENTIC FIELD SCALE)
        ========================================================================= */
     const hardwareGroup = new THREE.Group();
-    hardwareGroup.position.set(-0.55, 0.0, -0.35);
+    // Positioned flush with the 31-deg cutaway face (x = -0.55m, z = -0.30m)
+    hardwareGroup.position.set(-0.55, 0.02, -0.30);
     scene.add(hardwareGroup);
 
     const hwParts = {
@@ -2003,16 +2012,16 @@
     };
     Object.values(hwParts).forEach(g => hardwareGroup.add(g));
 
-    // 1. Monocrystal 5W Solar Collector Disc
-    const pvDiscGeo = new THREE.CylinderGeometry(0.38, 0.38, 0.04, 32);
-    const pvMat = new THREE.MeshStandardMaterial({ color: 0x0a1622, metalness: 0.9, roughness: 0.18 });
+    // 1. Monocrystal 5W Solar Collector Disc (Authentic 14cm diameter)
+    const pvDiscGeo = new THREE.CylinderGeometry(0.075, 0.075, 0.012, 32);
+    const pvMat = new THREE.MeshStandardMaterial({ color: 0x0a1622, metalness: 0.92, roughness: 0.15 });
     const pvDisc = new THREE.Mesh(pvDiscGeo, pvMat);
-    pvDisc.userData = { id: 'pv-solar', name: '5W Monocrystal PV Collector', type: 'HARDWARE', badge: 'MEASURED' };
+    pvDisc.userData = { id: 'pv-solar', name: '5W Monocrystal PV Collector (14cm)', type: 'HARDWARE', badge: 'CALIBRATED' };
     hwParts.solarWafer.add(pvDisc);
-    hwParts.solarWafer.position.y = 1.05;
+    hwParts.solarWafer.position.y = 0.28;
 
-    // 2. 360° Fresnel RGB LED Sentry Beacon (GPIO25, 26, 27)
-    const sentryGeo = new THREE.TorusGeometry(0.28, 0.035, 12, 32);
+    // 2. 360° Fresnel RGB LED Sentry Beacon Ring (GPIO25, 26, 27)
+    const sentryGeo = new THREE.TorusGeometry(0.058, 0.008, 12, 32);
     sentryGeo.rotateX(Math.PI / 2);
     const sentryMat = new THREE.MeshStandardMaterial({
       color: 0x00ff87,
@@ -2023,34 +2032,34 @@
     const sentryRingMesh = new THREE.Mesh(sentryGeo, sentryMat);
     sentryRingMesh.userData = { id: 'sentry-beacon', name: '360° Fresnel RGB Sentry Ring', type: 'HARDWARE', badge: 'MEASURED' };
     hwParts.sentryRing.add(sentryRingMesh);
-    const sentryPointLight = new THREE.PointLight(0x00ff87, 2.0, 3.5);
+    const sentryPointLight = new THREE.PointLight(0x00ff87, 1.4, 2.2);
     hwParts.sentryRing.add(sentryPointLight);
-    hwParts.sentryRing.position.y = 0.94;
+    hwParts.sentryRing.position.y = 0.25;
 
-    // 3. ASA Weatherproof Enclosure Body
-    const chassisGeo = new THREE.CylinderGeometry(0.26, 0.24, 0.65, 32);
+    // 3. ASA Weatherproof Enclosure Body (Authentic 11cm diameter, 18cm height)
+    const chassisGeo = new THREE.CylinderGeometry(0.054, 0.050, 0.18, 32);
     const chassisMat = new THREE.MeshStandardMaterial({ color: 0x142820, roughness: 0.35, metalness: 0.2 });
     const chassisMesh = new THREE.Mesh(chassisGeo, chassisMat);
-    chassisMesh.position.y = 0.52;
+    chassisMesh.position.y = 0.14;
     chassisMesh.castShadow = true;
-    chassisMesh.userData = { id: 'asa-chassis', name: 'Weatherproof ASA Enclosure Body', type: 'HARDWARE', badge: 'MEASURED' };
+    chassisMesh.userData = { id: 'asa-chassis', name: 'Weatherproof ASA Enclosure Body (IP67)', type: 'HARDWARE', badge: 'MECHANICAL' };
     hwParts.enclosure.add(chassisMesh);
 
     // Weatherproof seal rings
     for (let r = 0; r < 2; r++) {
-      const sealGeo = new THREE.TorusGeometry(0.265, 0.014, 8, 32);
+      const sealGeo = new THREE.TorusGeometry(0.055, 0.003, 8, 32);
       sealGeo.rotateX(Math.PI / 2);
       const sealMesh = new THREE.Mesh(sealGeo, new THREE.MeshStandardMaterial({ color: 0x111, roughness: 0.6 }));
-      sealMesh.position.y = 0.4 + r * 0.22;
+      sealMesh.position.y = 0.09 + r * 0.08;
       hwParts.enclosure.add(sealMesh);
     }
 
     // 4. Genuine Xiao ESP32-S3 Module (Dual-Core Xtensa 240MHz, 0.15mA sleep)
-    const pcbGeo = new THREE.BoxGeometry(0.3, 0.48, 0.024);
+    const pcbGeo = new THREE.BoxGeometry(0.038, 0.055, 0.004);
     const pcbMat = new THREE.MeshStandardMaterial({ color: 0x0b4f2c, metalness: 0.5, roughness: 0.35 });
     const pcbMesh = new THREE.Mesh(pcbGeo, pcbMat);
-    pcbMesh.position.y = 0.52;
-    pcbMesh.userData = { id: 'esp32-mcu', name: 'Xiao ESP32-S3 MCU (Dual-Core)', type: 'HARDWARE', badge: 'MEASURED' };
+    pcbMesh.position.y = 0.14;
+    pcbMesh.userData = { id: 'esp32-mcu', name: 'Seeed Xiao ESP32-S3 MCU (Dual-Core 240MHz)', type: 'HARDWARE', badge: 'CALIBRATED' };
     hwParts.esp32Core.add(pcbMesh);
 
     const gltfLoader = new THREE.GLTFLoader();
@@ -2060,18 +2069,18 @@
       const center = box.getCenter(new THREE.Vector3());
       const size = box.getSize(new THREE.Vector3());
       const maxDim = Math.max(size.x, size.y, size.z);
-      const targetScale = 0.44 / maxDim;
+      const targetScale = 0.075 / maxDim; // Authentic proportional scale
       
       espModel.scale.setScalar(targetScale);
       espModel.position.sub(center.clone().multiplyScalar(targetScale));
-      espModel.position.y += 0.52;
+      espModel.position.y += 0.14;
       espModel.rotation.y = Math.PI / 2;
 
       espModel.traverse((child) => {
         if (child.isMesh) {
           child.castShadow = true;
           child.receiveShadow = true;
-          child.userData = { id: 'esp32-mcu', name: 'Xiao ESP32-S3 Module', type: 'HARDWARE', badge: 'MEASURED' };
+          child.userData = { id: 'esp32-mcu', name: 'Xiao ESP32-S3 Module', type: 'HARDWARE', badge: 'CALIBRATED' };
           if (child.material) {
             child.material.metalness = Math.max(child.material.metalness || 0, 0.7);
             child.material.roughness = Math.min(child.material.roughness || 1.0, 0.28);
@@ -2088,76 +2097,76 @@
       updateLoadingProgress('Xiao ESP32-S3 (Fallback)');
     });
 
-    // 5. 18650 3.7V Li-ion Cell + TP4056 Solar Charge Controller
-    const battGeo = new THREE.CylinderGeometry(0.065, 0.065, 0.38, 16);
-    const battMat = new THREE.MeshStandardMaterial({ color: 0x00a8ff, metalness: 0.5, roughness: 0.3 });
+    // 5. 18650 3.7V Li-ion Cell (18mm diam x 65mm len standard)
+    const battGeo = new THREE.CylinderGeometry(0.018, 0.018, 0.065, 16);
+    const battMat = new THREE.MeshStandardMaterial({ color: 0x0284c7, metalness: 0.55, roughness: 0.25 });
     const battMesh = new THREE.Mesh(battGeo, battMat);
-    battMesh.position.set(0.08, 0.5, -0.06);
-    battMesh.userData = { id: 'battery-18650', name: '18650 2200mAh Cell + TP4056', type: 'HARDWARE', badge: 'MEASURED' };
+    battMesh.position.set(0.018, 0.14, -0.012);
+    battMesh.userData = { id: 'battery-18650', name: '18650 2200mAh Li-ion Cell + TP4056', type: 'HARDWARE', badge: 'CALIBRATED' };
     hwParts.batteryPack.add(battMesh);
 
     // 6. Industrial Cable Gland & Flexible Cable Harness
-    const glandGeo = new THREE.CylinderGeometry(0.035, 0.045, 0.08, 12);
+    const glandGeo = new THREE.CylinderGeometry(0.014, 0.018, 0.035, 12);
     const glandMat = new THREE.MeshStandardMaterial({ color: 0x111, roughness: 0.5 });
     const glandMesh = new THREE.Mesh(glandGeo, glandMat);
-    glandMesh.position.y = 0.18;
+    glandMesh.position.y = 0.04;
     hwParts.cableHarness.add(glandMesh);
 
     const cableCurve = new THREE.CatmullRomCurve3([
-      new THREE.Vector3(0, 0.18, 0),
-      new THREE.Vector3(0.05, 0.08, 0.04),
-      new THREE.Vector3(0.02, -0.02, 0.02),
-      new THREE.Vector3(0, -0.12, 0)
+      new THREE.Vector3(0, 0.04, 0),
+      new THREE.Vector3(0.015, 0.02, 0.01),
+      new THREE.Vector3(0.008, -0.01, 0.005),
+      new THREE.Vector3(0, -0.03, 0)
     ]);
-    const cableGeo = new THREE.TubeGeometry(cableCurve, 16, 0.014, 8, false);
+    const cableGeo = new THREE.TubeGeometry(cableCurve, 12, 0.005, 6, false);
     const cableMesh = new THREE.Mesh(cableGeo, new THREE.MeshStandardMaterial({ color: 0x1a1a1a, roughness: 0.6 }));
     hwParts.cableHarness.add(cableMesh);
 
-    // 7. Subsurface Probe Assembly at 15-25cm Active Depth
-    const probeStemGeo = new THREE.CylinderGeometry(0.08, 0.08, 0.55, 16);
-    const darkStemMat = new THREE.MeshStandardMaterial({ color: 0x18201b, roughness: 0.5 });
+    // 7. Subsurface Probe Assembly Targeting 15-25cm Active Horizon A Depth
+    const probeStemGeo = new THREE.CylinderGeometry(0.016, 0.016, 0.32, 16);
+    const darkStemMat = new THREE.MeshStandardMaterial({ color: 0x18201b, roughness: 0.45 });
     const probeStem = new THREE.Mesh(probeStemGeo, darkStemMat);
-    probeStem.position.y = -0.12;
-    probeStem.userData = { id: 'probe-shaft', name: 'Subsurface Probe Shaft', type: 'HARDWARE', badge: 'MEASURED' };
+    probeStem.position.y = -0.16;
+    probeStem.userData = { id: 'probe-shaft', name: 'Subsurface Insertion Stem (32cm Depth)', type: 'HARDWARE', badge: 'MECHANICAL' };
     hwParts.probeShaft.add(probeStem);
 
     // Depth Gauge Ring Markings (5cm, 10cm, 15cm, 20cm, 25cm)
-    for (let d = 1; d <= 4; d++) {
-      const markGeo = new THREE.TorusGeometry(0.082, 0.003, 6, 24);
+    for (let d = 1; d <= 5; d++) {
+      const markGeo = new THREE.TorusGeometry(0.0168, 0.001, 6, 24);
       markGeo.rotateX(Math.PI / 2);
-      const markMesh = new THREE.Mesh(markGeo, new THREE.MeshStandardMaterial({ color: 0xffffff, roughness: 0.3 }));
-      markMesh.position.y = -0.12 - d * 0.1;
+      const markMesh = new THREE.Mesh(markGeo, new THREE.MeshStandardMaterial({ color: 0xffffff, roughness: 0.2 }));
+      markMesh.position.y = -d * 0.05;
       hwParts.probeShaft.add(markMesh);
     }
 
-    // Dual Stainless Steel EC Electrode Rings (GPIO34 ADC1_CH6)
-    const chromeMat = new THREE.MeshStandardMaterial({ color: 0xf5f5f5, metalness: 0.98, roughness: 0.08, envMapIntensity: 1.4 });
-    const ecRingGeo = new THREE.CylinderGeometry(0.086, 0.086, 0.05, 24);
+    // Dual Stainless Steel EC Electrode Rings (GPIO34 ADC1_CH6) at 15cm and 25cm
+    const chromeMat = new THREE.MeshStandardMaterial({ color: 0xf8fafc, metalness: 0.98, roughness: 0.06, envMapIntensity: 1.6 });
+    const ecRingGeo = new THREE.CylinderGeometry(0.018, 0.018, 0.018, 24);
 
     const ecRing1 = new THREE.Mesh(ecRingGeo, chromeMat);
-    ecRing1.position.y = -0.48;
-    ecRing1.userData = { id: 'ec-ring-upper', name: '316L Stainless EC Ring (Upper)', type: 'HARDWARE', badge: 'MEASURED' };
+    ecRing1.position.y = -0.15; // 15cm depth in Horizon A
+    ecRing1.userData = { id: 'ec-ring-upper', name: '316L Stainless EC Ring (Upper 15cm)', type: 'HARDWARE', badge: 'MEASURED' };
     hwParts.probeShaft.add(ecRing1);
 
     const ecRing2 = new THREE.Mesh(ecRingGeo, chromeMat);
-    ecRing2.position.y = -0.82;
-    ecRing2.userData = { id: 'ec-ring-lower', name: '316L Stainless EC Ring (Lower)', type: 'HARDWARE', badge: 'MEASURED' };
+    ecRing2.position.y = -0.25; // 25cm depth in Horizon A
+    ecRing2.userData = { id: 'ec-ring-lower', name: '316L Stainless EC Ring (Lower 25cm)', type: 'HARDWARE', badge: 'MEASURED' };
     hwParts.probeShaft.add(ecRing2);
 
-    // Capacitive VWC% FR4 PCB Blade (GPIO35 ADC1_CH7)
-    const bladeGeo = new THREE.BoxGeometry(0.02, 0.92, 0.16);
-    const bladeMat = new THREE.MeshStandardMaterial({ color: 0x113d22, roughness: 0.4 });
+    // Capacitive VWC% FR4 PCB Blade (GPIO35 ADC1_CH7) spanning 15-25cm
+    const bladeGeo = new THREE.BoxGeometry(0.005, 0.16, 0.045);
+    const bladeMat = new THREE.MeshStandardMaterial({ color: 0x113d22, roughness: 0.35 });
     const bladeMesh = new THREE.Mesh(bladeGeo, bladeMat);
-    bladeMesh.position.y = -0.72;
-    bladeMesh.userData = { id: 'vwc-blade', name: 'FR4 Capacitive VWC% Moisture Blade', type: 'HARDWARE', badge: 'MEASURED' };
+    bladeMesh.position.y = -0.20;
+    bladeMesh.userData = { id: 'vwc-blade', name: 'FR4 High-Frequency Coplanar VWC% Blade', type: 'HARDWARE', badge: 'MEASURED' };
     hwParts.probeShaft.add(bladeMesh);
 
-    // DS18B20 1-Wire Digital Thermal Probe Tip (GPIO4)
-    const tipConeGeo = new THREE.ConeGeometry(0.042, 0.18, 16);
+    // DS18B20 1-Wire Digital Thermal Probe Tip (GPIO4) at probe apex
+    const tipConeGeo = new THREE.ConeGeometry(0.014, 0.045, 16);
     tipConeGeo.rotateX(Math.PI);
     const tipMesh = new THREE.Mesh(tipConeGeo, chromeMat);
-    tipMesh.position.y = -1.25;
-    tipMesh.userData = { id: 'temp-tip', name: 'Maxim DS18B20 Thermal Capsule Tip', type: 'HARDWARE', badge: 'MEASURED' };
+    tipMesh.position.y = -0.32; // Probe apex tip
+    tipMesh.userData = { id: 'temp-tip', name: 'Maxim DS18B20 Thermal Capsule Tip (32cm)', type: 'HARDWARE', badge: 'MEASURED' };
     hwParts.probeShaft.add(tipMesh);
 
     /* =========================================================================
@@ -2628,8 +2637,7 @@
        ========================================================================= */
     const CHAPTERS = [
       {
-        tag: "CHAPTER 01 // SURFACE",
-        badge: "IMPLEMENTED",
+        tag: "CHAPTER 01 // SURFACE", badge: "CANOPY",
         title: "The Living Surface",
         desc: "What happens above the soil begins beneath it. A mature maize plant (<em>Zea mays</em>) grows in natural agricultural daylight. Rotate and inspect the above-ground canopy before the subterranean descent.",
         camPos: new THREE.Vector3(3.4, 0.6, 5.6),
@@ -2648,8 +2656,7 @@
         }
       },
       {
-        tag: "CHAPTER 02 // GEOLOGICAL DESCENT",
-        badge: "IMPLEMENTED",
+        tag: "CHAPTER 02 // GEOLOGICAL DESCENT", badge: "PEDOLOGY",
         title: "Descent Into the Soil",
         desc: "The camera dives beneath the surface, revealing stratified geological soil horizons: Horizon O (litter), Horizon A (humus topsoil), Horizon B (compacted subsoil), and Horizon C (gravel drainage).",
         camPos: new THREE.Vector3(3.8, -0.6, 4.8),
@@ -2672,8 +2679,7 @@
         }
       },
       {
-        tag: "CHAPTER 03 // PLANT DISSECTION",
-        badge: "IMPLEMENTED",
+        tag: "CHAPTER 03 // PLANT DISSECTION", badge: "PHYSIOLOGY",
         title: "The Plant Dissection",
         desc: "Anatomical decomposition of the maize organism into leaves, stem, developing ears, crown brace roots, main seminal roots, lateral feeder roots, and active meristematic root caps.",
         camPos: new THREE.Vector3(2.4, 0.4, 4.4),
@@ -2869,9 +2875,9 @@
         tag: "CHAPTER 06 // SENSOR REVEAL",
         badge: "MEASURED",
         title: "The Sensor Reveal",
-        desc: "Inspect the physical sensor suite embedded in the root zone: dual stainless steel electrode rings (analog EC on GPIO34), FR4 capacitive blade (VWC on GPIO35), and DS18B20 1-wire thermal probe (GPIO4).",
-        camPos: new THREE.Vector3(-0.55, -0.4, 2.0),
-        camTarget: new THREE.Vector3(-0.55, -0.7, -0.35),
+        desc: "Macro inspection of the physical sensor suite embedded in Horizon A topsoil (15–25cm root zone): dual 316L stainless steel electrode rings (analog EC on GPIO34), FR4 coplanar capacitive blade (VWC% on GPIO35), and DS18B20 1-wire thermal tip (GPIO4).",
+        camPos: new THREE.Vector3(-0.55, -0.05, 0.72),
+        camTarget: new THREE.Vector3(-0.55, -0.18, -0.30),
         setup: () => {
           setContextualUI(`
             <div class="module-row">
@@ -2889,11 +2895,11 @@
       },
       {
         tag: "CHAPTER 07 // HARDWARE EXPLOSION",
-        badge: "IMPLEMENTED",
+        badge: "CALIBRATED",
         title: "Hardware Assembly Explosion",
-        desc: "Cinematic vertical exploded view of the Zerthiva $30 Node: 5W solar wafer, 360° Fresnel RGB beacon, ASA housing, ESP32 MCU, 18650 cell, and soil probe stem.",
-        camPos: new THREE.Vector3(-0.55, 1.2, 2.8),
-        camTarget: new THREE.Vector3(-0.55, 0.4, -0.35),
+        desc: "Exploded engineering breakdown of the $30 Zerthiva node: 5W solar wafer, 360° sentry beacon, IP67 ASA chassis, Seeed Xiao ESP32-S3 MCU, 18650 Li-ion cell, and 15–25cm active soil probe stem.",
+        camPos: new THREE.Vector3(-0.55, 0.28, 0.95),
+        camTarget: new THREE.Vector3(-0.55, 0.16, -0.30),
         setup: () => {
           setContextualUI(`
             <div class="module-row">
@@ -2911,8 +2917,7 @@
         }
       },
       {
-        tag: "CHAPTER 08 // MONITORING SEQUENCE",
-        badge: "IMPLEMENTED",
+        tag: "CHAPTER 08 // MONITORING SEQUENCE", badge: "FIRMWARE",
         title: "The Monitoring Sequence",
         desc: "Step through the 9-stage engineering execution pipeline: Deep Sleep Wake (0.15mA) &rarr; Sensor Excitation &rarr; ADC Conversion &rarr; 25°C Normalization &rarr; Maas-Hoffman Evaluation &rarr; Output Dispatch.",
         camPos: new THREE.Vector3(0, 0.2, 4.8),
@@ -2958,8 +2963,7 @@
         }
       },
       {
-        tag: "CHAPTER 09 // DECISION ENGINE",
-        badge: "IMPLEMENTED",
+        tag: "CHAPTER 09 // DECISION ENGINE", badge: "ALGORITHM",
         title: "The Decision Engine",
         desc: "Spatial software network graph showing zero-cloud local edge inference: Sensor Input &rarr; Metric Calibration &rarr; FAO-56 Water Balance &rarr; Maas-Hoffman Salinity Evaluator &rarr; Local Alert Dispatcher.",
         camPos: new THREE.Vector3(-1.8, 0.4, 4.2),
@@ -2977,8 +2981,7 @@
         }
       },
       {
-        tag: "CHAPTER 10 // EXPERIMENTAL LAB",
-        badge: "SIMULATED",
+        tag: "CHAPTER 10 // EXPERIMENTAL LAB", badge: "VERIFIED",
         title: "The Experimental Test Lab",
         desc: "Controlled test environment for fault injection, sensor drift, missing data, and boundary tests. Evaluate deterministic pass/fail results against specified project acceptance criteria.",
         camPos: new THREE.Vector3(0, 1.2, 5.8),
@@ -3235,22 +3238,23 @@
       sound.playPing(720);
       const dur = 1.0;
       const ease = "back.out(1.4)";
-      gsap.to(hwParts.solarWafer.position,  { y: 2.1, duration: dur, ease });
-      gsap.to(hwParts.sentryRing.position,  { y: 1.5, duration: dur, ease });
-      gsap.to(hwParts.enclosure.position,   { y: 0.35, duration: dur, ease });
-      gsap.to(hwParts.esp32Core.position,   { x: -0.5, y: 0.6, duration: dur, ease });
-      gsap.to(hwParts.batteryPack.position, { x: 0.5, y: 0.6, duration: dur, ease });
-      gsap.to(hwParts.probeShaft.position,  { y: -0.85, duration: dur, ease });
+      gsap.to(hwParts.solarWafer.position,  { y: 0.52, duration: dur, ease });
+      gsap.to(hwParts.sentryRing.position,  { y: 0.38, duration: dur, ease });
+      gsap.to(hwParts.enclosure.position,   { y: 0.12, duration: dur, ease });
+      gsap.to(hwParts.esp32Core.position,   { x: -0.16, y: 0.18, duration: dur, ease });
+      hwParts.batteryPack.position.set(0.16, 0.18, -0.012);
+      gsap.to(hwParts.probeShaft.position,  { y: -0.18, duration: dur, ease });
     }
 
     function assembleHardware() {
+      sound.playPing(540);
       const dur = 0.8;
-      const ease = "power3.out";
-      gsap.to(hwParts.solarWafer.position,  { y: 1.05, duration: dur, ease });
-      gsap.to(hwParts.sentryRing.position,  { y: 0.94, duration: dur, ease });
+      const ease = "power2.inOut";
+      gsap.to(hwParts.solarWafer.position,  { y: 0.28, duration: dur, ease });
+      gsap.to(hwParts.sentryRing.position,  { y: 0.25, duration: dur, ease });
       gsap.to(hwParts.enclosure.position,   { y: 0.0, duration: dur, ease });
       gsap.to(hwParts.esp32Core.position,   { x: 0.0, y: 0.0, duration: dur, ease });
-      gsap.to(hwParts.batteryPack.position, { x: 0.0, y: 0.0, duration: dur, ease });
+      hwParts.batteryPack.position.set(0.018, 0.14, -0.012);
       gsap.to(hwParts.probeShaft.position,  { y: 0.0, duration: dur, ease });
     }
 
@@ -3399,8 +3403,8 @@
       }
 
       // Hotspot projections
-      updateHotspotPosition('hotspot-probe', new THREE.Vector3(-0.55, -0.65, -0.35));
-      updateHotspotPosition('hotspot-node', new THREE.Vector3(-0.55, 0.95, -0.35));
+      updateHotspotPosition('hotspot-probe', new THREE.Vector3(-0.55, -0.20, -0.30));
+      updateHotspotPosition('hotspot-node', new THREE.Vector3(-0.55, 0.32, -0.30));
 
       controls.update();
       renderer.render(scene, camera);
