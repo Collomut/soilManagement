@@ -2173,6 +2173,108 @@
             background: #10b981;
         }
     
+
+        /* Issue 2: Comprehensive Styling for All Navbar Level Headings & Special Link */
+        .special-link {
+            display: flex !important;
+            align-items: center !important;
+            justify-content: space-between !important;
+            background: #ecfdf5 !important;
+            color: #047857 !important;
+            font-weight: 800 !important;
+            border: 1px solid #a7f3d0 !important;
+            margin-bottom: 0.85rem !important;
+            border-radius: 6px !important;
+            padding: 0.55rem 0.75rem !important;
+            transition: all 0.2s ease !important;
+        }
+
+        .special-link .special-icon {
+            color: #059669;
+            font-size: 0.95rem;
+            margin-right: 0.35rem;
+        }
+
+        .special-link .special-title {
+            flex-grow: 1;
+            font-size: 0.82rem;
+            letter-spacing: 0.02em;
+        }
+
+        .special-link:hover {
+            background: #d1fae5 !important;
+            transform: translateX(2px) !important;
+        }
+
+        [data-theme="dark"] .special-link,
+        body.dark-mode .special-link {
+            background: #081d13 !important;
+            color: #34d399 !important;
+            border: 1px solid #164e2f !important;
+        }
+
+        [data-theme="dark"] .special-link .special-icon,
+        body.dark-mode .special-link .special-icon {
+            color: #10b981 !important;
+        }
+
+        [data-theme="dark"] .special-link:hover,
+        body.dark-mode .special-link:hover {
+            background: #0d281a !important;
+            border-color: #1b5e3a !important;
+        }
+
+        .sidebar-level-header {
+            display: flex !important;
+            align-items: center !important;
+            justify-content: space-between !important;
+            gap: 0.45rem !important;
+            font-size: 0.7rem !important;
+            font-weight: 800 !important;
+            letter-spacing: 0.08em !important;
+            text-transform: uppercase !important;
+            color: #475569 !important;
+            background: #f1f5f9 !important;
+            border: 1px solid #e2e8f0 !important;
+            border-left: 3px solid #059669 !important;
+            border-radius: 5px !important;
+            padding: 0.55rem 0.65rem !important;
+            margin-top: 1.15rem !important;
+            margin-bottom: 0.45rem !important;
+            transition: all 0.2s ease !important;
+        }
+
+        .sidebar-level-header .level-title {
+            letter-spacing: 0.08em;
+            line-height: 1.2;
+        }
+
+        .sidebar-level-header .level-tag {
+            font-family: ui-monospace, SFMono-Regular, Menlo, monospace !important;
+            font-size: 0.62rem !important;
+            font-weight: 900 !important;
+            padding: 0.15rem 0.4rem !important;
+            border-radius: 3px !important;
+            background: #e2e8f0 !important;
+            color: #0f172a !important;
+            letter-spacing: 0.04em !important;
+        }
+
+        [data-theme="dark"] .sidebar-level-header,
+        body.dark-mode .sidebar-level-header {
+            background: #0d0d12 !important;
+            color: #cbd5e1 !important;
+            border: 1px solid #1c1c24 !important;
+            border-left: 3px solid #10b981 !important;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.4) !important;
+        }
+
+        [data-theme="dark"] .sidebar-level-header .level-tag,
+        body.dark-mode .sidebar-level-header .level-tag {
+            background: #16161e !important;
+            color: #34d399 !important;
+            border: 1px solid #22222e !important;
+        }
 </style>
 <script>
         (function() {
@@ -2203,9 +2305,16 @@
             <div class="sidebar-version-pill">Master Dossier · v2.0</div>
         </div>
 
-        <a href="#cover" class="nav-link special-link">★ Cover & Overview</a>
+        <a href="#cover" class="nav-link special-link">
+            <span class="special-icon">★</span>
+            <span class="special-title">Cover & Summary</span>
+            <span class="nav-num">00</span>
+        </a>
 
-        <div class="sidebar-level-header">LEVEL 1 · CONTEXT & PROBLEM</div>
+        <div class="sidebar-level-header">
+            <span class="level-title">LEVEL 1 · CONTEXT & PROBLEM</span>
+            <span class="level-tag">L1</span>
+        </div>
         <a href="#section1" class="nav-link"><span class="nav-num">01</span> Project Identity</a>
         <a href="#section2" class="nav-link"><span class="nav-num">02</span> Executive Summary</a>
         <a href="#section3" class="nav-link"><span class="nav-num">03</span> Introduction</a>
@@ -2217,7 +2326,7 @@
         <a href="#section9" class="nav-link"><span class="nav-num">09</span> Existing Solutions & Physics</a>
         <a href="#section10" class="nav-link"><span class="nav-num">10</span> The Unaddressed Gap</a>
 
-        <div class="sidebar-level-header">LEVEL 2 · SOLUTION ARCHITECTURE</div>
+        <div class="sidebar-level-header"><span class="level-title">LEVEL 2 · SOLUTION ARCHITECTURE</span><span class="level-tag">L2</span></div>
         <a href="#section11" class="nav-link"><span class="nav-num">11</span> Proposed Solution & Functions</a>
         <a href="#section12" class="nav-link"><span class="nav-num">12</span> User Journeys</a>
         <a href="#section13" class="nav-link"><span class="nav-num">13</span> Technical & Verification Reqs</a>
@@ -2229,7 +2338,7 @@
         <a href="#section19" class="nav-link"><span class="nav-num">19</span> Crop Process Models</a>
         <a href="#section20" class="nav-link"><span class="nav-num">20</span> Expected Outputs</a>
 
-        <div class="sidebar-level-header">LEVEL 3 · OPERATIONS & FINANCIALS</div>
+        <div class="sidebar-level-header"><span class="level-title">LEVEL 3 · OPERATIONS & FINANCIALS</span><span class="level-tag">L3</span></div>
         <a href="#section21" class="nav-link"><span class="nav-num">21</span> Cross-Sector Impacts</a>
         <a href="#section22" class="nav-link"><span class="nav-num">22</span> Impact Measurement & Baselines</a>
         <a href="#section23" class="nav-link"><span class="nav-num">23</span> Target User Profiles</a>
@@ -2241,7 +2350,7 @@
         <a href="#section29" class="nav-link"><span class="nav-num">29</span> Pilot Protocol & Design</a>
         <a href="#section30" class="nav-link"><span class="nav-num">30</span> Implementation Roadmap</a>
 
-        <div class="sidebar-level-header">LEVEL 4 · GOVERNANCE & RISK</div>
+        <div class="sidebar-level-header"><span class="level-title">LEVEL 4 · GOVERNANCE & RISK</span><span class="level-tag">L4</span></div>
         <a href="#section31" class="nav-link"><span class="nav-num">31</span> Team & Organizational Structure</a>
         <a href="#section32" class="nav-link"><span class="nav-num">32</span> Strategic Partnerships</a>
         <a href="#section33" class="nav-link"><span class="nav-num">33</span> Regulatory & Legal Compliance</a>
@@ -2256,7 +2365,7 @@
         <a href="#section42" class="nav-link"><span class="nav-num">42</span> Operational Sustainability</a>
         <a href="#section43" class="nav-link"><span class="nav-num">43</span> IP & Data Sovereignty</a>
 
-        <div class="sidebar-level-header">LEVEL 5 · VALIDATION & DEFENSE</div>
+        <div class="sidebar-level-header"><span class="level-title">LEVEL 5 · VALIDATION & DEFENSE</span><span class="level-tag">L5</span></div>
         <a href="#section44" class="nav-link"><span class="nav-num">44</span> Testing & Bench Calibration</a>
         <a href="#section45" class="nav-link"><span class="nav-num">45</span> Matched-Pair Methodology</a>
         <a href="#section46" class="nav-link"><span class="nav-num">46</span> Results & Hypotheses</a>
@@ -2273,7 +2382,7 @@
         <a href="#section57" class="nav-link"><span class="nav-num">57</span> Final Pitch</a>
         <a href="#section58" class="nav-link"><span class="nav-num">58</span> The Final Kill Test (30 Qs)</a>
 
-        <div class="sidebar-level-header">TECHNICAL ANNEXES</div>
+        <div class="sidebar-level-header"><span class="level-title">TECHNICAL ANNEXES</span><span class="level-tag">ANNEX</span></div>
         <a href="#annexA" class="nav-link"><span class="nav-num">A</span> Document Control & Audit Log</a>
         <a href="#annexB" class="nav-link"><span class="nav-num">B</span> Scientific Reference Register</a>
         <a href="#annexC" class="nav-link"><span class="nav-num">C</span> Hardware & Power Budget</a>
