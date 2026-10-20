@@ -11,9 +11,11 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400&family=Space+Grotesk:wght@300;400;500;600;700&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
 
-  <!-- Libraries: Three.js (r128), OrbitControls, GSAP 3.12, Lucide Icons -->
+  <!-- Libraries: Three.js (r128), OrbitControls, GLTFLoader, RGBELoader, GSAP 3.12, Lucide Icons -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/loaders/GLTFLoader.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/loaders/RGBELoader.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
   <script src="https://unpkg.com/lucide@latest"></script>
 
@@ -612,6 +614,11 @@
       <a href="./Zerthiva_Full_Documentation.html" class="btn-pill" target="_blank" title="Open master 58-section dossier">
         <i data-lucide="file-text" style="width: 13px; height: 13px;"></i> Master Specs
       </a>
+
+      <!-- 3D Assets & Scientific Citations -->
+      <button class="btn-pill" id="btn-open-citations" title="View 3D asset licenses, PBR textures, and scientific citations">
+        <i data-lucide="info" style="width: 13px; height: 13px;"></i> Citations
+      </button>
     </div>
   </header>
 
@@ -936,11 +943,76 @@
       return tex;
     }
 
+    /* =========================================================================
+       2. REAL CC0 PBR TEXTURES (POLY HAVEN) + ORGANIC FOLIAGE TEXTURES
+       ========================================================================= */
+    const texLoader = new THREE.TextureLoader();
+
+    function setupPBRTexture(url, rx = 2.0, ry = 2.0) {
+      const tex = texLoader.load(url);
+      tex.wrapS = THREE.RepeatWrapping;
+      tex.wrapT = THREE.RepeatWrapping;
+      tex.repeat.set(rx, ry);
+      return tex;
+    }
+
+    // Poly Haven CC0 1K PBR Textures
+    const texDirtDiff  = setupPBRTexture('assets/textures/soil/dirt_diff_1k.jpg', 2.0, 2.0);
+    const texDirtNor   = setupPBRTexture('assets/textures/soil/dirt_nor_1k.jpg', 2.0, 2.0);
+    const texDirtRough = setupPBRTexture('assets/textures/soil/dirt_rough_1k.jpg', 2.0, 2.0);
+
+    const texMudDiff   = setupPBRTexture('assets/textures/soil/brown_mud_02_diff_1k.jpg', 2.5, 2.5);
+    const texMudNor    = setupPBRTexture('assets/textures/soil/brown_mud_02_nor_1k.jpg', 2.5, 2.5);
+    const texMudRough  = setupPBRTexture('assets/textures/soil/brown_mud_02_rough_1k.jpg', 2.5, 2.5);
+
+    // Procedural Monocot Maize Leaf Texture with parallel venation & central midrib
+    function generateMaizeLeafTexture() {
+      const c = document.createElement('canvas');
+      c.width = 512;
+      c.height = 1024;
+      const ctx = c.getContext('2d');
+
+      // Lush base green
+      ctx.fillStyle = '#2c8f38';
+      ctx.fillRect(0, 0, 512, 1024);
+
+      // Gradient from base sheath to tip
+      const lenGrad = ctx.createLinearGradient(0, 0, 0, 1024);
+      lenGrad.addColorStop(0, 'rgba(56, 155, 65, 0.45)');
+      lenGrad.addColorStop(0.5, 'rgba(38, 130, 48, 0.15)');
+      lenGrad.addColorStop(1.0, 'rgba(28, 105, 36, 0.55)');
+      ctx.fillStyle = lenGrad;
+      ctx.fillRect(0, 0, 512, 1024);
+
+      // Fine parallel monocot venation lines
+      ctx.lineWidth = 1;
+      for (let x = 0; x < 512; x += 3) {
+        const isMajor = (x % 18 === 0);
+        ctx.strokeStyle = isMajor ? 'rgba(85, 205, 95, 0.32)' : 'rgba(20, 80, 28, 0.22)';
+        ctx.beginPath();
+        ctx.moveTo(x, 0);
+        ctx.lineTo(x, 1024);
+        ctx.stroke();
+      }
+
+      // Pale luminous midrib along the center (x = 256)
+      const midrib = ctx.createLinearGradient(236, 0, 276, 0);
+      midrib.addColorStop(0, 'rgba(85, 205, 95, 0)');
+      midrib.addColorStop(0.3, 'rgba(155, 225, 140, 0.8)');
+      midrib.addColorStop(0.5, 'rgba(195, 245, 175, 0.95)');
+      midrib.addColorStop(0.7, 'rgba(155, 225, 140, 0.8)');
+      midrib.addColorStop(1, 'rgba(85, 205, 95, 0)');
+      ctx.fillStyle = midrib;
+      ctx.fillRect(236, 0, 40, 1024);
+
+      const t = new THREE.CanvasTexture(c);
+      t.wrapS = THREE.ClampToEdgeWrapping;
+      t.wrapT = THREE.ClampToEdgeWrapping;
+      return t;
+    }
+
+    const leafTexture = generateMaizeLeafTexture();
     const bumpMapSoil = generateSoilBumpMap();
-    const texHorizonO = generateSoilTexture('#263d24', 0.22, true);
-    const texHorizonA = generateSoilTexture('#362416', 0.25, true);
-    const texHorizonB = generateSoilTexture('#543922', 0.22, true);
-    const texHorizonC = generateSoilTexture('#262927', 0.28, true);
 
     /* =========================================================================
        3. THREE.JS SCENE SETUP & PROFESSIONAL LIGHTING PIPELINE
@@ -962,6 +1034,20 @@
     renderer.toneMapping = THREE.ACESFilmicToneMapping;
     renderer.toneMappingExposure = 1.25;
     container.appendChild(renderer.domElement);
+
+    // Poly Haven CC0 HDRI Environment Map via RGBELoader + PMREMGenerator
+    const pmremGen = new THREE.PMREMGenerator(renderer);
+    pmremGen.compileEquirectangularShader();
+    new THREE.RGBELoader()
+      .setDataType(THREE.UnsignedByteType)
+      .load('assets/hdr/autumn_field_1k.hdr', (texture) => {
+        const envMap = pmremGen.fromEquirectangular(texture).texture;
+        scene.environment = envMap;
+        texture.dispose();
+        pmremGen.dispose();
+      }, undefined, (err) => {
+        console.warn('HDRI environment fallback:', err);
+      });
 
     const controls = new THREE.OrbitControls(camera, renderer.domElement);
     controls.enableDamping = true;
@@ -1018,12 +1104,13 @@
     const horizonOGroup = new THREE.Group();
     geologyGroup.add(horizonOGroup);
     const matHorizonO = new THREE.MeshStandardMaterial({
-      color: 0x243520,
-      map: texHorizonO,
-      bumpMap: bumpMapSoil,
-      bumpScale: 0.04,
-      roughness: 0.9,
-      metalness: 0.05
+      color: 0x2e3d2a,
+      map: texDirtDiff,
+      normalMap: texDirtNor,
+      normalScale: new THREE.Vector2(0.85, 0.85),
+      roughnessMap: texDirtRough,
+      roughness: 0.92,
+      metalness: 0.02
     });
     const geoO = new THREE.BoxGeometry(blockW, 0.16, blockD, 16, 2, 16);
     // Deform top surface vertices for natural organic terrain contours
@@ -1049,12 +1136,13 @@
     const horizonAGroup = new THREE.Group();
     geologyGroup.add(horizonAGroup);
     const matHorizonA = new THREE.MeshStandardMaterial({
-      color: 0x362416,
-      map: texHorizonA,
-      bumpMap: bumpMapSoil,
-      bumpScale: 0.05,
-      roughness: 0.92,
-      metalness: 0.02
+      color: 0x3d2919,
+      map: texDirtDiff,
+      normalMap: texDirtNor,
+      normalScale: new THREE.Vector2(1.1, 1.1),
+      roughnessMap: texDirtRough,
+      roughness: 0.94,
+      metalness: 0.01
     });
     const geoA = new THREE.BoxGeometry(blockW, 0.95, blockD);
     const meshA = new THREE.Mesh(geoA, matHorizonA);
@@ -1066,12 +1154,13 @@
     const horizonBGroup = new THREE.Group();
     geologyGroup.add(horizonBGroup);
     const matHorizonB = new THREE.MeshStandardMaterial({
-      color: 0x543922,
-      map: texHorizonB,
-      bumpMap: bumpMapSoil,
-      bumpScale: 0.04,
-      roughness: 0.88,
-      metalness: 0.04
+      color: 0x6e4827,
+      map: texMudDiff,
+      normalMap: texMudNor,
+      normalScale: new THREE.Vector2(1.2, 1.2),
+      roughnessMap: texMudRough,
+      roughness: 0.86,
+      metalness: 0.03
     });
     const geoB = new THREE.BoxGeometry(blockW, 0.95, blockD);
     const meshB = new THREE.Mesh(geoB, matHorizonB);
@@ -1083,12 +1172,13 @@
     const horizonCGroup = new THREE.Group();
     geologyGroup.add(horizonCGroup);
     const matHorizonC = new THREE.MeshStandardMaterial({
-      color: 0x222623,
-      map: texHorizonC,
-      bumpMap: bumpMapSoil,
-      bumpScale: 0.06,
-      roughness: 0.75,
-      metalness: 0.2
+      color: 0x242826,
+      map: texMudDiff,
+      normalMap: texMudNor,
+      normalScale: new THREE.Vector2(1.5, 1.5),
+      roughnessMap: texMudRough,
+      roughness: 0.72,
+      metalness: 0.22
     });
     const geoC = new THREE.BoxGeometry(blockW, 0.75, blockD);
     const meshC = new THREE.Mesh(geoC, matHorizonC);
@@ -1124,6 +1214,7 @@
     const anatomyParts = {
       leaves: new THREE.Group(),
       stem: new THREE.Group(),
+      ears: new THREE.Group(),
       crown: new THREE.Group(),
       mainRoots: new THREE.Group(),
       lateralRoots: new THREE.Group(),
@@ -1139,9 +1230,10 @@
     });
 
     const leafPBRMat = new THREE.MeshStandardMaterial({
-      color: 0x2ea443,
-      roughness: 0.45,
-      metalness: 0.05,
+      color: 0x36a845,
+      map: leafTexture,
+      roughness: 0.38,
+      metalness: 0.04,
       side: THREE.DoubleSide
     });
 
@@ -1277,6 +1369,70 @@
       createMaizeLeafRibbon(l, 9);
     }
 
+    // Maize Ear (Cob with layered green husk and cascading golden silk)
+    function createMaizeEar(yPos, angle) {
+      const earGroup = new THREE.Group();
+      earGroup.position.set(0, yPos, 0);
+      earGroup.rotation.y = angle;
+      earGroup.rotation.z = -0.42; // naturally arching outward from stalk
+
+      // Ear Shank (stem attachment)
+      const shankGeo = new THREE.CylinderGeometry(0.018, 0.024, 0.14, 8);
+      const shankMat = new THREE.MeshStandardMaterial({ color: 0x2e8b38, roughness: 0.6 });
+      const shank = new THREE.Mesh(shankGeo, shankMat);
+      shank.position.y = 0.06;
+      earGroup.add(shank);
+
+      // Cob Body (swollen cylinder tapering at both ends)
+      const cobGeo = new THREE.CylinderGeometry(0.048, 0.065, 0.40, 16);
+      const huskMat = new THREE.MeshStandardMaterial({
+        color: 0x3d9e40,
+        map: leafTexture,
+        roughness: 0.45,
+        metalness: 0.04
+      });
+      const cob = new THREE.Mesh(cobGeo, huskMat);
+      cob.position.y = 0.25;
+      cob.castShadow = true;
+      earGroup.add(cob);
+
+      // Layered Husk Leaves
+      for (let h = 0; h < 4; h++) {
+        const hPoints = [
+          new THREE.Vector3(0, 0.1, 0),
+          new THREE.Vector3(Math.cos(h * 1.57) * 0.07, 0.28, Math.sin(h * 1.57) * 0.07),
+          new THREE.Vector3(Math.cos(h * 1.57) * 0.02, 0.46, Math.sin(h * 1.57) * 0.02)
+        ];
+        const hCurve = new THREE.CatmullRomCurve3(hPoints);
+        const hGeo = new THREE.TubeGeometry(hCurve, 8, 0.014, 5, false);
+        const hMesh = new THREE.Mesh(hGeo, huskMat);
+        earGroup.add(hMesh);
+      }
+
+      // Golden Silk (tuft of fine stigmata emerging at apex)
+      for (let s = 0; s < 14; s++) {
+        const sAngle = (s / 14) * Math.PI * 2;
+        const sPoints = [
+          new THREE.Vector3(0, 0.44, 0),
+          new THREE.Vector3(Math.cos(sAngle) * 0.035, 0.50, Math.sin(sAngle) * 0.035),
+          new THREE.Vector3(Math.cos(sAngle) * 0.07 + (Math.random() - 0.5) * 0.03, 0.55 - Math.random() * 0.04, Math.sin(sAngle) * 0.07)
+        ];
+        const sCurve = new THREE.CatmullRomCurve3(sPoints);
+        const sGeo = new THREE.TubeGeometry(sCurve, 6, 0.003, 4, false);
+        const sMesh = new THREE.Mesh(sGeo, new THREE.MeshStandardMaterial({
+          color: 0xe6b840,
+          roughness: 0.45,
+          emissive: 0x4a3508
+        }));
+        earGroup.add(sMesh);
+      }
+
+      anatomyParts.ears.add(earGroup);
+    }
+
+    createMaizeEar(0.95, 1.25);
+    createMaizeEar(1.35, 3.85);
+
     // C. Crown / Brace Roots (Stilt roots emerging above soil line)
     for (let c = 0; c < 7; c++) {
       const angle = (c / 7) * Math.PI * 2;
@@ -1394,12 +1550,46 @@
       hwParts.enclosure.add(sealMesh);
     }
 
-    // 4. ESP32-WROOM-32 Dev Module PCB (Dual-Core Xtensa 240MHz, 0.15mA sleep)
+    // 4. Genuine Xiao ESP32-S3 Module (Dual-Core Xtensa 240MHz, 0.15mA sleep)
+    // Procedural baseline mesh initially in place so geometry is never empty
     const pcbGeo = new THREE.BoxGeometry(0.3, 0.48, 0.024);
     const pcbMat = new THREE.MeshStandardMaterial({ color: 0x0b4f2c, metalness: 0.5, roughness: 0.35 });
     const pcbMesh = new THREE.Mesh(pcbGeo, pcbMat);
     pcbMesh.position.y = 0.52;
     hwParts.esp32Core.add(pcbMesh);
+
+    // Asynchronously load real Xiao ESP32-S3 3D CAD GLB model
+    const gltfLoader = new THREE.GLTFLoader();
+    gltfLoader.load('assets/models/esp32.glb', (gltf) => {
+      const espModel = gltf.scene;
+      const box = new THREE.Box3().setFromObject(espModel);
+      const center = box.getCenter(new THREE.Vector3());
+      const size = box.getSize(new THREE.Vector3());
+      const maxDim = Math.max(size.x, size.y, size.z);
+      const targetScale = 0.44 / maxDim; // scale to fit the chassis module bay
+      
+      espModel.scale.setScalar(targetScale);
+      espModel.position.sub(center.clone().multiplyScalar(targetScale));
+      espModel.position.y += 0.52;
+      espModel.rotation.y = Math.PI / 2;
+
+      espModel.traverse((child) => {
+        if (child.isMesh) {
+          child.castShadow = true;
+          child.receiveShadow = true;
+          if (child.material) {
+            child.material.metalness = Math.max(child.material.metalness || 0, 0.7);
+            child.material.roughness = Math.min(child.material.roughness || 1.0, 0.3);
+            child.material.envMapIntensity = 1.3;
+          }
+        }
+      });
+
+      hwParts.esp32Core.remove(pcbMesh);
+      hwParts.esp32Core.add(espModel);
+    }, undefined, (err) => {
+      console.warn('ESP32 model load note:', err);
+    });
 
     // 5. 18650 3.7V Li-ion Cell + TP4056 Solar Charge Controller
     const battGeo = new THREE.CylinderGeometry(0.065, 0.065, 0.38, 16);
@@ -2027,6 +2217,7 @@
 
     function applyAnatomyExplosion(val) {
       gsap.to(anatomyParts.leaves.position, { y: val * 0.8, duration: 0.4 });
+      if (anatomyParts.ears) gsap.to(anatomyParts.ears.position, { y: val * 0.45, duration: 0.4 });
       gsap.to(anatomyParts.stem.position, { y: val * 0.2, duration: 0.4 });
       gsap.to(anatomyParts.crown.position, { y: -val * 0.15, duration: 0.4 });
       gsap.to(anatomyParts.mainRoots.position, { y: -val * 0.35, duration: 0.4 });
@@ -2108,6 +2299,47 @@
       `;
       modal.classList.add('active');
     });
+
+    const btnCitations = document.getElementById('btn-open-citations');
+    if (btnCitations) {
+      btnCitations.addEventListener('click', () => {
+        sound.playPing(880);
+        modalBody.innerHTML = `
+          <h3 style="font-family:var(--font-display); font-size:1.3rem; color:var(--accent-emerald); margin-bottom:8px;">
+            3D Asset Licenses & Scientific Citations
+          </h3>
+          <p style="font-size:0.8rem; line-height:1.6; color:var(--text-muted); margin-bottom:14px;">
+            Zerthiva SIS integrates physically based rendering, verified open agronomic standards, and open-source embedded hardware CAD assets.
+          </p>
+
+          <div style="background:rgba(0,0,0,0.45); padding:12px 14px; border-radius:8px; border:1px solid var(--border-subtle); margin-bottom:12px;">
+            <div style="color:var(--accent-cyan); font-weight:700; font-size:0.75rem; margin-bottom:6px;">1. Poly Haven CC0 PBR Assets</div>
+            <ul style="font-size:0.72rem; line-height:1.6; color:var(--text-muted); list-style:none; padding-left:0;">
+              <li>• <strong style="color:var(--text-main);">Dirt 1k:</strong> Topsoil diffuse, normal, and roughness maps (<a href="https://polyhaven.com/a/dirt" target="_blank" style="color:var(--accent-cyan); text-decoration:none;">Poly Haven CC0</a>).</li>
+              <li>• <strong style="color:var(--text-main);">Brown Mud 02 1k:</strong> Subsoil clay diffuse, normal, and roughness maps (<a href="https://polyhaven.com/a/brown_mud_02" target="_blank" style="color:var(--accent-cyan); text-decoration:none;">Poly Haven CC0</a>).</li>
+              <li>• <strong style="color:var(--text-main);">Autumn Field 1k HDRI:</strong> Physically based outdoor Image-Based Lighting environment (<a href="https://polyhaven.com/a/autumn_field" target="_blank" style="color:var(--accent-cyan); text-decoration:none;">Poly Haven CC0</a>).</li>
+            </ul>
+          </div>
+
+          <div style="background:rgba(0,0,0,0.45); padding:12px 14px; border-radius:8px; border:1px solid var(--border-subtle); margin-bottom:12px;">
+            <div style="color:var(--accent-emerald); font-weight:700; font-size:0.75rem; margin-bottom:6px;">2. Open-Source Hardware 3D Model</div>
+            <div style="font-size:0.72rem; line-height:1.6; color:var(--text-muted);">
+              • <strong style="color:var(--text-main);">Xiao ESP32-S3 CAD Assembly:</strong> Standard 240MHz dual-core module (<a href="https://github.com/mfranzon/circuitiny" target="_blank" style="color:var(--accent-emerald); text-decoration:none;">Circuitiny / mfranzon</a>, MIT License).
+            </div>
+          </div>
+
+          <div style="background:rgba(0,0,0,0.45); padding:12px 14px; border-radius:8px; border:1px solid var(--border-subtle);">
+            <div style="color:var(--accent-amber); font-weight:700; font-size:0.75rem; margin-bottom:6px;">3. Scientific References</div>
+            <ul style="font-size:0.72rem; line-height:1.6; color:var(--text-muted); list-style:none; padding-left:0;">
+              <li>• <strong style="color:var(--text-main);">Maas, E.V. & Hoffman, G.J. (1977):</strong> <em>Crop Salt Tolerance—Evaluation of Existing Data</em>. ASCE J. Irrig. Drain. Div. Threshold 1.70 dS/m, slope 12.0%/dS/m.</li>
+              <li>• <strong style="color:var(--text-main);">FAO Irrigation & Drainage Papers 29 & 56:</strong> Water Quality for Agriculture & Crop Evapotranspiration Guidelines.</li>
+              <li>• <strong style="color:var(--text-main);">US Salinity Laboratory Handbook 60:</strong> Diagnosis and Improvement of Saline and Alkali Soils.</li>
+            </ul>
+          </div>
+        `;
+        modal.classList.add('active');
+      });
+    }
 
     /* =========================================================================
        14. ANIMATION & RENDER LOOP (60 FPS)
