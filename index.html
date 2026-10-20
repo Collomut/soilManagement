@@ -1208,133 +1208,357 @@
     const geologyGroup = new THREE.Group();
     scene.add(geologyGroup);
 
-    const blockW = 3.6;
-    const blockD = 3.6;
+    // Parametric Geological Cutaway Generator for Stratified Pedological Horizons
+    function createStratumBlock(yTop, yBottom, horizonType) {
+      const geom = new THREE.BufferGeometry();
+      const vertices = [];
+      const uvs = [];
+      const colors = [];
+      const indices = [];
 
-    // Helper to sculpt organic fracture relief on cutaway faces
-    function sculptSoilFace(geo, height, isTop = false) {
-      const pos = geo.attributes.position;
-      for (let i = 0; i < pos.count; i++) {
-        const x = pos.getX(i);
-        const y = pos.getY(i);
-        const z = pos.getZ(i);
+      const xMin = -1.75;
+      const xMax = 1.75;
+      const zBack = -1.50;
 
-        // Displace the front cutaway face (z near front boundary)
-        if (z > (blockD / 2) - 0.1) {
-          const fracture = Math.sin(x * 5.2 + y * 4.1) * 0.035 + Math.cos(x * 8.0) * 0.015;
-          pos.setZ(i, z + fracture);
-        }
+      // Natural diagonal cutaway line passing through sensor (-0.55, -0.35) and maize stalk (0.35, 0.20)
+      function getZFront(x) {
+        return 0.533 * x - 0.007;
+      }
 
-        // If top organic layer, sculpt the surface mound & undulations
-        if (isTop && y > 0.04) {
-          const distToPlant = Math.sqrt((x - 0.35) ** 2 + (z - 0.2) ** 2);
-          const mound = Math.max(0, 0.09 * (1.0 - distToPlant / 0.85));
-          pos.setY(i, y + mound + Math.sin(x * 3.5) * Math.cos(z * 3.5) * 0.022);
+      // Pedological micro-relief and fractured structural peds along the exposed cutaway face
+      function getFracture(x, y) {
+        if (horizonType === 'O') {
+          return Math.sin(x * 9.5 + y * 12.0) * 0.022 + Math.cos(x * 20.0) * 0.012;
+        } else if (horizonType === 'A') {
+          return Math.sin(x * 6.5 + y * 7.2) * 0.035 + Math.cos(x * 14.0 - y * 11.0) * 0.018 + Math.sin(x * 26.0 + y * 18.0) * 0.008;
+        } else if (horizonType === 'B') {
+          return Math.sin(x * 4.2 - y * 6.5) * 0.045 + Math.sin(x * 9.5 + y * 8.0) * 0.024 + Math.cos(x * 18.0) * 0.015;
+        } else { // 'C'
+          return Math.sin(x * 3.0 + y * 4.0) * 0.055 + Math.cos(x * 7.5 - y * 5.5) * 0.035 + Math.sin(x * 16.0 + y * 10.0) * 0.018;
         }
       }
-      geo.computeVertexNormals();
+
+      // Surface agricultural terrain micro-furrows and root collar mound
+      function getSurfaceRelief(x, z) {
+        const distToPlant = Math.sqrt((x - 0.35) ** 2 + (z - 0.20) ** 2);
+        const mound = Math.max(0, 0.09 * (1.0 - distToPlant / 0.85));
+        const furrows = Math.sin(z * 6.0) * 0.018 + Math.sin(x * 3.5) * 0.014;
+        return mound + furrows;
+      }
+
+      // Multi-scale organic color variation to eliminate visible texture tiling patterns
+      function getVertexColor(x, y, z) {
+        const band = Math.sin(y * 18.0 + Math.sin(x * 4.0) * 1.5) * 0.06;
+        const patch = (Math.sin(x * 3.2 + z * 2.8) * Math.cos(y * 4.0)) * 0.08;
+        const v = 1.0 + band + patch;
+
+        let r = 1.0, g = 1.0, b = 1.0;
+        if (horizonType === 'O') {
+          r = 0.85 * v; g = 0.88 * v; b = 0.82 * v;
+        } else if (horizonType === 'A') {
+          r = 1.02 * v; g = 0.96 * v; b = 0.90 * v;
+        } else if (horizonType === 'B') {
+          const ironBand = Math.sin(y * 12.0) * 0.08;
+          r = (1.08 + ironBand) * v; g = 0.95 * v; b = 0.85 * v;
+        } else { // 'C'
+          const stoneSpeck = (Math.sin(x * 24.0) * Math.cos(z * 24.0)) * 0.12;
+          r = (0.95 + stoneSpeck) * v; g = (0.95 + stoneSpeck) * v; b = (0.98 + stoneSpeck) * v;
+        }
+        return [Math.max(0.2, Math.min(1.5, r)), Math.max(0.2, Math.min(1.5, g)), Math.max(0.2, Math.min(1.5, b))];
+      }
+
+      function addQuadFace(nu, nv, getPos, getUV, flipTriangles) {
+        const baseIdx = vertices.length / 3;
+        for (let j = 0; j <= nv; j++) {
+          const vParam = j / nv;
+          for (let i = 0; i <= nu; i++) {
+            const uParam = i / nu;
+            const [px, py, pz] = getPos(uParam, vParam);
+            vertices.push(px, py, pz);
+
+            const [uCoord, vCoord] = getUV(uParam, vParam, px, py, pz);
+            uvs.push(uCoord, vCoord);
+
+            const [cr, cg, cb] = getVertexColor(px, py, pz);
+            colors.push(cr, cg, cb);
+          }
+        }
+
+        for (let j = 0; j < nv; j++) {
+          const row1 = baseIdx + j * (nu + 1);
+          const row2 = baseIdx + (j + 1) * (nu + 1);
+          for (let i = 0; i < nu; i++) {
+            if (flipTriangles) {
+              indices.push(row1 + i, row2 + i, row1 + i + 1);
+              indices.push(row1 + i + 1, row2 + i, row2 + i + 1);
+            } else {
+              indices.push(row1 + i, row1 + i + 1, row2 + i);
+              indices.push(row1 + i + 1, row2 + i + 1, row2 + i);
+            }
+          }
+        }
+      }
+
+      // 1. Front Cutaway Face
+      addQuadFace(36, 12, (u, w) => {
+        const px = xMin + u * (xMax - xMin);
+        const py = yBottom + w * (yTop - yBottom) + (w === 1 && horizonType === 'O' ? getSurfaceRelief(px, getZFront(px)) : 0);
+        const pz = getZFront(px) + getFracture(px, py);
+        return [px, py, pz];
+      }, (u, w, px, py, pz) => [px * 1.5, py * 1.5], false);
+
+      // 2. Top Face
+      addQuadFace(36, 20, (u, v) => {
+        const px = xMin + u * (xMax - xMin);
+        const pz = zBack + v * (getZFront(px) - zBack);
+        const py = yTop + (horizonType === 'O' ? getSurfaceRelief(px, pz) : 0);
+        return [px, py, pz];
+      }, (u, v, px, py, pz) => [px * 1.5, pz * 1.5], true);
+
+      // 3. Bottom Face
+      addQuadFace(18, 12, (u, v) => {
+        const px = xMin + u * (xMax - xMin);
+        const pz = zBack + v * (getZFront(px) - zBack);
+        return [px, yBottom, pz];
+      }, (u, v, px, py, pz) => [px * 1.5, pz * 1.5], false);
+
+      // 4. Back Face
+      addQuadFace(20, 8, (u, w) => {
+        const px = xMin + u * (xMax - xMin);
+        const py = yBottom + w * (yTop - yBottom);
+        return [px, py, zBack];
+      }, (u, w, px, py, pz) => [px * 1.5, py * 1.5], true);
+
+      // 5. Left Face
+      addQuadFace(14, 8, (v, w) => {
+        const pz = zBack + v * (getZFront(xMin) - zBack);
+        const py = yBottom + w * (yTop - yBottom);
+        return [xMin, py, pz];
+      }, (v, w, px, py, pz) => [pz * 1.5, py * 1.5], false);
+
+      // 6. Right Face
+      addQuadFace(14, 8, (v, w) => {
+        const pz = zBack + v * (getZFront(xMax) - zBack);
+        const py = yBottom + w * (yTop - yBottom);
+        return [xMax, py, pz];
+      }, (v, w, px, py, pz) => [pz * 1.5, py * 1.5], true);
+
+      geom.setAttribute('position', new THREE.Float32BufferAttribute(vertices, 3));
+      geom.setAttribute('uv', new THREE.Float32BufferAttribute(uvs, 2));
+      geom.setAttribute('color', new THREE.Float32BufferAttribute(colors, 3));
+      geom.setIndex(indices);
+      geom.computeVertexNormals();
+
+      return geom;
     }
 
-    // Horizon O: Organic Mulch & Humus Litter (0 - 4cm)
+    // Helper: Front Cutaway Profile Z calculation for embedded elements
+    function calcCutawayZ(x) {
+      return 0.533 * x - 0.007;
+    }
+
+    // =========================================================================
+    // HORIZON O: Organic Mulch & Humus Litter (0 - 4cm)
+    // =========================================================================
     const horizonOGroup = new THREE.Group();
     geologyGroup.add(horizonOGroup);
     const matHorizonO = new THREE.MeshStandardMaterial({
-      color: 0x2e3d2a,
+      color: 0x1f241a,
       map: texDirtDiff,
       normalMap: texDirtNor,
-      normalScale: new THREE.Vector2(0.85, 0.85),
+      normalScale: new THREE.Vector2(1.1, 1.1),
       roughnessMap: texDirtRough,
-      roughness: 0.94,
-      metalness: 0.02
+      roughness: 0.95,
+      metalness: 0.01,
+      vertexColors: true
     });
-    const geoO = new THREE.BoxGeometry(blockW, 0.16, blockD, 24, 4, 24);
-    sculptSoilFace(geoO, 0.16, true);
+    const geoO = createStratumBlock(0.04, -0.08, 'O');
     const meshO = new THREE.Mesh(geoO, matHorizonO);
-    meshO.position.y = 0;
     meshO.receiveShadow = true;
     meshO.castShadow = true;
-    meshO.userData = { id: 'soil-o', name: 'Horizon O (Organic Mulch)', type: 'GEOLOGY', badge: 'MEASURED' };
+    meshO.userData = { id: 'soil-o', name: 'Horizon O (Organic Mulch & Humus Litter)', type: 'GEOLOGY', badge: 'MEASURED' };
     horizonOGroup.add(meshO);
 
-    // Horizon A: Topsoil Humus Layer (4 - 24cm)
+    // Scattered Surface Organic Mulch & Leaf Litter Fragments
+    const mulchMat = new THREE.MeshStandardMaterial({
+      color: 0x3d3525,
+      roughness: 0.88,
+      side: THREE.DoubleSide
+    });
+    const mulchGeo = new THREE.PlaneGeometry(0.045, 0.022);
+    mulchGeo.rotateX(-Math.PI / 2);
+    const mulchInstanced = new THREE.InstancedMesh(mulchGeo, mulchMat, 36);
+    const dummyMulch = new THREE.Object3D();
+    for (let m = 0; m < 36; m++) {
+      const mx = (Math.random() - 0.4) * 2.2;
+      const mz = -1.3 + Math.random() * (calcCutawayZ(mx) + 1.25);
+      const distToPlant = Math.sqrt((mx - 0.35) ** 2 + (mz - 0.20) ** 2);
+      const my = 0.045 + Math.max(0, 0.09 * (1.0 - distToPlant / 0.85)) + Math.sin(mz * 6.0) * 0.015;
+      dummyMulch.position.set(mx, my, mz);
+      dummyMulch.rotation.set((Math.random() - 0.5) * 0.3, Math.random() * Math.PI, (Math.random() - 0.5) * 0.3);
+      dummyMulch.scale.set(0.7 + Math.random() * 0.7, 1.0, 0.7 + Math.random() * 0.7);
+      dummyMulch.updateMatrix();
+      mulchInstanced.setMatrixAt(m, dummyMulch.matrix);
+    }
+    mulchInstanced.instanceMatrix.needsUpdate = true;
+    mulchInstanced.userData = { id: 'soil-mulch', name: 'Organic Leaf Litter & Mulch Debris', type: 'GEOLOGY', badge: 'MEASURED' };
+    horizonOGroup.add(mulchInstanced);
+
+    // =========================================================================
+    // HORIZON A: Topsoil Humus Layer (4 - 25cm)
+    // =========================================================================
     const horizonAGroup = new THREE.Group();
     geologyGroup.add(horizonAGroup);
     const matHorizonA = new THREE.MeshStandardMaterial({
-      color: 0x3d2919,
+      color: 0x2e1d13,
       map: texDirtDiff,
       normalMap: texDirtNor,
-      normalScale: new THREE.Vector2(1.15, 1.15),
+      normalScale: new THREE.Vector2(1.45, 1.45),
       roughnessMap: texDirtRough,
       roughness: 0.92,
-      metalness: 0.01
+      metalness: 0.02,
+      vertexColors: true
     });
-    const geoA = new THREE.BoxGeometry(blockW, 0.95, blockD, 24, 12, 24);
-    sculptSoilFace(geoA, 0.95);
+    const geoA = createStratumBlock(-0.08, -0.85, 'A');
     const meshA = new THREE.Mesh(geoA, matHorizonA);
-    meshA.position.y = -0.55;
     meshA.receiveShadow = true;
-    meshA.userData = { id: 'soil-a', name: 'Horizon A (Humus Topsoil)', type: 'GEOLOGY', badge: 'MEASURED' };
+    meshA.userData = { id: 'soil-a', name: 'Horizon A (Melanic Topsoil Humus)', type: 'GEOLOGY', badge: 'MEASURED' };
     horizonAGroup.add(meshA);
 
-    // Horizon B: Compacted Clay Subsoil (24 - 55cm)
+    // Embedded Topsoil River Pebbles & Mineral Aggregates in Horizon A
+    const stoneGeoA = new THREE.DodecahedronGeometry(0.032, 1);
+    const stoneMatA = new THREE.MeshStandardMaterial({ color: 0x5e5446, roughness: 0.88 });
+    const stoneInstancedA = new THREE.InstancedMesh(stoneGeoA, stoneMatA, 45);
+    const dummyStoneA = new THREE.Object3D();
+    for (let s = 0; s < 45; s++) {
+      const sx = (Math.random() - 0.5) * 3.1;
+      const sy = -0.12 - Math.random() * 0.68;
+      const sz = calcCutawayZ(sx) + (Math.random() - 0.5) * 0.04;
+      dummyStoneA.position.set(sx, sy, sz);
+      dummyStoneA.scale.set(0.6 + Math.random() * 0.8, 0.4 + Math.random() * 0.6, 0.6 + Math.random() * 0.8);
+      dummyStoneA.rotation.set(Math.random() * Math.PI, Math.random() * Math.PI, 0);
+      dummyStoneA.updateMatrix();
+      stoneInstancedA.setMatrixAt(s, dummyStoneA.matrix);
+    }
+    stoneInstancedA.instanceMatrix.needsUpdate = true;
+    stoneInstancedA.userData = { id: 'soil-stone-a', name: 'Topsoil Granular Aggregate / Mineral Pebble', type: 'GEOLOGY', badge: 'MEASURED' };
+    horizonAGroup.add(stoneInstancedA);
+
+    // Fine Capillary Rootlets protruding from Horizon A Cutaway Face
+    const rootletMat = new THREE.MeshStandardMaterial({ color: 0xded5c2, roughness: 0.38, metalness: 0.02 });
+    for (let r = 0; r < 24; r++) {
+      const rx = (Math.random() - 0.5) * 2.8;
+      const ry = -0.15 - Math.random() * 0.62;
+      const rz = calcCutawayZ(rx);
+      const angle = Math.random() * Math.PI * 2;
+      const rLen = 0.08 + Math.random() * 0.14;
+      const rCurve = new THREE.CatmullRomCurve3([
+        new THREE.Vector3(rx, ry, rz - 0.02),
+        new THREE.Vector3(rx + Math.cos(angle) * (rLen * 0.5), ry - rLen * 0.4, rz + 0.02),
+        new THREE.Vector3(rx + Math.cos(angle) * rLen, ry - rLen * 0.9, rz + (Math.random() - 0.5) * 0.03)
+      ]);
+      const rGeo = new THREE.TubeGeometry(rCurve, 8, 0.0035, 4, false);
+      const rMesh = new THREE.Mesh(rGeo, rootletMat);
+      rMesh.userData = { id: `soil-rootlet-a-${r+1}`, name: 'Rhizosphere Feeder Capillary Rootlet', type: 'BOTANY', badge: 'MEASURED' };
+      horizonAGroup.add(rMesh);
+    }
+
+    // =========================================================================
+    // HORIZON B: Compacted Clay Subsoil (25 - 60cm)
+    // =========================================================================
     const horizonBGroup = new THREE.Group();
     geologyGroup.add(horizonBGroup);
     const matHorizonB = new THREE.MeshStandardMaterial({
-      color: 0x6e4827,
+      color: 0x62391a,
       map: texMudDiff,
       normalMap: texMudNor,
-      normalScale: new THREE.Vector2(1.25, 1.25),
+      normalScale: new THREE.Vector2(1.35, 1.35),
       roughnessMap: texMudRough,
-      roughness: 0.84,
-      metalness: 0.03
+      roughness: 0.85,
+      metalness: 0.03,
+      vertexColors: true
     });
-    const geoB = new THREE.BoxGeometry(blockW, 0.95, blockD, 24, 12, 24);
-    sculptSoilFace(geoB, 0.95);
+    const geoB = createStratumBlock(-0.85, -1.80, 'B');
     const meshB = new THREE.Mesh(geoB, matHorizonB);
-    meshB.position.y = -1.50;
     meshB.receiveShadow = true;
-    meshB.userData = { id: 'soil-b', name: 'Horizon B (Clay Subsoil)', type: 'GEOLOGY', badge: 'MEASURED' };
+    meshB.userData = { id: 'soil-b', name: 'Horizon B (Compacted Clay Subsoil)', type: 'GEOLOGY', badge: 'MEASURED' };
     horizonBGroup.add(meshB);
 
-    // Horizon C: Gravel Drainage & Bedrock Substratum (55cm+)
+    // Clay Clods & Ferruginous Concretions in Horizon B
+    const stoneGeoB = new THREE.DodecahedronGeometry(0.048, 1);
+    const stoneMatB = new THREE.MeshStandardMaterial({ color: 0x734a2c, roughness: 0.82 });
+    const stoneInstancedB = new THREE.InstancedMesh(stoneGeoB, stoneMatB, 35);
+    const dummyStoneB = new THREE.Object3D();
+    for (let s = 0; s < 35; s++) {
+      const sx = (Math.random() - 0.5) * 3.1;
+      const sy = -0.92 - Math.random() * 0.80;
+      const sz = calcCutawayZ(sx) + (Math.random() - 0.5) * 0.04;
+      dummyStoneB.position.set(sx, sy, sz);
+      dummyStoneB.scale.set(0.7 + Math.random() * 0.8, 0.5 + Math.random() * 0.7, 0.6 + Math.random() * 0.8);
+      dummyStoneB.rotation.set(Math.random() * Math.PI, Math.random() * Math.PI, 0);
+      dummyStoneB.updateMatrix();
+      stoneInstancedB.setMatrixAt(s, dummyStoneB.matrix);
+    }
+    stoneInstancedB.instanceMatrix.needsUpdate = true;
+    stoneInstancedB.userData = { id: 'soil-stone-b', name: 'Illuvial Clay Clod / Ferruginous Concretion', type: 'GEOLOGY', badge: 'MEASURED' };
+    horizonBGroup.add(stoneInstancedB);
+
+    // Deep Vertical Seminal Root Cleavage Impressions in Horizon B
+    for (let r = 0; r < 12; r++) {
+      const rx = (Math.random() - 0.5) * 2.2;
+      const ry = -0.95 - Math.random() * 0.75;
+      const rz = calcCutawayZ(rx);
+      const rCurve = new THREE.CatmullRomCurve3([
+        new THREE.Vector3(rx, ry, rz - 0.015),
+        new THREE.Vector3(rx + (Math.random() - 0.5) * 0.04, ry - 0.12, rz + 0.015),
+        new THREE.Vector3(rx + (Math.random() - 0.5) * 0.06, ry - 0.24, rz)
+      ]);
+      const rGeo = new THREE.TubeGeometry(rCurve, 8, 0.005, 4, false);
+      const rMesh = new THREE.Mesh(rGeo, rootletMat);
+      rMesh.userData = { id: `soil-rootlet-b-${r+1}`, name: 'Deep Subsoil Seminal Root Cleavage Axis', type: 'BOTANY', badge: 'MEASURED' };
+      horizonBGroup.add(rMesh);
+    }
+
+    // =========================================================================
+    // HORIZON C: Gravel Drainage & Bedrock Substratum (60cm+)
+    // =========================================================================
     const horizonCGroup = new THREE.Group();
     geologyGroup.add(horizonCGroup);
     const matHorizonC = new THREE.MeshStandardMaterial({
-      color: 0x242826,
+      color: 0x363836,
       map: texMudDiff,
       normalMap: texMudNor,
-      normalScale: new THREE.Vector2(1.5, 1.5),
+      normalScale: new THREE.Vector2(1.65, 1.65),
       roughnessMap: texMudRough,
-      roughness: 0.70,
-      metalness: 0.24
+      roughness: 0.72,
+      metalness: 0.22,
+      vertexColors: true
     });
-    const geoC = new THREE.BoxGeometry(blockW, 0.75, blockD, 24, 10, 24);
-    sculptSoilFace(geoC, 0.75);
+    const geoC = createStratumBlock(-1.80, -2.60, 'C');
     const meshC = new THREE.Mesh(geoC, matHorizonC);
-    meshC.position.y = -2.35;
     meshC.receiveShadow = true;
-    meshC.userData = { id: 'soil-c', name: 'Horizon C (Parent Substratum)', type: 'GEOLOGY', badge: 'MEASURED' };
+    meshC.userData = { id: 'soil-c', name: 'Horizon C (Parent Substratum & Saprolite)', type: 'GEOLOGY', badge: 'MEASURED' };
     horizonCGroup.add(meshC);
 
-    // Embedded 3D Soil Aggregates & Mineral Stones along the cutaway face
-    const stoneGeo = new THREE.DodecahedronGeometry(0.045, 1);
-    const stoneMat = new THREE.MeshStandardMaterial({ color: 0x7a6b58, roughness: 0.85 });
-    const stoneInstanced = new THREE.InstancedMesh(stoneGeo, stoneMat, 55);
-    const dummyObj = new THREE.Object3D();
-    for (let s = 0; s < 55; s++) {
-      const sx = (Math.random() - 0.5) * (blockW - 0.35);
-      const sy = -0.12 - Math.random() * 2.3;
-      const sz = (blockD / 2) - 0.05 + (Math.random() - 0.5) * 0.12;
-      dummyObj.position.set(sx, sy, sz);
-      dummyObj.scale.set(0.6 + Math.random() * 0.9, 0.4 + Math.random() * 0.6, 0.6 + Math.random() * 0.7);
-      dummyObj.rotation.set(Math.random() * Math.PI, Math.random() * Math.PI, 0);
-      dummyObj.updateMatrix();
-      stoneInstanced.setMatrixAt(s, dummyObj.matrix);
+    // Angular Saprolite Rock Clods & Slate Gravel in Horizon C
+    const stoneGeoC = new THREE.DodecahedronGeometry(0.075, 1);
+    const stoneMatC = new THREE.MeshStandardMaterial({ color: 0x4a4c4a, roughness: 0.70, metalness: 0.20 });
+    const stoneInstancedC = new THREE.InstancedMesh(stoneGeoC, stoneMatC, 45);
+    const dummyStoneC = new THREE.Object3D();
+    for (let s = 0; s < 45; s++) {
+      const sx = (Math.random() - 0.5) * 3.1;
+      const sy = -1.88 - Math.random() * 0.65;
+      const sz = calcCutawayZ(sx) + (Math.random() - 0.5) * 0.05;
+      dummyStoneC.position.set(sx, sy, sz);
+      dummyStoneC.scale.set(0.7 + Math.random() * 1.1, 0.5 + Math.random() * 0.9, 0.7 + Math.random() * 1.0);
+      dummyStoneC.rotation.set(Math.random() * Math.PI, Math.random() * Math.PI, 0);
+      dummyStoneC.updateMatrix();
+      stoneInstancedC.setMatrixAt(s, dummyStoneC.matrix);
     }
-    stoneInstanced.instanceMatrix.needsUpdate = true;
-    geologyGroup.add(stoneInstanced);
-
-    /* =========================================================================
+    stoneInstancedC.instanceMatrix.needsUpdate = true;
+    stoneInstancedC.userData = { id: 'soil-stone-c', name: 'Saprolite Weathered Bedrock / Slate Gravel', type: 'GEOLOGY', badge: 'MEASURED' };
+    horizonCGroup.add(stoneInstancedC);
+/* =========================================================================
        5. BOTANICAL MAIZE ORGANISM (ZEA MAYS L.) WITH DETAILED FIBROUS ARCHITECTURE
        ========================================================================= */
     const plantGroup = new THREE.Group();
@@ -2180,9 +2404,24 @@
       } else if (data.id?.includes('ear')) {
         desc = 'Developing maize ear enclosed in protective husks; golden silk styles receive pollen from the apical tassel.';
         meta = 'Physiological Stage: R1 Silking / R2 Blister | Grains: Active filling';
-      } else if (data.id?.includes('soil')) {
-        desc = 'Stratified pedological soil horizon regulating water retention, bulk density, and nutrient diffusion.';
-        meta = 'Horizon Porosity: 46% | Clay content: 28% | Field Cap: 32% VWC';
+      } else if (data.id === 'soil-o' || data.id?.includes('mulch')) {
+        desc = 'Horizon O: Organic mulch & decomposed surface litter (0–4cm depth). High carbon fraction (>15%), active microbial respiration, humification zone, and natural evaporation barrier.';
+        meta = 'Organic Carbon: >15% | Humification: Active | Bulk Density: 0.95 g/cm³';
+      } else if (data.id === 'soil-a') {
+        desc = 'Horizon A: Melanic agricultural topsoil humus (4–25cm depth). Rich in humic acids, fine granular crumb structure, high CEC, and 46% pore space supporting primary active nutrient mass flow.';
+        meta = 'Porosity: 46% | Clay: 22% | Silt: 48% | Sand: 30% | Field Cap: 32% VWC';
+      } else if (data.id === 'soil-b') {
+        desc = 'Horizon B: Illuvial argillic compacted clay subsoil (25–60cm depth). Dense subangular blocky to prismatic ped structure formed by illuviated silicate clays and iron oxides; high moisture holding capacity.';
+        meta = 'Bulk Density: 1.45 g/cm³ | Hydraulic Cond: 2.4 mm/hr | Clay: 38%';
+      } else if (data.id === 'soil-c') {
+        desc = 'Horizon C: Saprolite substratum and weathered parent rock fragments (60cm+ depth). Low organic matter (<0.3%), high gravel fraction, unweathered mineral bedrock providing deep macro-drainage.';
+        meta = 'Organic Matter: <0.3% | Permeability: High | Drainage Matrix';
+      } else if (data.id?.includes('stone')) {
+        desc = 'Pedological mineral aggregate / quartz-silica pebble embedded in the soil matrix, providing micro-tortuosity to soil pore water pathways.';
+        meta = 'Mineralogy: Quartz & Silicates | Tortuosity Factor: 1.42';
+      } else if (data.id?.includes('rootlet')) {
+        desc = 'High-surface-area mycorrhizal capillary rootlet penetrating soil macropores to intercept diffused phosphate and nitrate ions.';
+        meta = 'Diffusion Depletion Zone: ~1.5mm | Ion Interception: Active';
       } else if (data.id?.includes('ec-ring')) {
         desc = 'Machined 316L stainless steel annular electrode ring with 10 kHz bipolar excitation avoiding electrolysis.';
         meta = 'Analog EC (GPIO34 ADC1_CH6) | EC₂₅ = EC_T / [1 + 0.0191(T-25)]';
