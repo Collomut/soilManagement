@@ -5628,15 +5628,15 @@
         if (simState.yieldLoss > 0) {
           elPen.innerText = `-${simState.yieldLoss.toFixed(1)}% LOSS`;
           elPen.style.color = 'var(--accent-crimson)';
-          sentryMat.color.setHex(0xff2a5f);
-          sentryMat.emissive.setHex(0xff2a5f);
-          sentryPointLight.color.setHex(0xff2a5f);
+          if (sentryMat?.color?.setHex) sentryMat.color.setHex(0xff2a5f);
+          if (sentryMat?.emissive?.setHex) sentryMat.emissive.setHex(0xff2a5f);
+          if (sentryPointLight?.color?.setHex) sentryPointLight.color.setHex(0xff2a5f);
         } else {
           elPen.innerText = '0.0% LOSS';
           elPen.style.color = 'var(--accent-emerald)';
-          sentryMat.color.setHex(0x00ff87);
-          sentryMat.emissive.setHex(0x00ff87);
-          sentryPointLight.color.setHex(0x00ff87);
+          if (sentryMat?.color?.setHex) sentryMat.color.setHex(0x00ff87);
+          if (sentryMat?.emissive?.setHex) sentryMat.emissive.setHex(0x00ff87);
+          if (sentryPointLight?.color?.setHex) sentryPointLight.color.setHex(0x00ff87);
         }
       }
 
@@ -7041,6 +7041,7 @@ document.getElementById('label-chapter-tag').innerText = ch.tag;
         truthInLabeling: 'Standard ASTM D2000 nitrile elastomer specification.'
       },
       'esp32-mcu': {
+        category: 'Logic & Processing',
         id: 'esp32-mcu',
         name: 'Seeed Xiao ESP32-S3 MCU Board',
         subsystem: 'core',
@@ -7067,6 +7068,7 @@ document.getElementById('label-chapter-tag').innerText = ch.tag;
         truthInLabeling: 'Electrical specifications bench-verified from Espressif ESP32-S3 technical reference manual and Nordic PPK2 profiling.'
       },
       'esp32-antenna': {
+        category: 'RF & Wireless',
         id: 'esp32-antenna',
         name: 'Meandered 2.4GHz Wi-Fi/BLE PCB Antenna',
         subsystem: 'core',
@@ -7088,6 +7090,7 @@ document.getElementById('label-chapter-tag').innerText = ch.tag;
         truthInLabeling: 'Antenna return loss S11 characterized on Seeed Studio evaluation board.'
       },
       'esp32-headers': {
+        category: 'Interconnect & Pinout',
         id: 'esp32-headers',
         name: 'Dual 7-Pin 2.54mm Breakout Headers',
         subsystem: 'core',
@@ -7109,6 +7112,7 @@ document.getElementById('label-chapter-tag').innerText = ch.tag;
         truthInLabeling: 'Standard industrial gold-plated phosphor bronze contact specifications.'
       },
       'mod-sim800l': {
+        category: 'Cellular Telemetry',
         id: 'mod-sim800l',
         name: 'SIM800L GSM/GPRS Cellular Uplink Modem',
         subsystem: 'comms',
@@ -7132,6 +7136,7 @@ document.getElementById('label-chapter-tag').innerText = ch.tag;
         truthInLabeling: 'SIMCom SIM800L hardware design guide specifications; 1000µF low-ESR buffer capacitor mandatory to prevent brownout reset during GSM bursts.'
       },
       'sim800-antenna': {
+        category: 'RF Cellular',
         id: 'sim800-antenna',
         name: 'Helical Coiled Gold Spring Antenna',
         subsystem: 'comms',
@@ -7152,6 +7157,7 @@ document.getElementById('label-chapter-tag').innerText = ch.tag;
         truthInLabeling: 'Resonance tuning and VSWR measured on vector network analyzer (VNA) inside ASA chassis.'
       },
       'mod-sdcard': {
+        category: 'Non-Volatile Storage',
         id: 'mod-sdcard',
         name: 'MicroSD SPI Telemetry Logger Shield',
         subsystem: 'comms',
@@ -7175,6 +7181,7 @@ document.getElementById('label-chapter-tag').innerText = ch.tag;
         truthInLabeling: 'FAT32 SPI driver benchmarks verified on MicroPython firmware builds.'
       },
       'cable-gland': {
+        category: 'Enclosure Seal',
         id: 'cable-gland',
         name: 'PG7 IP67 Liquid-Tight Cable Compression Gland',
         subsystem: 'enclosure',
@@ -7195,6 +7202,7 @@ document.getElementById('label-chapter-tag').innerText = ch.tag;
         truthInLabeling: 'Certified DIN 40430 standard component rating.'
       },
       'jst-header': {
+        category: 'Power Connector',
         id: 'jst-header',
         name: 'JST-XH 5-Pin Latched Sensor Disconnect Header',
         subsystem: 'enclosure',
@@ -7215,6 +7223,7 @@ document.getElementById('label-chapter-tag').innerText = ch.tag;
         truthInLabeling: 'JST XH standard technical specification.'
       },
       'wire-harness': {
+        category: 'Signal Harness',
         id: 'wire-harness',
         name: '5-Core Silicone Sensor Wire Harness',
         subsystem: 'enclosure',
@@ -7239,6 +7248,7 @@ document.getElementById('label-chapter-tag').innerText = ch.tag;
         truthInLabeling: 'Loop resistance and inter-conductor capacitance (<45 pF/m) bench-verified.'
       },
       'probe-shaft': {
+        category: 'Mechanical Housing',
         id: 'probe-shaft',
         name: 'Subsurface Probe Stem (32cm Depth with Laser Marks)',
         subsystem: 'sensing',
@@ -7260,6 +7270,7 @@ document.getElementById('label-chapter-tag').innerText = ch.tag;
         truthInLabeling: 'Physical dimension and soil insertion durability validated in silt loam and compacted clay test plots.'
       },
       'ec-ring-upper': {
+        category: 'EC Electrode',
         id: 'ec-ring-upper',
         name: '316L Stainless Annular EC Electrode (Upper 15cm)',
         subsystem: 'sensing',
@@ -7281,6 +7292,7 @@ document.getElementById('label-chapter-tag').innerText = ch.tag;
         truthInLabeling: 'Cell constant calibrated in standard KCl solutions (1.413 mS/cm and 12.88 mS/cm at 25°C).'
       },
       'ec-ring-lower': {
+        category: 'EC Electrode',
         id: 'ec-ring-lower',
         name: '316L Stainless Annular EC Electrode (Lower 25cm)',
         subsystem: 'sensing',
@@ -7301,6 +7313,7 @@ document.getElementById('label-chapter-tag').innerText = ch.tag;
         truthInLabeling: 'Rhoades soil salinity model parameters verified against USDA Agricultural Handbook 60 standard reference procedures.'
       },
       'vwc-blade': {
+        category: 'Dielectric Blade',
         id: 'vwc-blade',
         name: 'Capacitive Soil Moisture Sensor v1.2 Blade',
         subsystem: 'sensing',
@@ -7322,6 +7335,7 @@ document.getElementById('label-chapter-tag').innerText = ch.tag;
         truthInLabeling: 'Dual-point calibration curve (V_dry = 2.82V, V_sat = 1.24V) established on physical hardware in oven-dried soil and distilled water.'
       },
       'temp-tip': {
+        category: 'Thermal Sensing',
         id: 'temp-tip',
         name: 'Maxim DS18B20 1-Wire Thermal Capsule Tip',
         subsystem: 'sensing',
@@ -7554,10 +7568,11 @@ document.getElementById('label-chapter-tag').innerText = ch.tag;
         const data = HARDWARE_COMPONENTS_DATA[id];
         if (!data) return;
         const matches = !query ||
-          data.name.toLowerCase().includes(query) ||
-          data.category.toLowerCase().includes(query) ||
-          data.plainLanguage.toLowerCase().includes(query) ||
-          data.ioPaths.some(p => p.pin.toLowerCase().includes(query) || p.desc.toLowerCase().includes(query));
+          (data.name && data.name.toLowerCase().includes(query)) ||
+          (data.category && data.category.toLowerCase().includes(query)) ||
+          (data.subsystemLabel && data.subsystemLabel.toLowerCase().includes(query)) ||
+          (data.plainLanguage && data.plainLanguage.toLowerCase().includes(query)) ||
+          (data.ioPaths && data.ioPaths.some(p => (p.pin && p.pin.toLowerCase().includes(query)) || (p.desc && p.desc.toLowerCase().includes(query))));
         el.style.display = matches ? 'flex' : 'none';
       });
     }
@@ -7582,7 +7597,7 @@ document.getElementById('label-chapter-tag').innerText = ch.tag;
         minDist: controls.minDistance,
         maxDist: controls.maxDistance,
         maxPolar: controls.maxPolarAngle,
-        chapter: activeChapterIndex,
+        chapter: (typeof simState !== 'undefined' ? simState.currentChapter : 0),
         geologyVis: geologyGroup.visible,
         plantVis: plantGroup.visible,
         hydroVis: hydrologyGroup.visible
@@ -7898,21 +7913,36 @@ document.getElementById('label-chapter-tag').innerText = ch.tag;
 
     // Render Component Technical Dossier Panel
     function renderLabDossier(data) {
-      document.getElementById('dossier-category').innerText = `${data.subsystemLabel.toUpperCase()} // ${data.category.toUpperCase()}`;
-      document.getElementById('dossier-title').innerText = data.name;
-      document.getElementById('dossier-badge').innerText = data.badge;
+      if (!data) return;
+      const subLabel = data.subsystemLabel || (data.subsystem ? data.subsystem.toUpperCase() : 'SUBSYSTEM');
+      const catLabel = data.category || (data.subsystem ? data.subsystem.toUpperCase() : 'CORE');
+      const catElem = document.getElementById('dossier-category');
+      if (catElem) catElem.innerText = `${subLabel.toUpperCase()} // ${catLabel.toUpperCase()}`;
 
-      document.getElementById('dossier-plain-lang').innerText = data.plainLanguage;
-      document.getElementById('dossier-zerthiva-role').innerText = data.zerthivaRole;
-      document.getElementById('dossier-truth-text').innerText = data.truthInLabeling;
+      const titleElem = document.getElementById('dossier-title');
+      if (titleElem) titleElem.innerText = data.name || 'Component';
+
+      const badgeElem = document.getElementById('dossier-badge');
+      if (badgeElem) badgeElem.innerText = data.badge || 'VERIFIED';
+
+      const plainElem = document.getElementById('dossier-plain-lang');
+      if (plainElem) plainElem.innerText = data.plainLanguage || '';
+
+      const roleElem = document.getElementById('dossier-zerthiva-role');
+      if (roleElem) roleElem.innerText = data.zerthivaRole || '';
+
+      const truthElem = document.getElementById('dossier-truth-text');
+      if (truthElem) truthElem.innerText = data.truthInLabeling || '';
 
       // Populate I/O Table
       const ioTable = document.getElementById('dossier-io-table');
       if (ioTable) {
         let html = '<tr><th>Pin / Line</th><th>Type</th><th>Protocol / Description</th></tr>';
-        data.ioPaths.forEach(p => {
-          html += `<tr><td style="color:#fff; font-weight:700;">${p.pin}</td><td style="color:var(--accent-amber);">${p.type}</td><td style="color:var(--text-muted);">${p.desc}</td></tr>`;
-        });
+        if (Array.isArray(data.ioPaths)) {
+          data.ioPaths.forEach(p => {
+            html += `<tr><td style="color:#fff; font-weight:700;">${p.pin || ''}</td><td style="color:var(--accent-amber);">${p.type || ''}</td><td style="color:var(--text-muted);">${p.desc || ''}</td></tr>`;
+          });
+        }
         ioTable.innerHTML = html;
       }
 
@@ -7920,9 +7950,11 @@ document.getElementById('label-chapter-tag').innerText = ch.tag;
       const specsGrid = document.getElementById('dossier-specs-grid');
       if (specsGrid) {
         let html = '';
-        data.specs.forEach(s => {
-          html += `<div class="spec-item"><div class="spec-label">${s.label}</div><div class="spec-value">${s.val}</div></div>`;
-        });
+        if (Array.isArray(data.specs)) {
+          data.specs.forEach(s => {
+            html += `<div class="spec-item"><div class="spec-label">${s.label || ''}</div><div class="spec-value">${s.val || ''}</div></div>`;
+          });
+        }
         specsGrid.innerHTML = html;
       }
     }
@@ -8780,15 +8812,19 @@ document.getElementById('label-chapter-tag').innerText = ch.tag;
         haloOpacity = 0.60;
       }
 
-      haloUpperMat.color.setHex(haloColor);
-      haloUpperMat.emissive.setHex(haloColor);
-      haloUpperMat.emissiveIntensity = haloIntensity;
-      haloUpperMat.opacity = haloOpacity;
+      if (haloUpperMat?.color?.setHex) haloUpperMat.color.setHex(haloColor);
+      if (haloUpperMat?.emissive?.setHex) haloUpperMat.emissive.setHex(haloColor);
+      if (haloUpperMat) {
+        haloUpperMat.emissiveIntensity = haloIntensity;
+        haloUpperMat.opacity = haloOpacity;
+      }
 
-      haloLowerMat.color.setHex(haloColor);
-      haloLowerMat.emissive.setHex(haloColor);
-      haloLowerMat.emissiveIntensity = haloIntensity;
-      haloLowerMat.opacity = haloOpacity;
+      if (haloLowerMat?.color?.setHex) haloLowerMat.color.setHex(haloColor);
+      if (haloLowerMat?.emissive?.setHex) haloLowerMat.emissive.setHex(haloColor);
+      if (haloLowerMat) {
+        haloLowerMat.emissiveIntensity = haloIntensity;
+        haloLowerMat.opacity = haloOpacity;
+      }
     }
 
     // 2. Comprehensive Subsurface Scientific Database
@@ -10735,6 +10771,17 @@ document.getElementById('label-chapter-tag').innerText = ch.tag;
     initStreamlinedUI();
     initSubsurfaceExplorer();
     initDeviceLaboratory();
+    window.enterDeviceLaboratory = enterDeviceLaboratory;
+    window.leaveDeviceLaboratory = leaveDeviceLaboratory;
+    window.enterSubsurfaceExplorer = enterSubsurfaceExplorer;
+    window.leaveSubsurfaceExplorer = leaveSubsurfaceExplorer;
+    window.enterMonitoringStation = enterMonitoringStation;
+    window.leaveMonitoringStation = leaveMonitoringStation;
+    window.labState = labState;
+    window.subsurfaceState = subsurfaceState;
+    window.walkState = walkState;
+    window.simState = simState;
+
     initWalkMode();
 
     // Start with the opening cinematic sweep
