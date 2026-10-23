@@ -1609,6 +1609,425 @@
       box-shadow: 0 14px 40px rgba(0,0,0,0.65);
     }
 
+
+    /* =========================================================================
+       PHASE 4: AUTONOMOUS MONITORING STATION & SCENARIO LAB
+       ========================================================================= */
+    .monitoring-station-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      z-index: 52;
+      pointer-events: none;
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.35s cubic-bezier(0.16, 1, 0.3, 1), visibility 0.35s;
+    }
+    .monitoring-station-overlay.active {
+      opacity: 1;
+      visibility: visible;
+      pointer-events: auto;
+    }
+
+    /* Station Top Bar */
+    .station-top-bar {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 56px;
+      background: var(--bg-panel-elevated);
+      backdrop-filter: blur(28px);
+      -webkit-backdrop-filter: blur(28px);
+      border-bottom: 1px solid var(--border-subtle);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 20px;
+      pointer-events: auto;
+      z-index: 55;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.5);
+    }
+
+    .st-bar-left, .st-bar-center, .st-bar-right {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .btn-leave-station {
+      background: rgba(56, 189, 248, 0.15) !important;
+      border-color: #38bdf8 !important;
+      color: #fff !important;
+      font-weight: 600;
+    }
+    .btn-leave-station:hover {
+      background: rgba(56, 189, 248, 0.28) !important;
+      box-shadow: 0 0 15px rgba(56, 189, 248, 0.35);
+    }
+
+    .station-brand-badge {
+      display: flex;
+      flex-direction: column;
+      border-left: 1px solid var(--border-subtle);
+      padding-left: 14px;
+    }
+    .st-brand-title {
+      font-family: var(--font-display);
+      font-size: 0.8rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      color: #fff;
+    }
+    .st-brand-sub {
+      font-family: var(--font-mono);
+      font-size: 0.58rem;
+      color: #38bdf8;
+      letter-spacing: 0.05em;
+    }
+
+    .st-status-chip {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      background: rgba(0,0,0,0.45);
+      border: 1px solid var(--border-subtle);
+      padding: 5px 10px;
+      border-radius: 999px;
+      font-family: var(--font-mono);
+      font-size: 0.62rem;
+      color: var(--text-muted);
+    }
+    .st-status-chip .pulse-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: var(--accent-emerald);
+      box-shadow: 0 0 8px var(--accent-emerald);
+      animation: pulse-dot 1.8s infinite;
+    }
+    .st-status-chip.warning .pulse-dot {
+      background: var(--accent-amber);
+      box-shadow: 0 0 8px var(--accent-amber);
+    }
+    .st-status-chip.critical .pulse-dot {
+      background: var(--accent-crimson);
+      box-shadow: 0 0 8px var(--accent-crimson);
+    }
+
+    /* Floating Scenario Selector Bar */
+    .station-scenario-bar {
+      position: absolute;
+      top: 68px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      background: var(--bg-panel-elevated);
+      backdrop-filter: blur(24px);
+      -webkit-backdrop-filter: blur(24px);
+      border: 1px solid var(--border-accent);
+      border-radius: 999px;
+      padding: 5px 12px;
+      pointer-events: auto;
+      z-index: 53;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.6);
+      max-width: 90vw;
+      overflow-x: auto;
+    }
+    .scenario-pill {
+      background: transparent;
+      border: 1px solid transparent;
+      color: var(--text-muted);
+      padding: 5px 12px;
+      border-radius: 999px;
+      font-family: var(--font-mono);
+      font-size: 0.64rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      white-space: nowrap;
+      transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .scenario-pill:hover {
+      color: #fff;
+      background: rgba(255,255,255,0.06);
+    }
+    .scenario-pill.active {
+      background: rgba(56, 189, 248, 0.16);
+      border-color: #38bdf8;
+      color: #fff;
+      font-weight: 600;
+      box-shadow: 0 0 14px rgba(56, 189, 248, 0.3);
+    }
+    .scenario-pill.active.pill-saline {
+      background: rgba(255, 42, 95, 0.18);
+      border-color: var(--accent-crimson);
+      box-shadow: 0 0 14px rgba(255, 42, 95, 0.35);
+    }
+    .scenario-pill.active.pill-drought {
+      background: rgba(255, 184, 0, 0.18);
+      border-color: var(--accent-amber);
+      box-shadow: 0 0 14px rgba(255, 184, 0, 0.35);
+    }
+
+    /* Left Telemetry Panel */
+    .st-panel-left {
+      position: absolute;
+      top: 122px;
+      bottom: 160px;
+      left: 20px;
+      width: 320px;
+      background: var(--bg-panel-elevated);
+      backdrop-filter: blur(28px);
+      -webkit-backdrop-filter: blur(28px);
+      border: 1px solid var(--border-subtle);
+      border-radius: 12px;
+      pointer-events: auto;
+      z-index: 53;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      box-shadow: 0 16px 40px rgba(0,0,0,0.55);
+    }
+
+    .st-tele-scroll {
+      flex: 1;
+      overflow-y: auto;
+      padding: 14px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .st-card {
+      background: rgba(0,0,0,0.35);
+      border: 1px solid var(--border-subtle);
+      border-radius: 8px;
+      padding: 10px 12px;
+      transition: border-color 0.2s;
+    }
+    .st-card:hover {
+      border-color: var(--border-accent);
+    }
+    .st-card-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 4px;
+    }
+    .st-card-name {
+      font-family: var(--font-mono);
+      font-size: 0.62rem;
+      color: var(--text-muted);
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+    }
+    .st-card-badge {
+      font-family: var(--font-mono);
+      font-size: 0.55rem;
+      padding: 2px 6px;
+      border-radius: 4px;
+      background: rgba(255,255,255,0.06);
+      color: var(--text-dim);
+    }
+    .st-val-row {
+      display: flex;
+      align-items: baseline;
+      gap: 6px;
+      margin-top: 2px;
+    }
+    .st-val-num {
+      font-family: var(--font-mono);
+      font-size: 1.45rem;
+      font-weight: 700;
+      color: #fff;
+    }
+    .st-val-unit {
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      color: var(--text-muted);
+    }
+    .st-gauge-bar {
+      height: 4px;
+      background: rgba(255,255,255,0.08);
+      border-radius: 2px;
+      margin-top: 8px;
+      overflow: hidden;
+    }
+    .st-gauge-fill {
+      height: 100%;
+      background: #38bdf8;
+      border-radius: 2px;
+      width: 50%;
+      transition: width 0.4s ease, background 0.4s ease;
+    }
+    .st-card-subtext {
+      font-family: var(--font-mono);
+      font-size: 0.58rem;
+      color: var(--text-dim);
+      margin-top: 6px;
+      line-height: 1.35;
+    }
+
+    /* Right Intelligence Briefing Panel */
+    .st-panel-right {
+      position: absolute;
+      top: 122px;
+      bottom: 160px;
+      right: 20px;
+      width: 380px;
+      background: var(--bg-panel-elevated);
+      backdrop-filter: blur(28px);
+      -webkit-backdrop-filter: blur(28px);
+      border: 1px solid var(--border-subtle);
+      border-radius: 12px;
+      pointer-events: auto;
+      z-index: 53;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      box-shadow: 0 16px 40px rgba(0,0,0,0.55);
+    }
+
+    .st-briefing-scroll {
+      flex: 1;
+      overflow-y: auto;
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .briefing-block {
+      background: rgba(0,0,0,0.32);
+      border-left: 2px solid #38bdf8;
+      padding: 10px 12px;
+      border-radius: 0 6px 6px 0;
+    }
+    .briefing-block.alert-warn {
+      border-left-color: var(--accent-amber);
+    }
+    .briefing-block.alert-crit {
+      border-left-color: var(--accent-crimson);
+    }
+    .briefing-title {
+      font-family: var(--font-mono);
+      font-size: 0.62rem;
+      font-weight: 700;
+      color: #38bdf8;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      margin-bottom: 4px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .briefing-block.alert-warn .briefing-title { color: var(--accent-amber); }
+    .briefing-block.alert-crit .briefing-title { color: var(--accent-crimson); }
+    .briefing-p {
+      font-size: 0.74rem;
+      line-height: 1.5;
+      color: var(--text-muted);
+      margin: 0;
+    }
+
+    .equation-card {
+      background: rgba(0,0,0,0.5);
+      border: 1px solid var(--border-subtle);
+      border-radius: 6px;
+      padding: 10px;
+      font-family: var(--font-mono);
+      font-size: 0.68rem;
+      color: var(--accent-cyan);
+      text-align: center;
+      line-height: 1.4;
+    }
+
+    /* Bottom Timeline Drawer */
+    .st-timeline-drawer {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 148px;
+      background: var(--bg-panel-elevated);
+      backdrop-filter: blur(28px);
+      -webkit-backdrop-filter: blur(28px);
+      border-top: 1px solid var(--border-subtle);
+      pointer-events: auto;
+      z-index: 54;
+      display: flex;
+      flex-direction: column;
+      padding: 8px 20px 12px 20px;
+      box-shadow: 0 -8px 30px rgba(0,0,0,0.6);
+    }
+
+    .st-drawer-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 6px;
+    }
+    .st-drawer-title-group {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .st-drawer-title {
+      font-family: var(--font-mono);
+      font-size: 0.68rem;
+      font-weight: 700;
+      color: #fff;
+      letter-spacing: 0.05em;
+    }
+
+    .st-playback-group {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .btn-play-ctrl {
+      background: rgba(255,255,255,0.06);
+      border: 1px solid var(--border-subtle);
+      color: #fff;
+      padding: 3px 8px;
+      border-radius: 4px;
+      font-family: var(--font-mono);
+      font-size: 0.62rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      transition: all 0.2s;
+    }
+    .btn-play-ctrl:hover {
+      background: rgba(255,255,255,0.14);
+      border-color: #38bdf8;
+    }
+    .btn-play-ctrl.active {
+      background: rgba(56,189,248,0.22);
+      border-color: #38bdf8;
+      color: #38bdf8;
+    }
+
+    .st-chart-wrapper {
+      position: relative;
+      flex: 1;
+      width: 100%;
+      height: 90px;
+    }
+    #station-chart-canvas {
+      width: 100%;
+      height: 100%;
+      display: block;
+      cursor: crosshair;
+    }
+
   </style>
 </head>
 <body>
@@ -1654,6 +2073,16 @@
       <!-- First-Person Field Exploration Walk Mode -->
       <button class="btn-pill" id="btn-toggle-walk" title="Toggle First-Person Field Walk Mode (Shortcut: [V] or [C])">
         <i data-lucide="footprints" id="icon-walk-mode" style="width: 13px; height: 13px; color: var(--accent-emerald);"></i> Walk Mode
+      </button>
+
+      <!-- Subterranean Underground Explorer -->
+      <button class="btn-pill" id="btn-enter-underground" title="Open Subterranean Underground Explorer & Rhizosphere">
+        <i data-lucide="layers" style="width: 13px; height: 13px; color: var(--accent-cyan);"></i> Underground
+      </button>
+
+      <!-- Autonomous Monitoring Station & Scenario Lab -->
+      <button class="btn-pill" id="btn-enter-station" title="Open Autonomous Monitoring Station & Scenario Lab">
+        <i data-lucide="activity" style="width: 13px; height: 13px; color: #38bdf8;"></i> Station
       </button>
 
       <!-- Device Engineering Laboratory Mode -->
@@ -2215,6 +2644,241 @@
           <span class="chip-color" style="background:#f97316;"></span>
           <span class="chip-label">RF Antennas</span>
         </div>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- PHASE 4: AUTONOMOUS MONITORING STATION & SCENARIO LAB OVERLAY -->
+  <div id="monitoring-station-overlay" class="monitoring-station-overlay">
+    <!-- Top Navigation Bar -->
+    <header class="station-top-bar">
+      <div class="st-bar-left">
+        <button class="btn-pill btn-leave-station" id="btn-leave-station" title="Return to Field Exploration">
+          <i data-lucide="arrow-left" style="width:14px; height:14px;"></i> Return to Field
+        </button>
+        <div class="station-brand-badge">
+          <span class="st-brand-title">AUTONOMOUS MONITORING STATION</span>
+          <span class="st-brand-sub">SCENARIO LAB & DECISION ENGINE</span>
+        </div>
+      </div>
+
+      <div class="st-bar-center">
+        <div class="st-status-chip" id="chip-st-conn">
+          <span class="pulse-dot"></span>
+          <span id="st-conn-label">ONLINE: LoRaWAN 868MHz (SF7 / RSSI -68dBm)</span>
+        </div>
+        <div class="st-status-chip">
+          <i data-lucide="clock" style="width:11px; height:11px; color:#38bdf8;"></i>
+          <span id="st-freshness-label">LAST BURST: 3.2s AGO (10s DEMO RATE)</span>
+        </div>
+      </div>
+
+      <div class="st-bar-right">
+        <span class="badge-evidence" id="st-badge-classification" style="background:rgba(56,189,248,0.15); border-color:#38bdf8; color:#38bdf8;">
+          SIMULATED BENCHMARK
+        </span>
+        <button class="btn-pill" id="btn-st-reset-baseline" title="Restore Nominal Field Capacity Baseline">
+          <i data-lucide="rotate-ccw" style="width:13px; height:13px;"></i> Reset Baseline
+        </button>
+      </div>
+    </header>
+
+    <!-- Floating Scenario Selector Bar -->
+    <div class="station-scenario-bar" id="station-scenario-bar">
+      <button class="scenario-pill active" data-scenario="optimal" id="pill-sc-optimal">
+        <i data-lucide="check-circle" style="width:12px; height:12px; color:var(--accent-emerald);"></i> 1. Field Capacity
+      </button>
+      <button class="scenario-pill pill-drought" data-scenario="drought" id="pill-sc-drought">
+        <i data-lucide="sun" style="width:12px; height:12px; color:var(--accent-amber);"></i> 2. Drought Deficit
+      </button>
+      <button class="scenario-pill" data-scenario="saturation" id="pill-sc-saturation">
+        <i data-lucide="droplets" style="width:12px; height:12px; color:#38bdf8;"></i> 3. Waterlogging
+      </button>
+      <button class="scenario-pill pill-saline" data-scenario="lockout" id="pill-sc-lockout">
+        <i data-lucide="alert-triangle" style="width:12px; height:12px; color:var(--accent-crimson);"></i> 4. Saline Lockout
+      </button>
+      <button class="scenario-pill" data-scenario="disconnect" id="pill-sc-disconnect">
+        <i data-lucide="wifi-off" style="width:12px; height:12px; color:#94a3b8;"></i> 5. Sensor Fault
+      </button>
+      <button class="scenario-pill" data-scenario="flush" id="pill-sc-flush" style="border-color:rgba(56,189,248,0.4);">
+        <i data-lucide="play" style="width:12px; height:12px; color:#38bdf8;"></i> 6. Irrigation Flush Replay
+      </button>
+    </div>
+
+    <!-- Left Panel: Live Sensor Telemetry Suite -->
+    <aside class="st-panel-left" id="st-panel-left">
+      <div class="lab-panel-header">
+        <div>
+          <div class="lab-panel-subtitle">LIVE TELEMETRY STREAM</div>
+          <h3 class="lab-panel-title">Sensor Metrics</h3>
+        </div>
+        <span class="badge-evidence" id="st-tele-status-tag">NOMINAL</span>
+      </div>
+
+      <div class="st-tele-scroll">
+        <!-- VWC Moisture -->
+        <div class="st-card">
+          <div class="st-card-head">
+            <span class="st-card-name">Moisture θ (VWC)</span>
+            <span class="st-card-badge">TLC555 1.5MHz</span>
+          </div>
+          <div class="st-val-row">
+            <span class="st-val-num" id="st-val-moist">31.8</span>
+            <span class="st-val-unit">vol %</span>
+          </div>
+          <div class="st-gauge-bar">
+            <div class="st-gauge-fill" id="st-gauge-moist" style="width:63%; background:#38bdf8;"></div>
+          </div>
+          <div class="st-card-subtext" id="st-sub-moist">Optimal Field Capacity (RAW). Capillary flux active.</div>
+        </div>
+
+        <!-- Soil ECe -->
+        <div class="st-card">
+          <div class="st-card-head">
+            <span class="st-card-name">Pore Salinity EC₂₅</span>
+            <span class="st-card-badge">Dual 316L Ring</span>
+          </div>
+          <div class="st-val-row">
+            <span class="st-val-num" id="st-val-ec" style="color:var(--accent-emerald);">1.42</span>
+            <span class="st-val-unit">dS/m</span>
+          </div>
+          <div class="st-gauge-bar">
+            <div class="st-gauge-fill" id="st-gauge-ec" style="width:28%; background:var(--accent-emerald);"></div>
+          </div>
+          <div class="st-card-subtext" id="st-sub-ec">Sub-threshold salinity (&le; 1.70 dS/m). 100% yield potential.</div>
+        </div>
+
+        <!-- Soil Temperature -->
+        <div class="st-card">
+          <div class="st-card-head">
+            <span class="st-card-name">Soil Temp T_s</span>
+            <span class="st-card-badge">DS18B20 1-Wire</span>
+          </div>
+          <div class="st-val-row">
+            <span class="st-val-num" id="st-val-temp">22.4</span>
+            <span class="st-val-unit">°C</span>
+          </div>
+          <div class="st-card-subtext">Thermal compensation active (Rhoades α = 0.0191 / °C).</div>
+        </div>
+
+        <!-- Matric Potential -->
+        <div class="st-card">
+          <div class="st-card-head">
+            <span class="st-card-name">Matric Potential ψ_m</span>
+            <span class="st-card-badge">Van Genuchten</span>
+          </div>
+          <div class="st-val-row">
+            <span class="st-val-num" id="st-val-matric">-33</span>
+            <span class="st-val-unit">kPa</span>
+          </div>
+          <div class="st-card-subtext" id="st-sub-matric">Field Capacity meniscus suction (-33 kPa).</div>
+        </div>
+
+        <!-- Maas-Hoffman Yield Loss -->
+        <div class="st-card">
+          <div class="st-card-head">
+            <span class="st-card-name">Maas-Hoffman Yield Impact</span>
+            <span class="st-card-badge">FAO-56</span>
+          </div>
+          <div class="st-val-row">
+            <span class="st-val-num" id="st-val-penalty" style="color:var(--accent-emerald);">0.0%</span>
+            <span class="st-val-unit">Yield Loss</span>
+          </div>
+          <div class="st-card-subtext" id="st-sub-penalty">Maas-Hoffman threshold 1.70 dS/m; b = 12.0%/dS/m.</div>
+        </div>
+
+        <!-- System & Power -->
+        <div class="st-card" style="background:rgba(0,0,0,0.2);">
+          <div class="st-card-head">
+            <span class="st-card-name">Edge Power Subsystem</span>
+            <span class="st-card-badge">Solar / LiPo</span>
+          </div>
+          <div style="font-family:var(--font-mono); font-size:0.65rem; color:var(--text-muted); display:flex; justify-content:space-between; margin-top:4px;">
+            <span>Battery: <strong id="st-val-bat" style="color:#fff;">4.08V (88%)</strong></span>
+            <span>Harvest: <strong id="st-val-solar" style="color:#38bdf8;">82 mA (0.38W)</strong></span>
+          </div>
+          <div class="st-card-subtext">Deep-sleep duty cycle: 15s sample / 885s hibernation.</div>
+        </div>
+      </div>
+    </aside>
+
+    <!-- Right Panel: Scenario Intelligence Briefing -->
+    <aside class="st-panel-right" id="st-panel-right">
+      <div class="lab-panel-header">
+        <div>
+          <div class="lab-panel-subtitle" id="st-brief-subtitle">AGRONOMIC BRIEFING</div>
+          <h3 class="lab-panel-title" id="st-brief-title">Optimal Field Capacity</h3>
+        </div>
+        <span class="badge-evidence" id="st-brief-badge">STABLE</span>
+      </div>
+
+      <div class="st-briefing-scroll">
+        <!-- 1. Input Changed -->
+        <div class="briefing-block" id="block-input">
+          <div class="briefing-title"><i data-lucide="corner-down-right" style="width:12px; height:12px;"></i> 1. Input Disturbance / Condition</div>
+          <p class="briefing-p" id="st-text-input">
+            Nominal capillary moisture following balanced transpiration. Soil solution salt concentrations remain uniformly dispersed within the rhizosphere.
+          </p>
+        </div>
+
+        <!-- 2. System Detected -->
+        <div class="briefing-block" id="block-detected">
+          <div class="briefing-title"><i data-lucide="scan" style="width:12px; height:12px;"></i> 2. Edge Signal Detected</div>
+          <p class="briefing-p" id="st-text-detected">
+            High-frequency TLC555 resonant circuit registers 1.48 MHz (ADC 1840). Dual 316L electrode bipolar AC impedance stable at 420 Ω (EC₂₅ = 1.42 dS/m).
+          </p>
+        </div>
+
+        <!-- 3. Agronomic Law Applied -->
+        <div class="briefing-block" id="block-rule">
+          <div class="briefing-title"><i data-lucide="book-open" style="width:12px; height:12px;"></i> 3. Governing Agronomic Law</div>
+          <p class="briefing-p" id="st-text-rule">
+            FAO-56 Readily Available Water (RAW = p × TAW) maintained. Maas-Hoffman (1977) boundary verified: EC_e &le; 1.70 dS/m.
+          </p>
+        </div>
+
+        <!-- 4. Autonomous Recommendation -->
+        <div class="briefing-block" id="block-action">
+          <div class="briefing-title"><i data-lucide="zap" style="width:12px; height:12px;"></i> 4. Autonomous Advisory Recommendation</div>
+          <p class="briefing-p" id="st-text-action">
+            No irrigation required. Root respiration and transpiration flux at maximum biological efficiency. Schedule next automated burst in 15 minutes.
+          </p>
+        </div>
+
+        <!-- Equation Card -->
+        <div class="equation-card" id="st-eq-box">
+          Y = 100 - 0.0% &nbsp;|&nbsp; ψ_m = -33 kPa &nbsp;|&nbsp; LF = 0.00
+        </div>
+
+        <!-- Scientific Classification Notice -->
+        <div style="background:rgba(56,189,248,0.06); border:1px solid rgba(56,189,248,0.2); border-radius:6px; padding:8px 10px; font-family:var(--font-mono); font-size:0.58rem; color:var(--text-muted); line-height:1.4;">
+          <strong style="color:#38bdf8;">SCIENTIFIC PROVENANCE:</strong> Telemetry curves generated via verified FAO-56, Maas-Hoffman (1977), and Rhoades (1976) soil physics models. Classified as <em>Simulated Agronomic Benchmark</em>.
+        </div>
+      </div>
+    </aside>
+
+    <!-- Bottom Retractable Drawer: 24-Hour Historical Multi-Series Chart Canvas -->
+    <div class="st-timeline-drawer" id="station-timeline-drawer">
+      <div class="st-drawer-top">
+        <div class="st-drawer-title-group">
+          <i data-lucide="line-chart" style="width:14px; height:14px; color:#38bdf8;"></i>
+          <span class="st-drawer-title">24-HOUR HISTORICAL TELEMETRY TRENDS</span>
+          <span class="badge-evidence" style="font-size:0.55rem; padding:1px 6px;">SCRUBBABLE 24H BENCHMARK</span>
+          <span id="st-scrub-tooltip" style="font-family:var(--font-mono); font-size:0.62rem; color:var(--accent-cyan); margin-left:8px;">Hover canvas to inspect timeline</span>
+        </div>
+
+        <div class="st-playback-group">
+          <button class="btn-play-ctrl" id="btn-st-play-pause"><i data-lucide="play" id="icon-st-play" style="width:11px; height:11px;"></i> <span id="lbl-st-play">Play</span></button>
+          <button class="btn-play-ctrl active" data-speed="1" id="btn-st-speed-1">1x</button>
+          <button class="btn-play-ctrl" data-speed="2" id="btn-st-speed-2">2x</button>
+          <button class="btn-play-ctrl" data-speed="5" id="btn-st-speed-5">5x</button>
+          <button class="btn-play-ctrl" id="btn-st-replay"><i data-lucide="repeat" style="width:11px; height:11px;"></i> Replay</button>
+        </div>
+      </div>
+
+      <div class="st-chart-wrapper">
+        <canvas id="station-chart-canvas"></canvas>
       </div>
     </div>
   </div>
@@ -4839,6 +5503,9 @@
             <div class="module-row" style="margin-top:6px;">
               <span style="font-size:0.65rem; color:var(--text-muted);">Threshold: 1.70 dS/m | Yield slope: 12.0%/dS/m</span>
             </div>
+            <button class="btn-action-small" id="btn-ch9-station" style="width:100%; justify-content:center; margin-top:8px; background:rgba(56,189,248,0.15); border-color:#38bdf8;">
+              <i data-lucide="activity" style="width:12px; height:12px; color:#38bdf8;"></i> Launch Autonomous Scenario Lab
+            </button>
           `);
         }
       },
@@ -4909,7 +5576,10 @@
 
       const ch = CHAPTERS[index];
 
-      document.getElementById('label-chapter-tag').innerText = ch.tag;
+            setTimeout(() => {
+        document.getElementById('btn-ch9-station')?.addEventListener('click', () => enterMonitoringStation('lockout'));
+      }, 50);
+document.getElementById('label-chapter-tag').innerText = ch.tag;
       document.getElementById('text-chapter-title').innerHTML = ch.title;
       document.getElementById('text-chapter-desc').innerHTML = ch.desc;
       document.getElementById('label-playback-status').innerText = `CHAPTER ${index + 1} OF 10`;
@@ -7951,6 +8621,695 @@
       }
     }
 
+
+    /* =========================================================================
+       PHASE 4: AUTONOMOUS MONITORING STATION & SCENARIO LAB ENGINE
+       ========================================================================= */
+    const MONITORING_SCENARIOS = {
+      optimal: {
+        id: 'optimal',
+        name: 'Optimal Field Capacity (Nominal)',
+        badge: 'NOMINAL',
+        vwc: 31.8,
+        ec: 1.42,
+        temp: 22.4,
+        matric: '-33 kPa',
+        loss: 0.0,
+        status: 'NOMINAL',
+        linkStatus: 'ONLINE: LoRaWAN 868MHz (SF7 / RSSI -68dBm)',
+        linkClass: 'st-status-chip',
+        freshness: 'LAST BURST: 2.8s AGO (10s DEMO RATE)',
+        battery: '4.08V (88%)',
+        solar: '82 mA (0.38W)',
+        soilRoughness: 0.72,
+        plumeScale: 1.0,
+        plumeOpacity: 0.22,
+        haloColor: 0x00ff87,
+        sentryColor: 0x00ff87,
+        input: 'Nominal capillary water retention following 25mm rain 48 hours ago. Evapotranspiration balanced by upward capillary flux across Horizons A and B.',
+        detected: 'High-frequency TLC555 capacitive blade resonant frequency at 1.48 MHz (ADC 1840). Dual 316L annular electrode AC impedance stable at 420 Ω (EC₂₅ = 1.42 dS/m).',
+        rule: 'FAO-56 Irrigation Chapter 6: Soil water content within Readily Available Water (RAW) envelope for Zea mays. Maas-Hoffman boundary: ECe <= 1.70 dS/m.',
+        action: 'Zero irrigation required. Soil aeration and matric potential optimal for root respiration and nutrient translocation. Next scheduled broadcast in 15 minutes.',
+        equation: 'Y = 100 - 0.0%  |  ψ_m = -33 kPa  |  LF = 0.00',
+        alertLevel: 'normal'
+      },
+      drought: {
+        id: 'drought',
+        name: 'Severe Drought Deficit (PWP Stress)',
+        badge: 'DROUGHT',
+        vwc: 11.2,
+        ec: 2.10,
+        temp: 28.6,
+        matric: '-1500 kPa',
+        loss: 4.8,
+        status: 'DROUGHT DEFICIT',
+        linkStatus: 'ONLINE: LoRaWAN 868MHz (SF7 / RSSI -72dBm)',
+        linkClass: 'st-status-chip warning',
+        freshness: 'LAST BURST: 1.4s AGO (10s DEMO RATE)',
+        battery: '4.16V (92%)',
+        solar: '118 mA (0.55W)',
+        soilRoughness: 0.96,
+        plumeScale: 0.45,
+        plumeOpacity: 0.05,
+        haloColor: 0xffb800,
+        sentryColor: 0xffb800,
+        input: 'Continuous 14-day dry spell with ambient air temperature 34°C, VPD > 2.8 kPa, and zero supplemental precipitation.',
+        detected: 'Dielectric resonant frequency drops sharply (ADC 980 / 0.79V, VWC = 11.2%). Dual-probe salt ions concentrate in residual thin water films (ECe rises to 2.10 dS/m).',
+        rule: 'FAO-56 Management Allowed Depletion (MAD = 50% TAW for maize exceeded). Matric suction exceeds -1500 kPa (Permanent Wilting Point). Maas-Hoffman slope b = 12.0%/dS/m.',
+        action: 'CRITICAL ADVISORY: Initiate 24mm emergency furrow/drip irrigation within 6 hours. Yield loss progressing at 4.8% due to stomatal arrest and silk desiccation.',
+        equation: 'Y = 100 - 12.0 × (2.10 - 1.70) = 95.2% (-4.8% loss)  |  ψ_m <= -1500 kPa',
+        alertLevel: 'warn'
+      },
+      saturation: {
+        id: 'saturation',
+        name: 'Anaerobic Waterlogging & Saturation',
+        badge: 'WATERLOGGED',
+        vwc: 46.8,
+        ec: 0.92,
+        temp: 19.4,
+        matric: '0 kPa',
+        loss: 8.5,
+        status: 'HYPOXIC SATURATION',
+        linkStatus: 'ONLINE: LoRaWAN 868MHz (SF7 / RSSI -70dBm)',
+        linkClass: 'st-status-chip',
+        freshness: 'LAST BURST: 3.9s AGO (10s DEMO RATE)',
+        battery: '3.92V (76%)',
+        solar: '32 mA (0.15W)',
+        soilRoughness: 0.48,
+        plumeScale: 1.60,
+        plumeOpacity: 0.48,
+        haloColor: 0x00ff87,
+        sentryColor: 0x38bdf8,
+        input: 'Intense torrential cloudburst event (65mm in 2 hours) overwhelming surface infiltration capacity and raising perched water table across Horizons A and B.',
+        detected: 'TLC555 capacitance approaches pure water dielectric constant (ADC 2980 / 2.40V, VWC = 46.8%). Mobile salts diluted and leached downwards (ECe drops to 0.92 dS/m).',
+        rule: 'Root Hypoxia Threshold (Kramer & Boyer 1995): Air-filled porosity drops below 10% (θ_air = 4.9% < 10%), halting aerobic mitochondrial respiration in apical root caps.',
+        action: 'IMMEDIATE ADVISORY: Halt all scheduled irrigation. Open subsurface relief drainage channels. Prolonged saturation > 24h will induce root rot and adventitious lodging.',
+        equation: 'θ_air = 0.517 - 0.468 = 0.049 cm³/cm³ (< 10% threshold)  |  ψ_m = 0 kPa',
+        alertLevel: 'warn'
+      },
+      lockout: {
+        id: 'lockout',
+        name: 'Saline Osmotic Lockout & Toxicity',
+        badge: 'SALINE STRESS',
+        vwc: 27.2,
+        ec: 4.40,
+        temp: 24.8,
+        matric: '-45 kPa',
+        loss: 32.4,
+        status: 'OSMOTIC LOCKOUT',
+        linkStatus: 'ONLINE: LoRaWAN 868MHz (SF7 / RSSI -68dBm)',
+        linkClass: 'st-status-chip critical',
+        freshness: 'LAST BURST: 1.1s AGO (10s DEMO RATE)',
+        battery: '4.05V (86%)',
+        solar: '78 mA (0.36W)',
+        soilRoughness: 0.78,
+        plumeScale: 0.95,
+        plumeOpacity: 0.20,
+        haloColor: 0xff2a5f,
+        sentryColor: 0xff2a5f,
+        input: 'Repeated brackish irrigation without adequate leaching fraction, accumulating high sodium and chloride ions in the upper 25cm rhizosphere.',
+        detected: 'Dual 316L electrode conductivity surges to 4.40 dS/m (ADC 3410). While moisture θ = 27.2% appears adequate, osmotic potential (ψ_s = -160 kPa) prevents root extraction.',
+        rule: 'Maas-Hoffman Salinity Model (1977): Maize threshold EC_t = 1.70 dS/m, slope b = 12.0%/dS/m. FAO-56 Leaching Fraction: LF = EC_w / (5·EC_e - EC_w).',
+        action: 'HIGH SEVERITY ADVISORY: Enforce leaching fraction LF = 0.22 with low-salinity water. Note safety guard: only leach if irrigation water EC_w <= 0.5 EC_e to avoid worsening concentration.',
+        equation: 'Y = 100 - 12.0 × (4.40 - 1.70) = 67.6% (-32.4% yield penalty!)  |  ψ_s = -160 kPa',
+        alertLevel: 'crit'
+      },
+      disconnect: {
+        id: 'disconnect',
+        name: 'Sensor Disconnection / Hardware Fault',
+        badge: 'FAULT',
+        vwc: 0.0,
+        ec: 0.00,
+        temp: -99.9,
+        matric: 'N/A',
+        loss: 0.0,
+        status: 'CRC TIMEOUT',
+        linkStatus: 'OFFLINE: Sensor Rupture / CRC Checksum Timeout',
+        linkClass: 'st-status-chip critical',
+        freshness: 'LAST BURST: TIMEOUT (> 120s)',
+        battery: '4.02V (84%)',
+        solar: '0 mA (0.00W)',
+        soilRoughness: 0.85,
+        plumeScale: 1.0,
+        plumeOpacity: 0.08,
+        haloColor: 0x475569,
+        sentryColor: 0xff2a5f,
+        input: 'Subsurface spade probe cable rupture or rodent chew-through on 3-wire analog lead (GPIO34/GPIO35).',
+        detected: 'Hardware open-circuit detected: ADC channel voltage collapsed to 0 mV with CRC checksum timeout on 1-Wire DS18B20 bus.',
+        rule: 'IEEE 1451.4 Smart Sensor Fault Containment: Trigger fail-safe sentinel state. Suppress automated irrigation commands to prevent erroneous flooding.',
+        action: 'FIELD ALERT: Dispatch maintenance technician. Inspect enclosure cable gland and spade lead junction. Irrigation controller reverted to historical ETc baseline.',
+        equation: 'STATUS: CRC_TIMEOUT  |  VOLTAGE = 0.00V  |  FAILSAFE_LOCKOUT_ENGAGED',
+        alertLevel: 'crit'
+      }
+    };
+
+    let activeScenarioKey = 'optimal';
+    let isMonitoringStationActive = false;
+    let isStationPlaying = false;
+    let stationPlaySpeed = 1.0;
+    let stationScrubFraction = 1.0; // 0.0 (-24h) to 1.0 (Now)
+    let flushAnimationTimeline = null;
+
+    // Initialize Autonomous Monitoring Station
+    function initMonitoringStation() {
+      const overlay = document.getElementById('monitoring-station-overlay');
+      const btnLeave = document.getElementById('btn-leave-station');
+      const btnReset = document.getElementById('btn-st-reset-baseline');
+      const btnPlayPause = document.getElementById('btn-st-play-pause');
+      const btnReplay = document.getElementById('btn-st-replay');
+
+      // Top Header direct button
+      document.getElementById('btn-enter-station')?.addEventListener('click', () => enterMonitoringStation());
+      document.getElementById('btn-enter-underground')?.addEventListener('click', () => enterSubsurfaceExplorer());
+
+      btnLeave?.addEventListener('click', () => leaveMonitoringStation());
+      btnReset?.addEventListener('click', () => resetStationBaseline());
+
+      // Scenario Pill Toggles
+      document.querySelectorAll('.scenario-pill').forEach(pill => {
+        pill.addEventListener('click', () => {
+          const scKey = pill.getAttribute('data-scenario');
+          if (scKey === 'flush') {
+            triggerFlushReplaySequence();
+          } else {
+            setMonitoringScenario(scKey);
+          }
+        });
+      });
+
+      // Playback Controls
+      btnPlayPause?.addEventListener('click', () => toggleStationPlayback());
+      btnReplay?.addEventListener('click', () => {
+        stationScrubFraction = 0.0;
+        if (!isStationPlaying) toggleStationPlayback();
+      });
+
+      // Speed Toggles
+      [1, 2, 5].forEach(spd => {
+        document.getElementById(`btn-st-speed-${spd}`)?.addEventListener('click', (e) => {
+          stationPlaySpeed = spd;
+          document.querySelectorAll('.btn-play-ctrl[data-speed]').forEach(b => b.classList.remove('active'));
+          e.currentTarget.classList.add('active');
+          sound.playPing(600 + spd * 80);
+        });
+      });
+
+      // Setup 24-Hour Historical Chart Canvas
+      initStationChartCanvas();
+
+      // Keyboard Shortcut [M] for Monitoring Station
+      window.addEventListener('keydown', (e) => {
+        if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
+        if (e.key === 'm' || e.key === 'M') {
+          if (isMonitoringStationActive) leaveMonitoringStation();
+          else enterMonitoringStation();
+        }
+      });
+    }
+
+    // Enter Monitoring Station Overlay
+    function enterMonitoringStation(initialScenario = 'optimal') {
+      const overlay = document.getElementById('monitoring-station-overlay');
+      if (!overlay) return;
+
+      // Close other overlays if active
+      if (typeof isDeviceLabActive !== 'undefined' && isDeviceLabActive) leaveDeviceLaboratory();
+      if (typeof isSubsurfaceActive !== 'undefined' && isSubsurfaceActive) leaveSubsurfaceExplorer();
+      if (typeof isWalkModeActive !== 'undefined' && isWalkModeActive) toggleWalkMode(false);
+
+      isMonitoringStationActive = true;
+      overlay.classList.add('active');
+      sound.playPing(720);
+
+      // Camera view: elevated diagnostic perspective capturing maize, root zone, and hardware node
+      gsap.to(camera.position, {
+        x: 0.0,
+        y: 0.9,
+        z: 4.8,
+        duration: 1.2,
+        ease: 'power2.out'
+      });
+      gsap.to(controls.target, {
+        x: 0.0,
+        y: -0.2,
+        z: 0.0,
+        duration: 1.2,
+        ease: 'power2.out'
+      });
+
+      // Ensure cutaway soil and solute halos are visible for monitoring
+      if (typeof setInspectionMode === 'function') setInspectionMode('cutaway');
+      if (typeof soluteGroup !== 'undefined') soluteGroup.visible = true;
+
+      setMonitoringScenario(initialScenario);
+      drawStationChart();
+    }
+
+    // Leave Monitoring Station Overlay
+    function leaveMonitoringStation() {
+      const overlay = document.getElementById('monitoring-station-overlay');
+      if (!overlay) return;
+
+      isMonitoringStationActive = false;
+      overlay.classList.remove('active');
+      sound.playPing(480);
+
+      if (isStationPlaying) toggleStationPlayback();
+      if (flushAnimationTimeline) { flushAnimationTimeline.kill(); flushAnimationTimeline = null; }
+
+      // Restore hero composition
+      gsap.to(camera.position, { x: 0.0, y: 1.2, z: 5.8, duration: 1.0, ease: 'power2.out' });
+      gsap.to(controls.target, { x: 0.0, y: 0.0, z: 0.0, duration: 1.0, ease: 'power2.out' });
+    }
+
+    // Set Active Scenario
+    function setMonitoringScenario(scenarioKey) {
+      const sc = MONITORING_SCENARIOS[scenarioKey] || MONITORING_SCENARIOS.optimal;
+      activeScenarioKey = sc.id;
+
+      // Update Pill Selection
+      document.querySelectorAll('.scenario-pill').forEach(p => {
+        p.classList.toggle('active', p.getAttribute('data-scenario') === sc.id);
+      });
+
+      // Audio feedback
+      sound.playPing(sc.id === 'optimal' ? 680 : sc.id === 'drought' ? 440 : sc.id === 'lockout' ? 320 : 540);
+      if (sc.alertLevel === 'warn' || sc.alertLevel === 'crit') sound.playWarning();
+
+      // Top Bar Sync
+      const chipConn = document.getElementById('chip-st-conn');
+      const lblConn = document.getElementById('st-conn-label');
+      const lblFresh = document.getElementById('st-freshness-label');
+      if (chipConn) chipConn.className = sc.linkClass;
+      if (lblConn) lblConn.innerText = sc.linkStatus;
+      if (lblFresh) lblFresh.innerText = sc.freshness;
+
+      // Animate Live Telemetry Numbers
+      gsap.to(simState, {
+        vwcRaw: sc.vwc,
+        ecRaw: sc.ec,
+        tempRaw: sc.temp,
+        duration: 1.0,
+        ease: 'power2.out',
+        onUpdate: () => {
+          syncStationTelemetryUI(sc);
+          calculateAgronomicEngine();
+        }
+      });
+
+      // 3D Visual Shader & Halo Synchronization
+      if (typeof matHorizonA !== 'undefined' && typeof matHorizonB !== 'undefined') {
+        gsap.to(matHorizonA, { roughness: sc.soilRoughness, duration: 1.0 });
+        gsap.to(matHorizonB, { roughness: sc.soilRoughness * 0.94, duration: 1.0 });
+      }
+
+      if (typeof plumeMesh !== 'undefined' && typeof plumeMat !== 'undefined') {
+        gsap.to(plumeMesh.scale, { x: sc.plumeScale, y: sc.plumeScale * 1.45, z: sc.plumeScale * 0.95, duration: 1.0 });
+        gsap.to(plumeMat, { opacity: sc.plumeOpacity, duration: 1.0 });
+      }
+
+      if (typeof haloUpperMesh !== 'undefined' && typeof haloLowerMesh !== 'undefined') {
+        const col = new THREE.Color(sc.haloColor);
+        gsap.to(haloUpperMesh.material.color, { r: col.r, g: col.g, b: col.b, duration: 0.8 });
+        gsap.to(haloLowerMesh.material.color, { r: col.r, g: col.g, b: col.b, duration: 0.8 });
+      }
+
+      if (typeof sentryMat !== 'undefined' && typeof sentryPointLight !== 'undefined') {
+        const col = new THREE.Color(sc.sentryColor);
+        gsap.to(sentryMat.color, { r: col.r, g: col.g, b: col.b, duration: 0.8 });
+        gsap.to(sentryMat.emissive, { r: col.r, g: col.g, b: col.b, duration: 0.8 });
+        gsap.to(sentryPointLight.color, { r: col.r, g: col.g, b: col.b, duration: 0.8 });
+      }
+
+      // Update Right Intelligence Briefing
+      renderStationBriefing(sc);
+
+      // Redraw Timeline Canvas
+      drawStationChart();
+    }
+
+    // Sync Telemetry UI Numbers
+    function syncStationTelemetryUI(sc) {
+      const elMoist = document.getElementById('st-val-moist');
+      const elEc = document.getElementById('st-val-ec');
+      const elTemp = document.getElementById('st-val-temp');
+      const elMatric = document.getElementById('st-val-matric');
+      const elPenalty = document.getElementById('st-val-penalty');
+      const gaugeMoist = document.getElementById('st-gauge-moist');
+      const gaugeEc = document.getElementById('st-gauge-ec');
+      const tagStatus = document.getElementById('st-tele-status-tag');
+
+      if (elMoist) elMoist.innerText = simState.vwcRaw.toFixed(1);
+      if (elEc) elEc.innerText = simState.ec25.toFixed(2);
+      if (elTemp) elTemp.innerText = simState.tempRaw.toFixed(1);
+      if (elMatric) elMatric.innerText = sc.matric.split(' ')[0];
+
+      if (gaugeMoist) {
+        const pct = Math.max(0, Math.min(100, (simState.vwcRaw / 50.0) * 100));
+        gaugeMoist.style.width = `${pct}%`;
+        gaugeMoist.style.background = sc.id === 'drought' ? 'var(--accent-amber)' : sc.id === 'saturation' ? '#38bdf8' : '#38bdf8';
+      }
+
+      if (gaugeEc) {
+        const pct = Math.max(0, Math.min(100, (simState.ec25 / 5.0) * 100));
+        gaugeEc.style.width = `${pct}%`;
+        gaugeEc.style.background = simState.ec25 > 3.0 ? 'var(--accent-crimson)' : simState.ec25 > 1.7 ? 'var(--accent-amber)' : 'var(--accent-emerald)';
+      }
+
+      if (elPenalty) {
+        if (simState.yieldLoss > 0) {
+          elPenalty.innerText = `-${simState.yieldLoss.toFixed(1)}%`;
+          elPenalty.style.color = 'var(--accent-crimson)';
+        } else {
+          elPenalty.innerText = '0.0%';
+          elPenalty.style.color = 'var(--accent-emerald)';
+        }
+      }
+
+      if (tagStatus) {
+        tagStatus.innerText = sc.badge;
+        tagStatus.className = `badge-evidence ${sc.alertLevel === 'crit' ? 'badge-crit' : sc.alertLevel === 'warn' ? 'badge-warn' : ''}`;
+      }
+
+      document.getElementById('st-val-bat').innerText = sc.battery;
+      document.getElementById('st-val-solar').innerText = sc.solar;
+    }
+
+    // Render Right Intelligence Briefing
+    function renderStationBriefing(sc) {
+      document.getElementById('st-brief-title').innerText = sc.name;
+      document.getElementById('st-brief-subtitle').innerText = `SCENARIO // ${sc.id.toUpperCase()}`;
+      document.getElementById('st-brief-badge').innerText = sc.badge;
+
+      document.getElementById('st-text-input').innerText = sc.input;
+      document.getElementById('st-text-detected').innerText = sc.detected;
+      document.getElementById('st-text-rule').innerText = sc.rule;
+      document.getElementById('st-text-action').innerText = sc.action;
+      document.getElementById('st-eq-box').innerText = sc.equation;
+
+      const blkInput = document.getElementById('block-input');
+      const blkDetected = document.getElementById('block-detected');
+      const blkAction = document.getElementById('block-action');
+
+      [blkInput, blkDetected, blkAction].forEach(b => {
+        b.className = `briefing-block ${sc.alertLevel === 'crit' ? 'alert-crit' : sc.alertLevel === 'warn' ? 'alert-warn' : ''}`;
+      });
+    }
+
+    // Reset Station Baseline
+    function resetStationBaseline() {
+      if (flushAnimationTimeline) { flushAnimationTimeline.kill(); flushAnimationTimeline = null; }
+      setMonitoringScenario('optimal');
+      stationScrubFraction = 1.0;
+      sound.playPing(880);
+    }
+
+    // Dynamic Irrigation Flush & Leaching Replay Sequence
+    function triggerFlushReplaySequence() {
+      if (flushAnimationTimeline) flushAnimationTimeline.kill();
+
+      sound.playPing(760);
+
+      // Highlight flush pill
+      document.querySelectorAll('.scenario-pill').forEach(p => {
+        p.classList.toggle('active', p.getAttribute('data-scenario') === 'flush');
+      });
+
+      // Stage 1: High Saline Stress (t = 0s)
+      setMonitoringScenario('lockout');
+
+      document.getElementById('st-brief-title').innerText = "Dynamic Leaching Flush Sequence [RUNNING]";
+      document.getElementById('st-brief-subtitle').innerText = "AUTONOMOUS RECOVERY // STAGE 1 OF 4";
+
+      flushAnimationTimeline = gsap.timeline({
+        onComplete: () => {
+          document.getElementById('st-brief-title').innerText = "Dynamic Leaching Flush [COMPLETED]";
+          document.getElementById('st-brief-subtitle').innerText = "AUTONOMOUS RECOVERY // STABILIZED";
+          sound.playPing(880);
+        }
+      });
+
+      // Stage 2: Clean Water Infiltration (t = 2.5s)
+      flushAnimationTimeline.to({}, { duration: 2.5 });
+      flushAnimationTimeline.add(() => {
+        sound.playPing(640);
+        document.getElementById('st-brief-subtitle').innerText = "STAGE 2: CLEAN WATER PULSE (25mm Applied)";
+        document.getElementById('st-text-input').innerText = "Clean irrigation water (EC_w = 0.45 dS/m, 25mm depth) infiltrates through surface mulch, forming a downward wetting front.";
+        document.getElementById('st-text-detected').innerText = "Topsoil capacitance surges: VWC spikes to 41.5%. Solute displacement commences as high-conductivity pore water is diluted.";
+        
+        gsap.to(simState, { vwcRaw: 41.5, ecRaw: 3.10, duration: 1.5, onUpdate: calculateAgronomicEngine });
+        if (typeof plumeMesh !== 'undefined') gsap.to(plumeMesh.scale, { x: 1.45, y: 1.85, z: 1.2, duration: 1.5 });
+      });
+
+      // Stage 3: Solute Displacement Past Horizon B (t = 5.5s)
+      flushAnimationTimeline.to({}, { duration: 3.0 });
+      flushAnimationTimeline.add(() => {
+        sound.playPing(720);
+        document.getElementById('st-brief-subtitle').innerText = "STAGE 3: SOLUTE FLUSHING (Salts Leached Past 25cm)";
+        document.getElementById('st-text-input').innerText = "Pore water percolation pushes accumulated sodium and chloride ions past the Horizon A/B boundary into the deep Horizon C drainage gravel.";
+        document.getElementById('st-text-detected').innerText = "Dual 316L electrode impedance normalizes (EC₂₅ drops to 1.95 dS/m). Dual halos transition from crimson to amber.";
+        
+        gsap.to(simState, { vwcRaw: 34.0, ecRaw: 1.95, duration: 1.5, onUpdate: calculateAgronomicEngine });
+        if (typeof haloUpperMesh !== 'undefined') {
+          gsap.to(haloUpperMesh.material.color, { r: 1.0, g: 0.72, b: 0.0, duration: 1.0 });
+          gsap.to(haloLowerMesh.material.color, { r: 1.0, g: 0.72, b: 0.0, duration: 1.0 });
+        }
+      });
+
+      // Stage 4: Stabilization at Optimal Field Capacity (t = 8.5s)
+      flushAnimationTimeline.to({}, { duration: 3.0 });
+      flushAnimationTimeline.add(() => {
+        sound.playPing(840);
+        document.getElementById('st-brief-subtitle').innerText = "STAGE 4: RECOVERY COMPLETE (Nominal Equilibrium)";
+        document.getElementById('st-text-input').innerText = "Gravitational water drained out. Capillary equilibrium reached at Field Capacity (-33 kPa). Full root physiological recovery.";
+        document.getElementById('st-text-detected').innerText = "EC₂₅ = 1.38 dS/m (below 1.70 threshold). VWC = 31.5%. Maas-Hoffman yield penalty: 0.0% LOSS.";
+        
+        gsap.to(simState, { vwcRaw: 31.5, ecRaw: 1.38, duration: 1.5, onUpdate: calculateAgronomicEngine });
+        if (typeof haloUpperMesh !== 'undefined') {
+          gsap.to(haloUpperMesh.material.color, { r: 0.0, g: 1.0, b: 0.53, duration: 1.0 });
+          gsap.to(haloLowerMesh.material.color, { r: 0.0, g: 1.0, b: 0.53, duration: 1.0 });
+        }
+        if (typeof sentryMat !== 'undefined') {
+          gsap.to(sentryMat.color, { r: 0.0, g: 1.0, b: 0.53, duration: 1.0 });
+          gsap.to(sentryMat.emissive, { r: 0.0, g: 1.0, b: 0.53, duration: 1.0 });
+        }
+      });
+    }
+
+    // Toggle Play/Pause Simulation Scrubbing
+    function toggleStationPlayback() {
+      isStationPlaying = !isStationPlaying;
+      const btn = document.getElementById('btn-st-play-pause');
+      const icon = document.getElementById('icon-st-play');
+      const lbl = document.getElementById('lbl-st-play');
+
+      if (isStationPlaying) {
+        btn.classList.add('active');
+        lbl.innerText = 'Pause';
+        if (icon) icon.setAttribute('data-lucide', 'pause');
+        sound.playPing(680);
+      } else {
+        btn.classList.remove('active');
+        lbl.innerText = 'Play';
+        if (icon) icon.setAttribute('data-lucide', 'play');
+        sound.playPing(440);
+      }
+      lucide.createIcons();
+    }
+
+    // Interactive 24-Hour Historical Canvas Chart
+    let chartCanvas, chartCtx;
+
+    function initStationChartCanvas() {
+      chartCanvas = document.getElementById('station-chart-canvas');
+      if (!chartCanvas) return;
+      chartCtx = chartCanvas.getContext('2d');
+
+      function resizeCanvas() {
+        const rect = chartCanvas.getBoundingClientRect();
+        chartCanvas.width = rect.width * window.devicePixelRatio;
+        chartCanvas.height = rect.height * window.devicePixelRatio;
+        drawStationChart();
+      }
+
+      window.addEventListener('resize', resizeCanvas);
+      setTimeout(resizeCanvas, 150);
+
+      // Scrubber mouse/touch events
+      let isDragging = false;
+      function handleScrub(e) {
+        const rect = chartCanvas.getBoundingClientRect();
+        const clientX = e.touches ? e.touches[0].clientX : e.clientX;
+        const x = Math.max(0, Math.min(rect.width, clientX - rect.left));
+        stationScrubFraction = x / rect.width;
+
+        // Tooltip update
+        const hoursAgo = ((1.0 - stationScrubFraction) * 24).toFixed(1);
+        const tip = document.getElementById('st-scrub-tooltip');
+        if (tip) {
+          tip.innerText = stationScrubFraction >= 0.98 ? 'NOW (T=0)' : `T -${hoursAgo}h TIMELINE STEP`;
+        }
+
+        applyScrubbedTelemetry(stationScrubFraction);
+        drawStationChart();
+      }
+
+      chartCanvas.addEventListener('mousedown', (e) => { isDragging = true; handleScrub(e); });
+      chartCanvas.addEventListener('mousemove', (e) => { if (isDragging || e.buttons === 1) handleScrub(e); else handleHover(e); });
+      window.addEventListener('mouseup', () => { isDragging = false; });
+
+      chartCanvas.addEventListener('touchstart', (e) => { isDragging = true; handleScrub(e); }, { passive: true });
+      chartCanvas.addEventListener('touchmove', (e) => { if (isDragging) handleScrub(e); }, { passive: true });
+      window.addEventListener('touchend', () => { isDragging = false; });
+    }
+
+    function handleHover(e) {
+      const rect = chartCanvas.getBoundingClientRect();
+      const frac = Math.max(0, Math.min(1.0, (e.clientX - rect.left) / rect.width));
+      const hoursAgo = ((1.0 - frac) * 24).toFixed(1);
+      const tip = document.getElementById('st-scrub-tooltip');
+      if (tip) tip.innerText = frac >= 0.98 ? 'NOW (Live Feed)' : `Inspect: -${hoursAgo}h`;
+    }
+
+    // Apply scrubbed state to 3D scene & metrics
+    function applyScrubbedTelemetry(fraction) {
+      const sc = MONITORING_SCENARIOS[activeScenarioKey] || MONITORING_SCENARIOS.optimal;
+      // Interpolate from baseline (t=-24h) to current scenario state (t=Now)
+      const baseVwc = 30.5;
+      const baseEc = 1.35;
+      const baseTemp = 21.0;
+
+      const currentVwc = baseVwc + (sc.vwc - baseVwc) * fraction;
+      const currentEc = baseEc + (sc.ec - baseEc) * fraction;
+      const currentTemp = baseTemp + (sc.temp - baseTemp) * fraction;
+
+      simState.vwcRaw = currentVwc;
+      simState.ecRaw = currentEc;
+      simState.tempRaw = currentTemp;
+
+      calculateAgronomicEngine();
+      syncStationTelemetryUI(sc);
+    }
+
+    // Draw 24-Hour Multi-Series Chart
+    function drawStationChart() {
+      if (!chartCanvas || !chartCtx) return;
+
+      const ctx = chartCtx;
+      const dpr = window.devicePixelRatio || 1;
+      const w = chartCanvas.width;
+      const h = chartCanvas.height;
+
+      ctx.clearRect(0, 0, w, h);
+
+      const padL = 45 * dpr;
+      const padR = 25 * dpr;
+      const padT = 12 * dpr;
+      const padB = 22 * dpr;
+      const plotW = w - padL - padR;
+      const plotH = h - padT - padB;
+
+      // Draw horizontal grid lines & axis labels
+      ctx.strokeStyle = 'rgba(255, 255, 255, 0.08)';
+      ctx.lineWidth = 1 * dpr;
+      ctx.fillStyle = 'rgba(255, 255, 255, 0.4)';
+      ctx.font = `${9 * dpr}px JetBrains Mono, monospace`;
+
+      const gridSteps = 4;
+      for (let i = 0; i <= gridSteps; i++) {
+        const y = padT + (plotH / gridSteps) * i;
+        ctx.beginPath();
+        ctx.moveTo(padL, y);
+        ctx.lineTo(w - padR, y);
+        ctx.stroke();
+
+        const vwcVal = Math.round(50 - (i * (50 / gridSteps)));
+        ctx.fillText(`${vwcVal}%`, 10 * dpr, y + 3 * dpr);
+      }
+
+      // Draw time labels on X axis
+      const timeLabels = ['-24h', '-18h', '-12h', '-6h', 'Now'];
+      timeLabels.forEach((lbl, i) => {
+        const x = padL + (plotW / (timeLabels.length - 1)) * i;
+        ctx.fillText(lbl, x - 10 * dpr, h - 5 * dpr);
+      });
+
+      // Threshold Reference Line: Field Capacity (31.8%)
+      const yFc = padT + plotH * (1.0 - 31.8 / 50.0);
+      ctx.setLineDash([4 * dpr, 4 * dpr]);
+      ctx.strokeStyle = 'rgba(56, 189, 248, 0.45)';
+      ctx.beginPath();
+      ctx.moveTo(padL, yFc);
+      ctx.lineTo(w - padR, yFc);
+      ctx.stroke();
+
+      // Threshold Reference Line: Maas-Hoffman Salinity (1.70 dS/m = 34% of 5 dS/m scale)
+      const yMh = padT + plotH * (1.0 - (1.70 / 5.0));
+      ctx.strokeStyle = 'rgba(255, 184, 0, 0.45)';
+      ctx.beginPath();
+      ctx.moveTo(padL, yMh);
+      ctx.lineTo(w - padR, yMh);
+      ctx.stroke();
+      ctx.setLineDash([]);
+
+      // Generate 48 time points for active scenario
+      const sc = MONITORING_SCENARIOS[activeScenarioKey] || MONITORING_SCENARIOS.optimal;
+      const pts = 48;
+      const vwcPoints = [];
+      const ecPoints = [];
+
+      for (let i = 0; i <= pts; i++) {
+        const t = i / pts;
+        const x = padL + plotW * t;
+
+        // S-curve perturbation toward current scenario value
+        const curve = Math.pow(t, 1.4);
+        const v = 30.5 + (sc.vwc - 30.5) * curve + Math.sin(i * 0.7) * 0.4;
+        const e = 1.35 + (sc.ec - 1.35) * curve + Math.cos(i * 0.6) * 0.05;
+
+        const yV = padT + plotH * (1.0 - Math.max(0, Math.min(50, v)) / 50.0);
+        const yE = padT + plotH * (1.0 - Math.max(0, Math.min(5, e)) / 5.0);
+
+        vwcPoints.push({ x, y: yV });
+        ecPoints.push({ x, y: yE });
+      }
+
+      // Draw VWC Curve (Cyan)
+      ctx.lineWidth = 2 * dpr;
+      ctx.strokeStyle = '#38bdf8';
+      ctx.beginPath();
+      vwcPoints.forEach((pt, i) => {
+        if (i === 0) ctx.moveTo(pt.x, pt.y);
+        else ctx.lineTo(pt.x, pt.y);
+      });
+      ctx.stroke();
+
+      // Draw EC Curve (Emerald -> Amber -> Crimson)
+      ctx.strokeStyle = sc.ec > 3.0 ? '#ff2a5f' : sc.ec > 1.7 ? '#ffb800' : '#00ff87';
+      ctx.beginPath();
+      ecPoints.forEach((pt, i) => {
+        if (i === 0) ctx.moveTo(pt.x, pt.y);
+        else ctx.lineTo(pt.x, pt.y);
+      });
+      ctx.stroke();
+
+      // Draw Scrubber Cursor Line
+      const scrubX = padL + plotW * stationScrubFraction;
+      ctx.strokeStyle = '#fff';
+      ctx.lineWidth = 1.5 * dpr;
+      ctx.beginPath();
+      ctx.moveTo(scrubX, padT);
+      ctx.lineTo(scrubX, padT + plotH);
+      ctx.stroke();
+
+      // Scrubber Head Dot
+      ctx.fillStyle = '#38bdf8';
+      ctx.beginPath();
+      ctx.arc(scrubX, padT + plotH * 0.5, 4 * dpr, 0, Math.PI * 2);
+      ctx.fill();
+    }
+
+    initMonitoringStation();
     initSubsurfaceExplorer();
     initDeviceLaboratory();
     initWalkMode();
