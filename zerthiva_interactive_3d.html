@@ -37,6 +37,7 @@
   <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/loaders/RGBELoader.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
   <script src="https://unpkg.com/lucide@latest"></script>
+  <script src="https://cdn.jsdelivr.net/npm/lucide@latest/dist/umd/lucide.min.js"></script>
 
   <style>
     :root {
@@ -3659,7 +3660,13 @@
 
   <!-- Main Three.js Application Logic -->
   <script>
-    lucide.createIcons();
+    // Safe Lucide icon renderer: guards against missing/delayed CDN scripts
+    function safeCreateIcons() {
+      if (typeof lucide !== 'undefined' && typeof lucide.createIcons === 'function') {
+        try { lucide.createIcons(); } catch (e) { console.warn('Lucide icon notice:', e); }
+      }
+    }
+    safeCreateIcons();
 
     /* =========================================================================
        1. SYNTHESIZED AUDIO DESIGN (Web Audio API - 100% Self-Contained)
@@ -3809,26 +3816,43 @@
 
     const sound = new SoilAudioSynthesizer();
 
-    document.getElementById('btn-toggle-audio').addEventListener('click', () => {
+    function toggleAudio() {
       sound.enabled = !sound.enabled;
       const icon = document.getElementById('icon-audio');
+      const toolIcon = document.getElementById('icon-tool-audio');
       if (sound.enabled) {
         sound.init();
         if (sound.ambientGain) sound.ambientGain.gain.setValueAtTime(0.035, sound.ctx.currentTime);
-        icon.setAttribute('data-lucide', 'volume-2');
+        if (icon) icon.setAttribute('data-lucide', 'volume-2');
+        if (toolIcon) toolIcon.setAttribute('data-lucide', 'volume-2');
         sound.playPing(880);
       } else {
         if (sound.ambientGain) sound.ambientGain.gain.setValueAtTime(0, sound.ctx.currentTime);
-        icon.setAttribute('data-lucide', 'volume-x');
+        if (icon) icon.setAttribute('data-lucide', 'volume-x');
+        if (toolIcon) toolIcon.setAttribute('data-lucide', 'volume-x');
       }
-      lucide.createIcons();
-    });
+      safeCreateIcons();
+    }
+
+    document.getElementById('btn-toggle-audio')?.addEventListener('click', toggleAudio);
+    document.getElementById('btn-tool-audio')?.addEventListener('click', toggleAudio);
 
     /* =========================================================================
        2. ASSET LOADING & PROGRESS MANAGER
        ========================================================================= */
     let loadedAssets = 0;
     const totalAssets = 8;
+
+    function dismissLoadingScreen() {
+      const screen = document.getElementById('loading-screen');
+      if (screen && !screen.classList.contains('hidden')) {
+        screen.classList.add('hidden');
+        setTimeout(() => {
+          screen.style.display = 'none';
+        }, 800);
+      }
+    }
+
     function updateLoadingProgress(stepName) {
       loadedAssets++;
       const pct = Math.min(100, Math.round((loadedAssets / totalAssets) * 100));
@@ -3837,12 +3861,15 @@
       if (bar) bar.style.width = pct + '%';
       if (text) text.innerText = `LOADING ${stepName} (${pct}%)...`;
       if (loadedAssets >= totalAssets) {
-        setTimeout(() => {
-          const screen = document.getElementById('loading-screen');
-          if (screen) screen.classList.add('hidden');
-        }, 500);
+        setTimeout(dismissLoadingScreen, 300);
       }
     }
+
+    // Failsafe 1: Auto-dismiss loading screen after 1.8s regardless of network latency
+    setTimeout(dismissLoadingScreen, 1800);
+
+    // Failsafe 2: Clicking anywhere on the loading screen immediately dismisses it
+    document.getElementById('loading-screen')?.addEventListener('click', dismissLoadingScreen);
 
     const texLoader = new THREE.TextureLoader();
 
@@ -5939,12 +5966,12 @@
       componentCard.style.display = 'block';
     }
 
-    document.getElementById('btn-close-card').addEventListener('click', () => {
+    document.getElementById('btn-close-card')?.addEventListener('click', () => {
       componentCard.style.display = 'none';
       selectedComponentObj = null;
     });
 
-    document.getElementById('btn-focus-component').addEventListener('click', () => {
+    document.getElementById('btn-focus-component')?.addEventListener('click', () => {
       if (!selectedComponentObj) return;
       sound.playPing(750);
       const targetPos = new THREE.Vector3();
@@ -5990,8 +6017,8 @@
               </div>
             </div>
           `);
-          document.getElementById('btn-explode-hw').addEventListener('click', explodeHardware);
-          document.getElementById('btn-assemble-hw').addEventListener('click', assembleHardware);
+          document.getElementById('btn-explode-hw')?.addEventListener('click', explodeHardware);
+          document.getElementById('btn-assemble-hw')?.addEventListener('click', assembleHardware);
         }
       },
       // 1: CHAPTER 02 // STRATIGRAPHY
@@ -6026,11 +6053,11 @@
               </div>
             </div>
           `);
-          document.getElementById('btn-separate-strata').addEventListener('click', () => {
+          document.getElementById('btn-separate-strata')?.addEventListener('click', () => {
             applyLayerSeparation(1.0);
             sound.playPing(720);
           });
-          document.getElementById('btn-collapse-strata').addEventListener('click', () => {
+          document.getElementById('btn-collapse-strata')?.addEventListener('click', () => {
             collapseLayers();
             sound.playPing(520);
           });
@@ -6063,15 +6090,15 @@
               </button>
             </div>
           `);
-          document.getElementById('btn-dissect-plant').addEventListener('click', () => {
+          document.getElementById('btn-dissect-plant')?.addEventListener('click', () => {
             applyAnatomyExplosion(1.0);
             sound.playPing(760);
           });
-          document.getElementById('btn-assemble-plant').addEventListener('click', () => {
+          document.getElementById('btn-assemble-plant')?.addEventListener('click', () => {
             assembleAnatomy();
             sound.playPing(540);
           });
-          document.getElementById('btn-isolate-roots').addEventListener('click', () => {
+          document.getElementById('btn-isolate-roots')?.addEventListener('click', () => {
             setInspectionMode('rootfocus');
             sound.playPing(880);
           });
@@ -6108,7 +6135,7 @@
               <span id="label-matric-readout" style="font-family:var(--font-mono); font-size:0.65rem; color:var(--accent-cyan);">-33 kPa (Field Cap)</span>
             </div>
           `);
-          document.getElementById('select-hydro-scenario').addEventListener('change', (e) => {
+          document.getElementById('select-hydro-scenario')?.addEventListener('change', (e) => {
             const sc = HYDRATION_SCENARIOS[e.target.value];
             if (!sc) return;
             sound.playWaterInfiltration();
@@ -6146,7 +6173,7 @@
               <span id="label-chem-status" style="font-family:var(--font-mono); font-size:0.65rem; color:var(--accent-emerald);">SAFE (Threshold: 1.70 dS/m)</span>
             </div>
           `);
-          document.getElementById('slider-ec-live').addEventListener('input', (e) => {
+          document.getElementById('slider-ec-live')?.addEventListener('input', (e) => {
             simState.ecRaw = parseFloat(e.target.value);
             document.getElementById('slider-ec-val').innerText = simState.ecRaw.toFixed(1);
             calculateAgronomicEngine();
@@ -6209,9 +6236,9 @@
               </button>
             </div>
           `);
-          document.getElementById('btn-re-assemble-hw').addEventListener('click', assembleHardware);
-          document.getElementById('btn-re-explode-hw').addEventListener('click', explodeHardware);
-          document.getElementById('btn-ch7-enter-lab').addEventListener('click', () => enterDeviceLaboratory());
+          document.getElementById('btn-re-assemble-hw')?.addEventListener('click', assembleHardware);
+          document.getElementById('btn-re-explode-hw')?.addEventListener('click', explodeHardware);
+          document.getElementById('btn-ch7-enter-lab')?.addEventListener('click', () => enterDeviceLaboratory());
         }
       },
       // 7: CHAPTER 08 // MONITORING SEQUENCE
@@ -6245,12 +6272,12 @@
             "STAGE 8/9: TRI-COLOR BEACON & GSM DISPATCH",
             "STAGE 9/9: MICRO-SD SPI ROLLING LOG FLUSH"
           ];
-          document.getElementById('btn-step-sequence').addEventListener('click', () => {
+          document.getElementById('btn-step-sequence')?.addEventListener('click', () => {
             sound.playPing(600 + seqIdx * 50);
             document.getElementById('label-seq-step').innerText = seqSteps[seqIdx - 1];
             seqIdx = (seqIdx % 9) + 1;
           });
-          document.getElementById('btn-auto-sequence').addEventListener('click', () => {
+          document.getElementById('btn-auto-sequence')?.addEventListener('click', () => {
             seqIdx = 1;
             const timer = setInterval(() => {
               if (seqIdx > 9) { clearInterval(timer); return; }
@@ -6308,7 +6335,7 @@
               <span id="label-test-result" style="font-family:var(--font-mono); font-weight:700; color:var(--accent-emerald);">PASS [STATUS: NOMINAL]</span>
             </div>
           `);
-          document.getElementById('select-test-scenario').addEventListener('change', (e) => {
+          document.getElementById('select-test-scenario')?.addEventListener('change', (e) => {
             const sc = e.target.value;
             const resEl = document.getElementById('label-test-result');
             if (sc === 'normal') {
@@ -6340,7 +6367,7 @@
 
     function setContextualUI(html) {
       document.getElementById('contextual-controls').innerHTML = html;
-      lucide.createIcons();
+      safeCreateIcons();
     }
 
     function setChapter(index) {
@@ -6391,15 +6418,15 @@ document.getElementById('label-chapter-tag').innerText = ch.tag;
       });
     });
 
-    document.getElementById('btn-next-chapter').addEventListener('click', () => {
+    document.getElementById('btn-next-chapter')?.addEventListener('click', () => {
       setChapter((simState.currentChapter + 1) % CHAPTERS.length);
     });
-    document.getElementById('btn-prev-chapter').addEventListener('click', () => {
+    document.getElementById('btn-prev-chapter')?.addEventListener('click', () => {
       const prev = simState.currentChapter > 0 ? simState.currentChapter - 1 : CHAPTERS.length - 1;
       setChapter(prev);
     });
 
-    document.getElementById('btn-reset-view').addEventListener('click', () => {
+    document.getElementById('btn-reset-view')?.addEventListener('click', () => {
       sound.playPing(600);
       collapseLayers();
       assembleAnatomy();
@@ -6425,7 +6452,7 @@ document.getElementById('label-chapter-tag').innerText = ch.tag;
     });
 
     // Autonomous Narrative Tour
-    document.getElementById('btn-play-tour').addEventListener('click', () => {
+    document.getElementById('btn-play-tour')?.addEventListener('click', () => {
       simState.autoPlay = !simState.autoPlay;
       const icon = document.getElementById('icon-play-tour');
       if (simState.autoPlay) {
@@ -6445,7 +6472,7 @@ document.getElementById('label-chapter-tag').innerText = ch.tag;
         icon.setAttribute('data-lucide', 'play');
         clearTimeout(simState.autoPlayTimer);
       }
-      lucide.createIcons();
+      safeCreateIcons();
     });
 
     /* =========================================================================
@@ -6460,6 +6487,19 @@ document.getElementById('label-chapter-tag').innerText = ch.tag;
       camera.position.set(0, 3.2, 7.8);
       controls.target.set(0, 0.8, 0);
       controls.enabled = false;
+
+      // Allow user to immediately take control on any interaction
+      const userInterrupt = () => {
+        finishOpeningSequence();
+        window.removeEventListener('mousedown', userInterrupt);
+        window.removeEventListener('touchstart', userInterrupt);
+        window.removeEventListener('wheel', userInterrupt);
+        window.removeEventListener('keydown', userInterrupt);
+      };
+      window.addEventListener('mousedown', userInterrupt, { once: true });
+      window.addEventListener('touchstart', userInterrupt, { once: true });
+      window.addEventListener('wheel', userInterrupt, { once: true });
+      window.addEventListener('keydown', userInterrupt, { once: true });
 
       openingTimeline = gsap.timeline({
         onComplete: () => {
@@ -6499,7 +6539,7 @@ document.getElementById('label-chapter-tag').innerText = ch.tag;
     /* =========================================================================
        13. SIGNATURE CONTINUOUS INTERACTION: "REVEAL THE HIDDEN SYSTEM"
        ========================================================================= */
-    document.getElementById('btn-signature-reveal').addEventListener('click', () => {
+    document.getElementById('btn-signature-reveal')?.addEventListener('click', () => {
       sound.playPing(880);
       const tl = gsap.timeline();
 
@@ -6577,12 +6617,12 @@ document.getElementById('label-chapter-tag').innerText = ch.tag;
        ========================================================================= */
     const modal = document.getElementById('inspector-modal');
     const modalBody = document.getElementById('modal-body-content');
-    document.getElementById('btn-close-modal').addEventListener('click', () => {
+    document.getElementById('btn-close-modal')?.addEventListener('click', () => {
       sound.playPing(440);
       modal.classList.remove('active');
     });
 
-    document.getElementById('hotspot-probe').addEventListener('click', () => {
+    document.getElementById('hotspot-probe')?.addEventListener('click', () => {
       sound.playPing(880);
       modalBody.innerHTML = `
         <h3 style="font-family:var(--font-display); font-size:1.3rem; color:var(--accent-emerald); margin-bottom:8px;">
@@ -6601,7 +6641,7 @@ document.getElementById('label-chapter-tag').innerText = ch.tag;
       modal.classList.add('active');
     });
 
-    document.getElementById('hotspot-node').addEventListener('click', () => {
+    document.getElementById('hotspot-node')?.addEventListener('click', () => {
       sound.playPing(880);
       modalBody.innerHTML = `
         <h3 style="font-family:var(--font-display); font-size:1.3rem; color:var(--accent-cyan); margin-bottom:8px;">
@@ -7344,10 +7384,10 @@ document.getElementById('label-chapter-tag').innerText = ch.tag;
     // Initialize Device Laboratory
     function initDeviceLaboratory() {
       renderLabTree();
-      if (typeof lucide !== 'undefined') lucide.createIcons();
+      if (typeof lucide !== 'undefined') safeCreateIcons();
 
       // Top Bar Leave Button
-      document.getElementById('btn-leave-lab').addEventListener('click', () => {
+      document.getElementById('btn-leave-lab')?.addEventListener('click', () => {
         leaveDeviceLaboratory();
       });
 
@@ -7596,7 +7636,7 @@ document.getElementById('label-chapter-tag').innerText = ch.tag;
       const overlay = document.getElementById('device-lab-overlay');
       if (overlay) overlay.classList.add('active');
 
-      if (typeof lucide !== 'undefined') lucide.createIcons();
+      if (typeof lucide !== 'undefined') safeCreateIcons();
       labState.active = true;
     }
 
@@ -8407,7 +8447,7 @@ document.getElementById('label-chapter-tag').innerText = ch.tag;
       // Auto-show real-time field minimap
       if (typeof toggleMinimap === 'function') toggleMinimap(true);
 
-      if (typeof lucide !== 'undefined') lucide.createIcons();
+      if (typeof lucide !== 'undefined') safeCreateIcons();
     }
 
     // Leave Walk Mode
@@ -8458,7 +8498,7 @@ document.getElementById('label-chapter-tag').innerText = ch.tag;
         ease: "power2.inOut"
       });
 
-      if (typeof lucide !== 'undefined') lucide.createIcons();
+      if (typeof lucide !== 'undefined') safeCreateIcons();
     }
 
     // Execute active contextual action triggered by [E] or card click
@@ -9112,7 +9152,7 @@ document.getElementById('label-chapter-tag').innerText = ch.tag;
       setSubsurfaceMode(initialMode);
       if (targetId) selectSubsurfaceTarget(targetId);
 
-      if (typeof lucide !== 'undefined') lucide.createIcons();
+      if (typeof lucide !== 'undefined') safeCreateIcons();
     }
 
     // Leave Subsurface Explorer Mode
@@ -9151,7 +9191,7 @@ document.getElementById('label-chapter-tag').innerText = ch.tag;
       gsap.to(camera.position, { x: 3.8, y: 0.45, z: 6.2, duration: 1.2, ease: "power2.inOut" });
       gsap.to(controls.target, { x: 0.05, y: -0.25, z: 0.0, duration: 1.2, ease: "power2.inOut" });
 
-      if (typeof lucide !== 'undefined') lucide.createIcons();
+      if (typeof lucide !== 'undefined') safeCreateIcons();
     }
 
     // Set Subsurface Mode
@@ -9187,7 +9227,7 @@ document.getElementById('label-chapter-tag').innerText = ch.tag;
         selectSubsurfaceTarget('ec-solute-halo');
       }
 
-      if (typeof lucide !== 'undefined') lucide.createIcons();
+      if (typeof lucide !== 'undefined') safeCreateIcons();
     }
 
     // Render Dynamic Contextual Controls in Top Bar
@@ -9206,13 +9246,13 @@ document.getElementById('label-chapter-tag').innerText = ch.tag;
             <i data-lucide="move-vertical" style="width:11px; height:11px;"></i> Separate
           </button>
         `;
-        document.getElementById('slider-sub-strata').addEventListener('input', (e) => {
+        document.getElementById('slider-sub-strata')?.addEventListener('input', (e) => {
           const val = parseInt(e.target.value, 10);
           subsurfaceState.separationPercent = val;
           document.getElementById('val-sub-strata').innerText = `${val}%`;
           applyLayerSeparationFraction(val / 100.0);
         });
-        document.getElementById('btn-sub-step-strata').addEventListener('click', () => {
+        document.getElementById('btn-sub-step-strata')?.addEventListener('click', () => {
           const nextVal = (subsurfaceState.separationPercent > 50) ? 0 : 100;
           gsap.to(subsurfaceState, {
             separationPercent: nextVal,
@@ -9259,7 +9299,7 @@ document.getElementById('label-chapter-tag').innerText = ch.tag;
             </select>
           </div>
         `;
-        document.getElementById('select-sub-hydro-regime').addEventListener('change', (e) => {
+        document.getElementById('select-sub-hydro-regime')?.addEventListener('change', (e) => {
           const sc = HYDRATION_SCENARIOS[e.target.value];
           if (!sc) return;
           sound.playWaterInfiltration();
@@ -9279,7 +9319,7 @@ document.getElementById('label-chapter-tag').innerText = ch.tag;
             <span class="sub-slider-val" id="val-sub-ec">${simState.ecRaw.toFixed(1)} dS/m</span>
           </div>
         `;
-        document.getElementById('slider-sub-ec').addEventListener('input', (e) => {
+        document.getElementById('slider-sub-ec')?.addEventListener('input', (e) => {
           const val = parseFloat(e.target.value);
           simState.ecRaw = val;
           document.getElementById('val-sub-ec').innerText = `${val.toFixed(1)} dS/m`;
@@ -9995,7 +10035,7 @@ document.getElementById('label-chapter-tag').innerText = ch.tag;
         if (icon) icon.setAttribute('data-lucide', 'play');
         sound.playPing(440);
       }
-      lucide.createIcons();
+      safeCreateIcons();
     }
 
     // Interactive 24-Hour Historical Canvas Chart
