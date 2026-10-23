@@ -2314,6 +2314,346 @@
       background: rgba(255, 42, 95, 0.3) !important;
     }
 
+
+    /* =========================================================================
+       PHASES 2, 3, 4: PROGRESSIVE DISCLOSURE & INTERFACE STREAMLINING
+       ========================================================================= */
+
+    /* Central 4-Mode Navigation Switcher in Header */
+    .nav-mode-switcher {
+      display: flex;
+      align-items: center;
+      background: rgba(0, 0, 0, 0.45);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 1px solid var(--border-subtle);
+      border-radius: 999px;
+      padding: 3px 5px;
+      gap: 3px;
+    }
+    .mode-tab {
+      background: transparent;
+      border: 1px solid transparent;
+      color: var(--text-muted);
+      padding: 5px 12px;
+      border-radius: 999px;
+      font-family: var(--font-display);
+      font-size: 0.72rem;
+      font-weight: 600;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .mode-tab:hover {
+      color: #fff;
+      background: rgba(255, 255, 255, 0.08);
+    }
+    .mode-tab.active {
+      background: rgba(0, 255, 135, 0.15);
+      border-color: var(--accent-emerald);
+      color: #fff;
+      box-shadow: 0 0 12px rgba(0, 255, 135, 0.25);
+    }
+
+    /* Dropdown Menus (View / Layers & Tools / More) */
+    .menu-dropdown-wrap {
+      position: relative;
+      display: inline-block;
+    }
+    .dropdown-menu {
+      position: absolute;
+      top: calc(100% + 8px);
+      left: 0;
+      background: var(--bg-panel-elevated);
+      backdrop-filter: blur(28px);
+      -webkit-backdrop-filter: blur(28px);
+      border: 1px solid var(--border-subtle);
+      border-radius: 12px;
+      padding: 10px;
+      min-width: 210px;
+      box-shadow: 0 18px 45px rgba(0,0,0,0.7);
+      z-index: 60;
+      display: none;
+      flex-direction: column;
+      gap: 4px;
+    }
+    .dropdown-menu.dropdown-menu-right {
+      left: auto;
+      right: 0;
+      min-width: 240px;
+    }
+    .dropdown-menu.show {
+      display: flex;
+    }
+    .dropdown-section-title {
+      font-family: var(--font-mono);
+      font-size: 0.55rem;
+      color: var(--text-dim);
+      letter-spacing: 0.08em;
+      padding: 4px 8px 2px 8px;
+    }
+    .dropdown-divider {
+      height: 1px;
+      background: var(--border-subtle);
+      margin: 4px 0;
+    }
+    .drop-item {
+      background: transparent;
+      border: none;
+      color: var(--text-muted);
+      padding: 6px 10px;
+      border-radius: 6px;
+      font-family: var(--font-mono);
+      font-size: 0.68rem;
+      text-align: left;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      transition: all 0.15s;
+      text-decoration: none;
+      width: 100%;
+    }
+    .drop-item:hover {
+      background: rgba(255, 255, 255, 0.08);
+      color: #fff;
+    }
+    .drop-item.active {
+      background: rgba(0, 255, 135, 0.14);
+      color: var(--accent-emerald);
+      font-weight: 600;
+    }
+    .drop-check-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 5px 10px;
+      font-family: var(--font-mono);
+      font-size: 0.68rem;
+      color: var(--text-muted);
+      cursor: pointer;
+      border-radius: 6px;
+      transition: background 0.15s;
+    }
+    .drop-check-item:hover {
+      background: rgba(255, 255, 255, 0.06);
+      color: #fff;
+    }
+    .drop-check-item input[type="checkbox"] {
+      accent-color: var(--accent-emerald);
+      cursor: pointer;
+    }
+    .drop-pill-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4px;
+      padding: 2px 4px;
+    }
+
+    /* Streamlined Contextual Dock (Left) */
+    .contextual-dock {
+      width: 280px !important;
+      padding: 16px !important;
+      gap: 10px !important;
+      transition: transform 0.3s ease, opacity 0.3s ease;
+    }
+    .contextual-dock.dock-collapsed {
+      transform: translateX(calc(-100% - 20px));
+      opacity: 0;
+      pointer-events: none;
+    }
+    .chapter-headline {
+      font-size: 1.15rem !important;
+      margin-bottom: 4px !important;
+    }
+    .chapter-paragraph {
+      font-size: 0.72rem !important;
+      line-height: 1.5 !important;
+      margin-bottom: 6px !important;
+    }
+    .btn-toggle-telemetry {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid var(--border-subtle);
+      border-radius: 6px;
+      color: var(--text-muted);
+      padding: 6px 10px;
+      font-family: var(--font-mono);
+      font-size: 0.62rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      width: 100%;
+      margin-top: 4px;
+      transition: all 0.2s;
+    }
+    .btn-toggle-telemetry:hover {
+      background: rgba(255, 255, 255, 0.1);
+      color: #fff;
+    }
+    .tele-grid-collapsible {
+      display: none;
+      grid-template-columns: 1fr 1fr;
+      gap: 6px;
+      margin-top: 6px;
+    }
+    .tele-grid-collapsible.expanded {
+      display: grid;
+    }
+
+    /* Compact Bottom Story Navigator Bar */
+    .story-navigator-bar {
+      position: fixed;
+      bottom: 24px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: var(--bg-panel-elevated);
+      backdrop-filter: blur(28px);
+      -webkit-backdrop-filter: blur(28px);
+      border: 1px solid var(--border-accent);
+      border-radius: 999px;
+      padding: 5px 12px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      z-index: 40;
+      box-shadow: 0 14px 40px rgba(0,0,0,0.65);
+    }
+    .story-nav-btn {
+      background: rgba(255,255,255,0.06);
+      border: 1px solid var(--border-subtle);
+      color: #fff;
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .story-nav-btn:hover {
+      background: rgba(255,255,255,0.15);
+      border-color: var(--accent-emerald);
+    }
+    .story-chapter-pill {
+      background: rgba(0, 255, 135, 0.08);
+      border: 1px solid rgba(0, 255, 135, 0.3);
+      color: #fff;
+      padding: 4px 12px;
+      border-radius: 999px;
+      font-family: var(--font-mono);
+      font-size: 0.66rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      transition: all 0.2s;
+    }
+    .story-chapter-pill:hover {
+      background: rgba(0, 255, 135, 0.16);
+      border-color: var(--accent-emerald);
+    }
+    .story-num {
+      color: var(--accent-emerald);
+      font-weight: 700;
+    }
+
+    /* Chapter Quick Drawer / Modal */
+    .chapter-quick-drawer {
+      position: fixed;
+      bottom: 74px;
+      left: 50%;
+      transform: translateX(-50%) translateY(20px);
+      width: 480px;
+      max-width: 92vw;
+      background: var(--bg-panel-elevated);
+      backdrop-filter: blur(28px);
+      -webkit-backdrop-filter: blur(28px);
+      border: 1px solid var(--border-accent);
+      border-radius: 14px;
+      padding: 14px;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.8);
+      z-index: 48;
+      display: none;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .chapter-quick-drawer.show {
+      display: flex;
+      transform: translateX(-50%) translateY(0);
+    }
+    .quick-chapter-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 6px;
+      max-height: 280px;
+      overflow-y: auto;
+    }
+    .quick-ch-item {
+      background: rgba(0,0,0,0.35);
+      border: 1px solid var(--border-subtle);
+      border-radius: 6px;
+      padding: 8px 10px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .quick-ch-item:hover {
+      background: rgba(255,255,255,0.08);
+      border-color: var(--accent-emerald);
+    }
+    .quick-ch-item.active {
+      background: rgba(0, 255, 135, 0.14);
+      border-color: var(--accent-emerald);
+    }
+    .quick-ch-num {
+      font-family: var(--font-mono);
+      font-size: 0.65rem;
+      font-weight: 700;
+      color: var(--accent-emerald);
+    }
+    .quick-ch-title {
+      font-family: var(--font-display);
+      font-size: 0.72rem;
+      color: #fff;
+      font-weight: 600;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    /* Restrained Spatial Pins (Phase 4 Decluttering) */
+    .spatial-pin {
+      opacity: 0.75;
+      transform: scale(0.85);
+      transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .spatial-pin:hover {
+      opacity: 1;
+      transform: scale(1.0);
+    }
+    .spatial-pin .pin-text {
+      max-width: 0;
+      overflow: hidden;
+      white-space: nowrap;
+      transition: max-width 0.3s ease, padding 0.3s ease;
+      padding: 2px 0;
+    }
+    .spatial-pin:hover .pin-text {
+      max-width: 220px;
+      padding: 2px 8px;
+    }
+
+    /* Hide legacy floating toolbars to unclutter viewport */
+    .visibility-toolbar { display: none !important; }
+    .chapter-rail { display: none !important; }
+    .timeline-dock { display: none !important; }
+
   </style>
 </head>
 <body>
@@ -2338,85 +2678,87 @@
   </button>
 
   <!-- Top Header Navigation -->
+    <!-- Top Streamlined Navigation Header (Phases 2 & 3) -->
   <header class="experience-header">
     <div class="brand-pill">
       <div class="brand-dot"></div>
       <span class="brand-title">ZERTHIVA</span>
-      <span class="brand-sub">SOIL INTELLIGENCE SYSTEM</span>
+      <span class="brand-sub">SOIL INTELLIGENCE</span>
     </div>
 
+    <!-- Central Mode Switcher: The 4 Core Experience Modes -->
+    <nav class="nav-mode-switcher" id="nav-mode-switcher">
+      <button class="mode-tab active" data-mode="explore" id="tab-mode-explore" title="Agricultural Field Environment (Orbit / Walk)">
+        <i data-lucide="compass" style="width:13px; height:13px;"></i> Explore
+      </button>
+      <button class="mode-tab" data-mode="underground" id="tab-mode-underground" title="Subterranean Soil Stratigraphy & Rhizosphere">
+        <i data-lucide="layers" style="width:13px; height:13px; color:var(--accent-cyan);"></i> Underground
+      </button>
+      <button class="mode-tab" data-mode="lab" id="tab-mode-lab" title="Dedicated 3D Hardware Engineering Laboratory">
+        <i data-lucide="cpu" style="width:13px; height:13px; color:var(--accent-emerald);"></i> Device Lab
+      </button>
+      <button class="mode-tab" data-mode="station" id="tab-mode-station" title="Autonomous Scenarios & Decision Engine">
+        <i data-lucide="activity" style="width:13px; height:13px; color:#38bdf8;"></i> Monitoring
+      </button>
+    </nav>
+
+    <!-- Right Actions: View (Layers), Tools Menu, Signature Action -->
     <div class="header-actions">
-      <!-- Signature Continuous Cutaway Sequence Trigger -->
-      <button class="btn-pill btn-signature" id="btn-signature-reveal" title="Trigger 12-stage signature cinematic cutaway">
-        <i data-lucide="sparkles" style="width: 13px; height: 13px;"></i> Reveal Hidden System
-      </button>
-
-      <!-- Subterranean Underground Explorer Mode -->
-      <button class="btn-pill" id="btn-enter-subsurface" title="Open Subterranean Soil & Rhizosphere Explorer">
-        <i data-lucide="layers" style="width: 13px; height: 13px; color: var(--accent-cyan);"></i> Underground Explorer
-      </button>
-
-      <!-- First-Person Field Exploration Walk Mode -->
-      <button class="btn-pill" id="btn-toggle-walk" title="Toggle First-Person Field Walk Mode (Shortcut: [V] or [C])">
-        <i data-lucide="footprints" id="icon-walk-mode" style="width: 13px; height: 13px; color: var(--accent-emerald);"></i> Walk Mode
-      </button>
-
-      <!-- Subterranean Underground Explorer -->
-      <button class="btn-pill" id="btn-enter-underground" title="Open Subterranean Underground Explorer & Rhizosphere">
-        <i data-lucide="layers" style="width: 13px; height: 13px; color: var(--accent-cyan);"></i> Underground
-      </button>
-
-      <!-- Autonomous Monitoring Station & Scenario Lab -->
-      <button class="btn-pill" id="btn-enter-station" title="Open Autonomous Monitoring Station & Scenario Lab">
-        <i data-lucide="activity" style="width: 13px; height: 13px; color: #38bdf8;"></i> Station
-      </button>
-
-      <!-- Device Engineering Laboratory Mode -->
-      <button class="btn-pill" id="btn-enter-lab" title="Open Dedicated 3D Hardware Engineering Laboratory">
-        <i data-lucide="cpu" style="width: 13px; height: 13px; color: var(--accent-emerald);"></i> Device Lab
-      </button>
-
-      <!-- Daylight Presets Selector -->
-      <div class="daylight-selector" title="Daylight & Atmosphere Presets (Shortcut: [T])">
-        <button class="daylight-btn active" data-preset="noon" title="Clear Noon Daylight">☀️ Noon</button>
-        <button class="daylight-btn" data-preset="golden" title="Warm Sunset Golden Hour">🌅 Dusk</button>
-        <button class="daylight-btn" data-preset="overcast" title="Overcast Diffuse Field">☁️ Diffuse</button>
-        <button class="daylight-btn" data-preset="night" title="Field Station Night & Nocturnal LED">🌙 Night</button>
+      <!-- View & Layers Dropdown Menu -->
+      <div class="menu-dropdown-wrap" id="menu-layers-wrap">
+        <button class="btn-pill" id="btn-menu-layers" title="Toggle 3D Layers & Inspection Modes">
+          <i data-lucide="eye" style="width:13px; height:13px;"></i> View <i data-lucide="chevron-down" style="width:11px; height:11px; opacity:0.6;"></i>
+        </button>
+        <div class="dropdown-menu" id="dropdown-layers-menu">
+          <div class="dropdown-section-title">INSPECTION MODES</div>
+          <button class="drop-item active" id="drop-mode-cutaway"><i data-lucide="scissors" style="width:12px; height:12px;"></i> 31° Diagnostic Cutaway</button>
+          <button class="drop-item" id="drop-mode-solid"><i data-lucide="box" style="width:12px; height:12px;"></i> Solid Soil Monolith</button>
+          <button class="drop-item" id="drop-mode-rootfocus"><i data-lucide="scan" style="width:12px; height:12px;"></i> Rhizosphere Root Focus</button>
+          <div class="dropdown-divider"></div>
+          <div class="dropdown-section-title">3D SCENE LAYERS</div>
+          <label class="drop-check-item"><input type="checkbox" id="chk-layer-canopy" checked> <span>Plant Canopy</span></label>
+          <label class="drop-check-item"><input type="checkbox" id="chk-layer-roots" checked> <span>Root Architecture</span></label>
+          <label class="drop-check-item"><input type="checkbox" id="chk-layer-soil" checked> <span>Soil Strata</span></label>
+          <label class="drop-check-item"><input type="checkbox" id="chk-layer-hw" checked> <span>Sensor Hardware</span></label>
+          <label class="drop-check-item"><input type="checkbox" id="chk-layer-hydro"> <span>Hydrologic Flow</span></label>
+        </div>
       </div>
 
-      <!-- High-Res Screenshot Export -->
-      <button class="btn-pill" id="btn-snapshot" title="Export High-Resolution WebGL Screenshot (Shortcut: [P])">
-        <i data-lucide="camera" style="width: 13px; height: 13px; color: var(--accent-cyan);"></i> Snapshot
-      </button>
+      <!-- Tools & Settings Dropdown Menu -->
+      <div class="menu-dropdown-wrap" id="menu-tools-wrap">
+        <button class="btn-pill" id="btn-menu-tools" title="Atmospheric Lighting, Audio, Screenshot & Specifications">
+          <i data-lucide="more-horizontal" style="width:13px; height:13px;"></i> Tools <i data-lucide="chevron-down" style="width:11px; height:11px; opacity:0.6;"></i>
+        </button>
+        <div class="dropdown-menu dropdown-menu-right" id="dropdown-tools-menu">
+          <div class="dropdown-section-title">DAYLIGHT ATMOSPHERE</div>
+          <div class="drop-pill-grid">
+            <button class="daylight-btn active" data-preset="noon" title="Clear Noon Daylight">☀️ Noon</button>
+            <button class="daylight-btn" data-preset="golden" title="Warm Sunset Golden Hour">🌅 Dusk</button>
+            <button class="daylight-btn" data-preset="overcast" title="Overcast Diffuse Field">☁️ Diffuse</button>
+            <button class="daylight-btn" data-preset="night" title="Field Station Night">🌙 Night</button>
+          </div>
+          <div class="dropdown-divider"></div>
+          <div class="dropdown-section-title">EXPERIENCE & CONTROLS</div>
+          <button class="drop-item" id="btn-tool-walk"><i data-lucide="footprints" style="width:12px; height:12px; color:var(--accent-emerald);"></i> Walk Mode [V]</button>
+          <button class="drop-item" id="btn-tool-snapshot"><i data-lucide="camera" style="width:12px; height:12px; color:var(--accent-cyan);"></i> Export Snapshot [P]</button>
+          <button class="drop-item" id="btn-tool-audio"><i data-lucide="volume-2" id="icon-tool-audio" style="width:12px; height:12px;"></i> Ambient Audio</button>
+          <button class="drop-item" id="btn-tool-reset"><i data-lucide="rotate-ccw" style="width:12px; height:12px;"></i> Reset Hero Camera</button>
+          <div class="dropdown-divider"></div>
+          <div class="dropdown-section-title">DOCUMENTATION & CITATIONS</div>
+          <a href="./index.html" class="drop-item" target="_blank"><i data-lucide="file-text" style="width:12px; height:12px;"></i> Master Technical Dossier</a>
+          <button class="drop-item" id="btn-tool-citations"><i data-lucide="info" style="width:12px; height:12px;"></i> Scientific Citations & Licenses</button>
+          <button class="drop-item" id="btn-tool-shortcuts"><i data-lucide="help-circle" style="width:12px; height:12px;"></i> Keyboard Shortcuts [?]</button>
+        </div>
+      </div>
 
-      <!-- Keyboard Shortcuts & Accessibility Help -->
-      <button class="btn-pill" id="btn-shortcuts" title="Keyboard Shortcuts & Accessibility (Shortcut: [?])">
-        <i data-lucide="help-circle" style="width: 13px; height: 13px;"></i> Help
-      </button>
-
-      <!-- Reset View -->
-      <button class="btn-pill" id="btn-reset-view" title="Reset camera to default hero composition">
-        <i data-lucide="rotate-ccw" style="width: 13px; height: 13px;"></i> Reset View
-      </button>
-
-      <!-- Audio Synthesizer -->
-      <button class="btn-pill" id="btn-toggle-audio" title="Mute/unmute ambient audio">
-        <i data-lucide="volume-2" id="icon-audio" style="width: 13px; height: 13px;"></i> Audio
-      </button>
-
-      <!-- Master Technical Dossier Link -->
-      <a href="./index.html" class="btn-pill" target="_blank" title="Open master 58-section dossier">
-        <i data-lucide="file-text" style="width: 13px; height: 13px;"></i> Master Specs
-      </a>
-
-      <!-- 3D Assets & Scientific Citations -->
-      <button class="btn-pill" id="btn-open-citations" title="View 3D asset licenses, PBR textures, and scientific citations">
-        <i data-lucide="info" style="width: 13px; height: 13px;"></i> Citations
+      <!-- Signature Cutaway Action Button -->
+      <button class="btn-pill btn-signature" id="btn-signature-reveal" title="Trigger 12-stage signature cinematic cutaway">
+        <i data-lucide="sparkles" style="width: 13px; height: 13px;"></i> Reveal System
       </button>
     </div>
   </header>
 
-  <!-- Left Contextual Narrative & Telemetry Panel -->
+  <!-- Left Contextual Narrative Panel (Level 1 Progressive Disclosure) -->
   <aside class="contextual-dock" id="narrative-panel">
     <div class="chapter-tag-row">
       <span class="chapter-tag" id="label-chapter-tag">CHAPTER 01 // SURFACE</span>
@@ -2425,31 +2767,30 @@
 
     <h2 class="chapter-headline" id="text-chapter-title">The Living Surface</h2>
     <p class="chapter-paragraph" id="text-chapter-desc">
-      What happens above the soil begins beneath it. A mature maize plant (<em>Zea mays</em>) flourishes under ambient daylight. As we descend, the opaque ground opens into an explorable subterranean ecosystem.
+      What happens above the soil begins beneath it. A mature maize plant flourishes under ambient daylight. As we descend, the opaque ground opens into an explorable subterranean ecosystem.
     </p>
 
-    <!-- Contextual Chapter Controls (Dynamically switched per chapter) -->
-    <div class="module-controls" id="contextual-controls">
-      <!-- Injected per chapter -->
-    </div>
+    <!-- Contextual Chapter Controls -->
+    <div class="module-controls" id="contextual-controls"></div>
 
-    <!-- Live Telemetry Stream Grid -->
-    <div class="tele-grid">
+    <!-- Level 3 Collapsible Telemetry Metrics -->
+    <button class="btn-toggle-telemetry" id="btn-toggle-telemetry" title="Show live sensor telemetry stream">
+      <span><i data-lucide="bar-chart-2" style="width:12px; height:12px; display:inline-block; vertical-align:middle; margin-right:4px;"></i> Live Telemetry (4)</span>
+      <i data-lucide="chevron-down" id="icon-tele-chevron" style="width:11px; height:11px;"></i>
+    </button>
+    <div class="tele-grid-collapsible tele-grid" id="tele-grid-collapsible">
       <div class="tele-box">
         <div class="tele-box-title">BULK EC₂₅ <span class="tele-box-badge">[MEASURED]</span></div>
         <div class="tele-box-val" id="val-ec">1.42</div>
       </div>
-
       <div class="tele-box">
         <div class="tele-box-title">MOISTURE θ <span class="tele-box-badge">[MEASURED]</span></div>
         <div class="tele-box-val" id="val-moist">31.8</div>
       </div>
-
       <div class="tele-box">
         <div class="tele-box-title">SOIL TEMP <span class="tele-box-badge">[MEASURED]</span></div>
         <div class="tele-box-val" id="val-temp">24.6</div>
       </div>
-
       <div class="tele-box">
         <div class="tele-box-title">MAAS-HOFFMAN <span class="tele-box-badge">[SIMULATED]</span></div>
         <div class="tele-box-val" id="val-penalty" style="color: var(--accent-emerald);">0.0% LOSS</div>
@@ -2566,6 +2907,29 @@
   <div id="hotspot-node" class="spatial-pin" style="display: none;">
     <div class="pin-dot" style="background: var(--accent-cyan);"></div>
     <span class="pin-text">ESP32 Edge Gateway & Solar Cap</span>
+  </div>
+
+  <!-- Compact Bottom Story Navigator Bar (Phase 3) -->
+  <div class="story-navigator-bar" id="story-navigator-bar">
+    <button class="story-nav-btn" id="btn-story-prev" title="Previous chapter"><i data-lucide="chevron-left" style="width:14px; height:14px;"></i></button>
+    <button class="story-chapter-pill" id="btn-open-chapter-list" title="View all 10 story chapters">
+      <span class="story-num" id="label-story-num">01</span>
+      <span class="story-title-snippet" id="label-story-title">The Living Surface</span>
+      <i data-lucide="list" style="width:12px; height:12px; opacity:0.6;"></i>
+    </button>
+    <button class="story-nav-btn" id="btn-story-play-tour" title="Play autonomous tour"><i data-lucide="play" id="icon-story-tour" style="width:13px; height:13px;"></i></button>
+    <button class="story-nav-btn" id="btn-story-next" title="Next chapter"><i data-lucide="chevron-right" style="width:14px; height:14px;"></i></button>
+  </div>
+
+  <!-- Chapter Quick Drawer (10 Interactive Story Chapters) -->
+  <div class="chapter-quick-drawer" id="chapter-quick-drawer">
+    <div style="display:flex; justify-content:space-between; align-items:center; border-bottom:1px solid var(--border-subtle); padding-bottom:6px; margin-bottom:4px;">
+      <span style="font-family:var(--font-mono); font-size:0.64rem; font-weight:700; color:#fff;">STORY CHAPTERS (10)</span>
+      <button class="modal-close" id="btn-close-ch-drawer" style="position:static; width:20px; height:20px;"><i data-lucide="x" style="width:13px; height:13px;"></i></button>
+    </div>
+    <div class="quick-chapter-grid" id="quick-chapter-grid">
+      <!-- Injected dynamically -->
+    </div>
   </div>
 
   <!-- Deep Inspector Modal -->
@@ -10114,6 +10478,183 @@ document.getElementById('label-chapter-tag').innerText = ch.tag;
     }
 
     initImmersionControls();
+
+    /* =========================================================================
+       PHASES 2 & 3: STREAMLINED UI CONTROLLERS & PROGRESSIVE DISCLOSURE
+       ========================================================================= */
+    function initStreamlinedUI() {
+      // 1. Dropdown Menus (View / Layers & Tools)
+      const btnLayers = document.getElementById('btn-menu-layers');
+      const dropLayers = document.getElementById('dropdown-layers-menu');
+      const btnTools = document.getElementById('btn-menu-tools');
+      const dropTools = document.getElementById('dropdown-tools-menu');
+
+      btnLayers?.addEventListener('click', (e) => {
+        e.stopPropagation();
+        dropLayers?.classList.toggle('show');
+        dropTools?.classList.remove('show');
+      });
+
+      btnTools?.addEventListener('click', (e) => {
+        e.stopPropagation();
+        dropTools?.classList.toggle('show');
+        dropLayers?.classList.remove('show');
+      });
+
+      // Close dropdowns on outside click
+      window.addEventListener('click', (e) => {
+        if (!e.target.closest('#menu-layers-wrap')) dropLayers?.classList.remove('show');
+        if (!e.target.closest('#menu-tools-wrap')) dropTools?.classList.remove('show');
+      });
+
+      // 2. Central 4-Mode Switcher Tabs
+      document.querySelectorAll('.mode-tab').forEach(tab => {
+        tab.addEventListener('click', () => {
+          const mode = tab.getAttribute('data-mode');
+          document.querySelectorAll('.mode-tab').forEach(t => t.classList.remove('active'));
+          tab.classList.add('active');
+
+          if (mode === 'explore') {
+            if (typeof isDeviceLabActive !== 'undefined' && isDeviceLabActive) leaveDeviceLaboratory();
+            if (typeof isSubsurfaceActive !== 'undefined' && isSubsurfaceActive) leaveSubsurfaceExplorer();
+            if (typeof isMonitoringStationActive !== 'undefined' && isMonitoringStationActive) leaveMonitoringStation();
+            sound.playPing(680);
+          } else if (mode === 'underground') {
+            enterSubsurfaceExplorer();
+          } else if (mode === 'lab') {
+            enterDeviceLaboratory();
+          } else if (mode === 'station') {
+            enterMonitoringStation();
+          }
+        });
+      });
+
+      // 3. View Dropdown Inspection Modes
+      document.getElementById('drop-mode-cutaway')?.addEventListener('click', () => {
+        setInspectionMode('cutaway');
+        dropLayers?.classList.remove('show');
+      });
+      document.getElementById('drop-mode-solid')?.addEventListener('click', () => {
+        setInspectionMode('solid');
+        dropLayers?.classList.remove('show');
+      });
+      document.getElementById('drop-mode-rootfocus')?.addEventListener('click', () => {
+        setInspectionMode('rootfocus');
+        dropLayers?.classList.remove('show');
+      });
+
+      // 4. Layer Checkboxes
+      const layerMap = {
+        'chk-layer-canopy': [anatomyParts.leaves, anatomyParts.sheaths, anatomyParts.ears, anatomyParts.stem],
+        'chk-layer-roots': [anatomyParts.braceRoots, anatomyParts.crownRoots, anatomyParts.seminalRoots, anatomyParts.lateralRoots, anatomyParts.rootTips],
+        'chk-layer-soil': [geologyGroup],
+        'chk-layer-hw': [hardwareGroup],
+        'chk-layer-hydro': [hydrologyGroup, plumeMesh]
+      };
+
+      Object.entries(layerMap).forEach(([chkId, targets]) => {
+        const chk = document.getElementById(chkId);
+        if (chk) {
+          chk.addEventListener('change', () => {
+            targets.forEach(t => { if (t) t.visible = chk.checked; });
+            sound.playPing(chk.checked ? 720 : 420);
+          });
+        }
+      });
+
+      // 5. Tools Dropdown Actions
+      document.getElementById('btn-tool-walk')?.addEventListener('click', () => {
+        dropTools?.classList.remove('show');
+        toggleWalkMode();
+      });
+      document.getElementById('btn-tool-snapshot')?.addEventListener('click', () => {
+        dropTools?.classList.remove('show');
+        takeScreenshot();
+      });
+      document.getElementById('btn-tool-audio')?.addEventListener('click', () => {
+        document.getElementById('btn-toggle-audio')?.click();
+      });
+      document.getElementById('btn-tool-reset')?.addEventListener('click', () => {
+        dropTools?.classList.remove('show');
+        document.getElementById('btn-reset-view')?.click();
+      });
+      document.getElementById('btn-tool-citations')?.addEventListener('click', () => {
+        dropTools?.classList.remove('show');
+        document.getElementById('btn-open-citations')?.click();
+      });
+      document.getElementById('btn-tool-shortcuts')?.addEventListener('click', () => {
+        dropTools?.classList.remove('show');
+        toggleShortcutsModal(true);
+      });
+
+      // 6. Collapsible Telemetry Grid Toggle
+      const btnToggleTele = document.getElementById('btn-toggle-telemetry');
+      const gridTele = document.getElementById('tele-grid-collapsible');
+      const iconChevron = document.getElementById('icon-tele-chevron');
+
+      btnToggleTele?.addEventListener('click', () => {
+        const isExp = gridTele.classList.toggle('expanded');
+        if (iconChevron) iconChevron.style.transform = isExp ? 'rotate(180deg)' : 'rotate(0deg)';
+        sound.playPing(isExp ? 740 : 440);
+      });
+
+      // 7. Story Navigator & Chapter Quick Drawer
+      const btnOpenDrawer = document.getElementById('btn-open-chapter-list');
+      const drawer = document.getElementById('chapter-quick-drawer');
+      const btnCloseDrawer = document.getElementById('btn-close-ch-drawer');
+      const quickGrid = document.getElementById('quick-chapter-grid');
+
+      btnOpenDrawer?.addEventListener('click', (e) => {
+        e.stopPropagation();
+        drawer?.classList.toggle('show');
+        sound.playPing(660);
+      });
+
+      btnCloseDrawer?.addEventListener('click', () => {
+        drawer?.classList.remove('show');
+      });
+
+      window.addEventListener('click', (e) => {
+        if (!e.target.closest('#chapter-quick-drawer') && !e.target.closest('#btn-open-chapter-list')) {
+          drawer?.classList.remove('show');
+        }
+      });
+
+      // Populate Quick Chapter Grid
+      if (quickGrid && typeof CHAPTERS !== 'undefined') {
+        let chHtml = '';
+        CHAPTERS.forEach((ch, idx) => {
+          chHtml += `
+            <div class="quick-ch-item ${idx === 0 ? 'active' : ''}" data-idx="${idx}">
+              <span class="quick-ch-num">${String(idx + 1).padStart(2, '0')}</span>
+              <span class="quick-ch-title">${ch.title}</span>
+            </div>
+          `;
+        });
+        quickGrid.innerHTML = chHtml;
+
+        quickGrid.querySelectorAll('.quick-ch-item').forEach(item => {
+          item.addEventListener('click', () => {
+            const idx = parseInt(item.getAttribute('data-idx'));
+            setChapter(idx);
+            drawer?.classList.remove('show');
+          });
+        });
+      }
+
+      document.getElementById('btn-story-next')?.addEventListener('click', () => {
+        setChapter((simState.currentChapter + 1) % CHAPTERS.length);
+      });
+      document.getElementById('btn-story-prev')?.addEventListener('click', () => {
+        const prev = simState.currentChapter > 0 ? simState.currentChapter - 1 : CHAPTERS.length - 1;
+        setChapter(prev);
+      });
+      document.getElementById('btn-story-play-tour')?.addEventListener('click', () => {
+        document.getElementById('btn-play-tour')?.click();
+      });
+    }
+
+    initStreamlinedUI();
     initSubsurfaceExplorer();
     initDeviceLaboratory();
     initWalkMode();
