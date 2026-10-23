@@ -2028,6 +2028,212 @@
       cursor: crosshair;
     }
 
+
+    /* =========================================================================
+       PHASE 5: ENVIRONMENTAL IMMERSION & ACCESSIBILITY
+       ========================================================================= */
+
+    /* Daylight Presets Selector in Header */
+    .daylight-selector {
+      display: flex;
+      align-items: center;
+      background: rgba(0,0,0,0.45);
+      border: 1px solid var(--border-subtle);
+      border-radius: 999px;
+      padding: 2px 4px;
+      gap: 2px;
+    }
+    .daylight-btn {
+      background: transparent;
+      border: none;
+      color: var(--text-muted);
+      padding: 4px 8px;
+      border-radius: 999px;
+      font-family: var(--font-mono);
+      font-size: 0.62rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .daylight-btn:hover {
+      color: #fff;
+      background: rgba(255,255,255,0.08);
+    }
+    .daylight-btn.active {
+      background: rgba(255, 184, 0, 0.2);
+      border: 1px solid var(--accent-amber);
+      color: #fff;
+      font-weight: 600;
+    }
+
+    /* Interactive Field Minimap */
+    .field-minimap-container {
+      position: fixed;
+      bottom: 24px;
+      left: 24px;
+      width: 140px;
+      height: 140px;
+      background: var(--bg-panel-elevated);
+      backdrop-filter: blur(24px);
+      -webkit-backdrop-filter: blur(24px);
+      border: 1px solid var(--border-subtle);
+      border-radius: 12px;
+      z-index: 45;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 12px 30px rgba(0,0,0,0.6);
+      transition: opacity 0.3s, transform 0.3s;
+      overflow: hidden;
+      pointer-events: auto;
+    }
+    .field-minimap-container.hidden {
+      opacity: 0;
+      pointer-events: none;
+      transform: scale(0.9);
+    }
+    .minimap-header {
+      position: absolute;
+      top: 4px;
+      left: 8px;
+      right: 8px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-family: var(--font-mono);
+      font-size: 0.52rem;
+      color: var(--text-dim);
+      pointer-events: none;
+      z-index: 2;
+    }
+    #minimap-canvas {
+      width: 130px;
+      height: 130px;
+      display: block;
+    }
+
+    /* Screenshot Shutter Flash Effect */
+    .snapshot-flash {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: #fff;
+      z-index: 999;
+      pointer-events: none;
+      opacity: 0;
+      transition: opacity 0.08s ease-out;
+    }
+    .snapshot-flash.flash-active {
+      opacity: 0.85;
+      transition: opacity 0.4s ease-out;
+    }
+
+    /* Shortcuts & Accessibility Modal */
+    .shortcuts-modal {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: rgba(0, 0, 0, 0.75);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.25s ease;
+    }
+    .shortcuts-modal.active {
+      opacity: 1;
+      pointer-events: auto;
+    }
+    .shortcuts-dialog {
+      width: 580px;
+      max-width: 90vw;
+      background: var(--bg-panel-elevated);
+      border: 1px solid var(--border-accent);
+      border-radius: 14px;
+      padding: 24px;
+      box-shadow: 0 24px 60px rgba(0,0,0,0.8);
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+    .shortcuts-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid var(--border-subtle);
+      padding-bottom: 12px;
+    }
+    .shortcuts-title-group {
+      display: flex;
+      flex-direction: column;
+    }
+    .shortcuts-title {
+      font-family: var(--font-display);
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: #fff;
+    }
+    .shortcuts-sub {
+      font-family: var(--font-mono);
+      font-size: 0.62rem;
+      color: var(--accent-emerald);
+    }
+    .shortcuts-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+    .shortcut-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: rgba(0,0,0,0.3);
+      border: 1px solid var(--border-subtle);
+      border-radius: 6px;
+      padding: 6px 10px;
+    }
+    .shortcut-desc {
+      font-size: 0.72rem;
+      color: var(--text-muted);
+    }
+    .shortcut-key {
+      font-family: var(--font-mono);
+      font-size: 0.64rem;
+      font-weight: 700;
+      background: rgba(255,255,255,0.08);
+      border: 1px solid var(--border-subtle);
+      border-radius: 4px;
+      padding: 2px 6px;
+      color: #fff;
+    }
+    .shortcuts-footer {
+      border-top: 1px solid var(--border-subtle);
+      padding-top: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .motion-toggle-label {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-family: var(--font-mono);
+      font-size: 0.68rem;
+      color: var(--text-muted);
+      cursor: pointer;
+    }
+
   </style>
 </head>
 <body>
@@ -2088,6 +2294,24 @@
       <!-- Device Engineering Laboratory Mode -->
       <button class="btn-pill" id="btn-enter-lab" title="Open Dedicated 3D Hardware Engineering Laboratory">
         <i data-lucide="cpu" style="width: 13px; height: 13px; color: var(--accent-emerald);"></i> Device Lab
+      </button>
+
+      <!-- Daylight Presets Selector -->
+      <div class="daylight-selector" title="Daylight & Atmosphere Presets (Shortcut: [T])">
+        <button class="daylight-btn active" data-preset="noon" title="Clear Noon Daylight">☀️ Noon</button>
+        <button class="daylight-btn" data-preset="golden" title="Warm Sunset Golden Hour">🌅 Dusk</button>
+        <button class="daylight-btn" data-preset="overcast" title="Overcast Diffuse Field">☁️ Diffuse</button>
+        <button class="daylight-btn" data-preset="night" title="Field Station Night & Nocturnal LED">🌙 Night</button>
+      </div>
+
+      <!-- High-Res Screenshot Export -->
+      <button class="btn-pill" id="btn-snapshot" title="Export High-Resolution WebGL Screenshot (Shortcut: [P])">
+        <i data-lucide="camera" style="width: 13px; height: 13px; color: var(--accent-cyan);"></i> Snapshot
+      </button>
+
+      <!-- Keyboard Shortcuts & Accessibility Help -->
+      <button class="btn-pill" id="btn-shortcuts" title="Keyboard Shortcuts & Accessibility (Shortcut: [?])">
+        <i data-lucide="help-circle" style="width: 13px; height: 13px;"></i> Help
       </button>
 
       <!-- Reset View -->
@@ -2883,6 +3107,94 @@
     </div>
   </div>
 
+
+  <!-- PHASE 5: ATMOSPHERIC & ACCESSIBILITY COMPONENTS -->
+  <!-- Flash overlay for camera screenshot -->
+  <div id="snapshot-flash" class="snapshot-flash"></div>
+
+  <!-- Real-Time Field Plot Minimap -->
+  <div id="field-minimap-container" class="field-minimap-container hidden" title="Agricultural Research Field Minimap">
+    <div class="minimap-header">
+      <span>GRID: 20x20m</span>
+      <span style="color:var(--accent-emerald);">N &uarr;</span>
+    </div>
+    <canvas id="minimap-canvas" width="130" height="130"></canvas>
+  </div>
+
+  <!-- Keyboard Shortcuts & Accessibility Modal ([?]) -->
+  <div id="shortcuts-modal" class="shortcuts-modal">
+    <div class="shortcuts-dialog">
+      <div class="shortcuts-header">
+        <div class="shortcuts-title-group">
+          <span class="shortcuts-title">Keyboard Navigation & Exploration</span>
+          <span class="shortcuts-sub">SYSTEM SHORTCUTS & ACCESSIBILITY</span>
+        </div>
+        <button class="modal-close" id="btn-close-shortcuts" style="position:static;"><i data-lucide="x" style="width:16px; height:16px;"></i></button>
+      </div>
+
+      <div class="shortcuts-grid">
+        <div class="shortcut-row">
+          <span class="shortcut-desc">First-Person Field Walk Mode</span>
+          <span class="shortcut-key">V or C</span>
+        </div>
+        <div class="shortcut-row">
+          <span class="shortcut-desc">Walk & Strafe</span>
+          <span class="shortcut-key">W / A / S / D</span>
+        </div>
+        <div class="shortcut-row">
+          <span class="shortcut-desc">Sprint (2.4 m/s)</span>
+          <span class="shortcut-key">Shift</span>
+        </div>
+        <div class="shortcut-row">
+          <span class="shortcut-desc">Contextual Object Interaction</span>
+          <span class="shortcut-key">E</span>
+        </div>
+        <div class="shortcut-row">
+          <span class="shortcut-desc">Device Engineering Lab</span>
+          <span class="shortcut-key">L</span>
+        </div>
+        <div class="shortcut-row">
+          <span class="shortcut-desc">Subterranean Explorer</span>
+          <span class="shortcut-key">U</span>
+        </div>
+        <div class="shortcut-row">
+          <span class="shortcut-desc">Monitoring Station & Scenarios</span>
+          <span class="shortcut-key">M</span>
+        </div>
+        <div class="shortcut-row">
+          <span class="shortcut-desc">Toggle Field Minimap</span>
+          <span class="shortcut-key">N</span>
+        </div>
+        <div class="shortcut-row">
+          <span class="shortcut-desc">Cycle Daylight Presets</span>
+          <span class="shortcut-key">T</span>
+        </div>
+        <div class="shortcut-row">
+          <span class="shortcut-desc">Export High-Res Snapshot</span>
+          <span class="shortcut-key">P</span>
+        </div>
+        <div class="shortcut-row">
+          <span class="shortcut-desc">Autonomous Story Tour</span>
+          <span class="shortcut-key">Space</span>
+        </div>
+        <div class="shortcut-row">
+          <span class="shortcut-desc">Jump to Chapters</span>
+          <span class="shortcut-key">1 – 0</span>
+        </div>
+      </div>
+
+      <div class="shortcuts-footer">
+        <label class="motion-toggle-label">
+          <input type="checkbox" id="chk-reduced-motion" style="accent-color:var(--accent-emerald);">
+          <span>Reduce Motion & Visual Effects</span>
+        </label>
+        <button class="btn-action-small" id="btn-done-shortcuts" style="padding:6px 16px;">
+          Close [Esc]
+        </button>
+      </div>
+    </div>
+  </div>
+
   <!-- Main Three.js Application Logic -->
   <script>
     lucide.createIcons();
@@ -3161,7 +3473,7 @@
     const camera = new THREE.PerspectiveCamera(44, window.innerWidth / window.innerHeight, 0.1, 100);
     camera.position.set(3.8, 0.45, 6.2);
 
-    const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true, powerPreference: "high-performance" });
+    const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true, powerPreference: "high-performance", preserveDrawingBuffer: true });
 
     if (!renderer || !renderer.getContext()) {
       document.body.innerHTML = '<div style="display:flex;align-items:center;justify-content:center;height:100vh;background:#030705;color:#B7CC8A;font-family:sans-serif;text-align:center;padding:2rem;"><div><h2 style="font-size:1.4rem;margin-bottom:1rem;">WebGL Not Supported</h2><p style="color:#888;max-width:400px;">Your browser or device does not support WebGL, which is required for this 3D visualization.<br><br>Please open this page in Chrome, Firefox, or Edge on a desktop or modern device.</p><a href="./index.html" style="display:inline-block;margin-top:1.5rem;padding:0.75rem 1.5rem;background:#142D25;color:#B7CC8A;border-radius:6px;text-decoration:none;">← View Documentation</a></div></div>';
@@ -5913,10 +6225,18 @@ document.getElementById('label-chapter-tag').innerText = ch.tag;
 
       const t = clock.getElapsedTime();
 
-      // Organic leaf motion in gentle agricultural breeze
-      leafMeshes.forEach((leafGroup, i) => {
-        leafGroup.rotation.z = Math.sin(t * 1.5 + i * 0.75) * 0.022;
-      });
+      // Phase 5: Organic multi-frequency wind sway & gusts
+      if (typeof isReducedMotion !== 'undefined' && !isReducedMotion) {
+        const windGust = Math.sin(t * 0.45) * 0.5 + Math.cos(t * 0.22) * 0.5;
+        leafMeshes.forEach((leafGroup, i) => {
+          const freq = 1.2 + (i % 3) * 0.3;
+          const flutter = Math.sin(t * 3.8 + i * 1.1) * 0.006;
+          leafGroup.rotation.z = Math.sin(t * freq + i * 0.75) * (0.018 + windGust * 0.012) + flutter;
+        });
+      }
+
+      // Phase 5: Update real-time field minimap radar
+      if (typeof drawMinimap === 'function') drawMinimap();
 
       // Beacon LED soft pulse
       if (simState.status === 'SAFE') {
@@ -9310,6 +9630,293 @@ document.getElementById('label-chapter-tag').innerText = ch.tag;
     }
 
     initMonitoringStation();
+
+    /* =========================================================================
+       PHASE 5: ENVIRONMENTAL IMMERSION & ACCESSIBILITY ENGINE
+       ========================================================================= */
+
+    // 1. Daylight Presets Engine (Noon, Golden Hour, Overcast, Night)
+    const DAYLIGHT_PRESETS = {
+      noon: {
+        id: 'noon',
+        name: 'Clear Noon',
+        bgColor: 0x06100c,
+        sunColor: 0xfff8ee,
+        sunIntensity: 2.85,
+        sunPos: { x: 6.5, y: 9.5, z: 5.0 },
+        fillColor: 0xa4c6eb,
+        fillIntensity: 0.80,
+        ambColor: 0xe3e8e2,
+        ambIntensity: 0.45
+      },
+      golden: {
+        id: 'golden',
+        name: 'Golden Hour',
+        bgColor: 0x160c08,
+        sunColor: 0xff9e44,
+        sunIntensity: 3.4,
+        sunPos: { x: 9.0, y: 3.0, z: 4.5 },
+        fillColor: 0xc27ba0,
+        fillIntensity: 0.70,
+        ambColor: 0x6e3d2c,
+        ambIntensity: 0.45
+      },
+      overcast: {
+        id: 'overcast',
+        name: 'Overcast Field',
+        bgColor: 0x0c1314,
+        sunColor: 0xd2d9dc,
+        sunIntensity: 1.4,
+        sunPos: { x: 2.0, y: 8.5, z: 2.0 },
+        fillColor: 0x9eb1ba,
+        fillIntensity: 1.25,
+        ambColor: 0x8a989e,
+        ambIntensity: 0.65
+      },
+      night: {
+        id: 'night',
+        name: 'Field Station Night',
+        bgColor: 0x020605,
+        sunColor: 0x3d5c7a,
+        sunIntensity: 0.42,
+        sunPos: { x: -4.0, y: 7.0, z: -3.0 },
+        fillColor: 0x142033,
+        fillIntensity: 0.35,
+        ambColor: 0x0c1822,
+        ambIntensity: 0.22
+      }
+    };
+
+    let activeDaylightPreset = 'noon';
+    let isReducedMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    function setDaylightPreset(presetKey) {
+      const p = DAYLIGHT_PRESETS[presetKey] || DAYLIGHT_PRESETS.noon;
+      activeDaylightPreset = p.id;
+
+      // Update button styles
+      document.querySelectorAll('.daylight-btn').forEach(btn => {
+        btn.classList.toggle('active', btn.getAttribute('data-preset') === p.id);
+      });
+
+      sound.playPing(p.id === 'golden' ? 520 : p.id === 'overcast' ? 440 : p.id === 'night' ? 360 : 640);
+
+      const dur = isReducedMotion ? 0.05 : 1.2;
+
+      // Smooth transition for lights and scene background
+      if (typeof keySunLight !== 'undefined') {
+        const col = new THREE.Color(p.sunColor);
+        gsap.to(keySunLight.color, { r: col.r, g: col.g, b: col.b, duration: dur });
+        gsap.to(keySunLight, { intensity: p.sunIntensity, duration: dur });
+        gsap.to(keySunLight.position, { x: p.sunPos.x, y: p.sunPos.y, z: p.sunPos.z, duration: dur });
+      }
+
+      if (typeof skyFillLight !== 'undefined') {
+        const col = new THREE.Color(p.fillColor);
+        gsap.to(skyFillLight.color, { r: col.r, g: col.g, b: col.b, duration: dur });
+        gsap.to(skyFillLight, { intensity: p.fillIntensity, duration: dur });
+      }
+
+      if (typeof ambientLight !== 'undefined') {
+        const col = new THREE.Color(p.ambColor);
+        gsap.to(ambientLight.color, { r: col.r, g: col.g, b: col.b, duration: dur });
+        gsap.to(ambientLight, { intensity: p.ambIntensity, duration: dur });
+      }
+
+      if (scene && scene.background) {
+        const col = new THREE.Color(p.bgColor);
+        gsap.to(scene.background, { r: col.r, g: col.g, b: col.b, duration: dur });
+      }
+    }
+
+    // 2. High-Resolution Screenshot Export
+    function takeScreenshot() {
+      // Trigger shutter audio ping
+      sound.playPing(1200);
+      setTimeout(() => sound.playPing(800), 75);
+
+      // Flash effect
+      const flash = document.getElementById('snapshot-flash');
+      if (flash) {
+        flash.classList.add('flash-active');
+        setTimeout(() => flash.classList.remove('flash-active'), 180);
+      }
+
+      // Render frame cleanly before dataURL extraction
+      renderer.render(scene, camera);
+
+      try {
+        const dataUrl = renderer.domElement.toDataURL('image/png');
+        const link = document.createElement('a');
+        link.download = `zerthiva_soil_intelligence_${activeScenarioKey}_${activeDaylightPreset}.png`;
+        link.href = dataUrl;
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+      } catch (err) {
+        console.warn('Screenshot capture fallback:', err);
+      }
+    }
+
+    // 3. Interactive Real-Time Field Minimap
+    let minimapCanvas, minimapCtx;
+    let isMinimapVisible = false;
+
+    function initMinimap() {
+      minimapCanvas = document.getElementById('minimap-canvas');
+      if (!minimapCanvas) return;
+      minimapCtx = minimapCanvas.getContext('2d');
+    }
+
+    function toggleMinimap(show) {
+      const container = document.getElementById('field-minimap-container');
+      if (!container) return;
+      if (typeof show === 'undefined') isMinimapVisible = !isMinimapVisible;
+      else isMinimapVisible = show;
+
+      container.classList.toggle('hidden', !isMinimapVisible);
+      sound.playPing(isMinimapVisible ? 780 : 420);
+    }
+
+    function drawMinimap() {
+      if (!minimapCanvas || !minimapCtx || !isMinimapVisible) return;
+
+      const ctx = minimapCtx;
+      const w = minimapCanvas.width;
+      const h = minimapCanvas.height;
+      const cx = w / 2;
+      const cy = h / 2;
+      const scale = 2.8; // pixels per meter
+
+      ctx.clearRect(0, 0, w, h);
+
+      // Radar range rings
+      ctx.strokeStyle = 'rgba(255, 255, 255, 0.08)';
+      ctx.lineWidth = 1;
+      ctx.beginPath();
+      ctx.arc(cx, cy, 5 * scale, 0, Math.PI * 2);
+      ctx.arc(cx, cy, 10 * scale, 0, Math.PI * 2);
+      ctx.arc(cx, cy, 18 * scale, 0, Math.PI * 2);
+      ctx.stroke();
+
+      // Crop row lines (North-South orientation)
+      ctx.strokeStyle = 'rgba(0, 255, 135, 0.15)';
+      for (let r = -2; r <= 2; r++) {
+        const rx = cx + (r * 2.8) * scale;
+        ctx.beginPath();
+        ctx.moveTo(rx, 10);
+        ctx.lineTo(rx, h - 10);
+        ctx.stroke();
+      }
+
+      // Central Research Plot (Monolith at origin)
+      ctx.fillStyle = 'rgba(0, 255, 135, 0.7)';
+      ctx.fillRect(cx - 3, cy - 3, 6, 6);
+
+      // Hardware Station marker (Z = -0.45m)
+      ctx.fillStyle = '#38bdf8';
+      ctx.beginPath();
+      ctx.arc(cx, cy - 0.45 * scale, 3.5, 0, Math.PI * 2);
+      ctx.fill();
+
+      // Camera / Player Position & Direction Cone
+      const camX = camera.position.x;
+      const camZ = camera.position.z;
+      const px = cx + camX * scale;
+      const py = cy + camZ * scale;
+
+      // Camera view direction
+      const dir = new THREE.Vector3();
+      camera.getWorldDirection(dir);
+      const angle = Math.atan2(dir.x, dir.z);
+
+      // Player FOV cone
+      ctx.fillStyle = 'rgba(56, 189, 248, 0.18)';
+      ctx.beginPath();
+      ctx.moveTo(px, py);
+      ctx.arc(px, py, 14, angle - 0.45, angle + 0.45);
+      ctx.closePath();
+      ctx.fill();
+
+      // Player dot
+      ctx.fillStyle = '#fff';
+      ctx.beginPath();
+      ctx.arc(px, py, 3, 0, Math.PI * 2);
+      ctx.fill();
+    }
+
+    // 4. Keyboard Shortcuts Modal & Help
+    function toggleShortcutsModal(show) {
+      const modal = document.getElementById('shortcuts-modal');
+      if (!modal) return;
+      const isActive = modal.classList.contains('active');
+      const targetState = (typeof show === 'undefined') ? !isActive : show;
+
+      modal.classList.toggle('active', targetState);
+      sound.playPing(targetState ? 640 : 420);
+    }
+
+    // 5. Setup Immersion Controls
+    function initImmersionControls() {
+      initMinimap();
+
+      // Daylight Preset Buttons
+      document.querySelectorAll('.daylight-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const preset = btn.getAttribute('data-preset');
+          setDaylightPreset(preset);
+        });
+      });
+
+      // Top Header Buttons
+      document.getElementById('btn-snapshot')?.addEventListener('click', takeScreenshot);
+      document.getElementById('btn-shortcuts')?.addEventListener('click', () => toggleShortcutsModal(true));
+      document.getElementById('btn-close-shortcuts')?.addEventListener('click', () => toggleShortcutsModal(false));
+      document.getElementById('btn-done-shortcuts')?.addEventListener('click', () => toggleShortcutsModal(false));
+
+      // Reduced Motion Toggle
+      const chkMotion = document.getElementById('chk-reduced-motion');
+      if (chkMotion) {
+        chkMotion.checked = isReducedMotion;
+        chkMotion.addEventListener('change', (e) => {
+          isReducedMotion = e.target.checked;
+          sound.playPing(isReducedMotion ? 400 : 700);
+        });
+      }
+
+      // Global Keyboard Shortcuts
+      window.addEventListener('keydown', (e) => {
+        if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
+
+        if (e.key === '?' || (e.key === 'h' || e.key === 'H')) {
+          toggleShortcutsModal();
+        } else if (e.key === 'p' || e.key === 'P') {
+          takeScreenshot();
+        } else if (e.key === 'n' || e.key === 'N') {
+          toggleMinimap();
+        } else if (e.key === 't' || e.key === 'T') {
+          // Cycle daylight presets
+          const presets = ['noon', 'golden', 'overcast', 'night'];
+          const nextIdx = (presets.indexOf(activeDaylightPreset) + 1) % presets.length;
+          setDaylightPreset(presets[nextIdx]);
+        } else if (e.key >= '0' && e.key <= '9') {
+          // Jump to chapters
+          const chIdx = e.key === '0' ? 9 : parseInt(e.key) - 1;
+          if (typeof setChapter === 'function') setChapter(chIdx);
+        } else if (e.code === 'Space') {
+          // Toggle Narrative Tour Play/Pause
+          e.preventDefault();
+          const btnTour = document.getElementById('btn-play-tour');
+          btnTour?.click();
+        } else if (e.key === 'Escape') {
+          // Close modal if open
+          const modal = document.getElementById('shortcuts-modal');
+          if (modal && modal.classList.contains('active')) toggleShortcutsModal(false);
+        }
+      });
+    }
+
+    initImmersionControls();
     initSubsurfaceExplorer();
     initDeviceLaboratory();
     initWalkMode();
