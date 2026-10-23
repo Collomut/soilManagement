@@ -1,0 +1,3432 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>ZERTHIVA // BENEATH THE LIVING EARTH · Interactive 3D Soil Intelligence</title>
+  <meta name="description" content="Cinematic, high-fidelity real-time 3D soil intelligence visualization. Detailed maize plant anatomy, geological soil cutaway, root-zone electrochemical sensing, and autonomous agronomic simulation.">
+  <meta name="author" content="Zerthiva Engineering Team">
+  <link rel="canonical" href="https://collomut.github.io/soilManagement/zerthiva_interactive_3d.html">
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 36 36'%3E%3Crect width='36' height='36' rx='8' fill='%23142D25'/%3E%3Cpath d='M4 27C12 25 24 29 32 27' stroke='%23B7CC8A' stroke-width='1.5' stroke-linecap='round' opacity='0.6'/%3E%3Cpath d='M18 16V28' stroke='%23B7CC8A' stroke-width='2' stroke-linecap='round'/%3E%3Cpath d='M18 16C18 11 11 10 11 6C16 6 18 11 18 16Z' fill='%23B7CC8A'/%3E%3Cpath d='M18 16C18 12 25 11 25 8C20 8 18 12 18 16Z' fill='%23B7CC8A' opacity='0.85'/%3E%3Ccircle cx='18' cy='16' r='2.2' fill='%23FFFFFF'/%3E%3C/svg%3E">
+
+  <!-- OpenGraph / Social Sharing Meta -->
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Zerthiva">
+  <meta property="og:title" content="Zerthiva 3D // Beneath the Living Earth · Interactive Soil Intelligence">
+  <meta property="og:description" content="Cinematic WebGL real-time 3D soil cutaway visualization with autonomous agronomic simulation, live root-zone electrochemical sensing, and PBR-rendered geological layers.">
+  <meta property="og:image" content="https://collomut.github.io/soilManagement/assets/images/farm-hero.jpg">
+  <meta property="og:url" content="https://collomut.github.io/soilManagement/zerthiva_interactive_3d.html">
+  <meta property="og:locale" content="en_US">
+  <!-- Twitter / X Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Zerthiva 3D // Beneath the Living Earth">
+  <meta name="twitter:description" content="Cinematic WebGL real-time 3D soil cutaway visualization with autonomous agronomic simulation.">
+  <meta name="twitter:image" content="https://collomut.github.io/soilManagement/assets/images/farm-hero.jpg">
+
+  <!-- Typography -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400&family=Space+Grotesk:wght@300;400;500;600;700&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+
+  <!-- Libraries: Three.js (r128), OrbitControls, GLTFLoader, RGBELoader, GSAP 3.12, Lucide Icons -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/loaders/GLTFLoader.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/loaders/RGBELoader.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+  <script src="https://unpkg.com/lucide@latest"></script>
+
+  <style>
+    :root {
+      --bg-deep: #030705;
+      --bg-panel: rgba(5, 12, 8, 0.78);
+      --bg-panel-elevated: rgba(8, 18, 13, 0.94);
+      --border-subtle: rgba(255, 255, 255, 0.08);
+      --border-accent: rgba(0, 255, 135, 0.35);
+      
+      --text-main: #f5fdf9;
+      --text-muted: #8ca396;
+      --text-dim: #50665b;
+
+      --accent-emerald: #00ff87;
+      --accent-cyan: #00e5ff;
+      --accent-amber: #ffb703;
+      --accent-crimson: #ff2a5f;
+
+      --font-display: 'Space Grotesk', -apple-system, sans-serif;
+      --font-sans: 'Plus Jakarta Sans', sans-serif;
+      --font-mono: 'Space Mono', monospace;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      user-select: none;
+      -webkit-user-select: none;
+    }
+
+    body {
+      background-color: var(--bg-deep);
+      color: var(--text-main);
+      font-family: var(--font-sans);
+      overflow: hidden;
+      width: 100vw;
+      height: 100vh;
+      position: relative;
+    }
+
+    #webgl-canvas {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      z-index: 1;
+    }
+
+    /* Cinematic Film Vignette & Subtle Fog Gradient */
+    .film-vignette {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      z-index: 2;
+      background: radial-gradient(circle at 50% 45%, transparent 55%, rgba(2, 5, 3, 0.85) 100%);
+    }
+
+    /* Initial Loading Screen */
+    .loading-screen {
+      position: absolute;
+      inset: 0;
+      background: #030705;
+      z-index: 200;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      gap: 18px;
+      transition: opacity 0.8s ease, visibility 0.8s ease;
+    }
+    .loading-screen.hidden {
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+    }
+    .loading-title {
+      font-family: var(--font-display);
+      font-size: 1.1rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      color: #fff;
+      text-transform: uppercase;
+    }
+    .loading-sub {
+      font-family: var(--font-mono);
+      font-size: 0.68rem;
+      color: var(--accent-emerald);
+      letter-spacing: 0.08em;
+    }
+    .loading-bar-wrap {
+      width: 260px;
+      height: 3px;
+      background: rgba(255,255,255,0.1);
+      border-radius: 999px;
+      overflow: hidden;
+    }
+    .loading-bar-fill {
+      height: 100%;
+      width: 0%;
+      background: var(--accent-emerald);
+      box-shadow: 0 0 12px var(--accent-emerald);
+      transition: width 0.3s ease;
+    }
+
+    /* Top Minimalist Header */
+    header.experience-header {
+      position: absolute;
+      top: 24px;
+      left: 32px;
+      right: 32px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      z-index: 30;
+      pointer-events: none;
+    }
+
+    .brand-pill {
+      pointer-events: auto;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      background: var(--bg-panel);
+      backdrop-filter: blur(24px);
+      -webkit-backdrop-filter: blur(24px);
+      border: 1px solid var(--border-subtle);
+      padding: 8px 18px;
+      border-radius: 999px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+    }
+
+    .brand-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: var(--accent-emerald);
+      box-shadow: 0 0 12px var(--accent-emerald);
+      animation: pulseDot 2.4s infinite;
+    }
+
+    @keyframes pulseDot {
+      0%, 100% { transform: scale(0.9); opacity: 0.6; }
+      50% { transform: scale(1.3); opacity: 1; box-shadow: 0 0 18px var(--accent-emerald); }
+    }
+
+    .brand-title {
+      font-family: var(--font-display);
+      font-weight: 700;
+      font-size: 0.95rem;
+      letter-spacing: -0.01em;
+      color: #fff;
+    }
+
+    .brand-sub {
+      font-family: var(--font-mono);
+      font-size: 0.65rem;
+      color: var(--text-muted);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding-left: 8px;
+      border-left: 1px solid rgba(255,255,255,0.12);
+    }
+
+    .header-actions {
+      pointer-events: auto;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .btn-pill {
+      background: var(--bg-panel);
+      backdrop-filter: blur(24px);
+      -webkit-backdrop-filter: blur(24px);
+      border: 1px solid var(--border-subtle);
+      color: var(--text-main);
+      padding: 8px 16px;
+      border-radius: 999px;
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      text-decoration: none;
+      transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .btn-pill:hover {
+      background: rgba(255, 255, 255, 0.12);
+      border-color: rgba(255, 255, 255, 0.25);
+      transform: translateY(-2px);
+      color: #fff;
+    }
+
+    .btn-pill.btn-signature {
+      background: linear-gradient(135deg, rgba(0, 255, 135, 0.2), rgba(0, 229, 255, 0.2));
+      border-color: var(--accent-emerald);
+      color: #fff;
+      font-weight: 700;
+    }
+
+    .btn-pill.btn-signature:hover {
+      box-shadow: 0 0 25px rgba(0, 255, 135, 0.4);
+      transform: translateY(-2px) scale(1.02);
+    }
+
+    /* Left Minimalist Contextual Card */
+    aside.contextual-dock {
+      position: absolute;
+      top: 96px;
+      left: 32px;
+      width: 340px;
+      max-height: calc(100vh - 190px);
+      background: var(--bg-panel);
+      backdrop-filter: blur(28px);
+      -webkit-backdrop-filter: blur(28px);
+      border: 1px solid var(--border-subtle);
+      border-radius: 18px;
+      padding: 20px;
+      z-index: 20;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+      overflow-y: auto;
+      scrollbar-width: thin;
+      scrollbar-color: var(--accent-emerald) transparent;
+      transition: transform 0.4s ease, opacity 0.4s ease;
+    }
+
+    .chapter-tag-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-bottom: 8px;
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+    }
+
+    .chapter-tag {
+      font-family: var(--font-mono);
+      font-size: 0.65rem;
+      letter-spacing: 0.12em;
+      color: var(--accent-emerald);
+      text-transform: uppercase;
+    }
+
+    .badge-evidence {
+      font-family: var(--font-mono);
+      font-size: 0.58rem;
+      font-weight: 700;
+      padding: 2px 6px;
+      border-radius: 4px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      background: rgba(0, 255, 135, 0.12);
+      color: var(--accent-emerald);
+      border: 1px solid rgba(0, 255, 135, 0.25);
+    }
+
+    .chapter-headline {
+      font-family: var(--font-display);
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: #fff;
+      line-height: 1.25;
+      letter-spacing: -0.02em;
+    }
+
+    .chapter-paragraph {
+      font-size: 0.8rem;
+      line-height: 1.55;
+      color: var(--text-muted);
+    }
+
+    /* Contextual Action Module */
+    .module-controls {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      background: rgba(0,0,0,0.3);
+      border: 1px solid rgba(255,255,255,0.05);
+      border-radius: 10px;
+      padding: 10px 12px;
+    }
+
+    .module-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .module-label {
+      font-family: var(--font-mono);
+      font-size: 0.65rem;
+      color: var(--text-muted);
+      text-transform: uppercase;
+    }
+
+    .range-slider {
+      width: 140px;
+      height: 4px;
+      accent-color: var(--accent-emerald);
+      cursor: pointer;
+    }
+
+    .btn-action-small {
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      color: #fff;
+      padding: 6px 12px;
+      border-radius: 6px;
+      font-family: var(--font-mono);
+      font-size: 0.65rem;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.2s;
+    }
+    .btn-action-small:hover {
+      background: rgba(0, 255, 135, 0.15);
+      border-color: var(--accent-emerald);
+    }
+
+    /* Live Telemetry Cells */
+    .tele-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+    }
+
+    .tele-box {
+      background: rgba(0,0,0,0.3);
+      border: 1px solid rgba(255,255,255,0.05);
+      border-radius: 8px;
+      padding: 8px 10px;
+    }
+
+    .tele-box-title {
+      font-family: var(--font-mono);
+      font-size: 0.58rem;
+      color: var(--text-dim);
+      margin-bottom: 2px;
+      display: flex;
+      justify-content: space-between;
+    }
+    .tele-box-badge {
+      font-size: 0.52rem;
+      color: var(--accent-cyan);
+      opacity: 0.8;
+    }
+
+    .tele-box-val {
+      font-family: var(--font-display);
+      font-size: 1.15rem;
+      font-weight: 700;
+      color: #fff;
+    }
+
+    /* Floating Visibility Toolbar */
+    .visibility-toolbar {
+      position: absolute;
+      bottom: 80px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: var(--bg-panel);
+      backdrop-filter: blur(28px);
+      -webkit-backdrop-filter: blur(28px);
+      border: 1px solid var(--border-subtle);
+      border-radius: 999px;
+      padding: 5px 14px;
+      z-index: 28;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      box-shadow: 0 14px 40px rgba(0,0,0,0.5);
+    }
+    .vis-toggle {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      color: var(--text-muted);
+      padding: 4px 10px;
+      border-radius: 999px;
+      font-family: var(--font-mono);
+      font-size: 0.62rem;
+      letter-spacing: 0.04em;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      transition: all 0.2s;
+    }
+    .vis-toggle:hover {
+      background: rgba(255, 255, 255, 0.12);
+      color: #fff;
+    }
+    .vis-toggle.active {
+      background: rgba(0, 255, 135, 0.16);
+      border-color: var(--accent-emerald);
+      color: #fff;
+      font-weight: 700;
+    }
+
+    /* Interactive 3D Component Inspector Card */
+    .component-inspector-card {
+      position: absolute;
+      bottom: 136px;
+      right: 32px;
+      width: 320px;
+      background: var(--bg-panel-elevated);
+      backdrop-filter: blur(28px);
+      -webkit-backdrop-filter: blur(28px);
+      border: 1px solid var(--border-accent);
+      border-radius: 16px;
+      padding: 16px 18px;
+      z-index: 35;
+      box-shadow: 0 20px 50px rgba(0,0,0,0.6);
+      display: none;
+      animation: fadeInCard 0.25s ease;
+    }
+    @keyframes fadeInCard {
+      from { opacity: 0; transform: translateY(8px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .card-close-btn {
+      position: absolute;
+      top: 12px;
+      right: 12px;
+      background: none;
+      border: none;
+      color: var(--text-muted);
+      cursor: pointer;
+      font-size: 0.8rem;
+    }
+
+    /* Right Chapter Rail (10 Guided Narrative Nodes) */
+    aside.chapter-rail {
+      position: absolute;
+      top: 50%;
+      right: 32px;
+      transform: translateY(-50%);
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      z-index: 25;
+    }
+
+    .chapter-node {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      cursor: pointer;
+      opacity: 0.4;
+      transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+      padding: 4px 0;
+    }
+
+    .chapter-node:hover, .chapter-node.active {
+      opacity: 1;
+      transform: translateX(-4px);
+    }
+
+    .chapter-bullet {
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      background: rgba(0,0,0,0.5);
+      border: 1px solid rgba(255,255,255,0.2);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--font-mono);
+      font-size: 0.58rem;
+      color: var(--text-muted);
+      transition: all 0.25s;
+    }
+
+    .chapter-node.active .chapter-bullet {
+      background: var(--accent-emerald);
+      border-color: var(--accent-emerald);
+      color: #000;
+      font-weight: 700;
+      box-shadow: 0 0 14px var(--accent-emerald);
+    }
+
+    .chapter-name {
+      font-family: var(--font-mono);
+      font-size: 0.65rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      white-space: nowrap;
+    }
+
+    .chapter-node.active .chapter-name {
+      color: #fff;
+      font-weight: 600;
+    }
+
+    /* Bottom Playback & Chapter Navigation */
+    .timeline-dock {
+      position: absolute;
+      bottom: 24px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: var(--bg-panel);
+      backdrop-filter: blur(28px);
+      -webkit-backdrop-filter: blur(28px);
+      border: 1px solid var(--border-subtle);
+      border-radius: 999px;
+      padding: 8px 18px;
+      z-index: 30;
+      box-shadow: 0 20px 50px rgba(0,0,0,0.6);
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .nav-btn {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .nav-btn:hover {
+      background: rgba(0, 255, 135, 0.2);
+      border-color: var(--accent-emerald);
+    }
+
+    .timeline-bar {
+      width: 200px;
+      height: 4px;
+      background: rgba(255,255,255,0.1);
+      border-radius: 999px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .timeline-fill {
+      height: 100%;
+      width: 10%;
+      background: var(--accent-emerald);
+      border-radius: 999px;
+      transition: width 0.3s;
+    }
+
+    .timeline-label {
+      font-family: var(--font-mono);
+      font-size: 0.65rem;
+      letter-spacing: 0.08em;
+      color: var(--accent-emerald);
+      text-transform: uppercase;
+      font-weight: 700;
+    }
+
+    /* Skip Opening Sequence Pill */
+    .skip-btn {
+      position: absolute;
+      top: 24px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: rgba(0, 0, 0, 0.7);
+      backdrop-filter: blur(16px);
+      border: 1px solid var(--border-accent);
+      color: #fff;
+      padding: 6px 14px;
+      border-radius: 999px;
+      font-family: var(--font-mono);
+      font-size: 0.65rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      cursor: pointer;
+      z-index: 40;
+      display: none;
+      transition: all 0.2s;
+    }
+    .skip-btn:hover {
+      background: rgba(0, 255, 135, 0.2);
+      box-shadow: 0 0 15px rgba(0, 255, 135, 0.3);
+    }
+
+    /* Spatial Screen-Projected Pins */
+    .spatial-pin {
+      position: absolute;
+      transform: translate(-50%, -50%);
+      pointer-events: auto;
+      cursor: pointer;
+      z-index: 15;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(6, 14, 10, 0.85);
+      backdrop-filter: blur(16px);
+      border: 1px solid rgba(255,255,255,0.15);
+      padding: 5px 12px;
+      border-radius: 999px;
+      transition: all 0.2s;
+    }
+
+    .spatial-pin:hover {
+      border-color: var(--accent-emerald);
+      transform: translate(-50%, -50%) scale(1.1);
+      box-shadow: 0 0 20px rgba(0, 255, 135, 0.4);
+    }
+
+    .pin-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--accent-emerald);
+      box-shadow: 0 0 8px var(--accent-emerald);
+    }
+
+    .pin-text {
+      font-family: var(--font-mono);
+      font-size: 0.65rem;
+      color: #fff;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+
+    /* Modal Dossier */
+    .inspector-modal {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%) scale(0.9);
+      background: var(--bg-panel-elevated);
+      backdrop-filter: blur(36px);
+      -webkit-backdrop-filter: blur(36px);
+      border: 1px solid var(--border-accent);
+      border-radius: 20px;
+      padding: 28px;
+      width: 520px;
+      max-width: 90vw;
+      max-height: 85vh;
+      overflow-y: auto;
+      z-index: 100;
+      opacity: 0;
+      pointer-events: none;
+      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+      box-shadow: 0 35px 80px rgba(0,0,0,0.85);
+    }
+
+    .inspector-modal.active {
+      opacity: 1;
+      pointer-events: auto;
+      transform: translate(-50%, -50%) scale(1);
+    }
+
+    .modal-close {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      background: none;
+      border: none;
+      color: var(--text-muted);
+      cursor: pointer;
+    }
+
+    /* Responsive */
+    @media (max-width: 1080px) {
+      aside.contextual-dock {
+        width: 300px;
+      }
+      aside.chapter-rail {
+        display: none;
+      }
+      .timeline-dock {
+        width: 92vw;
+        justify-content: space-between;
+      }
+      .visibility-toolbar {
+        bottom: 84px;
+        flex-wrap: wrap;
+        width: 92vw;
+        justify-content: center;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- WebGL Render Canvas -->
+  <div id="webgl-canvas"></div>
+  <div class="film-vignette"></div>
+
+  <!-- Initial Loading Screen -->
+  <div class="loading-screen" id="loading-screen">
+    <div class="brand-dot" style="width:16px; height:16px;"></div>
+    <div class="loading-title">ZERTHIVA // SIS 3D</div>
+    <div class="loading-sub" id="loading-status-text">INITIALIZING BOTANICAL ENGINE & PBR STRATA...</div>
+    <div class="loading-bar-wrap">
+      <div class="loading-bar-fill" id="loading-progress-bar"></div>
+    </div>
+  </div>
+
+  <!-- Skip Opening Button -->
+  <button class="skip-btn" id="btn-skip-intro">
+    <i data-lucide="fast-forward" style="width:12px; height:12px; display:inline-block; vertical-align:middle; margin-right:4px;"></i> Skip Intro
+  </button>
+
+  <!-- Top Header Navigation -->
+  <header class="experience-header">
+    <div class="brand-pill">
+      <div class="brand-dot"></div>
+      <span class="brand-title">ZERTHIVA</span>
+      <span class="brand-sub">SOIL INTELLIGENCE SYSTEM</span>
+    </div>
+
+    <div class="header-actions">
+      <!-- Signature Continuous Cutaway Sequence Trigger -->
+      <button class="btn-pill btn-signature" id="btn-signature-reveal" title="Trigger 12-stage signature cinematic cutaway">
+        <i data-lucide="sparkles" style="width: 13px; height: 13px;"></i> Reveal Hidden System
+      </button>
+
+      <!-- Reset View -->
+      <button class="btn-pill" id="btn-reset-view" title="Reset camera to default hero composition">
+        <i data-lucide="rotate-ccw" style="width: 13px; height: 13px;"></i> Reset View
+      </button>
+
+      <!-- Audio Synthesizer -->
+      <button class="btn-pill" id="btn-toggle-audio" title="Mute/unmute ambient audio">
+        <i data-lucide="volume-2" id="icon-audio" style="width: 13px; height: 13px;"></i> Audio
+      </button>
+
+      <!-- Master Technical Dossier Link -->
+      <a href="./index.html" class="btn-pill" target="_blank" title="Open master 58-section dossier">
+        <i data-lucide="file-text" style="width: 13px; height: 13px;"></i> Master Specs
+      </a>
+
+      <!-- 3D Assets & Scientific Citations -->
+      <button class="btn-pill" id="btn-open-citations" title="View 3D asset licenses, PBR textures, and scientific citations">
+        <i data-lucide="info" style="width: 13px; height: 13px;"></i> Citations
+      </button>
+    </div>
+  </header>
+
+  <!-- Left Contextual Narrative & Telemetry Panel -->
+  <aside class="contextual-dock" id="narrative-panel">
+    <div class="chapter-tag-row">
+      <span class="chapter-tag" id="label-chapter-tag">CHAPTER 01 // SURFACE</span>
+      <span class="badge-evidence" id="badge-evidence-type">IMPLEMENTED</span>
+    </div>
+
+    <h2 class="chapter-headline" id="text-chapter-title">The Living Surface</h2>
+    <p class="chapter-paragraph" id="text-chapter-desc">
+      What happens above the soil begins beneath it. A mature maize plant (<em>Zea mays</em>) flourishes under ambient daylight. As we descend, the opaque ground opens into an explorable subterranean ecosystem.
+    </p>
+
+    <!-- Contextual Chapter Controls (Dynamically switched per chapter) -->
+    <div class="module-controls" id="contextual-controls">
+      <!-- Injected per chapter -->
+    </div>
+
+    <!-- Live Telemetry Stream Grid -->
+    <div class="tele-grid">
+      <div class="tele-box">
+        <div class="tele-box-title">BULK EC₂₅ <span class="tele-box-badge">[MEASURED]</span></div>
+        <div class="tele-box-val" id="val-ec">1.42</div>
+      </div>
+
+      <div class="tele-box">
+        <div class="tele-box-title">MOISTURE θ <span class="tele-box-badge">[MEASURED]</span></div>
+        <div class="tele-box-val" id="val-moist">31.8</div>
+      </div>
+
+      <div class="tele-box">
+        <div class="tele-box-title">SOIL TEMP <span class="tele-box-badge">[MEASURED]</span></div>
+        <div class="tele-box-val" id="val-temp">24.6</div>
+      </div>
+
+      <div class="tele-box">
+        <div class="tele-box-title">MAAS-HOFFMAN <span class="tele-box-badge">[SIMULATED]</span></div>
+        <div class="tele-box-val" id="val-penalty" style="color: var(--accent-emerald);">0.0% LOSS</div>
+      </div>
+    </div>
+  </aside>
+
+  <!-- Floating Layer Visibility Toolbar -->
+  <div class="visibility-toolbar">
+    <button class="vis-toggle active" id="tog-canopy" title="Toggle Above-Ground Plant Canopy"><i data-lucide="leaf" style="width:12px; height:12px;"></i> Canopy</button>
+    <button class="vis-toggle active" id="tog-roots" title="Toggle Subsurface Root Architecture"><i data-lucide="git-branch" style="width:12px; height:12px;"></i> Roots</button>
+    <button class="vis-toggle active" id="tog-soil" title="Toggle Geological Soil Strata"><i data-lucide="layers" style="width:12px; height:12px;"></i> Soil Strata</button>
+    <button class="vis-toggle active" id="tog-hw" title="Toggle Hardware & Sensors"><i data-lucide="cpu" style="width:12px; height:12px;"></i> Hardware</button>
+    <button class="vis-toggle active" id="tog-hydro" title="Toggle Hydrologic Flow Lines"><i data-lucide="droplet" style="width:12px; height:12px;"></i> Hydrology</button>
+  </div>
+
+  <!-- Interactive 3D Raycast Component Inspector Card -->
+  <div class="component-inspector-card" id="component-card">
+    <button class="card-close-btn" id="btn-close-card">&times;</button>
+    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px;">
+      <span id="card-tag" style="font-family:var(--font-mono); font-size:0.6rem; color:var(--accent-emerald); text-transform:uppercase;">COMPONENT</span>
+      <span id="card-badge" class="badge-evidence">MEASURED</span>
+    </div>
+    <h4 id="card-title" style="font-family:var(--font-display); font-size:1.05rem; font-weight:700; color:#fff; margin-bottom:6px;">Component Title</h4>
+    <p id="card-desc" style="font-size:0.75rem; line-height:1.5; color:var(--text-muted); margin-bottom:10px;">Description text.</p>
+    <div id="card-meta" style="background:rgba(0,0,0,0.35); padding:8px 10px; border-radius:6px; font-family:var(--font-mono); font-size:0.65rem; color:var(--accent-cyan); margin-bottom:10px;">
+      Details / Formulas
+    </div>
+    <button class="btn-action-small" id="btn-focus-component" style="width:100%; justify-content:center;">
+      <i data-lucide="crosshair" style="width:12px; height:12px;"></i> Frame Camera on Component
+    </button>
+  </div>
+
+  <!-- Right Chapter Navigation Rail (10 Interactive Story Chapters) -->
+  <aside class="chapter-rail">
+    <div class="chapter-node active" data-chapter="0">
+      <div class="chapter-bullet">01</div>
+      <div class="chapter-name">The Living Surface</div>
+    </div>
+    <div class="chapter-node" data-chapter="1">
+      <div class="chapter-bullet">02</div>
+      <div class="chapter-name">Descent Into Soil</div>
+    </div>
+    <div class="chapter-node" data-chapter="2">
+      <div class="chapter-bullet">03</div>
+      <div class="chapter-name">Plant Dissection</div>
+    </div>
+    <div class="chapter-node" data-chapter="3">
+      <div class="chapter-bullet">04</div>
+      <div class="chapter-name">Hidden Water World</div>
+    </div>
+    <div class="chapter-node" data-chapter="4">
+      <div class="chapter-bullet">05</div>
+      <div class="chapter-name">Nutrient Chemistry</div>
+    </div>
+    <div class="chapter-node" data-chapter="5">
+      <div class="chapter-bullet">06</div>
+      <div class="chapter-name">The Sensor Reveal</div>
+    </div>
+    <div class="chapter-node" data-chapter="6">
+      <div class="chapter-bullet">07</div>
+      <div class="chapter-name">Hardware Explosion</div>
+    </div>
+    <div class="chapter-node" data-chapter="7">
+      <div class="chapter-bullet">08</div>
+      <div class="chapter-name">Monitoring Sequence</div>
+    </div>
+    <div class="chapter-node" data-chapter="8">
+      <div class="chapter-bullet">09</div>
+      <div class="chapter-name">Decision Engine</div>
+    </div>
+    <div class="chapter-node" data-chapter="9">
+      <div class="chapter-bullet">10</div>
+      <div class="chapter-name">Experimental Lab</div>
+    </div>
+  </aside>
+
+  <!-- Bottom Timeline & Storyboard Controls -->
+  <div class="timeline-dock">
+    <button class="nav-btn" id="btn-prev-chapter" title="Previous chapter"><i data-lucide="chevron-left" style="width: 16px; height: 16px;"></i></button>
+    <button class="nav-btn" id="btn-play-tour" title="Play / pause autonomous narrative tour"><i data-lucide="play" id="icon-play-tour" style="width: 16px; height: 16px;"></i></button>
+    <button class="nav-btn" id="btn-next-chapter" title="Next chapter"><i data-lucide="chevron-right" style="width: 16px; height: 16px;"></i></button>
+
+    <div class="timeline-bar">
+      <div class="timeline-fill" id="timeline-progress-fill"></div>
+    </div>
+
+    <span class="timeline-label" id="label-playback-status">CHAPTER 01 OF 10</span>
+  </div>
+
+  <!-- Screen-Projected Spatial Hotspots -->
+  <div id="hotspot-probe" class="spatial-pin" style="display: none;">
+    <div class="pin-dot"></div>
+    <span class="pin-text">EC & Dielectric Probe [15-25cm]</span>
+  </div>
+
+  <div id="hotspot-node" class="spatial-pin" style="display: none;">
+    <div class="pin-dot" style="background: var(--accent-cyan);"></div>
+    <span class="pin-text">ESP32 Edge Gateway & Solar Cap</span>
+  </div>
+
+  <!-- Deep Inspector Modal -->
+  <div class="inspector-modal" id="inspector-modal">
+    <button class="modal-close" id="btn-close-modal"><i data-lucide="x"></i></button>
+    <div id="modal-body-content"></div>
+  </div>
+
+  <!-- Main Three.js Application Logic -->
+  <script>
+    lucide.createIcons();
+
+    /* =========================================================================
+       1. SYNTHESIZED AUDIO DESIGN (Web Audio API - 100% Self-Contained)
+       ========================================================================= */
+    class SoilAudioSynthesizer {
+      constructor() {
+        this.ctx = null;
+        this.enabled = true;
+        this.ambientGain = null;
+      }
+
+      init() {
+        if (this.ctx) return;
+        const AudioContext = window.AudioContext || window.webkitAudioContext;
+        this.ctx = new AudioContext();
+
+        // Subterranean resonant brownian noise drone (55 Hz earth fundamental)
+        const bufferSize = this.ctx.sampleRate * 2;
+        const noiseBuffer = this.ctx.createBuffer(1, bufferSize, this.ctx.sampleRate);
+        const output = noiseBuffer.getChannelData(0);
+        let lastOut = 0.0;
+        for (let i = 0; i < bufferSize; i++) {
+          const white = Math.random() * 2 - 1;
+          output[i] = (lastOut + 0.02 * white) / 1.02;
+          lastOut = output[i];
+          output[i] *= 3.5;
+        }
+
+        const whiteNoise = this.ctx.createBufferSource();
+        whiteNoise.buffer = noiseBuffer;
+        whiteNoise.loop = true;
+
+        const filter = this.ctx.createBiquadFilter();
+        filter.type = 'lowpass';
+        filter.frequency.setValueAtTime(65, this.ctx.currentTime);
+
+        this.ambientGain = this.ctx.createGain();
+        this.ambientGain.gain.setValueAtTime(0.035, this.ctx.currentTime);
+
+        whiteNoise.connect(filter);
+        filter.connect(this.ambientGain);
+        this.ambientGain.connect(this.ctx.destination);
+        whiteNoise.start();
+      }
+
+      playPing(freq = 660) {
+        if (!this.enabled) return;
+        this.init();
+        if (!this.ctx) return;
+        const osc = this.ctx.createOscillator();
+        const gain = this.ctx.createGain();
+        osc.type = 'sine';
+        osc.frequency.setValueAtTime(freq, this.ctx.currentTime);
+        osc.frequency.exponentialRampToValueAtTime(freq * 0.5, this.ctx.currentTime + 0.18);
+        gain.gain.setValueAtTime(0.08, this.ctx.currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.001, this.ctx.currentTime + 0.18);
+        osc.connect(gain);
+        gain.connect(this.ctx.destination);
+        osc.start();
+        osc.stop(this.ctx.currentTime + 0.18);
+      }
+
+      playWaterInfiltration() {
+        if (!this.enabled) return;
+        this.init();
+        if (!this.ctx) return;
+        for (let i = 0; i < 5; i++) {
+          setTimeout(() => {
+            if (!this.ctx) return;
+            const osc = this.ctx.createOscillator();
+            const gain = this.ctx.createGain();
+            osc.type = 'sine';
+            const f = 400 + Math.random() * 400;
+            osc.frequency.setValueAtTime(f, this.ctx.currentTime);
+            osc.frequency.exponentialRampToValueAtTime(f * 1.4, this.ctx.currentTime + 0.08);
+            gain.gain.setValueAtTime(0.06, this.ctx.currentTime);
+            gain.gain.exponentialRampToValueAtTime(0.001, this.ctx.currentTime + 0.08);
+            osc.connect(gain);
+            gain.connect(this.ctx.destination);
+            osc.start();
+            osc.stop(this.ctx.currentTime + 0.08);
+          }, i * 65);
+        }
+      }
+
+      playWarning() {
+        if (!this.enabled) return;
+        this.init();
+        if (!this.ctx) return;
+        const osc = this.ctx.createOscillator();
+        const gain = this.ctx.createGain();
+        osc.type = 'sawtooth';
+        osc.frequency.setValueAtTime(320, this.ctx.currentTime);
+        osc.frequency.setValueAtTime(240, this.ctx.currentTime + 0.15);
+        gain.gain.setValueAtTime(0.12, this.ctx.currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.01, this.ctx.currentTime + 0.35);
+        osc.connect(gain);
+        gain.connect(this.ctx.destination);
+        osc.start();
+        osc.stop(this.ctx.currentTime + 0.35);
+      }
+    }
+
+    const sound = new SoilAudioSynthesizer();
+
+    document.getElementById('btn-toggle-audio').addEventListener('click', () => {
+      sound.enabled = !sound.enabled;
+      const icon = document.getElementById('icon-audio');
+      if (sound.enabled) {
+        sound.init();
+        if (sound.ambientGain) sound.ambientGain.gain.setValueAtTime(0.035, sound.ctx.currentTime);
+        icon.setAttribute('data-lucide', 'volume-2');
+        sound.playPing(880);
+      } else {
+        if (sound.ambientGain) sound.ambientGain.gain.setValueAtTime(0, sound.ctx.currentTime);
+        icon.setAttribute('data-lucide', 'volume-x');
+      }
+      lucide.createIcons();
+    });
+
+    /* =========================================================================
+       2. ASSET LOADING & PROGRESS MANAGER
+       ========================================================================= */
+    let loadedAssets = 0;
+    const totalAssets = 8;
+    function updateLoadingProgress(stepName) {
+      loadedAssets++;
+      const pct = Math.min(100, Math.round((loadedAssets / totalAssets) * 100));
+      const bar = document.getElementById('loading-progress-bar');
+      const text = document.getElementById('loading-status-text');
+      if (bar) bar.style.width = pct + '%';
+      if (text) text.innerText = `LOADING ${stepName} (${pct}%)...`;
+      if (loadedAssets >= totalAssets) {
+        setTimeout(() => {
+          const screen = document.getElementById('loading-screen');
+          if (screen) screen.classList.add('hidden');
+        }, 500);
+      }
+    }
+
+    const texLoader = new THREE.TextureLoader();
+
+    function setupPBRTexture(url, rx = 2.0, ry = 2.0, name = 'Texture') {
+      return texLoader.load(url, () => updateLoadingProgress(name), undefined, (err) => {
+        console.warn('Fallback active for:', url);
+        updateLoadingProgress(name);
+      });
+    }
+
+    // Poly Haven CC0 1K PBR Textures
+    const texDirtDiff  = setupPBRTexture('assets/textures/soil/dirt_diff_1k.jpg', 2.0, 2.0, 'Topsoil Diffuse');
+    texDirtDiff.wrapS = texDirtDiff.wrapT = THREE.RepeatWrapping;
+    const texDirtNor   = setupPBRTexture('assets/textures/soil/dirt_nor_1k.jpg', 2.0, 2.0, 'Topsoil Normal');
+    texDirtNor.wrapS = texDirtNor.wrapT = THREE.RepeatWrapping;
+    const texDirtRough = setupPBRTexture('assets/textures/soil/dirt_rough_1k.jpg', 2.0, 2.0, 'Topsoil Roughness');
+    texDirtRough.wrapS = texDirtRough.wrapT = THREE.RepeatWrapping;
+
+    const texMudDiff   = setupPBRTexture('assets/textures/soil/brown_mud_02_diff_1k.jpg', 2.5, 2.5, 'Subsoil Diffuse');
+    texMudDiff.wrapS = texMudDiff.wrapT = THREE.RepeatWrapping;
+    const texMudNor    = setupPBRTexture('assets/textures/soil/brown_mud_02_nor_1k.jpg', 2.5, 2.5, 'Subsoil Normal');
+    texMudNor.wrapS = texMudNor.wrapT = THREE.RepeatWrapping;
+    const texMudRough  = setupPBRTexture('assets/textures/soil/brown_mud_02_rough_1k.jpg', 2.5, 2.5, 'Subsoil Roughness');
+    texMudRough.wrapS = texMudRough.wrapT = THREE.RepeatWrapping;
+
+    // Procedural Monocot Maize Leaf Texture with parallel venation & central midrib
+    function generateMaizeLeafTexture() {
+      const c = document.createElement('canvas');
+      c.width = 512;
+      c.height = 1024;
+      const ctx = c.getContext('2d');
+
+      ctx.fillStyle = '#2c8f38';
+      ctx.fillRect(0, 0, 512, 1024);
+
+      const lenGrad = ctx.createLinearGradient(0, 0, 0, 1024);
+      lenGrad.addColorStop(0, 'rgba(56, 155, 65, 0.45)');
+      lenGrad.addColorStop(0.5, 'rgba(38, 130, 48, 0.15)');
+      lenGrad.addColorStop(1.0, 'rgba(28, 105, 36, 0.55)');
+      ctx.fillStyle = lenGrad;
+      ctx.fillRect(0, 0, 512, 1024);
+
+      // Fine parallel monocot venation lines
+      ctx.lineWidth = 1;
+      for (let x = 0; x < 512; x += 3) {
+        const isMajor = (x % 18 === 0);
+        ctx.strokeStyle = isMajor ? 'rgba(85, 205, 95, 0.32)' : 'rgba(20, 80, 28, 0.22)';
+        ctx.beginPath();
+        ctx.moveTo(x, 0);
+        ctx.lineTo(x, 1024);
+        ctx.stroke();
+      }
+
+      // Pale luminous midrib along the center (x = 256)
+      const midrib = ctx.createLinearGradient(236, 0, 276, 0);
+      midrib.addColorStop(0, 'rgba(85, 205, 95, 0)');
+      midrib.addColorStop(0.3, 'rgba(155, 225, 140, 0.8)');
+      midrib.addColorStop(0.5, 'rgba(195, 245, 175, 0.95)');
+      midrib.addColorStop(0.7, 'rgba(155, 225, 140, 0.8)');
+      midrib.addColorStop(1, 'rgba(85, 205, 95, 0)');
+      ctx.fillStyle = midrib;
+      ctx.fillRect(236, 0, 40, 1024);
+
+      const t = new THREE.CanvasTexture(c);
+      t.wrapS = THREE.ClampToEdgeWrapping;
+      t.wrapT = THREE.ClampToEdgeWrapping;
+      return t;
+    }
+
+    const leafTexture = generateMaizeLeafTexture();
+
+    /* =========================================================================
+       3. THREE.JS SCENE SETUP & PROFESSIONAL LIGHTING PIPELINE
+       ========================================================================= */
+    const container = document.getElementById('webgl-canvas');
+    const scene = new THREE.Scene();
+    scene.background = new THREE.Color(0x06100c);
+    // Linear fog tuned for crisp foreground foliage and soft subterranean horizon depth
+    scene.fog = new THREE.Fog(0x06100c, 7.5, 22.0);
+
+    const camera = new THREE.PerspectiveCamera(42, window.innerWidth / window.innerHeight, 0.1, 100);
+    camera.position.set(3.4, 0.6, 5.6);
+
+    const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true, powerPreference: "high-performance" });
+
+    // ── WebGL Support Check ──────────────────────────────────────────
+    if (!renderer || !renderer.getContext()) {
+      document.body.innerHTML = '<div style="display:flex;align-items:center;justify-content:center;height:100vh;background:#030705;color:#B7CC8A;font-family:sans-serif;text-align:center;padding:2rem;"><div><h2 style="font-size:1.4rem;margin-bottom:1rem;">WebGL Not Supported</h2><p style="color:#888;max-width:400px;">Your browser or device does not support WebGL, which is required for this 3D visualization.<br><br>Please open this page in Chrome, Firefox, or Edge on a desktop or modern device.</p><a href="./index.html" style="display:inline-block;margin-top:1.5rem;padding:0.75rem 1.5rem;background:#142D25;color:#B7CC8A;border-radius:6px;text-decoration:none;">← View Documentation</a></div></div>';
+      throw new Error('WebGL not supported — graceful exit');
+    }
+
+    // ── Mobile / Low-Power Device Detection ────────────────────────
+    const isMobile = /Mobi|Android|iPhone|iPad|iPod/i.test(navigator.userAgent) || window.innerWidth < 768;
+    const isLowPower = isMobile || navigator.hardwareConcurrency <= 2;
+
+    // Scale pixel ratio: cap at 1.5 on mobile, 2.0 on desktop
+    renderer.setPixelRatio(isLowPower ? Math.min(window.devicePixelRatio, 1.0) : Math.min(window.devicePixelRatio, 2.0));
+
+    // Reduce antialiasing quality on mobile to save GPU memory
+    if (isMobile) {
+      renderer.shadowMap.enabled = false;
+    }
+    renderer.setSize(window.innerWidth, window.innerHeight);
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+    renderer.shadowMap.enabled = true;
+    renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+    renderer.toneMapping = THREE.ACESFilmicToneMapping;
+    renderer.toneMappingExposure = 1.28;
+    container.appendChild(renderer.domElement);
+
+    // Poly Haven CC0 HDRI Environment Map via RGBELoader + PMREMGenerator
+    const pmremGen = new THREE.PMREMGenerator(renderer);
+    pmremGen.compileEquirectangularShader();
+    new THREE.RGBELoader()
+      .setDataType(THREE.UnsignedByteType)
+      .load('assets/hdr/autumn_field_1k.hdr', (texture) => {
+        const envMap = pmremGen.fromEquirectangular(texture).texture;
+        scene.environment = envMap;
+        texture.dispose();
+        pmremGen.dispose();
+        updateLoadingProgress('Outdoor HDRI');
+      }, undefined, (err) => {
+        console.warn('HDRI environment fallback:', err);
+        updateLoadingProgress('Outdoor HDRI (Fallback)');
+      });
+
+    const controls = new THREE.OrbitControls(camera, renderer.domElement);
+    controls.enableDamping = true;
+    controls.dampingFactor = 0.06;
+    controls.maxPolarAngle = Math.PI / 2 + 0.15;
+    controls.minDistance = 1.2;
+    controls.maxDistance = 14.0;
+    controls.target.set(0, -0.15, 0);
+
+    // Controlled 4-Point Cinematic Lighting Setup with tight shadow frustum
+    // 1. Soft Warm Key Sunlight from above
+    const keySunLight = new THREE.DirectionalLight(0xfff6ea, 3.1);
+    keySunLight.position.set(5.5, 11, 4.8);
+    keySunLight.castShadow = true;
+    keySunLight.shadow.mapSize.width = 2048;
+    keySunLight.shadow.mapSize.height = 2048;
+    keySunLight.shadow.camera.near = 1.0;
+    keySunLight.shadow.camera.far = 22;
+    keySunLight.shadow.camera.left = -2.6;
+    keySunLight.shadow.camera.right = 2.6;
+    keySunLight.shadow.camera.top = 3.6;
+    keySunLight.shadow.camera.bottom = -3.6;
+    keySunLight.shadow.bias = -0.00015;
+    keySunLight.shadow.normalBias = 0.025;
+    scene.add(keySunLight);
+
+    // 2. Cool Sky Fill Light from opposite angle
+    const skyFillLight = new THREE.DirectionalLight(0x93c5fd, 0.95);
+    skyFillLight.position.set(-4.5, 5.5, -2.5);
+    scene.add(skyFillLight);
+
+    // 3. Subterranean Earthen Bounce Light (illuminates root cavities & cutaway)
+    const earthenBounce = new THREE.DirectionalLight(0x784a28, 0.85);
+    earthenBounce.position.set(0, -5, 2.5);
+    scene.add(earthenBounce);
+
+    // 4. Subtle Foliage Rim Light (separates foliage from deep dark backdrop)
+    const rimLight = new THREE.DirectionalLight(0x6ee7b7, 0.65);
+    rimLight.position.set(-5, 2.5, -5);
+    scene.add(rimLight);
+
+    const ambientLight = new THREE.AmbientLight(0xdcfce7, 0.40);
+    scene.add(ambientLight);
+
+    /* =========================================================================
+       4. SCULPTED GEOLOGICAL SOIL CUTAWAY & STRATA HORIZONS
+       ========================================================================= */
+    const geologyGroup = new THREE.Group();
+    scene.add(geologyGroup);
+
+    // Parametric Geological Cutaway Generator for Stratified Pedological Horizons
+    function createStratumBlock(yTop, yBottom, horizonType) {
+      const geom = new THREE.BufferGeometry();
+      const vertices = [];
+      const uvs = [];
+      const colors = [];
+      const indices = [];
+
+      const xMin = -1.75;
+      const xMax = 1.75;
+      const zBack = -1.50;
+
+      // Natural diagonal cutaway line passing through sensor (-0.55, -0.35) and maize stalk (0.35, 0.20)
+      function getZFront(x) {
+        return 0.533 * x - 0.007;
+      }
+
+      // Pedological micro-relief and fractured structural peds along the exposed cutaway face
+      function getFracture(x, y) {
+        if (horizonType === 'O') {
+          return Math.sin(x * 9.5 + y * 12.0) * 0.022 + Math.cos(x * 20.0) * 0.012;
+        } else if (horizonType === 'A') {
+          return Math.sin(x * 6.5 + y * 7.2) * 0.035 + Math.cos(x * 14.0 - y * 11.0) * 0.018 + Math.sin(x * 26.0 + y * 18.0) * 0.008;
+        } else if (horizonType === 'B') {
+          return Math.sin(x * 4.2 - y * 6.5) * 0.045 + Math.sin(x * 9.5 + y * 8.0) * 0.024 + Math.cos(x * 18.0) * 0.015;
+        } else { // 'C'
+          return Math.sin(x * 3.0 + y * 4.0) * 0.055 + Math.cos(x * 7.5 - y * 5.5) * 0.035 + Math.sin(x * 16.0 + y * 10.0) * 0.018;
+        }
+      }
+
+      // Surface agricultural terrain micro-furrows and root collar mound
+      function getSurfaceRelief(x, z) {
+        const distToPlant = Math.sqrt((x - 0.35) ** 2 + (z - 0.20) ** 2);
+        const mound = Math.max(0, 0.09 * (1.0 - distToPlant / 0.85));
+        const furrows = Math.sin(z * 6.0) * 0.018 + Math.sin(x * 3.5) * 0.014;
+        return mound + furrows;
+      }
+
+      // Multi-scale organic color variation to eliminate visible texture tiling patterns
+      function getVertexColor(x, y, z) {
+        const band = Math.sin(y * 18.0 + Math.sin(x * 4.0) * 1.5) * 0.06;
+        const patch = (Math.sin(x * 3.2 + z * 2.8) * Math.cos(y * 4.0)) * 0.08;
+        const v = 1.0 + band + patch;
+
+        let r = 1.0, g = 1.0, b = 1.0;
+        if (horizonType === 'O') {
+          r = 0.85 * v; g = 0.88 * v; b = 0.82 * v;
+        } else if (horizonType === 'A') {
+          r = 1.02 * v; g = 0.96 * v; b = 0.90 * v;
+        } else if (horizonType === 'B') {
+          const ironBand = Math.sin(y * 12.0) * 0.08;
+          r = (1.08 + ironBand) * v; g = 0.95 * v; b = 0.85 * v;
+        } else { // 'C'
+          const stoneSpeck = (Math.sin(x * 24.0) * Math.cos(z * 24.0)) * 0.12;
+          r = (0.95 + stoneSpeck) * v; g = (0.95 + stoneSpeck) * v; b = (0.98 + stoneSpeck) * v;
+        }
+        return [Math.max(0.2, Math.min(1.5, r)), Math.max(0.2, Math.min(1.5, g)), Math.max(0.2, Math.min(1.5, b))];
+      }
+
+      function addQuadFace(nu, nv, getPos, getUV, flipTriangles) {
+        const baseIdx = vertices.length / 3;
+        for (let j = 0; j <= nv; j++) {
+          const vParam = j / nv;
+          for (let i = 0; i <= nu; i++) {
+            const uParam = i / nu;
+            const [px, py, pz] = getPos(uParam, vParam);
+            vertices.push(px, py, pz);
+
+            const [uCoord, vCoord] = getUV(uParam, vParam, px, py, pz);
+            uvs.push(uCoord, vCoord);
+
+            const [cr, cg, cb] = getVertexColor(px, py, pz);
+            colors.push(cr, cg, cb);
+          }
+        }
+
+        for (let j = 0; j < nv; j++) {
+          const row1 = baseIdx + j * (nu + 1);
+          const row2 = baseIdx + (j + 1) * (nu + 1);
+          for (let i = 0; i < nu; i++) {
+            if (flipTriangles) {
+              indices.push(row1 + i, row2 + i, row1 + i + 1);
+              indices.push(row1 + i + 1, row2 + i, row2 + i + 1);
+            } else {
+              indices.push(row1 + i, row1 + i + 1, row2 + i);
+              indices.push(row1 + i + 1, row2 + i + 1, row2 + i);
+            }
+          }
+        }
+      }
+
+      // 1. Front Cutaway Face
+      addQuadFace(36, 12, (u, w) => {
+        const px = xMin + u * (xMax - xMin);
+        const py = yBottom + w * (yTop - yBottom) + (w === 1 && horizonType === 'O' ? getSurfaceRelief(px, getZFront(px)) : 0);
+        const pz = getZFront(px) + getFracture(px, py);
+        return [px, py, pz];
+      }, (u, w, px, py, pz) => [px * 1.5, py * 1.5], false);
+
+      // 2. Top Face
+      addQuadFace(36, 20, (u, v) => {
+        const px = xMin + u * (xMax - xMin);
+        const pz = zBack + v * (getZFront(px) - zBack);
+        const py = yTop + (horizonType === 'O' ? getSurfaceRelief(px, pz) : 0);
+        return [px, py, pz];
+      }, (u, v, px, py, pz) => [px * 1.5, pz * 1.5], true);
+
+      // 3. Bottom Face
+      addQuadFace(18, 12, (u, v) => {
+        const px = xMin + u * (xMax - xMin);
+        const pz = zBack + v * (getZFront(px) - zBack);
+        return [px, yBottom, pz];
+      }, (u, v, px, py, pz) => [px * 1.5, pz * 1.5], false);
+
+      // 4. Back Face
+      addQuadFace(20, 8, (u, w) => {
+        const px = xMin + u * (xMax - xMin);
+        const py = yBottom + w * (yTop - yBottom);
+        return [px, py, zBack];
+      }, (u, w, px, py, pz) => [px * 1.5, py * 1.5], true);
+
+      // 5. Left Face
+      addQuadFace(14, 8, (v, w) => {
+        const pz = zBack + v * (getZFront(xMin) - zBack);
+        const py = yBottom + w * (yTop - yBottom);
+        return [xMin, py, pz];
+      }, (v, w, px, py, pz) => [pz * 1.5, py * 1.5], false);
+
+      // 6. Right Face
+      addQuadFace(14, 8, (v, w) => {
+        const pz = zBack + v * (getZFront(xMax) - zBack);
+        const py = yBottom + w * (yTop - yBottom);
+        return [xMax, py, pz];
+      }, (v, w, px, py, pz) => [pz * 1.5, py * 1.5], true);
+
+      geom.setAttribute('position', new THREE.Float32BufferAttribute(vertices, 3));
+      geom.setAttribute('uv', new THREE.Float32BufferAttribute(uvs, 2));
+      geom.setAttribute('color', new THREE.Float32BufferAttribute(colors, 3));
+      geom.setIndex(indices);
+      geom.computeVertexNormals();
+
+      return geom;
+    }
+
+    // Helper: Front Cutaway Profile Z calculation for embedded elements
+    function calcCutawayZ(x) {
+      return 0.533 * x - 0.007;
+    }
+
+    // =========================================================================
+    // HORIZON O: Organic Mulch & Humus Litter (0 - 4cm)
+    // =========================================================================
+    const horizonOGroup = new THREE.Group();
+    geologyGroup.add(horizonOGroup);
+    const matHorizonO = new THREE.MeshStandardMaterial({
+      color: 0x1f241a,
+      map: texDirtDiff,
+      normalMap: texDirtNor,
+      normalScale: new THREE.Vector2(1.1, 1.1),
+      roughnessMap: texDirtRough,
+      roughness: 0.95,
+      metalness: 0.01,
+      vertexColors: true
+    });
+    const geoO = createStratumBlock(0.04, -0.08, 'O');
+    const meshO = new THREE.Mesh(geoO, matHorizonO);
+    meshO.receiveShadow = true;
+    meshO.castShadow = true;
+    meshO.userData = { id: 'soil-o', name: 'Horizon O (Organic Mulch & Humus Litter)', type: 'GEOLOGY', badge: 'MEASURED' };
+    horizonOGroup.add(meshO);
+
+    // Scattered Surface Organic Mulch & Leaf Litter Fragments
+    const mulchMat = new THREE.MeshStandardMaterial({
+      color: 0x3d3525,
+      roughness: 0.88,
+      side: THREE.DoubleSide
+    });
+    const mulchGeo = new THREE.PlaneGeometry(0.045, 0.022);
+    mulchGeo.rotateX(-Math.PI / 2);
+    const mulchInstanced = new THREE.InstancedMesh(mulchGeo, mulchMat, 36);
+    const dummyMulch = new THREE.Object3D();
+    for (let m = 0; m < 36; m++) {
+      const mx = (Math.random() - 0.4) * 2.2;
+      const mz = -1.3 + Math.random() * (calcCutawayZ(mx) + 1.25);
+      const distToPlant = Math.sqrt((mx - 0.35) ** 2 + (mz - 0.20) ** 2);
+      const my = 0.045 + Math.max(0, 0.09 * (1.0 - distToPlant / 0.85)) + Math.sin(mz * 6.0) * 0.015;
+      dummyMulch.position.set(mx, my, mz);
+      dummyMulch.rotation.set((Math.random() - 0.5) * 0.3, Math.random() * Math.PI, (Math.random() - 0.5) * 0.3);
+      dummyMulch.scale.set(0.7 + Math.random() * 0.7, 1.0, 0.7 + Math.random() * 0.7);
+      dummyMulch.updateMatrix();
+      mulchInstanced.setMatrixAt(m, dummyMulch.matrix);
+    }
+    mulchInstanced.instanceMatrix.needsUpdate = true;
+    mulchInstanced.userData = { id: 'soil-mulch', name: 'Organic Leaf Litter & Mulch Debris', type: 'GEOLOGY', badge: 'MEASURED' };
+    horizonOGroup.add(mulchInstanced);
+
+    // =========================================================================
+    // HORIZON A: Topsoil Humus Layer (4 - 25cm)
+    // =========================================================================
+    const horizonAGroup = new THREE.Group();
+    geologyGroup.add(horizonAGroup);
+    const matHorizonA = new THREE.MeshStandardMaterial({
+      color: 0x2e1d13,
+      map: texDirtDiff,
+      normalMap: texDirtNor,
+      normalScale: new THREE.Vector2(1.45, 1.45),
+      roughnessMap: texDirtRough,
+      roughness: 0.92,
+      metalness: 0.02,
+      vertexColors: true
+    });
+    const geoA = createStratumBlock(-0.08, -0.85, 'A');
+    const meshA = new THREE.Mesh(geoA, matHorizonA);
+    meshA.receiveShadow = true;
+    meshA.userData = { id: 'soil-a', name: 'Horizon A (Melanic Topsoil Humus)', type: 'GEOLOGY', badge: 'MEASURED' };
+    horizonAGroup.add(meshA);
+
+    // Embedded Topsoil River Pebbles & Mineral Aggregates in Horizon A
+    const stoneGeoA = new THREE.DodecahedronGeometry(0.032, 1);
+    const stoneMatA = new THREE.MeshStandardMaterial({ color: 0x5e5446, roughness: 0.88 });
+    const stoneInstancedA = new THREE.InstancedMesh(stoneGeoA, stoneMatA, 45);
+    const dummyStoneA = new THREE.Object3D();
+    for (let s = 0; s < 45; s++) {
+      const sx = (Math.random() - 0.5) * 3.1;
+      const sy = -0.12 - Math.random() * 0.68;
+      const sz = calcCutawayZ(sx) + (Math.random() - 0.5) * 0.04;
+      dummyStoneA.position.set(sx, sy, sz);
+      dummyStoneA.scale.set(0.6 + Math.random() * 0.8, 0.4 + Math.random() * 0.6, 0.6 + Math.random() * 0.8);
+      dummyStoneA.rotation.set(Math.random() * Math.PI, Math.random() * Math.PI, 0);
+      dummyStoneA.updateMatrix();
+      stoneInstancedA.setMatrixAt(s, dummyStoneA.matrix);
+    }
+    stoneInstancedA.instanceMatrix.needsUpdate = true;
+    stoneInstancedA.userData = { id: 'soil-stone-a', name: 'Topsoil Granular Aggregate / Mineral Pebble', type: 'GEOLOGY', badge: 'MEASURED' };
+    horizonAGroup.add(stoneInstancedA);
+
+    // Fine Capillary Rootlets protruding from Horizon A Cutaway Face
+    const rootletMat = new THREE.MeshStandardMaterial({ color: 0xded5c2, roughness: 0.38, metalness: 0.02 });
+    for (let r = 0; r < 24; r++) {
+      const rx = (Math.random() - 0.5) * 2.8;
+      const ry = -0.15 - Math.random() * 0.62;
+      const rz = calcCutawayZ(rx);
+      const angle = Math.random() * Math.PI * 2;
+      const rLen = 0.08 + Math.random() * 0.14;
+      const rCurve = new THREE.CatmullRomCurve3([
+        new THREE.Vector3(rx, ry, rz - 0.02),
+        new THREE.Vector3(rx + Math.cos(angle) * (rLen * 0.5), ry - rLen * 0.4, rz + 0.02),
+        new THREE.Vector3(rx + Math.cos(angle) * rLen, ry - rLen * 0.9, rz + (Math.random() - 0.5) * 0.03)
+      ]);
+      const rGeo = new THREE.TubeGeometry(rCurve, 8, 0.0035, 4, false);
+      const rMesh = new THREE.Mesh(rGeo, rootletMat);
+      rMesh.userData = { id: `soil-rootlet-a-${r+1}`, name: 'Rhizosphere Feeder Capillary Rootlet', type: 'BOTANY', badge: 'PHYSIOLOGY' };
+      horizonAGroup.add(rMesh);
+    }
+
+    // =========================================================================
+    // HORIZON B: Compacted Clay Subsoil (25 - 60cm)
+    // =========================================================================
+    const horizonBGroup = new THREE.Group();
+    geologyGroup.add(horizonBGroup);
+    const matHorizonB = new THREE.MeshStandardMaterial({
+      color: 0x62391a,
+      map: texMudDiff,
+      normalMap: texMudNor,
+      normalScale: new THREE.Vector2(1.35, 1.35),
+      roughnessMap: texMudRough,
+      roughness: 0.85,
+      metalness: 0.03,
+      vertexColors: true
+    });
+    const geoB = createStratumBlock(-0.85, -1.80, 'B');
+    const meshB = new THREE.Mesh(geoB, matHorizonB);
+    meshB.receiveShadow = true;
+    meshB.userData = { id: 'soil-b', name: 'Horizon B (Compacted Clay Subsoil)', type: 'GEOLOGY', badge: 'MEASURED' };
+    horizonBGroup.add(meshB);
+
+    // Clay Clods & Ferruginous Concretions in Horizon B
+    const stoneGeoB = new THREE.DodecahedronGeometry(0.048, 1);
+    const stoneMatB = new THREE.MeshStandardMaterial({ color: 0x734a2c, roughness: 0.82 });
+    const stoneInstancedB = new THREE.InstancedMesh(stoneGeoB, stoneMatB, 35);
+    const dummyStoneB = new THREE.Object3D();
+    for (let s = 0; s < 35; s++) {
+      const sx = (Math.random() - 0.5) * 3.1;
+      const sy = -0.92 - Math.random() * 0.80;
+      const sz = calcCutawayZ(sx) + (Math.random() - 0.5) * 0.04;
+      dummyStoneB.position.set(sx, sy, sz);
+      dummyStoneB.scale.set(0.7 + Math.random() * 0.8, 0.5 + Math.random() * 0.7, 0.6 + Math.random() * 0.8);
+      dummyStoneB.rotation.set(Math.random() * Math.PI, Math.random() * Math.PI, 0);
+      dummyStoneB.updateMatrix();
+      stoneInstancedB.setMatrixAt(s, dummyStoneB.matrix);
+    }
+    stoneInstancedB.instanceMatrix.needsUpdate = true;
+    stoneInstancedB.userData = { id: 'soil-stone-b', name: 'Illuvial Clay Clod / Ferruginous Concretion', type: 'GEOLOGY', badge: 'MEASURED' };
+    horizonBGroup.add(stoneInstancedB);
+
+    // Deep Vertical Seminal Root Cleavage Impressions in Horizon B
+    for (let r = 0; r < 12; r++) {
+      const rx = (Math.random() - 0.5) * 2.2;
+      const ry = -0.95 - Math.random() * 0.75;
+      const rz = calcCutawayZ(rx);
+      const rCurve = new THREE.CatmullRomCurve3([
+        new THREE.Vector3(rx, ry, rz - 0.015),
+        new THREE.Vector3(rx + (Math.random() - 0.5) * 0.04, ry - 0.12, rz + 0.015),
+        new THREE.Vector3(rx + (Math.random() - 0.5) * 0.06, ry - 0.24, rz)
+      ]);
+      const rGeo = new THREE.TubeGeometry(rCurve, 8, 0.005, 4, false);
+      const rMesh = new THREE.Mesh(rGeo, rootletMat);
+      rMesh.userData = { id: `soil-rootlet-b-${r+1}`, name: 'Deep Subsoil Seminal Root Cleavage Axis', type: 'BOTANY', badge: 'PHYSIOLOGY' };
+      horizonBGroup.add(rMesh);
+    }
+
+    // =========================================================================
+    // HORIZON C: Gravel Drainage & Bedrock Substratum (60cm+)
+    // =========================================================================
+    const horizonCGroup = new THREE.Group();
+    geologyGroup.add(horizonCGroup);
+    const matHorizonC = new THREE.MeshStandardMaterial({
+      color: 0x363836,
+      map: texMudDiff,
+      normalMap: texMudNor,
+      normalScale: new THREE.Vector2(1.65, 1.65),
+      roughnessMap: texMudRough,
+      roughness: 0.72,
+      metalness: 0.22,
+      vertexColors: true
+    });
+    const geoC = createStratumBlock(-1.80, -2.60, 'C');
+    const meshC = new THREE.Mesh(geoC, matHorizonC);
+    meshC.receiveShadow = true;
+    meshC.userData = { id: 'soil-c', name: 'Horizon C (Parent Substratum & Saprolite)', type: 'GEOLOGY', badge: 'MEASURED' };
+    horizonCGroup.add(meshC);
+
+    // Angular Saprolite Rock Clods & Slate Gravel in Horizon C
+    const stoneGeoC = new THREE.DodecahedronGeometry(0.075, 1);
+    const stoneMatC = new THREE.MeshStandardMaterial({ color: 0x4a4c4a, roughness: 0.70, metalness: 0.20 });
+    const stoneInstancedC = new THREE.InstancedMesh(stoneGeoC, stoneMatC, 45);
+    const dummyStoneC = new THREE.Object3D();
+    for (let s = 0; s < 45; s++) {
+      const sx = (Math.random() - 0.5) * 3.1;
+      const sy = -1.88 - Math.random() * 0.65;
+      const sz = calcCutawayZ(sx) + (Math.random() - 0.5) * 0.05;
+      dummyStoneC.position.set(sx, sy, sz);
+      dummyStoneC.scale.set(0.7 + Math.random() * 1.1, 0.5 + Math.random() * 0.9, 0.7 + Math.random() * 1.0);
+      dummyStoneC.rotation.set(Math.random() * Math.PI, Math.random() * Math.PI, 0);
+      dummyStoneC.updateMatrix();
+      stoneInstancedC.setMatrixAt(s, dummyStoneC.matrix);
+    }
+    stoneInstancedC.instanceMatrix.needsUpdate = true;
+    stoneInstancedC.userData = { id: 'soil-stone-c', name: 'Saprolite Weathered Bedrock / Slate Gravel', type: 'GEOLOGY', badge: 'MEASURED' };
+    horizonCGroup.add(stoneInstancedC);
+/* =========================================================================
+       5. BOTANICAL MAIZE ORGANISM (ZEA MAYS L.) WITH DETAILED FIBROUS ARCHITECTURE
+       ========================================================================= */
+    const plantGroup = new THREE.Group();
+    plantGroup.position.set(0.35, 0.07, 0.2);
+    scene.add(plantGroup);
+
+    const anatomyParts = {
+      stem: new THREE.Group(),
+      sheaths: new THREE.Group(),
+      leaves: new THREE.Group(),
+      ears: new THREE.Group(),
+      braceRoots: new THREE.Group(),
+      crownRoots: new THREE.Group(),
+      seminalRoots: new THREE.Group(),
+      lateralRoots: new THREE.Group(),
+      rootTips: new THREE.Group()
+    };
+    Object.values(anatomyParts).forEach(g => plantGroup.add(g));
+
+    // Stalk (Culm) Material with subtle rind luster
+    const stalkMat = new THREE.MeshStandardMaterial({
+      color: 0x3d9e38,
+      roughness: 0.50,
+      metalness: 0.05
+    });
+
+    // Root Materials with natural ivory-cream hydration sheen (fibrous monocot system)
+    const braceRootMat = new THREE.MeshStandardMaterial({
+      color: 0xd6c7af,
+      roughness: 0.40,
+      metalness: 0.03
+    });
+    const crownRootMat = new THREE.MeshStandardMaterial({
+      color: 0xe8dfce,
+      roughness: 0.38,
+      metalness: 0.02
+    });
+    const lateralRootMat = new THREE.MeshStandardMaterial({
+      color: 0xf0e8db,
+      roughness: 0.34,
+      metalness: 0.02
+    });
+    const rootCapMat = new THREE.MeshStandardMaterial({
+      color: 0xfdfbf7,
+      roughness: 0.22,
+      metalness: 0.04
+    });
+
+    // Stratified Canopy Foliage Materials (Upper, Mid, Lower Canopy with distinct age & cuticle thickness)
+    const leafMatUpper = new THREE.MeshStandardMaterial({
+      color: 0x4fae3b,
+      map: leafTexture,
+      roughness: 0.30,
+      metalness: 0.02,
+      emissive: 0x0c2a09,
+      emissiveIntensity: 0.22,
+      side: THREE.DoubleSide
+    });
+    const leafMatMid = new THREE.MeshStandardMaterial({
+      color: 0x277824,
+      map: leafTexture,
+      roughness: 0.34,
+      metalness: 0.03,
+      emissive: 0x071e06,
+      emissiveIntensity: 0.18,
+      side: THREE.DoubleSide
+    });
+    const leafMatLower = new THREE.MeshStandardMaterial({
+      color: 0x316f2b,
+      map: leafTexture,
+      roughness: 0.42,
+      metalness: 0.04,
+      emissive: 0x051604,
+      emissiveIntensity: 0.14,
+      side: THREE.DoubleSide
+    });
+    const sheathMat = new THREE.MeshStandardMaterial({
+      color: 0x48963c,
+      roughness: 0.46,
+      metalness: 0.04,
+      side: THREE.DoubleSide
+    });
+
+    // A. Culm (Stalk) with Anatomically Spaced Nodes and Solid Internodes
+    const stalkPoints = [
+      new THREE.Vector3(0, 0, 0),
+      new THREE.Vector3(0.012, 0.4, -0.008),
+      new THREE.Vector3(-0.015, 0.95, 0.012),
+      new THREE.Vector3(0.01, 1.6, -0.01),
+      new THREE.Vector3(0.005, 2.3, 0.0)
+    ];
+    const stalkCurve = new THREE.CatmullRomCurve3(stalkPoints);
+    const stalkGeo = new THREE.TubeGeometry(stalkCurve, 40, 0.046, 16, false);
+    const stalkMesh = new THREE.Mesh(stalkGeo, stalkMat);
+    stalkMesh.castShadow = true;
+    stalkMesh.receiveShadow = true;
+    stalkMesh.userData = { id: 'plant-stem', name: 'Zea Mays Culm (Stalk Internodes)', type: 'BOTANY', badge: 'PHYSIOLOGY' };
+    anatomyParts.stem.add(stalkMesh);
+
+    // Node Collars along the Culm
+    const nodeHeights = [0.08, 0.18, 0.35, 0.55, 0.80, 1.08, 1.38, 1.70, 2.05];
+    nodeHeights.forEach((nh, idx) => {
+      const nodeGeo = new THREE.TorusGeometry(0.049, 0.008, 8, 24);
+      nodeGeo.rotateX(Math.PI / 2);
+      const nodeMesh = new THREE.Mesh(nodeGeo, stalkMat);
+      nodeMesh.position.set(0, nh, 0);
+      nodeMesh.userData = { id: `culm-node-${idx+1}`, name: `Culm Node Collar #${idx+1}`, type: 'BOTANY', badge: 'PHYSIOLOGY' };
+      anatomyParts.stem.add(nodeMesh);
+    });
+
+    // Apical Tassel (Male Inflorescence with central spike & radiating branches)
+    const tasselSpike = new THREE.TubeGeometry(new THREE.CatmullRomCurve3([
+      new THREE.Vector3(0, 2.25, 0),
+      new THREE.Vector3(0, 2.52, 0)
+    ]), 8, 0.008, 6, false);
+    const tasselMat = new THREE.MeshStandardMaterial({ color: 0xd4be6a, roughness: 0.65 });
+    const spikeMesh = new THREE.Mesh(tasselSpike, tasselMat);
+    spikeMesh.userData = { id: 'tassel-central', name: 'Tassel Central Rachis (Inflorescence)', type: 'BOTANY', badge: 'PHYSIOLOGY' };
+    anatomyParts.stem.add(spikeMesh);
+
+    for (let t = 0; t < 10; t++) {
+      const angle = (t / 10) * Math.PI * 2 + (Math.random() - 0.5) * 0.2;
+      const tCurve = new THREE.CatmullRomCurve3([
+        new THREE.Vector3(0, 2.26 + (t / 10) * 0.06, 0),
+        new THREE.Vector3(Math.cos(angle) * 0.08, 2.38, Math.sin(angle) * 0.08),
+        new THREE.Vector3(Math.cos(angle) * 0.19, 2.48, Math.sin(angle) * 0.19),
+        new THREE.Vector3(Math.cos(angle) * 0.24, 2.44, Math.sin(angle) * 0.24)
+      ]);
+      const tGeo = new THREE.TubeGeometry(tCurve, 8, 0.005, 5, false);
+      const tMesh = new THREE.Mesh(tGeo, tasselMat);
+      tMesh.userData = { id: `tassel-branch-${t+1}`, name: `Tassel Spikelet Branch #${t+1}`, type: 'BOTANY', badge: 'PHYSIOLOGY' };
+      anatomyParts.stem.add(tMesh);
+    }
+
+    // B. Anatomically Detailed Maize Leaves (Sheath + 7-Point Cross-Section Blade with Ruffled Margins)
+    const leafMeshes = [];
+
+    function createBotanicalMaizeLeaf(index, totalLeaves) {
+      const leafGroup = new THREE.Group();
+      const nodeH = nodeHeights[Math.min(nodeHeights.length - 1, index + 1)] || (0.3 + (index / totalLeaves) * 1.6);
+      leafGroup.position.set(0, nodeH, 0);
+
+      // Distichous alternating phyllotaxis (~180° alternation with subtle 15° natural spiral)
+      const baseAngle = (index % 2 === 0) ? 0 : Math.PI;
+      const spiralOffset = (index - 5) * 0.12 + (Math.random() - 0.5) * 0.08;
+      leafGroup.rotation.y = baseAngle + spiralOffset;
+
+      // 1. Clasping Cylindrical Leaf Sheath wrapping the stalk below the collar
+      const sheathLen = 0.14 + (index / totalLeaves) * 0.08;
+      const sheathGeo = new THREE.CylinderGeometry(0.052, 0.050, sheathLen, 16, 1, true, 0.2, Math.PI * 1.85);
+      sheathGeo.translate(0, -sheathLen * 0.45, 0);
+      const sheathMesh = new THREE.Mesh(sheathGeo, sheathMat);
+      sheathMesh.castShadow = true;
+      sheathMesh.userData = { id: `sheath-${index+1}`, name: `Leaf Sheath #${index+1} (Clasping Collar)`, type: 'BOTANY', badge: 'PHYSIOLOGY' };
+      anatomyParts.sheaths.add(sheathMesh);
+
+      // 2. Leaf Blade with 7-Point Profile, V-Groove, and Undulating Fluted Margins
+      const length = 1.35 + Math.sin((index / totalLeaves) * Math.PI) * 0.42;
+      const maxWidth = 0.17 + Math.sin((index / totalLeaves) * Math.PI) * 0.07;
+      const segments = 28;
+
+      const archFactor = 0.28 + (index / totalLeaves) * 0.35;
+      const droopPower = 1.8 + (1.0 - index / totalLeaves) * 0.7;
+
+      const curvePoints = [];
+      for (let i = 0; i <= segments; i++) {
+        const u = i / segments;
+        const x = Math.sin(u * Math.PI * 0.5) * length;
+        const y = Math.sin(u * Math.PI * 0.8) * archFactor - Math.pow(u, droopPower) * (0.45 + (1.0 - index / totalLeaves) * 0.25);
+        const z = Math.sin(u * Math.PI) * (0.035 * (Math.random() - 0.5));
+        curvePoints.push(new THREE.Vector3(x, y, z));
+      }
+
+      // 7-Point Transverse Profile Mesh
+      const geom = new THREE.BufferGeometry();
+      const vertices = [];
+      const uvs = [];
+      const indices = [];
+
+      for (let i = 0; i <= segments; i++) {
+        const u = i / segments;
+        const p = curvePoints[i];
+        const w = Math.sin(u * Math.PI) * maxWidth * (1.0 - u * 0.35);
+
+        const tangent = (i < segments)
+          ? curvePoints[i + 1].clone().sub(p).normalize()
+          : p.clone().sub(curvePoints[i - 1]).normalize();
+        let side = new THREE.Vector3(0, 0, 1).cross(tangent).normalize();
+        if (side.lengthSq() < 0.001) side.set(0, 0, 1);
+
+        // Fluted wavy margin undulations
+        const marginWave = Math.sin(u * 26.0 + index) * (0.015 * Math.sin(u * Math.PI));
+
+        // 7 profile points: p0 (ruffled left) to p6 (ruffled right) with p3 (midrib keel)
+        const v0 = p.clone().add(side.clone().multiplyScalar(w * 0.50)).add(new THREE.Vector3(0, 0.014 + marginWave, 0));
+        const v1 = p.clone().add(side.clone().multiplyScalar(w * 0.32)).add(new THREE.Vector3(0, 0.008 + marginWave * 0.5, 0));
+        const v2 = p.clone().add(side.clone().multiplyScalar(w * 0.12)).add(new THREE.Vector3(0, 0.002, 0));
+        const v3 = p.clone().add(new THREE.Vector3(0, -0.010, 0));
+        const v4 = p.clone().sub(side.clone().multiplyScalar(w * 0.12)).add(new THREE.Vector3(0, 0.002, 0));
+        const v5 = p.clone().sub(side.clone().multiplyScalar(w * 0.32)).add(new THREE.Vector3(0, 0.008 - marginWave * 0.5, 0));
+        const v6 = p.clone().sub(side.clone().multiplyScalar(w * 0.50)).add(new THREE.Vector3(0, 0.014 - marginWave, 0));
+
+        vertices.push(
+          v0.x, v0.y, v0.z,
+          v1.x, v1.y, v1.z,
+          v2.x, v2.y, v2.z,
+          v3.x, v3.y, v3.z,
+          v4.x, v4.y, v4.z,
+          v5.x, v5.y, v5.z,
+          v6.x, v6.y, v6.z
+        );
+
+        uvs.push(
+          0.00, u,
+          0.18, u,
+          0.38, u,
+          0.50, u,
+          0.62, u,
+          0.82, u,
+          1.00, u
+        );
+
+        if (i < segments) {
+          const row = i * 7;
+          for (let q = 0; q < 6; q++) {
+            indices.push(row + q, row + q + 7, row + q + 1);
+            indices.push(row + q + 1, row + q + 7, row + q + 8);
+          }
+        }
+      }
+
+      geom.setAttribute('position', new THREE.Float32BufferAttribute(vertices, 3));
+      geom.setAttribute('uv', new THREE.Float32BufferAttribute(uvs, 2));
+      geom.setIndex(indices);
+      geom.computeVertexNormals();
+
+      // Stratified foliage material based on leaf insertion level
+      let chosenMat = leafMatMid;
+      if (index >= 7) chosenMat = leafMatUpper;
+      else if (index <= 2) chosenMat = leafMatLower;
+
+      const mesh = new THREE.Mesh(geom, chosenMat);
+      mesh.castShadow = true;
+      mesh.receiveShadow = true;
+      mesh.userData = { id: `leaf-${index + 1}`, name: `Maize Leaf Blade #${index + 1}`, type: 'BOTANY', badge: 'PHYSIOLOGY' };
+
+      leafGroup.add(mesh);
+      anatomyParts.leaves.add(leafGroup);
+      leafMeshes.push(leafGroup);
+    }
+
+    for (let l = 0; l < 11; l++) {
+      createBotanicalMaizeLeaf(l, 11);
+    }
+
+    // C. Developing Maize Ears (Female Inflorescences with Husks and Cascading Silk)
+    function createBotanicalMaizeEar(nodeHeight, angle, earIndex) {
+      const earGroup = new THREE.Group();
+      earGroup.position.set(0, nodeHeight, 0);
+      earGroup.rotation.y = angle;
+      earGroup.rotation.z = -0.44;
+
+      // Rigid Ear Shank
+      const shankGeo = new THREE.CylinderGeometry(0.018, 0.024, 0.15, 10);
+      const shankMat = new THREE.MeshStandardMaterial({ color: 0x2e8b38, roughness: 0.58 });
+      const shank = new THREE.Mesh(shankGeo, shankMat);
+      shank.position.y = 0.07;
+      earGroup.add(shank);
+
+      // Cob Body wrapped in Spathe Husk Leaves
+      const cobGeo = new THREE.CylinderGeometry(0.046, 0.068, 0.42, 16);
+      const huskMat = new THREE.MeshStandardMaterial({
+        color: 0x3d9e40,
+        map: leafTexture,
+        roughness: 0.45,
+        metalness: 0.04
+      });
+      const cob = new THREE.Mesh(cobGeo, huskMat);
+      cob.position.y = 0.26;
+      cob.castShadow = true;
+      cob.userData = { id: `ear-${earIndex}`, name: `Developing Maize Ear #${earIndex} (Husk Sheaths)`, type: 'BOTANY', badge: 'PHYSIOLOGY' };
+      earGroup.add(cob);
+
+      // Overlapping Husk Bracts (spathes)
+      for (let h = 0; h < 6; h++) {
+        const hPoints = [
+          new THREE.Vector3(0, 0.10, 0),
+          new THREE.Vector3(Math.cos(h * 1.05) * 0.075, 0.28, Math.sin(h * 1.05) * 0.075),
+          new THREE.Vector3(Math.cos(h * 1.05) * 0.022, 0.47, Math.sin(h * 1.05) * 0.022)
+        ];
+        const hCurve = new THREE.CatmullRomCurve3(hPoints);
+        const hGeo = new THREE.TubeGeometry(hCurve, 8, 0.015, 6, false);
+        const hMesh = new THREE.Mesh(hGeo, huskMat);
+        earGroup.add(hMesh);
+      }
+
+      // Cascading Corn Silk Tufts (styles/stigmata)
+      for (let s = 0; s < 18; s++) {
+        const sAngle = (s / 18) * Math.PI * 2;
+        const sCurve = new THREE.CatmullRomCurve3([
+          new THREE.Vector3(0, 0.45, 0),
+          new THREE.Vector3(Math.cos(sAngle) * 0.038, 0.51, Math.sin(sAngle) * 0.038),
+          new THREE.Vector3(Math.cos(sAngle) * 0.075 + (Math.random() - 0.5) * 0.03, 0.56 - Math.random() * 0.04, Math.sin(sAngle) * 0.075),
+          new THREE.Vector3(Math.cos(sAngle) * 0.09, 0.49 - Math.random() * 0.08, Math.sin(sAngle) * 0.09)
+        ]);
+        const sGeo = new THREE.TubeGeometry(sCurve, 8, 0.003, 4, false);
+        const sMesh = new THREE.Mesh(sGeo, new THREE.MeshStandardMaterial({
+          color: 0xdeb842,
+          roughness: 0.45,
+          emissive: 0x4a3508
+        }));
+        earGroup.add(sMesh);
+      }
+
+      anatomyParts.ears.add(earGroup);
+    }
+
+    createBotanicalMaizeEar(0.82, 1.30, 1);
+    createBotanicalMaizeEar(1.40, 3.90, 2);
+
+    // D. Whorled Aerial Brace Roots (Prop Roots for Mechanical Support & Topsoil Uptake)
+    // Whorl 1: Emerging from above-ground Node 1 (8 prop roots)
+    for (let c = 0; c < 8; c++) {
+      const angle = (c / 8) * Math.PI * 2 + 0.15;
+      const cPoints = [
+        new THREE.Vector3(0, 0.08, 0),
+        new THREE.Vector3(Math.cos(angle) * 0.12, 0.03, Math.sin(angle) * 0.12),
+        new THREE.Vector3(Math.cos(angle) * 0.24, -0.14, Math.sin(angle) * 0.24)
+      ];
+      const cCurve = new THREE.CatmullRomCurve3(cPoints);
+      const cGeo = new THREE.TubeGeometry(cCurve, 10, 0.022, 6, false);
+      const cMesh = new THREE.Mesh(cGeo, braceRootMat);
+      cMesh.castShadow = true;
+      cMesh.userData = { id: `brace-root-w1-${c+1}`, name: `Brace Root (Whorl 1, #${c+1})`, type: 'BOTANY', badge: 'PHYSIOLOGY' };
+      anatomyParts.braceRoots.add(cMesh);
+    }
+
+    // Whorl 2: Emerging from above-ground Node 2 (10 prop roots)
+    for (let c = 0; c < 10; c++) {
+      const angle = (c / 10) * Math.PI * 2;
+      const cPoints = [
+        new THREE.Vector3(0, 0.18, 0),
+        new THREE.Vector3(Math.cos(angle) * 0.16, 0.08, Math.sin(angle) * 0.16),
+        new THREE.Vector3(Math.cos(angle) * 0.32, -0.20, Math.sin(angle) * 0.32)
+      ];
+      const cCurve = new THREE.CatmullRomCurve3(cPoints);
+      const cGeo = new THREE.TubeGeometry(cCurve, 12, 0.026, 6, false);
+      const cMesh = new THREE.Mesh(cGeo, braceRootMat);
+      cMesh.castShadow = true;
+      cMesh.userData = { id: `brace-root-w2-${c+1}`, name: `Brace Root (Whorl 2, #${c+1})`, type: 'BOTANY', badge: 'PHYSIOLOGY' };
+      anatomyParts.braceRoots.add(cMesh);
+    }
+
+    // E. Subterranean Crown Roots (Nodal Roots radiating in Topsoil Horizon A)
+    const crownRootAxes = [];
+    for (let cr = 0; cr < 16; cr++) {
+      const angle = (cr / 16) * Math.PI * 2 + (Math.random() - 0.5) * 0.3;
+      const reach = 0.55 + Math.random() * 0.35;
+      const depth = -0.25 - Math.random() * 0.35;
+      const crPoints = [
+        new THREE.Vector3(0, -0.04 - (cr % 4) * 0.02, 0),
+        new THREE.Vector3(Math.cos(angle) * (reach * 0.45), depth * 0.5, Math.sin(angle) * (reach * 0.45)),
+        new THREE.Vector3(Math.cos(angle) * reach, depth, Math.sin(angle) * reach)
+      ];
+      const crCurve = new THREE.CatmullRomCurve3(crPoints);
+      const crGeo = new THREE.TubeGeometry(crCurve, 16, 0.020, 6, false);
+      const crMesh = new THREE.Mesh(crGeo, crownRootMat);
+      crMesh.castShadow = true;
+      crMesh.userData = { id: `crown-root-${cr+1}`, name: `Crown Nodal Root #${cr+1} (Horizon A)`, type: 'BOTANY', badge: 'PHYSIOLOGY' };
+      anatomyParts.crownRoots.add(crMesh);
+      crownRootAxes.push(crPoints[2]);
+    }
+
+    // F. Seminal Taproot System (Deep vertical moisture axes penetrating Horizons B & C)
+    const tapPoints = [
+      new THREE.Vector3(0, -0.05, 0),
+      new THREE.Vector3(0.03, -0.45, -0.02),
+      new THREE.Vector3(-0.025, -1.05, 0.02),
+      new THREE.Vector3(0.015, -1.82, 0.0)
+    ];
+    const tapCurve = new THREE.CatmullRomCurve3(tapPoints);
+    const tapGeo = new THREE.TubeGeometry(tapCurve, 28, 0.034, 8, false);
+    const tapMesh = new THREE.Mesh(tapGeo, crownRootMat);
+    tapMesh.castShadow = true;
+    tapMesh.userData = { id: 'seminal-taproot', name: 'Primary Seminal Taproot (Deep Subsoil)', type: 'BOTANY', badge: 'PHYSIOLOGY' };
+    anatomyParts.seminalRoots.add(tapMesh);
+
+    // 4 Secondary Seminal Axes radiating downwards
+    for (let s = 0; s < 4; s++) {
+      const sAngle = (s / 4) * Math.PI * 2 + 0.4;
+      const sCurve = new THREE.CatmullRomCurve3([
+        new THREE.Vector3(0, -0.06, 0),
+        new THREE.Vector3(Math.cos(sAngle) * 0.12, -0.65, Math.sin(sAngle) * 0.12),
+        new THREE.Vector3(Math.cos(sAngle) * 0.18, -1.45, Math.sin(sAngle) * 0.18)
+      ]);
+      const sGeo = new THREE.TubeGeometry(sCurve, 18, 0.018, 6, false);
+      const sMesh = new THREE.Mesh(sGeo, crownRootMat);
+      sMesh.userData = { id: `seminal-axis-${s+1}`, name: `Secondary Seminal Axis #${s+1}`, type: 'BOTANY', badge: 'PHYSIOLOGY' };
+      anatomyParts.seminalRoots.add(sMesh);
+    }
+
+    // G. Dense Lateral Feeder Root Web (1st and 2nd Order Branches in Rhizosphere)
+    const rootTipPositions = [];
+    for (let r = 0; r < 48; r++) {
+      const angle = (r / 48) * Math.PI * 2 + (Math.random() - 0.5) * 0.45;
+      const startDepth = -0.12 - (r / 48) * 1.45;
+      const reach = 0.42 + Math.random() * 0.85;
+      const endDepth = startDepth - 0.18 - Math.random() * 0.32;
+
+      const p0 = new THREE.Vector3(0, startDepth, 0);
+      const p2 = new THREE.Vector3(Math.cos(angle) * reach, endDepth, Math.sin(angle) * reach);
+      const p1 = new THREE.Vector3(
+        (p0.x + p2.x) * 0.5 + (Math.random() - 0.5) * 0.16,
+        (p0.y + p2.y) * 0.5 - 0.05,
+        (p0.z + p2.z) * 0.5 + (Math.random() - 0.5) * 0.16
+      );
+
+      const latCurve = new THREE.CatmullRomCurve3([p0, p1, p2]);
+      const latGeo = new THREE.TubeGeometry(latCurve, 12, 0.012, 5, false);
+      const latMesh = new THREE.Mesh(latGeo, lateralRootMat);
+      latMesh.userData = { id: `feeder-root-${r+1}`, name: `Lateral Feeder Root #${r+1} (Rhizosphere)`, type: 'BOTANY', badge: 'PHYSIOLOGY' };
+      anatomyParts.lateralRoots.add(latMesh);
+
+      // Active Meristematic Root Cap (Calyptra)
+      const tipGeo = new THREE.SphereGeometry(0.018, 8, 8);
+      const tipMesh = new THREE.Mesh(tipGeo, rootCapMat);
+      tipMesh.position.copy(p2);
+      tipMesh.userData = { id: `root-cap-${r+1}`, name: `Active Root Cap #${r+1} (Calyptra)`, type: 'BOTANY', badge: 'PHYSIOLOGY' };
+      anatomyParts.rootTips.add(tipMesh);
+      rootTipPositions.push(p2);
+    }
+
+    /* =========================================================================
+       6. ZERTHIVA INDUSTRIAL $30 HARDWARE & PROBE SUITE (CAD-ACCURATE REALISM)
+       ========================================================================= */
+    const hardwareGroup = new THREE.Group();
+    // Positioned flush with the 31-deg cutaway face (x = -0.55m, z = -0.30m)
+    hardwareGroup.position.set(-0.55, 0.02, -0.30);
+    scene.add(hardwareGroup);
+
+    const hwParts = {
+      solarWafer: new THREE.Group(),
+      sentryRing: new THREE.Group(),
+      enclosure: new THREE.Group(),
+      esp32Core: new THREE.Group(),
+      sim800Mod: new THREE.Group(),
+      sdCardMod: new THREE.Group(),
+      batteryPack: new THREE.Group(),
+      cableHarness: new THREE.Group(),
+      probeShaft: new THREE.Group()
+    };
+    Object.values(hwParts).forEach(g => hardwareGroup.add(g));
+
+    // Master Realistic PBR Materials for Hardware Suite
+    const asaChassisMat = new THREE.MeshStandardMaterial({
+      color: 0x142820,
+      roughness: 0.38,
+      metalness: 0.15
+    });
+
+    const pcbGreenMat = new THREE.MeshStandardMaterial({
+      color: 0x0b4f2c,
+      roughness: 0.32,
+      metalness: 0.35
+    });
+
+    const pcbBlueMat = new THREE.MeshStandardMaterial({
+      color: 0x0284c7,
+      roughness: 0.30,
+      metalness: 0.38
+    });
+
+    const pcbRedMat = new THREE.MeshStandardMaterial({
+      color: 0x991b1b,
+      roughness: 0.30,
+      metalness: 0.40
+    });
+
+    const metalShieldMat = new THREE.MeshStandardMaterial({
+      color: 0xe2e8f0,
+      roughness: 0.16,
+      metalness: 0.96,
+      envMapIntensity: 1.5
+    });
+
+    const goldPinMat = new THREE.MeshStandardMaterial({
+      color: 0xf59e0b,
+      roughness: 0.18,
+      metalness: 0.92,
+      envMapIntensity: 1.4
+    });
+
+    const stainless316Mat = new THREE.MeshStandardMaterial({
+      color: 0xf8fafc,
+      roughness: 0.05,
+      metalness: 0.98,
+      envMapIntensity: 2.0
+    });
+
+    const blackNylonMat = new THREE.MeshStandardMaterial({
+      color: 0x111827,
+      roughness: 0.58,
+      metalness: 0.08
+    });
+
+    const jstHousingMat = new THREE.MeshStandardMaterial({
+      color: 0xf1f5f9,
+      roughness: 0.40,
+      metalness: 0.05
+    });
+
+    // 1. Monocrystal 5W Solar Collector Disc (Authentic 14cm diameter with silicon wafer grid)
+    const pvDiscGeo = new THREE.CylinderGeometry(0.075, 0.075, 0.012, 32);
+    const pvMat = new THREE.MeshStandardMaterial({
+      color: 0x0f172a,
+      metalness: 0.92,
+      roughness: 0.12,
+      envMapIntensity: 1.6
+    });
+    const pvDisc = new THREE.Mesh(pvDiscGeo, pvMat);
+    pvDisc.userData = { id: 'pv-solar', name: '5W Monocrystal PV Collector (14cm Wafer)', type: 'HARDWARE', badge: 'CALIBRATED' };
+    hwParts.solarWafer.add(pvDisc);
+
+    // Silver busbars & contact grid lines on the PV disc
+    for (let b = -2; b <= 2; b++) {
+      const busGeo = new THREE.BoxGeometry(0.0015, 0.0125, 0.14 * Math.cos(b * 0.35));
+      const busMesh = new THREE.Mesh(busGeo, metalShieldMat);
+      busMesh.position.set(b * 0.024, 0.001, 0);
+      hwParts.solarWafer.add(busMesh);
+    }
+    hwParts.solarWafer.position.y = 0.28;
+
+    // 2. 360° Fresnel RGB LED Optical Sentry Beacon (GPIO25, 26, 27)
+    const sentryGeo = new THREE.TorusGeometry(0.058, 0.008, 12, 32);
+    sentryGeo.rotateX(Math.PI / 2);
+    const sentryMat = new THREE.MeshStandardMaterial({
+      color: 0x00ff87,
+      emissive: 0x00ff87,
+      emissiveIntensity: 1.8,
+      roughness: 0.18
+    });
+    const sentryRingMesh = new THREE.Mesh(sentryGeo, sentryMat);
+    sentryRingMesh.userData = { id: 'sentry-beacon', name: '360° Fresnel RGB Sentry Ring (GPIO25/26/27)', type: 'HARDWARE', badge: 'MEASURED' };
+    hwParts.sentryRing.add(sentryRingMesh);
+    const sentryPointLight = new THREE.PointLight(0x00ff87, 1.4, 2.2);
+    hwParts.sentryRing.add(sentryPointLight);
+    hwParts.sentryRing.position.y = 0.25;
+
+    // 3. ASA Weatherproof Enclosure Body (Authentic 11cm diameter, 18cm height, IP67)
+    const chassisGeo = new THREE.CylinderGeometry(0.054, 0.050, 0.18, 32);
+    const chassisMesh = new THREE.Mesh(chassisGeo, asaChassisMat);
+    chassisMesh.position.y = 0.14;
+    chassisMesh.castShadow = true;
+    chassisMesh.userData = { id: 'asa-chassis', name: 'Weatherproof ASA Enclosure Body (IP67 Rated)', type: 'HARDWARE', badge: 'MECHANICAL' };
+    hwParts.enclosure.add(chassisMesh);
+
+    // Weatherproof dual nitrile O-ring seals
+    for (let r = 0; r < 2; r++) {
+      const sealGeo = new THREE.TorusGeometry(0.055, 0.0028, 8, 32);
+      sealGeo.rotateX(Math.PI / 2);
+      const sealMesh = new THREE.Mesh(sealGeo, blackNylonMat);
+      sealMesh.position.y = 0.09 + r * 0.08;
+      hwParts.enclosure.add(sealMesh);
+    }
+
+    // 4. Genuine Seeed Xiao ESP32-S3 / ESP32-WROOM-32 Mainboard
+    const pcbGeo = new THREE.BoxGeometry(0.042, 0.062, 0.0035);
+    const pcbMesh = new THREE.Mesh(pcbGeo, pcbGreenMat);
+    pcbMesh.position.set(-0.012, 0.14, 0.0);
+    pcbMesh.userData = { id: 'esp32-mcu', name: 'Seeed Xiao ESP32-S3 MCU (Dual-Core 240MHz)', type: 'HARDWARE', badge: 'CALIBRATED' };
+    hwParts.esp32Core.add(pcbMesh);
+
+    // Nickel-silver RF shield can stamped on ESP32
+    const rfCanGeo = new THREE.BoxGeometry(0.026, 0.028, 0.004);
+    const rfCanMesh = new THREE.Mesh(rfCanGeo, metalShieldMat);
+    rfCanMesh.position.set(-0.012, 0.145, 0.0035);
+    rfCanMesh.userData = { id: 'esp32-mcu', name: 'ESP32 Stamped RF Shield Can (Xtensa LX7)', type: 'HARDWARE', badge: 'CALIBRATED' };
+    hwParts.esp32Core.add(rfCanMesh);
+
+    // Meandered PCB Inverted-F 2.4GHz Antenna
+    const antGeo = new THREE.BoxGeometry(0.034, 0.012, 0.001);
+    const antMesh = new THREE.Mesh(antGeo, goldPinMat);
+    antMesh.position.set(-0.012, 0.166, 0.002);
+    antMesh.userData = { id: 'esp32-antenna', name: 'Meandered PCB 2.4GHz Wi-Fi/BLE Antenna', type: 'HARDWARE', badge: 'CALIBRATED' };
+    hwParts.esp32Core.add(antMesh);
+
+    // Dual-Row 2.54mm Header Pins on ESP32
+    for (let side of [-0.018, 0.018]) {
+      const plasticBarGeo = new THREE.BoxGeometry(0.003, 0.052, 0.003);
+      const barMesh = new THREE.Mesh(plasticBarGeo, blackNylonMat);
+      barMesh.position.set(-0.012 + side, 0.14, 0.003);
+      hwParts.esp32Core.add(barMesh);
+
+      for (let p = 0; p < 7; p++) {
+        const pinGeo = new THREE.BoxGeometry(0.0012, 0.0012, 0.008);
+        const pinMesh = new THREE.Mesh(pinGeo, goldPinMat);
+        pinMesh.position.set(-0.012 + side, 0.118 + p * 0.007, 0.006);
+        hwParts.esp32Core.add(pinMesh);
+      }
+    }
+
+    // Load authentic 3D GLB model if available to enrich detail
+    const gltfLoader = new THREE.GLTFLoader();
+    gltfLoader.load('assets/models/esp32.glb', (gltf) => {
+      const espModel = gltf.scene;
+      const box = new THREE.Box3().setFromObject(espModel);
+      const center = box.getCenter(new THREE.Vector3());
+      const size = box.getSize(new THREE.Vector3());
+      const maxDim = Math.max(size.x, size.y, size.z);
+      const targetScale = 0.065 / maxDim; // Authentic proportional scale
+      
+      espModel.scale.setScalar(targetScale);
+      espModel.position.sub(center.clone().multiplyScalar(targetScale));
+      espModel.position.set(-0.012, 0.14, 0.0);
+      espModel.rotation.y = Math.PI / 2;
+
+      espModel.traverse((child) => {
+        if (child.isMesh) {
+          child.castShadow = true;
+          child.receiveShadow = true;
+          child.userData = { id: 'esp32-mcu', name: 'Xiao ESP32-S3 Module CAD Mesh', type: 'HARDWARE', badge: 'CALIBRATED' };
+          if (child.material) {
+            child.material.metalness = Math.max(child.material.metalness || 0, 0.7);
+            child.material.roughness = Math.min(child.material.roughness || 1.0, 0.28);
+            child.material.envMapIntensity = 1.3;
+          }
+        }
+      });
+
+      hwParts.esp32Core.remove(pcbMesh);
+      hwParts.esp32Core.add(espModel);
+      updateLoadingProgress('Xiao ESP32-S3 Model');
+    }, undefined, (err) => {
+      console.warn('ESP32 model load note:', err);
+      updateLoadingProgress('Xiao ESP32-S3 (Fallback)');
+    });
+
+    // 5. SIM800L Quad-Band GSM/GPRS Cellular Uplink Module with Helical Spring Antenna
+    const simPcbGeo = new THREE.BoxGeometry(0.024, 0.038, 0.003);
+    const simPcbMesh = new THREE.Mesh(simPcbGeo, pcbRedMat);
+    simPcbMesh.position.set(0.025, 0.165, -0.015);
+    simPcbMesh.userData = { id: 'mod-sim800l', name: 'SIM800L GSM/GPRS Cellular Uplink (UART2)', type: 'HARDWARE', badge: 'CALIBRATED' };
+    hwParts.sim800Mod.add(simPcbMesh);
+
+    // SIMCOM metal shield can
+    const simCanGeo = new THREE.BoxGeometry(0.018, 0.020, 0.0035);
+    const simCanMesh = new THREE.Mesh(simCanGeo, metalShieldMat);
+    simCanMesh.position.set(0.025, 0.162, -0.012);
+    hwParts.sim800Mod.add(simCanMesh);
+
+    // Helical Coiled Gold Spring Antenna (Quad-band 850/900/1800/1900 MHz)
+    const helixPoints = [];
+    for (let t = 0; t <= 32; t++) {
+      const u = t / 32;
+      const angle = u * Math.PI * 14.0;
+      helixPoints.push(new THREE.Vector3(
+        0.025 + Math.cos(angle) * 0.0035,
+        0.184 + u * 0.038,
+        -0.015 + Math.sin(angle) * 0.0035
+      ));
+    }
+    const helixCurve = new THREE.CatmullRomCurve3(helixPoints);
+    const helixGeo = new THREE.TubeGeometry(helixCurve, 32, 0.0009, 5, false);
+    const helixMesh = new THREE.Mesh(helixGeo, goldPinMat);
+    helixMesh.userData = { id: 'mod-sim800l', name: 'SIM800L Helical Spring Antenna (GSM Uplink)', type: 'HARDWARE', badge: 'CALIBRATED' };
+    hwParts.sim800Mod.add(helixMesh);
+
+    // 6. MicroSD SPI Telemetry Logger Shield (CS=GPIO5, SCK=18, MISO=19, MOSI=23)
+    const sdPcbGeo = new THREE.BoxGeometry(0.024, 0.032, 0.003);
+    const sdPcbMesh = new THREE.Mesh(sdPcbGeo, pcbBlueMat);
+    sdPcbMesh.position.set(0.025, 0.115, 0.015);
+    sdPcbMesh.userData = { id: 'mod-sdcard', name: 'MicroSD SPI Telemetry Logger (CS=GPIO5)', type: 'HARDWARE', badge: 'CALIBRATED' };
+    hwParts.sdCardMod.add(sdPcbMesh);
+
+    // Metal TF socket
+    const sdSockGeo = new THREE.BoxGeometry(0.016, 0.018, 0.0028);
+    const sdSockMesh = new THREE.Mesh(sdSockGeo, metalShieldMat);
+    sdSockMesh.position.set(0.025, 0.112, 0.0175);
+    hwParts.sdCardMod.add(sdSockMesh);
+
+    // 7. 18650 3.7V 2200mAh Li-ion Battery & TP4056 Solar Charger
+    const battHolderGeo = new THREE.BoxGeometry(0.024, 0.072, 0.024);
+    const battHolderMesh = new THREE.Mesh(battHolderGeo, blackNylonMat);
+    battHolderMesh.position.set(-0.012, 0.14, -0.022);
+    hwParts.batteryPack.add(battHolderMesh);
+
+    const battGeo = new THREE.CylinderGeometry(0.009, 0.009, 0.065, 16);
+    const battMat = new THREE.MeshStandardMaterial({ color: 0x0284c7, metalness: 0.55, roughness: 0.25 });
+    const battMesh = new THREE.Mesh(battGeo, battMat);
+    battMesh.position.set(-0.012, 0.14, -0.022);
+    battMesh.userData = { id: 'battery-18650', name: '18650 2200mAh Li-ion Cell + TP4056 BMS', type: 'HARDWARE', badge: 'CALIBRATED' };
+    hwParts.batteryPack.add(battMesh);
+
+    // 8. Industrial PG7 Cable Gland & Color-Coded Multi-Conductor Wire Harness
+    const glandGeo = new THREE.CylinderGeometry(0.014, 0.018, 0.035, 12);
+    const glandMesh = new THREE.Mesh(glandGeo, blackNylonMat);
+    glandMesh.position.y = 0.04;
+    glandMesh.userData = { id: 'cable-gland', name: 'PG7 IP67 Nylon Cable Compression Gland', type: 'HARDWARE', badge: 'MECHANICAL' };
+    hwParts.cableHarness.add(glandMesh);
+
+    // JST-XH white nylon connector header housing on mainboard
+    const jstGeo = new THREE.BoxGeometry(0.016, 0.007, 0.010);
+    const jstMesh = new THREE.Mesh(jstGeo, jstHousingMat);
+    jstMesh.position.set(-0.012, 0.108, 0.014);
+    jstMesh.userData = { id: 'wire-harness', name: 'JST-XH 5-Pin Latched Sensor Disconnect Header', type: 'HARDWARE', badge: 'MECHANICAL' };
+    hwParts.cableHarness.add(jstMesh);
+
+    // 5-Core Color-Coded Silicone Wire Lines routing from JST header through gland into probe
+    const wireConfigs = [
+      { color: 0xef4444, name: 'VCC (+3.3V Power Bus)', xOff: -0.004, zOff: 0.002 },
+      { color: 0x1e293b, name: 'GND (System Ground)', xOff: -0.002, zOff: -0.002 },
+      { color: 0xfacc15, name: 'Analog EC Signal (GPIO34)', xOff: 0.000, zOff: 0.003 },
+      { color: 0x22c55e, name: 'Capacitive VWC Signal (GPIO35)', xOff: 0.002, zOff: -0.002 },
+      { color: 0xf8fafc, name: '1-Wire Digital Temp Bus (GPIO4)', xOff: 0.004, zOff: 0.002 }
+    ];
+
+    wireConfigs.forEach((wc) => {
+      const wCurve = new THREE.CatmullRomCurve3([
+        new THREE.Vector3(-0.012 + wc.xOff, 0.105, 0.014 + wc.zOff),
+        new THREE.Vector3(-0.008 + wc.xOff, 0.065, 0.008 + wc.zOff),
+        new THREE.Vector3(wc.xOff * 0.5, 0.035, wc.zOff * 0.5),
+        new THREE.Vector3(0, -0.01, 0)
+      ]);
+      const wGeo = new THREE.TubeGeometry(wCurve, 14, 0.0014, 5, false);
+      const wMat = new THREE.MeshStandardMaterial({ color: wc.color, roughness: 0.52 });
+      const wMesh = new THREE.Mesh(wGeo, wMat);
+      wMesh.userData = { id: 'wire-harness', name: `Silicone Sensor Wire: ${wc.name}`, type: 'HARDWARE', badge: 'CALIBRATED' };
+      hwParts.cableHarness.add(wMesh);
+    });
+
+    // Outer rugged protective cable jacket below gland
+    const jacketCurve = new THREE.CatmullRomCurve3([
+      new THREE.Vector3(0, 0.025, 0),
+      new THREE.Vector3(0.005, 0.008, 0.003),
+      new THREE.Vector3(0, -0.02, 0)
+    ]);
+    const jacketGeo = new THREE.TubeGeometry(jacketCurve, 10, 0.006, 6, false);
+    const jacketMesh = new THREE.Mesh(jacketGeo, blackNylonMat);
+    hwParts.cableHarness.add(jacketMesh);
+
+    // 9. Subsurface Probe Assembly Plunged in Horizon A (15-25cm Root Zone)
+    const probeStemGeo = new THREE.CylinderGeometry(0.016, 0.016, 0.32, 16);
+    const probeStem = new THREE.Mesh(probeStemGeo, blackNylonMat);
+    probeStem.position.y = -0.16;
+    probeStem.userData = { id: 'probe-shaft', name: 'Subsurface Probe Stem (32cm Depth, Horizon A/B)', type: 'HARDWARE', badge: 'MECHANICAL' };
+    hwParts.probeShaft.add(probeStem);
+
+    // Etched Depth Gauge Ring Markings (5cm, 10cm, 15cm, 20cm, 25cm)
+    for (let d = 1; d <= 5; d++) {
+      const markGeo = new THREE.TorusGeometry(0.0168, 0.001, 6, 24);
+      markGeo.rotateX(Math.PI / 2);
+      const markMesh = new THREE.Mesh(markGeo, new THREE.MeshStandardMaterial({ color: 0xf8fafc, roughness: 0.2 }));
+      markMesh.position.y = -d * 0.05;
+      markMesh.userData = { id: 'probe-shaft', name: `Etched Depth Collar Mark (${d*5}cm Insertion)`, type: 'HARDWARE', badge: 'MECHANICAL' };
+      hwParts.probeShaft.add(markMesh);
+    }
+
+    // A. Dual 316L Stainless Steel Annular EC Electrodes (GPIO34 ADC1_CH6)
+    // 10 kHz AC bipolar excitation across 10mm gap avoiding polarization
+    const ecRingGeo = new THREE.CylinderGeometry(0.0175, 0.0175, 0.018, 24);
+
+    const ecRing1 = new THREE.Mesh(ecRingGeo, stainless316Mat);
+    ecRing1.position.y = -0.15; // 15cm depth in Horizon A
+    ecRing1.userData = { id: 'ec-ring-upper', name: '316L Stainless EC Ring (Upper 15cm, GPIO34)', type: 'HARDWARE', badge: 'MEASURED' };
+    hwParts.probeShaft.add(ecRing1);
+
+    const ecRing2 = new THREE.Mesh(ecRingGeo, stainless316Mat);
+    ecRing2.position.y = -0.25; // 25cm depth in Horizon A
+    ecRing2.userData = { id: 'ec-ring-lower', name: '316L Stainless EC Ring (Lower 25cm, GPIO34)', type: 'HARDWARE', badge: 'MEASURED' };
+    hwParts.probeShaft.add(ecRing2);
+
+    // B. Capacitive Soil Moisture Sensor v1.2 FR4 PCB Spade Blade (GPIO35 ADC1_CH7)
+    // High-frequency 1.5 MHz coplanar dielectric blade spanning 15-25cm
+    const bladeGeo = new THREE.BoxGeometry(0.005, 0.16, 0.045);
+    const bladeMesh = new THREE.Mesh(bladeGeo, pcbGreenMat);
+    bladeMesh.position.y = -0.20;
+    bladeMesh.userData = { id: 'vwc-blade', name: 'Capacitive Soil Moisture Sensor v1.2 Blade (GPIO35)', type: 'HARDWARE', badge: 'MEASURED' };
+    hwParts.probeShaft.add(bladeMesh);
+
+    // White silkscreen calibration line on blade
+    const calibLineGeo = new THREE.BoxGeometry(0.0055, 0.002, 0.042);
+    const calibLineMesh = new THREE.Mesh(calibLineGeo, jstHousingMat);
+    calibLineMesh.position.set(0, -0.13, 0);
+    hwParts.probeShaft.add(calibLineMesh);
+
+    // C. Maxim DS18B20 1-Wire Digital Thermal Capsule Tip (GPIO4)
+    // 6x45mm stainless capsule probe with black polyolefin heat-shrink collar
+    const tipCollarGeo = new THREE.CylinderGeometry(0.006, 0.006, 0.012, 16);
+    const tipCollarMesh = new THREE.Mesh(tipCollarGeo, blackNylonMat);
+    tipCollarMesh.position.y = -0.285;
+    hwParts.probeShaft.add(tipCollarMesh);
+
+    const tipConeGeo = new THREE.ConeGeometry(0.005, 0.035, 16);
+    tipConeGeo.rotateX(Math.PI);
+    const tipMesh = new THREE.Mesh(tipConeGeo, stainless316Mat);
+    tipMesh.position.y = -0.31; // Probe apex tip in Horizon A
+    tipMesh.userData = { id: 'temp-tip', name: 'Maxim DS18B20 1-Wire Thermal Capsule Tip (GPIO4)', type: 'HARDWARE', badge: 'MEASURED' };
+    hwParts.probeShaft.add(tipMesh);
+
+    /* =========================================================================
+       7. RESTRAINED SCIENTIFIC HYDROLOGY (PLANT ROOT CONVERGENCE STREAMLINES)
+       ========================================================================= */
+    const hydrologyGroup = new THREE.Group();
+    scene.add(hydrologyGroup);
+
+    // Streamline curves collection & mesh registry
+    const streamlineCurves = [];
+    const streamlineMeshes = [];
+    const pulseMeshes = [];
+
+    // Materials for Rhizosphere Absorption vs Deep Gravitational Drainage
+    const rhizoLineMat = new THREE.MeshStandardMaterial({
+      color: 0x38bdf8,
+      emissive: 0x0369a1,
+      transparent: true,
+      opacity: 0.58,
+      roughness: 0.28
+    });
+
+    const drainageLineMat = new THREE.MeshStandardMaterial({
+      color: 0x2563eb,
+      emissive: 0x1e3a8a,
+      transparent: true,
+      opacity: 0.42,
+      roughness: 0.35
+    });
+
+    const pulseMat = new THREE.MeshStandardMaterial({
+      color: 0x7dd3fc,
+      emissive: 0x0284c7,
+      emissiveIntensity: 1.2,
+      roughness: 0.2
+    });
+
+    const drainagePulseMat = new THREE.MeshStandardMaterial({
+      color: 0x60a5fa,
+      emissive: 0x1d4ed8,
+      emissiveIntensity: 0.9,
+      roughness: 0.25
+    });
+
+    // A. 24 Rhizosphere Absorption Streamlines (Converging from surface to calyptra root caps & xylem)
+    for (let s = 0; s < 24; s++) {
+      const sAngle = (s / 24) * Math.PI * 2 + (Math.random() - 0.5) * 0.2;
+      const sRad = 0.35 + Math.random() * 0.75;
+      const pSurf = new THREE.Vector3(
+        Math.cos(sAngle) * sRad + 0.35,
+        0.045,
+        Math.sin(sAngle) * sRad + 0.20
+      );
+
+      // Connect to active root cap coordinates
+      const targetTip = rootTipPositions[s % rootTipPositions.length] || new THREE.Vector3(0.35, -0.65, 0.20);
+      const pRhizo = targetTip.clone().add(plantGroup.position);
+
+      // Transpirational xylem flow into stalk & lower canopy
+      const pStem = plantGroup.position.clone().add(new THREE.Vector3(0, 0.15 + (s % 4) * 0.05, 0));
+      const pCanopy = plantGroup.position.clone().add(new THREE.Vector3((Math.random() - 0.5) * 0.15, 0.75 + (s % 6) * 0.18, (Math.random() - 0.5) * 0.15));
+
+      const curve = new THREE.CatmullRomCurve3([
+        pSurf,
+        new THREE.Vector3(pSurf.x * 0.75 + pRhizo.x * 0.25, -0.15 - (s % 3) * 0.08, pSurf.z * 0.75 + pRhizo.z * 0.25),
+        new THREE.Vector3(pSurf.x * 0.35 + pRhizo.x * 0.65, pRhizo.y + 0.08, pSurf.z * 0.35 + pRhizo.z * 0.65),
+        pRhizo,
+        pStem,
+        pCanopy
+      ]);
+      streamlineCurves.push(curve);
+
+      const lineGeo = new THREE.TubeGeometry(curve, 36, 0.0048, 5, false);
+      const lineMesh = new THREE.Mesh(lineGeo, rhizoLineMat);
+      lineMesh.userData = { id: 'hydro-streamline-rhizo', name: `Rhizosphere Capillary Streamline #${s+1}`, type: 'HYDROLOGY', badge: 'SIMULATED' };
+      hydrologyGroup.add(lineMesh);
+      streamlineMeshes.push(lineMesh);
+    }
+
+    // B. 8 Gravitational Deep Drainage Streamlines (Percolating past roots into Horizon C gravel)
+    for (let d = 0; d < 8; d++) {
+      const dAngle = (d / 8) * Math.PI * 2 + 0.35;
+      const dRad = 0.85 + Math.random() * 0.55;
+      const pSurf = new THREE.Vector3(
+        Math.cos(dAngle) * dRad + 0.35,
+        0.045,
+        Math.sin(dAngle) * dRad + 0.20
+      );
+      const pMidA = new THREE.Vector3(pSurf.x * 0.9, -0.65, pSurf.z * 0.9);
+      const pMidB = new THREE.Vector3(pSurf.x * 0.85, -1.45, pSurf.z * 0.85);
+      const pDeepC = new THREE.Vector3(pSurf.x * 0.8, -2.45, pSurf.z * 0.8);
+
+      const dCurve = new THREE.CatmullRomCurve3([pSurf, pMidA, pMidB, pDeepC]);
+      streamlineCurves.push(dCurve);
+
+      const dGeo = new THREE.TubeGeometry(dCurve, 28, 0.0055, 5, false);
+      const dMesh = new THREE.Mesh(dGeo, drainageLineMat);
+      dMesh.userData = { id: 'hydro-streamline-drain', name: `Deep Gravitational Drainage Pathway #${d+1}`, type: 'HYDROLOGY', badge: 'SIMULATED' };
+      hydrologyGroup.add(dMesh);
+      streamlineMeshes.push(dMesh);
+    }
+
+    // C. Animated Water Flux Pulse Packets along Coherent Streamlines (56 pulses)
+    const pulseGeo = new THREE.SphereGeometry(0.015, 6, 6);
+    for (let p = 0; p < 56; p++) {
+      const cIdx = p % streamlineCurves.length;
+      const isDrainage = (cIdx >= 24);
+      const pm = new THREE.Mesh(pulseGeo, isDrainage ? drainagePulseMat : pulseMat);
+      pm.userData = {
+        curveIdx: cIdx,
+        offset: Math.random(),
+        speedMult: 0.85 + Math.random() * 0.3
+      };
+      hydrologyGroup.add(pm);
+      pulseMeshes.push(pm);
+    }
+
+    // D. Volumetric Rhizosphere Wetting Front (Dynamic Infiltration Bulb)
+    const plumeGeo = new THREE.SphereGeometry(0.85, 20, 16);
+    plumeGeo.scale(1.0, 1.45, 0.95);
+    const plumeMat = new THREE.MeshStandardMaterial({
+      color: 0x0284c7,
+      transparent: true,
+      opacity: 0.22,
+      roughness: 0.42,
+      metalness: 0.05
+    });
+    const plumeMesh = new THREE.Mesh(plumeGeo, plumeMat);
+    plumeMesh.position.set(0.35, -0.70, 0.20);
+    plumeMesh.userData = { id: 'hydro-plume', name: 'Rhizosphere Infiltration Wetting Envelope', type: 'HYDROLOGY', badge: 'SIMULATED' };
+    hydrologyGroup.add(plumeMesh);
+
+    /* =========================================================================
+       8. DETERMINISTIC SIMULATION & MAAS-HOFFMAN DECISION LOGIC
+       ========================================================================= */
+    const simState = {
+      ecRaw: 1.42,
+      vwcRaw: 31.8,
+      tempRaw: 24.6,
+      ec25: 1.42,
+      status: 'SAFE',
+      yieldLoss: 0.0,
+      faultType: 'NONE',
+      currentChapter: 0,
+      autoPlay: false,
+      autoPlayTimer: null,
+      // Hydrology & visual synchronization state
+      isHydrologyPaused: false,
+      flowSpeed: 1.0,
+      matricPotential: '-33 kPa',
+      hydrationState: 'Optimal Field Capacity',
+      currentScenarioId: 'optimal'
+    };
+
+    const HYDRATION_SCENARIOS = {
+      optimal: {
+        id: 'optimal',
+        name: 'Optimal Field Capacity',
+        desc: 'Pore water held at ideal matric suction (-33 kPa). Uniform capillary flux into root caps without hypoxia.',
+        vwc: 31.8,
+        ec: 1.42,
+        temp: 24.5,
+        matric: '-33 kPa',
+        statusText: 'OPTIMAL FIELD CAPACITY',
+        flowSpeed: 1.0,
+        plumeScale: 1.0,
+        plumeOpacity: 0.22,
+        badge: 'OPTIMAL'
+      },
+      drought: {
+        id: 'drought',
+        name: 'Severe Drought Deficit',
+        desc: 'Matric suction exceeds root extraction capacity (-1500 kPa PWP). Capillary flow arrested; thin water films.',
+        vwc: 11.4,
+        ec: 1.85,
+        temp: 28.5,
+        matric: '-1500 kPa (PWP)',
+        statusText: 'PERMANENT WILTING DEFICIT',
+        flowSpeed: 0.25,
+        plumeScale: 0.65,
+        plumeOpacity: 0.06,
+        badge: 'DROUGHT'
+      },
+      saturation: {
+        id: 'saturation',
+        name: 'Waterlogging & Deep Drainage',
+        desc: 'Soil exceeds saturation capacity (0 kPa). Rapid gravitational percolation past Horizon B into Horizon C gravel.',
+        vwc: 42.5,
+        ec: 1.05,
+        temp: 21.0,
+        matric: '0 to -10 kPa',
+        statusText: 'HYPOXIC SATURATION & DRAINAGE',
+        flowSpeed: 1.85,
+        plumeScale: 1.42,
+        plumeOpacity: 0.45,
+        badge: 'WATERLOGGED'
+      },
+      saline: {
+        id: 'saline',
+        name: 'Saline Osmotic Lockout',
+        desc: 'High salt concentration creates negative osmotic pressure (ψ_s). Roots suffer physiological drought despite physical moisture.',
+        vwc: 28.5,
+        ec: 3.45,
+        temp: 25.0,
+        matric: '-45 kPa (Matric) / -124 kPa (Osmotic)',
+        statusText: 'OSMOTIC DROUGHT LOCKOUT',
+        flowSpeed: 0.40,
+        plumeScale: 0.95,
+        plumeOpacity: 0.20,
+        badge: 'SALINE STRESS'
+      }
+    };
+
+    function calculateAgronomicEngine() {
+      const alpha = 0.0191;
+      let ec25 = simState.ecRaw / (1 + alpha * (simState.tempRaw - 25.0));
+
+      if (simState.faultType === 'DISCONNECTED') {
+        ec25 = 0.0;
+        simState.vwcRaw = 0.0;
+      } else if (simState.faultType === 'OUT_OF_RANGE') {
+        ec25 = 9.99;
+      }
+
+      simState.ec25 = ec25;
+
+      // Maize Maas-Hoffman: Threshold 1.70 dS/m, slope 12.0%/dS/m
+      const maizeThreshold = 1.70;
+      const bSlope = 12.0;
+
+      if (ec25 > maizeThreshold) {
+        simState.yieldLoss = Math.min(100.0, bSlope * (ec25 - maizeThreshold));
+        simState.status = 'CRITICAL';
+      } else {
+        simState.yieldLoss = 0.0;
+        simState.status = 'SAFE';
+      }
+
+      // Synchronize HUD Metric Readouts
+      const elEc = document.getElementById('val-ec');
+      const elMoist = document.getElementById('val-moist');
+      const elTemp = document.getElementById('val-temp');
+      const elPen = document.getElementById('val-penalty');
+
+      if (elEc) elEc.innerText = simState.ec25.toFixed(2);
+      if (elMoist) elMoist.innerText = simState.vwcRaw.toFixed(1);
+      if (elTemp) elTemp.innerText = simState.tempRaw.toFixed(1);
+
+      if (elPen) {
+        if (simState.yieldLoss > 0) {
+          elPen.innerText = `-${simState.yieldLoss.toFixed(1)}% LOSS`;
+          elPen.style.color = 'var(--accent-crimson)';
+          sentryMat.color.setHex(0xff2a5f);
+          sentryMat.emissive.setHex(0xff2a5f);
+          sentryPointLight.color.setHex(0xff2a5f);
+        } else {
+          elPen.innerText = '0.0% LOSS';
+          elPen.style.color = 'var(--accent-emerald)';
+          sentryMat.color.setHex(0x00ff87);
+          sentryMat.emissive.setHex(0x00ff87);
+          sentryPointLight.color.setHex(0x00ff87);
+        }
+      }
+
+      // Soil Hydration Appearance & PBR Sheen Modulation
+      const moistureRatio = Math.max(0, Math.min(1.0, (simState.vwcRaw - 10) / 32));
+      matHorizonA.roughness = 0.94 - moistureRatio * 0.35;
+      matHorizonB.roughness = 0.88 - moistureRatio * 0.32;
+
+      // Wetting Front Plume Scale & Opacity
+      const targetOpacity = 0.06 + moistureRatio * 0.36;
+      plumeMat.opacity = targetOpacity;
+      const targetScale = 0.65 + moistureRatio * 0.75;
+      plumeMesh.scale.set(targetScale, targetScale * 1.45, targetScale * 0.95);
+
+      // Synchronize contextual status tags if present
+      const elMatric = document.getElementById('hydro-matric-val');
+      const elHydroStatus = document.getElementById('hydro-status-badge');
+      if (elMatric) elMatric.innerText = simState.matricPotential;
+      if (elHydroStatus) elHydroStatus.innerText = simState.hydrationState;
+    }
+
+    function applyHydrationScenario(scenarioKey) {
+      const sc = HYDRATION_SCENARIOS[scenarioKey] || HYDRATION_SCENARIOS.optimal;
+      simState.currentScenarioId = sc.id;
+      simState.matricPotential = sc.matric;
+      simState.hydrationState = sc.statusText;
+      simState.flowSpeed = sc.flowSpeed;
+
+      sound.playPing(sc.id === 'optimal' ? 680 : sc.id === 'drought' ? 440 : sc.id === 'saturation' ? 780 : 380);
+
+      gsap.to(simState, {
+        vwcRaw: sc.vwc,
+        ecRaw: sc.ec,
+        tempRaw: sc.temp,
+        duration: 1.2,
+        ease: 'power2.out',
+        onUpdate: calculateAgronomicEngine
+      });
+    }
+/* =========================================================================
+       9. LAYER VISIBILITY CONTROLS
+       ========================================================================= */
+    const visibilityToggles = {
+      canopy: { el: document.getElementById('tog-canopy'), active: true, target: [anatomyParts.leaves, anatomyParts.sheaths, anatomyParts.ears, anatomyParts.stem] },
+      roots: { el: document.getElementById('tog-roots'), active: true, target: [anatomyParts.braceRoots, anatomyParts.crownRoots, anatomyParts.seminalRoots, anatomyParts.lateralRoots, anatomyParts.rootTips] },
+      soil: { el: document.getElementById('tog-soil'), active: true, target: [geologyGroup] },
+      hw: { el: document.getElementById('tog-hw'), active: true, target: [hardwareGroup] },
+      hydro: { el: document.getElementById('tog-hydro'), active: true, target: [hydrologyGroup] }
+    };
+
+    Object.entries(visibilityToggles).forEach(([key, cfg]) => {
+      cfg.el.addEventListener('click', () => {
+        cfg.active = !cfg.active;
+        if (cfg.active) cfg.el.classList.add('active');
+        else cfg.el.classList.remove('active');
+        cfg.target.forEach(t => t.visible = cfg.active);
+        sound.playPing(cfg.active ? 740 : 420);
+      });
+    });
+
+    /* =========================================================================
+       10. 3D RAYCASTER & INTERACTIVE COMPONENT INSPECTOR
+       ========================================================================= */
+    const raycaster = new THREE.Raycaster();
+    const mouse = new THREE.Vector2();
+    let mouseDownPos = { x: 0, y: 0 };
+    const componentCard = document.getElementById('component-card');
+    let selectedComponentObj = null;
+
+    window.addEventListener('mousedown', (e) => {
+      mouseDownPos = { x: e.clientX, y: e.clientY };
+    });
+
+    window.addEventListener('mouseup', (e) => {
+      // Ignore if user was dragging / orbiting
+      const dx = Math.abs(e.clientX - mouseDownPos.x);
+      const dy = Math.abs(e.clientY - mouseDownPos.y);
+      if (dx > 4 || dy > 4) return;
+      if (e.target.closest('aside') || e.target.closest('header') || e.target.closest('.timeline-dock') || e.target.closest('.visibility-toolbar') || e.target.closest('.component-inspector-card') || e.target.closest('.inspector-modal')) return;
+
+      mouse.x = (e.clientX / window.innerWidth) * 2 - 1;
+      mouse.y = -(e.clientY / window.innerHeight) * 2 + 1;
+      raycaster.setFromCamera(mouse, camera);
+
+      const interactable = [plantGroup, geologyGroup, hardwareGroup, hydrologyGroup];
+      const hits = raycaster.intersectObjects(interactable, true);
+
+      if (hits.length > 0) {
+        // Find topmost object with userData
+        let picked = hits[0].object;
+        while (picked && !picked.userData?.name && picked.parent && picked !== scene) {
+          picked = picked.parent;
+        }
+
+        if (picked && picked.userData?.name) {
+          showComponentInspector(picked, hits[0].point);
+          sound.playPing(880);
+        }
+      }
+    });
+
+    function showComponentInspector(obj, worldHitPoint) {
+      selectedComponentObj = obj;
+      const data = obj.userData || {};
+
+      document.getElementById('card-tag').innerText = data.type || 'SYSTEM';
+      document.getElementById('card-badge').innerText = data.badge || 'MEASURED';
+      document.getElementById('card-title').innerText = data.name || 'Component';
+
+      let desc = 'Engineered sensor or physiological plant component.';
+      let meta = 'Status: NOMINAL | Calibrated';
+
+      if (data.id?.includes('leaf')) {
+        desc = 'Linear-lanceolate monocot leaf blade with 7-point V-groove midrib, fluted wavy margins, and C4 dicarboxylic photosynthetic pathway.';
+        meta = 'Transpiration: g_s ≈ 0.28 mol/m²s | Chlorophyll: High';
+      } else if (data.id?.includes('sheath')) {
+        desc = 'Cylindrical split leaf sheath wrapping tightly around the culm internode, providing structural mechanical reinforcement and protecting intercalary meristems.';
+        meta = 'Structure: Clasping Petiole Equivalent | Node Insertion: Base Collar';
+      } else if (data.id?.includes('tassel')) {
+        desc = 'Apical male inflorescence terminating the main culm, with central rachis and lateral spikes shedding millions of windborne pollen grains.';
+        meta = 'Anthesis Stage (VT) | Pollen Shed: ~2–5 million grains/tassel';
+      } else if (data.id?.includes('brace-root')) {
+        desc = 'Adventitious prop root emerging in whorls from aerial stalk nodes 1 and 2. Plunges into soil at 50° to prevent lodging and absorb topsoil moisture.';
+        meta = 'Prop Roots (Whorls 1 & 2) | Anthocyanin-pigmented epidermis';
+      } else if (data.id?.includes('crown-root')) {
+        desc = 'Subterranean nodal crown root radiating through Horizon A topsoil, responsible for over 80% of mature vegetative water and nutrient uptake.';
+        meta = 'Corona Nodal System | Rhizosphere nutrient mass flow';
+      } else if (data.id?.includes('seminal')) {
+        desc = 'Embryonic seminal root system penetrating vertically deep into Horizon B and C subsoil to access deep residual water tables during moisture stress.';
+        meta = 'Seminal Axis | Subsoil Penetration Depth: 1.5–1.8m';
+      } else if (data.id?.includes('feeder-root')) {
+        desc = 'High-density 1st and 2nd order lateral feeder root network branching profusely in the rhizosphere to maximize surface area for ion diffusion.';
+        meta = 'Lateral Web | Nitrate mass flow & Phosphate diffusion zone';
+      } else if (data.id?.includes('root-cap')) {
+        desc = 'Apical meristematic calyptra protecting dividing cell initials and secreting mucigel to lubricate soil pore passage.';
+        meta = 'Calyptra | Gravitropic amyloplast statocytes | Active absorption';
+      } else if (data.id?.includes('ear')) {
+        desc = 'Developing maize ear enclosed in protective husks; golden silk styles receive pollen from the apical tassel.';
+        meta = 'Physiological Stage: R1 Silking / R2 Blister | Grains: Active filling';
+      } else if (data.id === 'soil-o' || data.id?.includes('mulch')) {
+        desc = 'Horizon O: Organic mulch & decomposed surface litter (0–4cm depth). High carbon fraction (>15%), active microbial respiration, humification zone, and natural evaporation barrier.';
+        meta = 'Organic Carbon: >15% | Humification: Active | Bulk Density: 0.95 g/cm³';
+      } else if (data.id === 'soil-a') {
+        desc = 'Horizon A: Melanic agricultural topsoil humus (4–25cm depth). Rich in humic acids, fine granular crumb structure, high CEC, and 46% pore space supporting primary active nutrient mass flow.';
+        meta = 'Porosity: 46% | Clay: 22% | Silt: 48% | Sand: 30% | Field Cap: 32% VWC';
+      } else if (data.id === 'soil-b') {
+        desc = 'Horizon B: Illuvial argillic compacted clay subsoil (25–60cm depth). Dense subangular blocky to prismatic ped structure formed by illuviated silicate clays and iron oxides; high moisture holding capacity.';
+        meta = 'Bulk Density: 1.45 g/cm³ | Hydraulic Cond: 2.4 mm/hr | Clay: 38%';
+      } else if (data.id === 'soil-c') {
+        desc = 'Horizon C: Saprolite substratum and weathered parent rock fragments (60cm+ depth). Low organic matter (<0.3%), high gravel fraction, unweathered mineral bedrock providing deep macro-drainage.';
+        meta = 'Organic Matter: <0.3% | Permeability: High | Drainage Matrix';
+      } else if (data.id?.includes('stone')) {
+        desc = 'Pedological mineral aggregate / quartz-silica pebble embedded in the soil matrix, providing micro-tortuosity to soil pore water pathways.';
+        meta = 'Mineralogy: Quartz & Silicates | Tortuosity Factor: 1.42';
+      } else if (data.id?.includes('rootlet')) {
+        desc = 'High-surface-area mycorrhizal capillary rootlet penetrating soil macropores to intercept diffused phosphate and nitrate ions.';
+        meta = 'Diffusion Depletion Zone: ~1.5mm | Ion Interception: Active';
+      } else if (data.id?.includes('ec-ring')) {
+        desc = '316L Annular Stainless Steel Electrodes: Dual 10mm-spaced rings on GPIO34 (ADC1_CH6). Excited with a 10 kHz bipolar AC waveform to prevent DC electrolytic fouling; measures bulk apparent EC (σ_a) normalized to 25°C.';
+        meta = 'Signal: Analog EC (GPIO34) | AC Excitation: 10 kHz | Model: EC25 = ECT / [1 + 0.0191(T-25)] | Ref: Maas-Hoffman';
+      } else if (data.id?.includes('vwc-blade')) {
+        desc = 'Capacitive Soil Moisture Sensor v1.2: High-frequency 1.5 MHz TLC555 coplanar resonant circuit on GPIO35 (ADC1_CH7). Measures relative dielectric permittivity (ε_r), converted to VWC% via Topp polynomial curve with no exposed copper.';
+        meta = 'Signal: Analog VWC (GPIO35) | Frequency: 1.5 MHz | Permittivity: ε_soil ≈ 18.5 | Field Cap: 32% VWC';
+      } else if (data.id?.includes('temp-tip')) {
+        desc = 'Maxim DS18B20 1-Wire Digital Thermal Capsule: Waterproof stainless probe tip on GPIO4 with 4.7kΩ pull-up resistor. Provides real-time in-situ temperature for continuous EC thermal compensation (1.91%/°C).';
+        meta = 'Signal: 1-Wire Digital (GPIO4) | Precision: ±0.5°C (-10°C to +85°C) | Reading: ' + simState.tempRaw.toFixed(1) + '°C';
+      } else if (data.id?.includes('esp32')) {
+        desc = 'Seeed Xiao ESP32-S3 Microcontroller: Dual-core 32-bit Xtensa LX7 @ 240MHz, 8MB PSRAM, hardware 12-bit SAR ADC, and ULP co-processor running zero-cloud local edge agronomic algorithms at 0.15mA sleep current.';
+        meta = 'Core: Xtensa LX7 240MHz | Deep Sleep: 0.15mA | RTC Wake: 15-min cycle | Flash: 8MB QSPI';
+      } else if (data.id?.includes('mod-sim800l')) {
+        desc = 'SIM800L Quad-Band GSM/GPRS Cellular Uplink: Hardware UART2 (TX=GPIO17, RX=GPIO16) with coiled helical antenna, dispatching SMS alerts directly to farmers and HTTP JSON telemetry to cloud backends.';
+        meta = 'Comms: GSM/GPRS 850/900/1800/1900MHz | UART2 (115200 baud) | SMS Advisory Dispatch: Active';
+      } else if (data.id?.includes('mod-sdcard')) {
+        desc = 'MicroSD SPI Telemetry Logger Shield: Hardware SPI bus (CS=GPIO5, MOSI=GPIO23, MISO=GPIO19, SCK=GPIO18), logging 7-day rolling CSV telemetry backup for offline agronomic auditing.';
+        meta = 'Storage: SPI FAT32 | CS=GPIO5 | Rolling CSV Record: 15-min intervals';
+      } else if (data.id?.includes('battery')) {
+        desc = '18650 2200mAh 3.7V Lithium-Ion Cell with TP4056 Solar Charge Controller & BMS: Provides 90 days autonomous operation under 15-minute sleep cycles with overcharge/overdischarge protection.';
+        meta = 'Capacity: 2200mAh (8.14Wh) | BMS Cutoff: 3.0V - 4.2V | Charge Rate: 450mA Solar';
+      } else if (data.id?.includes('pv-solar')) {
+        desc = '5W Monocrystalline Photovoltaic Wafer: 14cm circular collector disc with Schott anti-reflective tempered glass and blocking Schottky diode, delivering up to 900mA charging current in direct sunlight.';
+        meta = 'Power: 5W Peak (Voc=6.2V, Isc=0.88A) | Diode: 1N5819 Schottky | Solar Yield: Active';
+      } else if (data.id?.includes('sentry-beacon')) {
+        desc = '360° Fresnel RGB Optical Sentry Beacon: High-efficiency common-cathode LED ring on GPIO25 (Red), GPIO26 (Green), GPIO27 (Blue). Provides instant visual field diagnosis (Green = Safe, Red = Critical, Blue = Cellular TX).';
+        meta = 'Status: GPIO25/26/27 | Current Mode: ' + (simState.status === 'SAFE' ? 'PULSING GREEN (SAFE)' : 'STROBING CRIMSON (CRITICAL)');
+      } else if (data.id?.includes('wire-harness')) {
+        desc = '5-Core Color-Coded Silicone Wire Harness: Red (+3.3V), Black (GND), Yellow (Analog EC), Green (Capacitive VWC), White (1-Wire Temp) with latched JST-XH nylon disconnect header.';
+        meta = 'Harness: 5-Wire 26AWG Silicone | Connector: JST-XH 2.54mm Latched';
+      } else if (data.id?.includes('cable-gland')) {
+        desc = 'PG7 Liquid-Tight Cable Compression Gland: Threaded nylon compression gland with neoprene O-ring seal, maintaining IP67 waterproof barrier at enclosure cable exit.';
+        meta = 'Spec: PG7 Thread (12.5mm) | IP Rating: IP67 Submersible';
+      } else if (data.id?.includes('asa-chassis')) {
+        desc = 'IP67 Weatherproof ASA Polymer Enclosure: UV-stabilized, impact-resistant Acrylonitrile Styrene Acrylate body with dual nitrile O-ring seals, designed for extreme outdoor field climates (-20°C to +70°C).';
+        meta = 'Material: ASA Polymer (UV-Resistant) | Dimensions: 11cm x 18cm | Rating: IP67';
+      } else if (data.id?.includes('probe-shaft')) {
+        desc = 'Subsurface Insertion Probe Stem: 32mm diameter ruggedized fiberglass-nylon shaft with precision laser-etched depth gauge markings at 5cm, 10cm, 15cm, 20cm, and 25cm. Integrates dual 316L EC rings, capacitive VWC blade, and DS18B20 tip into a single insertion core.';
+        meta = 'Insertion Depth: 32cm Total | Horizon A Active Target: 15–25cm | Body: POM/Fiberglass';
+      } else if (data.id === 'hydro-streamline-rhizo') {
+        desc = 'Rhizosphere Hydraulic Streamline: Illustrative macroscopic path of capillary pore water moving under matric potential gradient toward active calyptra and xylem transpirational sinks.';
+        meta = 'Darcy-Buckingham Matrix Flux | Matric Suction: ' + (simState.matricPotential || '-33 kPa') + ' | S_sink: Active';
+      } else if (data.id === 'hydro-streamline-drain') {
+        desc = 'Deep Gravitational Drainage Streamline: Excess soil water percolating vertically past the root zone into Horizon C saprolite gravel (leaching loss).';
+        meta = 'Gravitational Flow | Horizon B -> Horizon C | Deep Percolation';
+      } else if (data.id?.includes('plume')) {
+        desc = 'Wetted Infiltration Bulb: Volumetric envelope of plant-available soil moisture surrounding the maize root system.';
+        meta = 'Current VWC: ' + simState.vwcRaw.toFixed(1) + '% | Status: ' + (simState.hydrationState || 'Field Capacity');
+      }
+
+      document.getElementById('card-desc').innerText = desc;
+      document.getElementById('card-meta').innerText = meta;
+      componentCard.style.display = 'block';
+    }
+
+    document.getElementById('btn-close-card').addEventListener('click', () => {
+      componentCard.style.display = 'none';
+      selectedComponentObj = null;
+    });
+
+    document.getElementById('btn-focus-component').addEventListener('click', () => {
+      if (!selectedComponentObj) return;
+      sound.playPing(750);
+      const targetPos = new THREE.Vector3();
+      selectedComponentObj.getWorldPosition(targetPos);
+      gsap.to(controls.target, {
+        x: targetPos.x,
+        y: targetPos.y,
+        z: targetPos.z,
+        duration: 1.4,
+        ease: "power2.inOut"
+      });
+    });
+
+    /* =========================================================================
+       11. THE 10 INTERACTIVE CHAPTERS & SCENARIO CONTROLS
+       ========================================================================= */
+    const CHAPTERS = [
+      {
+        tag: "CHAPTER 01 // SURFACE", badge: "CANOPY",
+        title: "The Living Surface",
+        desc: "What happens above the soil begins beneath it. A mature maize plant (<em>Zea mays</em>) grows in natural agricultural daylight. Rotate and inspect the above-ground canopy before the subterranean descent.",
+        camPos: new THREE.Vector3(3.4, 0.6, 5.6),
+        camTarget: new THREE.Vector3(0, -0.15, 0),
+        setup: () => {
+          setContextualUI(`
+            <div class="module-row">
+              <span class="module-label">Hardware Explosion</span>
+              <button class="btn-action-small" id="btn-explode-hw" style="flex:1; justify-content:center;">
+                <i data-lucide="layers" style="width:12px; height:12px;"></i> Explode Assembly
+              </button>
+              <button class="btn-action-small" id="btn-assemble-hw" style="flex:1; justify-content:center;">
+                <i data-lucide="minimize-2" style="width:12px; height:12px;"></i> Reassemble
+              </button>
+            </div>
+            <div class="module-row" style="margin-top:6px; padding:6px 8px; background:rgba(10,24,36,0.6); border-radius:4px; border:1px solid rgba(56,189,248,0.15);">
+              <div style="font-size:0.60rem; color:#94a3b8; line-height:1.4;">
+                Click any exploded component in 3D to inspect its real pinout, hardware ICs, operating voltages, and telemetry source.
+              </div>
+            </div>
+          `);
+          document.getElementById('btn-explode-hw').addEventListener('click', explodeHardware);
+          document.getElementById('btn-assemble-hw').addEventListener('click', assembleHardware);
+        }
+      },
+      {
+        tag: "CHAPTER 08 // MONITORING SEQUENCE", badge: "FIRMWARE",
+        title: "The Monitoring Sequence",
+        desc: "Step through the 9-stage engineering execution pipeline: Deep Sleep Wake (0.15mA) &rarr; Sensor Excitation &rarr; ADC Conversion &rarr; 25°C Normalization &rarr; Maas-Hoffman Evaluation &rarr; Output Dispatch.",
+        camPos: new THREE.Vector3(0, 0.2, 4.8),
+        camTarget: new THREE.Vector3(0, 0.1, 0),
+        setup: () => {
+          assembleHardware();
+          setContextualUI(`
+            <div class="module-row">
+              <span class="module-label">Pipeline Stage</span>
+              <span id="label-seq-step" style="font-family:var(--font-mono); font-size:0.68rem; color:var(--accent-emerald);">STAGE 1/9: WAKE</span>
+            </div>
+            <div class="module-row" style="margin-top:6px;">
+              <button class="btn-action-small" id="btn-step-sequence"><i data-lucide="play" style="width:12px; height:12px;"></i> Step Pipeline</button>
+              <button class="btn-action-small" id="btn-auto-sequence">Run All</button>
+            </div>
+          `);
+          let seqIdx = 1;
+          const seqSteps = [
+            "STAGE 1/9: ESP32 DEEP-SLEEP WAKE (0.15mA)",
+            "STAGE 2/9: 10 kHz AC PROBE POLARIZATION",
+            "STAGE 3/9: 12-BIT ADC SAMPLING (CH6/CH7)",
+            "STAGE 4/9: DS18B20 1-WIRE TEMPERATURE READ",
+            "STAGE 5/9: 25°C COMPENSATION (alpha=0.0191)",
+            "STAGE 6/9: VWC% DIELECTRIC CALIBRATION",
+            "STAGE 7/9: MAAS-HOFFMAN COMPARISON (1.70)",
+            "STAGE 8/9: TRI-COLOR BEACON & GSM DISPATCH",
+            "STAGE 9/9: MICRO-SD SPI ROLLING LOG FLUSH"
+          ];
+          document.getElementById('btn-step-sequence').addEventListener('click', () => {
+            sound.playPing(600 + seqIdx * 50);
+            document.getElementById('label-seq-step').innerText = seqSteps[seqIdx - 1];
+            seqIdx = (seqIdx % 9) + 1;
+          });
+          document.getElementById('btn-auto-sequence').addEventListener('click', () => {
+            seqIdx = 1;
+            const timer = setInterval(() => {
+              if (seqIdx > 9) { clearInterval(timer); return; }
+              sound.playPing(600 + seqIdx * 50);
+              document.getElementById('label-seq-step').innerText = seqSteps[seqIdx - 1];
+              seqIdx++;
+            }, 600);
+          });
+        }
+      },
+      {
+        tag: "CHAPTER 09 // DECISION ENGINE", badge: "ALGORITHM",
+        title: "The Decision Engine",
+        desc: "Spatial software network graph showing zero-cloud local edge inference: Sensor Input &rarr; Metric Calibration &rarr; FAO-56 Water Balance &rarr; Maas-Hoffman Salinity Evaluator &rarr; Local Alert Dispatcher.",
+        camPos: new THREE.Vector3(-1.8, 0.4, 4.2),
+        camTarget: new THREE.Vector3(0, 0, 0),
+        setup: () => {
+          setContextualUI(`
+            <div class="module-row">
+              <span class="module-label">Edge Logic</span>
+              <span style="font-family:var(--font-mono); font-size:0.68rem; color:var(--accent-emerald);">MAAS_HOFFMAN_ENGINE</span>
+            </div>
+            <div class="module-row" style="margin-top:6px;">
+              <span style="font-size:0.65rem; color:var(--text-muted);">Threshold: 1.70 dS/m | Yield slope: 12.0%/dS/m</span>
+            </div>
+          `);
+        }
+      },
+      {
+        tag: "CHAPTER 10 // EXPERIMENTAL LAB", badge: "VERIFIED",
+        title: "The Experimental Test Lab",
+        desc: "Controlled test environment for fault injection, sensor drift, missing data, and boundary tests. Evaluate deterministic pass/fail results against specified project acceptance criteria.",
+        camPos: new THREE.Vector3(0, 1.2, 5.8),
+        camTarget: new THREE.Vector3(0, 0, 0),
+        setup: () => {
+          setContextualUI(`
+            <div class="module-row">
+              <span class="module-label">Test Scenario</span>
+              <select id="select-test-scenario" style="background:#000; color:#fff; border:1px solid #333; padding:4px 6px; border-radius:4px; font-family:var(--font-mono); font-size:0.65rem;">
+                <option value="normal">Scenario A: Normal Baseline (EC 1.42)</option>
+                <option value="dry">Scenario B: Dry Soil Drought (VWC 11%)</option>
+                <option value="moist">Scenario C: Hydrated Field Cap (VWC 32%)</option>
+                <option value="lockout">Scenario D: Osmotic Lockout (EC 3.40)</option>
+                <option value="disconnect">Scenario E: Sensor Disconnected (Fault)</option>
+                <option value="boundary">Scenario F: Threshold Boundary (EC 1.70)</option>
+              </select>
+            </div>
+            <div class="module-row" style="margin-top:6px;">
+              <span class="module-label">Result</span>
+              <span id="label-test-result" style="font-family:var(--font-mono); font-weight:700; color:var(--accent-emerald);">PASS [STATUS: NOMINAL]</span>
+            </div>
+          `);
+          document.getElementById('select-test-scenario').addEventListener('change', (e) => {
+            const sc = e.target.value;
+            const resEl = document.getElementById('label-test-result');
+            if (sc === 'normal') {
+              simState.faultType = 'NONE'; simState.ecRaw = 1.42; simState.vwcRaw = 31.8;
+              resEl.innerText = "PASS [NOMINAL]"; resEl.style.color = "var(--accent-emerald)";
+            } else if (sc === 'dry') {
+              simState.faultType = 'NONE'; simState.ecRaw = 1.55; simState.vwcRaw = 11.2;
+              resEl.innerText = "PASS [PWP WILT DETECTED]"; resEl.style.color = "var(--accent-amber)";
+            } else if (sc === 'moist') {
+              simState.faultType = 'NONE'; simState.ecRaw = 1.20; simState.vwcRaw = 34.0;
+              resEl.innerText = "PASS [FIELD CAP]"; resEl.style.color = "var(--accent-emerald)";
+            } else if (sc === 'lockout') {
+              simState.faultType = 'NONE'; simState.ecRaw = 3.40; simState.vwcRaw = 20.0;
+              resEl.innerText = "PASS [LOCKOUT ALERT SENT]"; resEl.style.color = "var(--accent-crimson)";
+              sound.playWarning();
+            } else if (sc === 'disconnect') {
+              simState.faultType = 'DISCONNECTED';
+              resEl.innerText = "PASS [FAULT HANDLED: ZERO_READ]"; resEl.style.color = "var(--accent-crimson)";
+              sound.playWarning();
+            } else if (sc === 'boundary') {
+              simState.faultType = 'NONE'; simState.ecRaw = 1.70; simState.vwcRaw = 26.0;
+              resEl.innerText = "PASS [BOUNDARY LIMIT 1.70]"; resEl.style.color = "var(--accent-amber)";
+            }
+            calculateAgronomicEngine();
+          });
+        }
+      }
+    ];
+
+    function setContextualUI(html) {
+      document.getElementById('contextual-controls').innerHTML = html;
+      lucide.createIcons();
+    }
+
+    function setChapter(index) {
+      if (index < 0 || index >= CHAPTERS.length) return;
+      simState.currentChapter = index;
+      sound.playPing(520 + index * 45);
+
+      const ch = CHAPTERS[index];
+
+      document.getElementById('label-chapter-tag').innerText = ch.tag;
+      document.getElementById('text-chapter-title').innerHTML = ch.title;
+      document.getElementById('text-chapter-desc').innerHTML = ch.desc;
+      document.getElementById('label-playback-status').innerText = `CHAPTER ${index + 1} OF 10`;
+      document.getElementById('badge-evidence-type').innerText = ch.badge;
+
+      document.querySelectorAll('.chapter-node').forEach((node, i) => {
+        if (i === index) node.classList.add('active');
+        else node.classList.remove('active');
+      });
+
+      document.getElementById('timeline-progress-fill').style.width = `${((index + 1) / 10) * 100}%`;
+
+      gsap.to(camera.position, {
+        x: ch.camPos.x,
+        y: ch.camPos.y,
+        z: ch.camPos.z,
+        duration: 1.8,
+        ease: "power3.inOut"
+      });
+      gsap.to(controls.target, {
+        x: ch.camTarget.x,
+        y: ch.camTarget.y,
+        z: ch.camTarget.z,
+        duration: 1.8,
+        ease: "power3.inOut"
+      });
+
+      ch.setup();
+      calculateAgronomicEngine();
+    }
+
+    document.querySelectorAll('.chapter-node').forEach(node => {
+      node.addEventListener('click', () => {
+        setChapter(parseInt(node.dataset.chapter));
+      });
+    });
+
+    document.getElementById('btn-next-chapter').addEventListener('click', () => {
+      setChapter((simState.currentChapter + 1) % CHAPTERS.length);
+    });
+    document.getElementById('btn-prev-chapter').addEventListener('click', () => {
+      const prev = simState.currentChapter > 0 ? simState.currentChapter - 1 : CHAPTERS.length - 1;
+      setChapter(prev);
+    });
+
+    document.getElementById('btn-reset-view').addEventListener('click', () => {
+      sound.playPing(600);
+      collapseLayers();
+      assembleAnatomy();
+      assembleHardware();
+      componentCard.style.display = 'none';
+      selectedComponentObj = null;
+
+      // Restore all visibility toggles
+      Object.values(visibilityToggles).forEach(cfg => {
+        cfg.active = true;
+        cfg.el.classList.add('active');
+        cfg.target.forEach(t => t.visible = true);
+      });
+
+      simState.faultType = 'NONE';
+      simState.ecRaw = 1.42;
+      simState.vwcRaw = 31.8;
+      simState.tempRaw = 24.6;
+      calculateAgronomicEngine();
+
+      setChapter(0);
+    });
+
+    // Autonomous Narrative Tour
+    document.getElementById('btn-play-tour').addEventListener('click', () => {
+      simState.autoPlay = !simState.autoPlay;
+      const icon = document.getElementById('icon-play-tour');
+      if (simState.autoPlay) {
+        icon.setAttribute('data-lucide', 'pause');
+        sound.playPing(750);
+        function loop() {
+          setChapter(simState.currentChapter);
+          simState.autoPlayTimer = setTimeout(() => {
+            if (simState.autoPlay) {
+              simState.currentChapter = (simState.currentChapter + 1) % CHAPTERS.length;
+              loop();
+            }
+          }, 7000);
+        }
+        loop();
+      } else {
+        icon.setAttribute('data-lucide', 'play');
+        clearTimeout(simState.autoPlayTimer);
+      }
+      lucide.createIcons();
+    });
+
+    /* =========================================================================
+       12. CINEMATIC OPENING CAMERA SEQUENCE
+       ========================================================================= */
+    let openingTimeline = null;
+    const skipBtn = document.getElementById('btn-skip-intro');
+
+    function startCinematicOpening() {
+      skipBtn.style.display = 'block';
+
+      camera.position.set(0, 3.2, 7.8);
+      controls.target.set(0, 0.8, 0);
+      controls.enabled = false;
+
+      openingTimeline = gsap.timeline({
+        onComplete: () => {
+          finishOpeningSequence();
+        }
+      });
+
+      openingTimeline.to(camera.position, { x: 2.2, y: 1.4, z: 5.5, duration: 3.0, ease: "power2.inOut" })
+        .to(controls.target, { x: 0.2, y: 0.4, z: 0.1, duration: 3.0, ease: "power2.inOut" }, "<")
+        .to(camera.position, { x: 3.8, y: -0.3, z: 4.8, duration: 3.5, ease: "power2.inOut" })
+        .to(controls.target, { x: 0, y: -0.6, z: 0, duration: 3.5, ease: "power2.inOut" }, "<")
+        .to(camera.position, { x: 1.8, y: -0.7, z: 3.2, duration: 3.0, ease: "power2.inOut" })
+        .to(controls.target, { x: 0.2, y: -0.9, z: 0.1, duration: 3.0, ease: "power2.inOut" }, "<")
+        .call(() => { sound.playPing(750); })
+        .to(camera.position, { x: -0.55, y: -0.4, z: 2.2, duration: 2.5, ease: "power2.inOut" })
+        .to(controls.target, { x: -0.55, y: -0.65, z: -0.35, duration: 2.5, ease: "power2.inOut" }, "<")
+        .call(() => { sound.playPing(920); })
+        .to(camera.position, { x: -0.55, y: 0.9, z: 2.5, duration: 2.0, ease: "power2.inOut" })
+        .to(controls.target, { x: -0.55, y: 0.5, z: -0.35, duration: 2.0, ease: "power2.inOut" }, "<")
+        .to(camera.position, { x: 3.4, y: 0.6, z: 5.6, duration: 3.0, ease: "power3.inOut" })
+        .to(controls.target, { x: 0, y: -0.15, z: 0, duration: 3.0, ease: "power3.inOut" }, "<");
+    }
+
+    function finishOpeningSequence() {
+      if (openingTimeline) openingTimeline.kill();
+      skipBtn.style.display = 'none';
+      controls.enabled = true;
+      gsap.to(camera.position, { x: 3.4, y: 0.6, z: 5.6, duration: 1.0 });
+      gsap.to(controls.target, { x: 0, y: -0.15, z: 0, duration: 1.0 });
+      setChapter(0);
+    }
+
+    skipBtn.addEventListener('click', () => {
+      finishOpeningSequence();
+    });
+
+    /* =========================================================================
+       13. SIGNATURE CONTINUOUS INTERACTION: "REVEAL THE HIDDEN SYSTEM"
+       ========================================================================= */
+    document.getElementById('btn-signature-reveal').addEventListener('click', () => {
+      sound.playPing(880);
+      const tl = gsap.timeline();
+
+      tl.to(camera.position, { x: 3.8, y: -0.4, z: 5.2, duration: 2.0, ease: "power2.inOut" })
+        .to(controls.target, { x: 0, y: -0.6, z: 0, duration: 2.0, ease: "power2.inOut" }, "<")
+        .call(() => { applyLayerSeparation(0.8); sound.playPing(520); })
+        .call(() => { explodeHardware(); sound.playPing(680); })
+        .to(camera.position, { x: -0.55, y: 0.8, z: 3.2, duration: 2.0, ease: "power2.inOut" })
+        .to(controls.target, { x: -0.55, y: 0.4, z: -0.35, duration: 2.0, ease: "power2.inOut" }, "<")
+        .call(() => { sound.playPing(1046); });
+    });
+
+    /* =========================================================================
+       14. GEOLOGICAL & HARDWARE PHYSICAL ANIMATIONS
+       ========================================================================= */
+    function applyLayerSeparation(val) {
+      gsap.to(horizonOGroup.position, { y: val * 0.45, duration: 0.4 });
+      gsap.to(horizonAGroup.position, { y: val * 0.15, duration: 0.4 });
+      gsap.to(horizonBGroup.position, { y: -val * 0.25, duration: 0.4 });
+      gsap.to(horizonCGroup.position, { y: -val * 0.65, duration: 0.4 });
+    }
+
+    function collapseLayers() {
+      applyLayerSeparation(0.0);
+    }
+
+    function applyAnatomyExplosion(val) {
+      gsap.to(anatomyParts.leaves.position,        { y: val * 0.85, duration: 0.4 });
+      gsap.to(anatomyParts.sheaths.position,       { y: val * 0.45, duration: 0.4 });
+      if (anatomyParts.ears) gsap.to(anatomyParts.ears.position, { y: val * 0.60, duration: 0.4 });
+      gsap.to(anatomyParts.stem.position,          { y: val * 0.20, duration: 0.4 });
+      gsap.to(anatomyParts.braceRoots.position,    { y: -val * 0.15, duration: 0.4 });
+      gsap.to(anatomyParts.crownRoots.position,    { y: -val * 0.35, duration: 0.4 });
+      gsap.to(anatomyParts.seminalRoots.position,  { y: -val * 0.55, duration: 0.4 });
+      gsap.to(anatomyParts.lateralRoots.position,  { y: -val * 0.65, duration: 0.4 });
+      gsap.to(anatomyParts.rootTips.position,      { y: -val * 0.75, duration: 0.4 });
+    }
+
+    function assembleAnatomy() {
+      applyAnatomyExplosion(0.0);
+    }
+
+    function explodeHardware() {
+      sound.playPing(720);
+      const dur = 1.0;
+      const ease = "back.out(1.4)";
+      gsap.to(hwParts.solarWafer.position,  { y: 0.56, duration: dur, ease });
+      gsap.to(hwParts.sentryRing.position,  { y: 0.42, duration: dur, ease });
+      gsap.to(hwParts.enclosure.position,   { y: 0.16, duration: dur, ease });
+      gsap.to(hwParts.esp32Core.position,   { x: -0.16, y: 0.20, duration: dur, ease });
+      gsap.to(hwParts.sim800Mod.position,   { x: 0.14, y: 0.24, z: -0.08, duration: dur, ease });
+      gsap.to(hwParts.sdCardMod.position,   { x: 0.14, y: 0.14, z: 0.08, duration: dur, ease });
+      gsap.to(hwParts.batteryPack.position, { x: -0.16, y: 0.06, duration: dur, ease });
+      gsap.to(hwParts.cableHarness.position,{ y: -0.06, duration: dur, ease });
+      gsap.to(hwParts.probeShaft.position,  { y: -0.20, duration: dur, ease });
+    }
+
+    function assembleHardware() {
+      sound.playPing(540);
+      const dur = 0.8;
+      const ease = "power2.inOut";
+      gsap.to(hwParts.solarWafer.position,  { y: 0.28, duration: dur, ease });
+      gsap.to(hwParts.sentryRing.position,  { y: 0.25, duration: dur, ease });
+      gsap.to(hwParts.enclosure.position,   { y: 0.0, duration: dur, ease });
+      gsap.to(hwParts.esp32Core.position,   { x: 0.0, y: 0.0, duration: dur, ease });
+      gsap.to(hwParts.sim800Mod.position,   { x: 0.0, y: 0.0, z: 0.0, duration: dur, ease });
+      gsap.to(hwParts.sdCardMod.position,   { x: 0.0, y: 0.0, z: 0.0, duration: dur, ease });
+      gsap.to(hwParts.batteryPack.position, { x: 0.0, y: 0.0, duration: dur, ease });
+      gsap.to(hwParts.cableHarness.position,{ y: 0.0, duration: dur, ease });
+      gsap.to(hwParts.probeShaft.position,  { y: 0.0, duration: dur, ease });
+    }
+
+    /* =========================================================================
+       15. MODAL INSPECTOR & CITATIONS
+       ========================================================================= */
+    const modal = document.getElementById('inspector-modal');
+    const modalBody = document.getElementById('modal-body-content');
+    document.getElementById('btn-close-modal').addEventListener('click', () => {
+      sound.playPing(440);
+      modal.classList.remove('active');
+    });
+
+    document.getElementById('hotspot-probe').addEventListener('click', () => {
+      sound.playPing(880);
+      modalBody.innerHTML = `
+        <h3 style="font-family:var(--font-display); font-size:1.3rem; color:var(--accent-emerald); margin-bottom:8px;">
+          EC & Dielectric Subsurface Probe
+        </h3>
+        <p style="font-size:0.82rem; line-height:1.55; color:var(--text-muted); margin-bottom:12px;">
+          Positioned directly at the 15–25cm maize active root horizon. Employs 10 kHz AC waveform excitation to avoid electrolysis polarization while calculating temperature-normalized bulk Electrical Conductivity.
+        </p>
+        <div style="background:rgba(0,0,0,0.4); padding:10px 14px; border-radius:8px; font-family:var(--font-mono); font-size:0.72rem; color:var(--accent-cyan); margin-bottom:10px;">
+          EC₂₅ = EC_T / [1 + 0.0191 × (T_soil - 25)]
+        </div>
+        <div style="font-size:0.75rem; color:var(--text-dim);">
+          Pinout: GPIO34 (ADC1_CH6 Analog EC), GPIO35 (ADC1_CH7 Capacitive VWC), GPIO4 (DS18B20 1-Wire).
+        </div>
+      `;
+      modal.classList.add('active');
+    });
+
+    document.getElementById('hotspot-node').addEventListener('click', () => {
+      sound.playPing(880);
+      modalBody.innerHTML = `
+        <h3 style="font-family:var(--font-display); font-size:1.3rem; color:var(--accent-cyan); margin-bottom:8px;">
+          Zerthiva $30 Edge Gateway
+        </h3>
+        <p style="font-size:0.82rem; line-height:1.55; color:var(--text-muted); margin-bottom:12px;">
+          100% off-grid autonomous edge computer engineered for zero-cloud rural deployment. Runs local MicroPython/PlatformIO firmware with Maas-Hoffman and FAO-56 decision logic.
+        </p>
+        <ul style="font-size:0.78rem; line-height:1.6; color:var(--text-main); margin-left:18px;">
+          <li><strong>MCU:</strong> Xiao ESP32-S3 (240MHz Xtensa dual-core, 0.15mA sleep)</li>
+          <li><strong>Power:</strong> 5W Monocrystal PV array + TP4056 + 18650 2,200mAh cell</li>
+          <li><strong>Visual Feedback:</strong> 360° Fresnel RGB LED beacon (GPIO25/26/27)</li>
+          <li><strong>Uplink:</strong> SIM800L GSM cellular SMS dispatcher (UART2 GPIO16/17)</li>
+        </ul>
+      `;
+      modal.classList.add('active');
+    });
+
+    const btnCitations = document.getElementById('btn-open-citations');
+    if (btnCitations) {
+      btnCitations.addEventListener('click', () => {
+        sound.playPing(880);
+        modalBody.innerHTML = `
+          <h3 style="font-family:var(--font-display); font-size:1.3rem; color:var(--accent-emerald); margin-bottom:8px;">
+            3D Asset Licenses & Scientific Citations
+          </h3>
+          <p style="font-size:0.8rem; line-height:1.6; color:var(--text-muted); margin-bottom:14px;">
+            Zerthiva SIS integrates physically based rendering, verified open agronomic standards, and open-source embedded hardware CAD assets.
+          </p>
+
+          <div style="background:rgba(0,0,0,0.45); padding:12px 14px; border-radius:8px; border:1px solid var(--border-subtle); margin-bottom:12px;">
+            <div style="color:var(--accent-cyan); font-weight:700; font-size:0.75rem; margin-bottom:6px;">1. Poly Haven CC0 PBR Assets</div>
+            <ul style="font-size:0.72rem; line-height:1.6; color:var(--text-muted); list-style:none; padding-left:0;">
+              <li>• <strong style="color:var(--text-main);">Dirt 1k:</strong> Topsoil diffuse, normal, and roughness maps (<a href="https://polyhaven.com/a/dirt" target="_blank" style="color:var(--accent-cyan); text-decoration:none;">Poly Haven CC0</a>).</li>
+              <li>• <strong style="color:var(--text-main);">Brown Mud 02 1k:</strong> Subsoil clay diffuse, normal, and roughness maps (<a href="https://polyhaven.com/a/brown_mud_02" target="_blank" style="color:var(--accent-cyan); text-decoration:none;">Poly Haven CC0</a>).</li>
+              <li>• <strong style="color:var(--text-main);">Autumn Field 1k HDRI:</strong> Physically based outdoor Image-Based Lighting environment (<a href="https://polyhaven.com/a/autumn_field" target="_blank" style="color:var(--accent-cyan); text-decoration:none;">Poly Haven CC0</a>).</li>
+            </ul>
+          </div>
+
+          <div style="background:rgba(0,0,0,0.45); padding:12px 14px; border-radius:8px; border:1px solid var(--border-subtle); margin-bottom:12px;">
+            <div style="color:var(--accent-emerald); font-weight:700; font-size:0.75rem; margin-bottom:6px;">2. Open-Source Hardware 3D Model</div>
+            <div style="font-size:0.72rem; line-height:1.6; color:var(--text-muted);">
+              • <strong style="color:var(--text-main);">Xiao ESP32-S3 CAD Assembly:</strong> Standard 240MHz dual-core module (<a href="https://github.com/mfranzon/circuitiny" target="_blank" style="color:var(--accent-emerald); text-decoration:none;">Circuitiny / mfranzon</a>, MIT License).
+            </div>
+          </div>
+
+          <div style="background:rgba(0,0,0,0.45); padding:12px 14px; border-radius:8px; border:1px solid var(--border-subtle);">
+            <div style="color:var(--accent-amber); font-weight:700; font-size:0.75rem; margin-bottom:6px;">3. Scientific References</div>
+            <ul style="font-size:0.72rem; line-height:1.6; color:var(--text-muted); list-style:none; padding-left:0;">
+              <li>• <strong style="color:var(--text-main);">Maas, E.V. & Hoffman, G.J. (1977):</strong> <em>Crop Salt Tolerance—Evaluation of Existing Data</em>. ASCE J. Irrig. Drain. Div. Threshold 1.70 dS/m, slope 12.0%/dS/m.</li>
+              <li>• <strong style="color:var(--text-main);">FAO Irrigation & Drainage Papers 29 & 56:</strong> Water Quality for Agriculture & Crop Evapotranspiration Guidelines.</li>
+              <li>• <strong style="color:var(--text-main);">US Salinity Laboratory Handbook 60:</strong> Diagnosis and Improvement of Saline and Alkali Soils.</li>
+            </ul>
+          </div>
+        `;
+        modal.classList.add('active');
+      });
+    }
+
+    /* =========================================================================
+       16. ANIMATION & RENDER LOOP (60 FPS)
+       ========================================================================= */
+    const clock = new THREE.Clock();
+
+    function updateHotspotPosition(id, worldVector) {
+      const pin = document.getElementById(id);
+      if (!pin) return;
+      const v = worldVector.clone();
+      v.project(camera);
+      if (v.z < 1) {
+        const x = (v.x * 0.5 + 0.5) * window.innerWidth;
+        const y = (-v.y * 0.5 + 0.5) * window.innerHeight;
+        pin.style.left = `${x}px`;
+        pin.style.top = `${y}px`;
+        pin.style.display = 'flex';
+      } else {
+        pin.style.display = 'none';
+      }
+    }
+
+    function animate() {
+      requestAnimationFrame(animate);
+
+      const t = clock.getElapsedTime();
+
+      // Organic leaf motion in gentle agricultural breeze
+      leafMeshes.forEach((leafGroup, i) => {
+        leafGroup.rotation.z = Math.sin(t * 1.5 + i * 0.75) * 0.022;
+      });
+
+      // Beacon LED soft pulse
+      if (simState.status === 'SAFE') {
+        const pulse = 1.1 + Math.sin(t * 3.2) * 0.3;
+        sentryMat.emissiveIntensity = pulse;
+        sentryPointLight.intensity = pulse * 1.5;
+      } else {
+        const strobe = (Math.sin(t * 14.0) > 0) ? 2.8 : 0.2;
+        sentryMat.emissiveIntensity = strobe;
+        sentryPointLight.intensity = strobe * 2.2;
+      }
+
+      // Animate water pulses along hydraulic streamlines
+      if (hydrologyGroup.visible && !simState.isHydrologyPaused) {
+        const speed = (simState.flowSpeed || 1.0) * 0.0035;
+        pulseMeshes.forEach(pm => {
+          pm.userData.offset = (pm.userData.offset + speed * (pm.userData.speedMult || 1.0)) % 1.0;
+          const curve = streamlineCurves[pm.userData.curveIdx];
+          if (curve) {
+            const pt = curve.getPointAt(pm.userData.offset);
+            pm.position.copy(pt);
+          }
+        });
+      }
+
+      // Hotspot projections
+      updateHotspotPosition('hotspot-probe', new THREE.Vector3(-0.55, -0.20, -0.30));
+      updateHotspotPosition('hotspot-node', new THREE.Vector3(-0.55, 0.32, -0.30));
+
+      controls.update();
+      renderer.render(scene, camera);
+    }
+
+    window.addEventListener('resize', () => {
+      camera.aspect = window.innerWidth / window.innerHeight;
+      camera.updateProjectionMatrix();
+      renderer.setSize(window.innerWidth, window.innerHeight);
+    });
+
+    // Start with the opening cinematic sweep
+    startCinematicOpening();
+    animate();
+  </script>
+</body>
+</html>
