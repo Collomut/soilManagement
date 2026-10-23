@@ -1371,6 +1371,244 @@
       border-color: var(--accent-cyan);
     }
 
+  
+    /* =========================================================================
+       PHASE 3: SUBTERRANEAN UNDERGROUND EXPLORER & RHIZOSPHERE PHYSICS
+       ========================================================================= */
+    .subsurface-explorer-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      z-index: 50;
+      pointer-events: none;
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.35s cubic-bezier(0.16, 1, 0.3, 1), visibility 0.35s;
+    }
+    .subsurface-explorer-overlay.active {
+      opacity: 1;
+      visibility: visible;
+      pointer-events: auto;
+    }
+
+    /* Subsurface Top Bar */
+    .sub-top-bar {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 56px;
+      background: var(--bg-panel-elevated);
+      backdrop-filter: blur(28px);
+      -webkit-backdrop-filter: blur(28px);
+      border-bottom: 1px solid var(--border-subtle);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 20px;
+      pointer-events: auto;
+      z-index: 55;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.5);
+    }
+
+    .sub-bar-left, .sub-bar-center, .sub-bar-right {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .btn-leave-subsurface {
+      background: rgba(0, 229, 255, 0.14) !important;
+      border: 1px solid var(--accent-cyan) !important;
+      color: #fff !important;
+      font-weight: 700 !important;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      cursor: pointer;
+      box-shadow: 0 0 12px rgba(0,229,255,0.25);
+    }
+    .btn-leave-subsurface:hover {
+      background: rgba(0, 229, 255, 0.28) !important;
+      box-shadow: 0 0 18px rgba(0,229,255,0.45) !important;
+    }
+
+    .sub-brand-badge {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding-left: 14px;
+      border-left: 1px solid rgba(255,255,255,0.12);
+    }
+    .sub-brand-title {
+      font-family: var(--font-display);
+      font-size: 0.85rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      color: #fff;
+    }
+    .sub-brand-sub {
+      font-family: var(--font-mono);
+      font-size: 0.55rem;
+      color: var(--accent-emerald);
+      letter-spacing: 0.08em;
+    }
+
+    .sub-slider-wrap {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(0,0,0,0.35);
+      padding: 5px 12px;
+      border-radius: 999px;
+      border: 1px solid var(--border-subtle);
+    }
+    .sub-control-label {
+      font-family: var(--font-mono);
+      font-size: 0.58rem;
+      color: var(--text-muted);
+      letter-spacing: 0.06em;
+    }
+    .sub-range {
+      width: 90px;
+      height: 4px;
+      accent-color: var(--accent-emerald);
+      cursor: pointer;
+    }
+    .sub-slider-val {
+      font-family: var(--font-mono);
+      font-size: 0.65rem;
+      color: var(--accent-emerald);
+      min-width: 32px;
+      text-align: right;
+    }
+
+    /* Subsurface Left Panel */
+    .sub-panel-left {
+      position: absolute;
+      top: 72px;
+      left: 24px;
+      bottom: 24px;
+      width: 340px;
+      background: var(--bg-panel-elevated);
+      backdrop-filter: blur(28px);
+      -webkit-backdrop-filter: blur(28px);
+      border: 1px solid var(--border-subtle);
+      border-radius: 16px;
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+      pointer-events: auto;
+      box-shadow: 0 16px 45px rgba(0,0,0,0.6);
+      z-index: 52;
+    }
+
+    /* Subsurface Right Panel */
+    .sub-panel-right {
+      position: absolute;
+      top: 72px;
+      right: 24px;
+      bottom: 24px;
+      width: 410px;
+      background: var(--bg-panel-elevated);
+      backdrop-filter: blur(28px);
+      -webkit-backdrop-filter: blur(28px);
+      border: 1px solid var(--border-subtle);
+      border-radius: 16px;
+      padding: 18px;
+      display: flex;
+      flex-direction: column;
+      pointer-events: auto;
+      box-shadow: 0 16px 45px rgba(0,0,0,0.6);
+      z-index: 52;
+    }
+
+    .sub-scroll-content {
+      flex: 1;
+      overflow-y: auto;
+      padding-right: 4px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    /* Subsurface Scientific Card */
+    .sub-card {
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(255,255,255,0.06);
+      border-radius: 10px;
+      padding: 10px 12px;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .sub-card:hover {
+      background: rgba(255,255,255,0.07);
+      border-color: rgba(255,255,255,0.14);
+    }
+    .sub-card.active {
+      background: rgba(0, 229, 255, 0.12);
+      border-color: var(--accent-cyan);
+      box-shadow: 0 0 14px rgba(0,229,255,0.22);
+    }
+    .sub-card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 4px;
+    }
+    .sub-card-title {
+      font-family: var(--font-display);
+      font-size: 0.82rem;
+      font-weight: 700;
+      color: #fff;
+    }
+    .sub-card-tag {
+      font-family: var(--font-mono);
+      font-size: 0.55rem;
+      color: var(--accent-cyan);
+    }
+    .sub-card-metrics {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4px;
+      margin-top: 6px;
+      background: rgba(0,0,0,0.3);
+      padding: 6px 8px;
+      border-radius: 6px;
+      font-family: var(--font-mono);
+      font-size: 0.58rem;
+    }
+    .metric-label {
+      color: var(--text-dim);
+    }
+    .metric-val {
+      color: #fff;
+      font-weight: 700;
+      text-align: right;
+    }
+
+    /* Bottom Subsurface Layer Dock */
+    .sub-bottom-dock {
+      position: absolute;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: var(--bg-panel-elevated);
+      backdrop-filter: blur(28px);
+      -webkit-backdrop-filter: blur(28px);
+      border: 1px solid var(--border-accent);
+      border-radius: 999px;
+      padding: 6px 16px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      pointer-events: auto;
+      z-index: 54;
+      box-shadow: 0 14px 40px rgba(0,0,0,0.65);
+    }
+
   </style>
 </head>
 <body>
@@ -1406,6 +1644,11 @@
       <!-- Signature Continuous Cutaway Sequence Trigger -->
       <button class="btn-pill btn-signature" id="btn-signature-reveal" title="Trigger 12-stage signature cinematic cutaway">
         <i data-lucide="sparkles" style="width: 13px; height: 13px;"></i> Reveal Hidden System
+      </button>
+
+      <!-- Subterranean Underground Explorer Mode -->
+      <button class="btn-pill" id="btn-enter-subsurface" title="Open Subterranean Soil & Rhizosphere Explorer">
+        <i data-lucide="layers" style="width: 13px; height: 13px; color: var(--accent-cyan);"></i> Underground Explorer
       </button>
 
       <!-- First-Person Field Exploration Walk Mode -->
@@ -1630,6 +1873,140 @@
         <div class="walk-prompt-action" id="walk-prompt-action">Inspect Gateway</div>
         <div class="walk-prompt-sub" id="walk-prompt-sub">ESP32 Field Telemetry Node • 1.4m away</div>
       </div>
+    </div>
+  </div>
+
+  <!-- DEDICATED SUBTERRANEAN UNDERGROUND EXPLORER OVERLAY -->
+  <div id="subsurface-explorer-overlay" class="subsurface-explorer-overlay">
+    <!-- Top Bar Navigation -->
+    <header class="sub-top-bar">
+      <div class="sub-bar-left">
+        <button class="btn-pill btn-leave-subsurface" id="btn-leave-subsurface" title="Return to ground surface view">
+          <i data-lucide="chevron-left" style="width:14px; height:14px;"></i> Return to Surface
+        </button>
+        <div class="sub-brand-badge">
+          <div class="brand-dot" style="background:var(--accent-cyan);"></div>
+          <span class="sub-brand-title">UNDERGROUND EXPLORER</span>
+          <span class="sub-brand-sub">RHIZOSPHERE & PEDOLOGY</span>
+        </div>
+      </div>
+
+      <div class="sub-bar-center">
+        <!-- Subterranean Mode Selector -->
+        <div class="lab-segmented-group" id="sub-mode-selector">
+          <button class="lab-seg-btn active" data-submode="stratigraphy" id="btn-sub-strata">
+            <i data-lucide="layers" style="width:12px; height:12px;"></i> Soil Stratigraphy
+          </button>
+          <button class="lab-seg-btn" data-submode="roots" id="btn-sub-roots">
+            <i data-lucide="git-branch" style="width:12px; height:12px;"></i> Root Architecture
+          </button>
+          <button class="lab-seg-btn" data-submode="hydrology" id="btn-sub-hydro">
+            <i data-lucide="droplet" style="width:12px; height:12px;"></i> Darcy Hydrology
+          </button>
+          <button class="lab-seg-btn" data-submode="solute" id="btn-sub-solute">
+            <i data-lucide="crosshair" style="width:12px; height:12px;"></i> Salinity & Solute
+          </button>
+        </div>
+      </div>
+
+      <div class="sub-bar-right">
+        <!-- Dynamic Context Area -->
+        <div id="sub-dynamic-controls" style="display:flex; align-items:center; gap:8px;">
+          <!-- Populated dynamically per mode -->
+        </div>
+
+        <button class="btn-pill" id="btn-sub-reset-view" title="Reset subterranean inspection view">
+          <i data-lucide="scan" style="width:13px; height:13px;"></i> Reset View
+        </button>
+      </div>
+    </header>
+
+    <!-- Left Panel: Subsurface Scientific Hierarchy -->
+    <aside class="sub-panel-left" id="sub-panel-left">
+      <div class="lab-panel-header">
+        <div>
+          <div class="lab-panel-subtitle" id="sub-left-subtitle">PEDOLOGICAL PROFILE</div>
+          <h3 class="lab-panel-title" id="sub-left-title">Soil Stratigraphy</h3>
+        </div>
+        <span class="badge-evidence" id="sub-left-badge">HORIZONS O-C</span>
+      </div>
+
+      <div class="sub-scroll-content" id="sub-left-scroll">
+        <!-- Injected dynamically per subterranean mode -->
+      </div>
+    </aside>
+
+    <!-- Right Panel: Subsurface Element Technical Dossier -->
+    <aside class="sub-panel-right" id="sub-panel-right">
+      <div class="lab-panel-header">
+        <div>
+          <div class="lab-panel-subtitle" id="sub-dossier-category">HORIZON A // MELANIC TOPSOIL</div>
+          <h3 class="lab-panel-title" id="sub-dossier-title">Horizon A Melanic Topsoil</h3>
+        </div>
+        <span class="badge-evidence" id="sub-dossier-badge">MEASURED</span>
+      </div>
+
+      <div class="lab-dossier-content" id="sub-dossier-scroll">
+        <div class="dossier-section">
+          <div class="dossier-section-title">
+            <i data-lucide="info" style="width:12px; height:12px; color:var(--accent-emerald);"></i>
+            PEDOLOGICAL / BOTANICAL PROPERTIES
+          </div>
+          <p class="dossier-p" id="sub-dossier-p1">
+            Melanic mineral topsoil horizon (4–25cm depth) characterized by granular crumb structure, high organic carbon accumulation, and intensive root proliferation.
+          </p>
+        </div>
+
+        <div class="dossier-section">
+          <div class="dossier-section-title">
+            <i data-lucide="sparkles" style="width:12px; height:12px; color:var(--accent-cyan);"></i>
+            RHIZOSPHERE & SENSING DYNAMICS
+          </div>
+          <p class="dossier-p" id="sub-dossier-p2">
+            Primary extraction envelope for maize nodal crown roots, accounting for >80% of active nitrogen, phosphorus, and moisture transpirational uptake. Target depth for the Zerthiva 3-in-1 probe core.
+          </p>
+        </div>
+
+        <div class="dossier-section">
+          <div class="dossier-section-title">
+            <i data-lucide="cpu" style="width:12px; height:12px; color:var(--accent-amber);"></i>
+            VERIFIED SCIENTIFIC PARAMETERS
+          </div>
+          <div class="dossier-specs-grid" id="sub-dossier-specs">
+            <!-- Dynamically populated -->
+          </div>
+        </div>
+
+        <div class="dossier-section" style="border-bottom:none;">
+          <div class="dossier-section-title">
+            <i data-lucide="file-text" style="width:12px; height:12px; color:var(--text-muted);"></i>
+            SCIENTIFIC GROUNDING & GOVERNING EQUATION
+          </div>
+          <div class="dossier-truth-box" id="sub-dossier-equation">
+            Darcy-Buckingham Matrix Flux: q = -K(θ) ∇ψ_m | Van Genuchten Retention: θ(ψ) = θ_r + (θ_s - θ_r) / [1 + (α|ψ|)^n]^m
+          </div>
+        </div>
+      </div>
+
+      <div class="lab-panel-footer">
+        <button class="btn-action-small" id="btn-sub-focus-target" style="flex:1; justify-content:center;">
+          <i data-lucide="crosshair" style="width:12px; height:12px;"></i> Frame in 3D
+        </button>
+        <button class="btn-action-small" id="btn-sub-isolate-target" style="flex:1; justify-content:center;">
+          <i data-lucide="scan" style="width:12px; height:12px;"></i> Isolate Layer
+        </button>
+      </div>
+    </aside>
+
+    <!-- Bottom Floating Subsurface Dock -->
+    <div class="sub-bottom-dock" id="sub-bottom-dock">
+      <button class="vis-toggle active" id="btn-sub-dock-cutaway" title="31° Cutaway view"><i data-lucide="scissors" style="width:11px; height:11px;"></i> Cutaway</button>
+      <button class="vis-toggle" id="btn-sub-dock-solid" title="Solid monolith"><i data-lucide="box" style="width:11px; height:11px;"></i> Solid</button>
+      <button class="vis-toggle" id="btn-sub-dock-rootfocus" title="Root focus mode"><i data-lucide="scan" style="width:11px; height:11px;"></i> Root Focus</button>
+      <div class="toolbar-divider" style="height:14px; margin:0 4px;"></div>
+      <button class="vis-toggle" id="btn-sub-ghost-soil" title="Toggle 20% ghost soil transparency"><i data-lucide="eye" style="width:11px; height:11px;"></i> Ghost Soil</button>
+      <button class="vis-toggle active" id="btn-sub-tog-streamlines" title="Toggle Darcy streamlines"><i data-lucide="droplet" style="width:11px; height:11px;"></i> Flow Lines</button>
+      <button class="vis-toggle active" id="btn-sub-tog-halo" title="Toggle EC Salinity Diffusion Bulb"><i data-lucide="crosshair" style="width:11px; height:11px;"></i> Salinity Bulb</button>
     </div>
   </div>
 
@@ -4200,6 +4577,11 @@
                 <i data-lucide="minimize-2" style="width:12px; height:12px;"></i> Close Strata
               </button>
             </div>
+            <div class="module-row" style="margin-top:6px;">
+              <button class="btn-action-small" id="btn-ch2-enter-sub" style="flex:1; justify-content:center; background:rgba(0,229,255,0.15); border-color:var(--accent-cyan);">
+                <i data-lucide="layers" style="width:12px; height:12px; color:var(--accent-cyan);"></i> Launch Underground Explorer
+              </button>
+            </div>
             <div class="module-row" style="margin-top:6px; padding:6px 8px; background:rgba(10,24,36,0.6); border-radius:4px; border:1px solid rgba(56,189,248,0.15);">
               <div style="font-size:0.60rem; color:#94a3b8; line-height:1.4;">
                 Examine soil texture, bulk density, pore space, and embedded quartz aggregates across distinct horizons.
@@ -4214,6 +4596,7 @@
             collapseLayers();
             sound.playPing(520);
           });
+          document.getElementById('btn-ch2-enter-sub')?.addEventListener('click', () => enterSubsurfaceExplorer('stratigraphy'));
         }
       },
       // 2: CHAPTER 03 // ANATOMY
@@ -6700,12 +7083,12 @@
       } else if (foundTarget && (foundTarget.id.includes('horizon') || foundTarget.id.includes('geology') || foundTarget.id.includes('stratum') || foundTarget.id.includes('field-soil'))) {
         reticleEl?.classList.add('targeted');
         promptCard?.classList.add('visible');
-        if (promptActionEl) promptActionEl.innerText = 'Examine Soil Stratigraphy';
+        if (promptActionEl) promptActionEl.innerText = 'Explore Subterranean Soil & Roots';
         if (promptSubEl) promptSubEl.innerText = `Pedological Horizons O, A, B, C • ${foundTarget.dist.toFixed(1)}m away`;
 
         walkState.activePromptAction = () => {
           leaveWalkMode();
-          goToChapter(1);
+          enterSubsurfaceExplorer('stratigraphy');
         };
       } else if (plantDist <= 3.0 && (foundTarget?.id.includes('leaf') || foundTarget?.id.includes('stalk') || foundTarget?.id.includes('tassel') || foundTarget?.id.includes('ear') || plantDist < 2.0)) {
         reticleEl?.classList.add('targeted');
@@ -6724,6 +7107,851 @@
       }
     }
 
+
+    /* =========================================================================
+       18. PHASE 3: SUBTERRANEAN UNDERGROUND EXPLORER & RHIZOSPHERE ENGINE
+       ========================================================================= */
+
+    // 1. Solute Salinity Diffusion Gradients & Dielectric Sensitivity Bulb
+    const soluteGroup = new THREE.Group();
+    soluteGroup.visible = true;
+    hardwareGroup.add(soluteGroup); // Mounted on probe coordinates
+
+    // Dual 316L Stainless Annular EC Electrode Salinity Diffusion Halos (Upper 15cm & Lower 25cm)
+    const haloGeo = new THREE.TorusGeometry(0.026, 0.012, 16, 32);
+    haloGeo.rotateX(Math.PI / 2);
+
+    const haloUpperMat = new THREE.MeshStandardMaterial({
+      color: 0x00ff87,
+      emissive: 0x00ff87,
+      emissiveIntensity: 0.85,
+      transparent: true,
+      opacity: 0.45,
+      roughness: 0.35
+    });
+    const haloUpperMesh = new THREE.Mesh(haloGeo, haloUpperMat);
+    haloUpperMesh.position.y = -0.15;
+    haloUpperMesh.userData = { id: 'ec-solute-halo-upper', name: 'Upper 15cm 316L EC Ionic Diffusion Halo', type: 'CHEMISTRY', badge: 'MEASURED' };
+    soluteGroup.add(haloUpperMesh);
+
+    const haloLowerMat = new THREE.MeshStandardMaterial({
+      color: 0x00ff87,
+      emissive: 0x00ff87,
+      emissiveIntensity: 0.85,
+      transparent: true,
+      opacity: 0.45,
+      roughness: 0.35
+    });
+    const haloLowerMesh = new THREE.Mesh(haloGeo, haloLowerMat);
+    haloLowerMesh.position.y = -0.25;
+    haloLowerMesh.userData = { id: 'ec-solute-halo-lower', name: 'Lower 25cm 316L EC Ionic Diffusion Halo', type: 'CHEMISTRY', badge: 'MEASURED' };
+    soluteGroup.add(haloLowerMesh);
+
+    // Capacitive 1.5 MHz Coplanar Dielectric Sensitivity Envelope (~180 cm³ fringe field)
+    const vwcFringeGeo = new THREE.SphereGeometry(0.048, 16, 16);
+    vwcFringeGeo.scale(0.8, 1.8, 1.0);
+    const vwcFringeMat = new THREE.MeshStandardMaterial({
+      color: 0x00e5ff,
+      emissive: 0x0284c7,
+      emissiveIntensity: 0.65,
+      transparent: true,
+      opacity: 0.22,
+      roughness: 0.35
+    });
+    const vwcFringeMesh = new THREE.Mesh(vwcFringeGeo, vwcFringeMat);
+    vwcFringeMesh.position.set(0, -0.20, 0);
+    vwcFringeMesh.userData = { id: 'vwc-dielectric-fringe', name: '1.5 MHz Coplanar Dielectric Sensitivity Bulb (~180cm³)', type: 'PHYSICS', badge: 'MEASURED' };
+    soluteGroup.add(vwcFringeMesh);
+
+    // Update Salinity Diffusion Halos dynamically linked to live EC
+    function updateSalinityHalos(ecVal) {
+      let haloColor = 0x00ff87; // Safe emerald (< 1.7 dS/m)
+      let haloIntensity = 0.85;
+      let haloOpacity = 0.45;
+
+      if (ecVal > 3.5) {
+        haloColor = 0xff2a5f; // Critical crimson (> 3.5 dS/m)
+        haloIntensity = 2.2;
+        haloOpacity = 0.80;
+      } else if (ecVal >= 1.7) {
+        haloColor = 0xffb703; // Salinity threshold amber (1.7 - 3.5 dS/m)
+        haloIntensity = 1.35;
+        haloOpacity = 0.60;
+      }
+
+      haloUpperMat.color.setHex(haloColor);
+      haloUpperMat.emissive.setHex(haloColor);
+      haloUpperMat.emissiveIntensity = haloIntensity;
+      haloUpperMat.opacity = haloOpacity;
+
+      haloLowerMat.color.setHex(haloColor);
+      haloLowerMat.emissive.setHex(haloColor);
+      haloLowerMat.emissiveIntensity = haloIntensity;
+      haloLowerMat.opacity = haloOpacity;
+    }
+
+    // 2. Comprehensive Subsurface Scientific Database
+    const SUBSURFACE_DATA = {
+      // Stratigraphy Horizons
+      'horizon-o': {
+        id: 'horizon-o',
+        name: 'Horizon O (Humus Mulch, 0–4cm)',
+        mode: 'stratigraphy',
+        category: 'Organic Epipedon',
+        badge: 'MEASURED',
+        targetPos: new THREE.Vector3(0.0, 0.05, 0.0),
+        p1: 'Surface organic mulch horizon formed by decomposing maize crop residue, biological litter, and active macrofauna (earthworm conduits). Highly porous micro-aggregate structure protecting mineral soil from raindrop kinetic impact and surface crusting.',
+        p2: 'Acts as thermal and moisture buffer reducing direct evaporative losses. High cation exchange capacity (CEC > 45 meq/100g) filtering initial precipitation before mineral horizon infiltration.',
+        specs: [
+          { label: 'Horizon Depth', val: '0 – 4 cm' },
+          { label: 'Bulk Density ρb', val: '1.05 g/cm³' },
+          { label: 'Total Porosity φ', val: '58.4%' },
+          { label: 'Hydraulic Cond Ksat', val: '8.5 cm/h' },
+          { label: 'Organic Matter', val: '4.8% by weight' },
+          { label: 'Structure', val: 'Granular Crumb' }
+        ],
+        equation: 'Organic Infiltration Flux: i(t) = S · t^(0.5) + A · t | Sorptivity S = 1.45 cm/min^0.5'
+      },
+      'horizon-a': {
+        id: 'horizon-a',
+        name: 'Horizon A (Melanic Topsoil, 4–25cm)',
+        mode: 'stratigraphy',
+        category: 'Mineral Topsoil // Rhizosphere Hub',
+        badge: 'MEASURED',
+        targetPos: new THREE.Vector3(0.0, -0.45, 0.0),
+        p1: 'Melanic mineral topsoil horizon characterized by deep dark brown humus staining, fine subangular blocky ped structure, and intensive biological root proliferation. Contains >80% of mature maize vegetative root density.',
+        p2: 'Primary nutrient extraction hub: intensive nitrate mass flow and phosphate diffusion occur here. Target zone for the Zerthiva 3-in-1 insertion probe core (15cm upper EC ring, 25cm lower ring, and 1.5MHz capacitive blade).',
+        specs: [
+          { label: 'Horizon Depth', val: '4 – 25 cm' },
+          { label: 'Bulk Density ρb', val: '1.25 g/cm³' },
+          { label: 'Total Porosity φ', val: '52.1%' },
+          { label: 'Hydraulic Cond Ksat', val: '4.2 cm/h' },
+          { label: 'Field Capacity θ_fc', val: '31.8% VWC' },
+          { label: 'Wilting Point θ_wp', val: '14.2% VWC' }
+        ],
+        equation: 'Rhoades Salinity Model: EC_e = (σ_b - σ_ws) / (a θ² + b θ) | a=1.85, b=0.024'
+      },
+      'horizon-b': {
+        id: 'horizon-b',
+        name: 'Horizon B (Compacted Clay Subsoil, 25–60cm)',
+        mode: 'stratigraphy',
+        category: 'Illuvial Argillic Subsoil',
+        badge: 'MEASURED',
+        targetPos: new THREE.Vector3(0.0, -1.25, 0.0),
+        p1: 'Illuvial subsoil layer formed by long-term downward translocated 2:1 montmorillonite/illite clay minerals. Characterized by prismatic structural aggregates, reduced macroporosity, and distinct iron oxide mottling.',
+        p2: 'Forms a hydraulic throttle layer with reduced saturated conductivity. Only strong vertical seminal root axes penetrate deeply into this compacted zone, while lateral feeder branching drops significantly.',
+        specs: [
+          { label: 'Horizon Depth', val: '25 – 60 cm' },
+          { label: 'Bulk Density ρb', val: '1.55 g/cm³' },
+          { label: 'Total Porosity φ', val: '41.5%' },
+          { label: 'Hydraulic Cond Ksat', val: '0.45 cm/h' },
+          { label: 'Clay Content', val: '42.6% illuvial' },
+          { label: 'Penetration Resist', val: '2.4 MPa' }
+        ],
+        equation: 'Soil Water Retention: θ(ψ) = θ_r + (θ_s - θ_r) / [1 + (α|ψ|)^n]^m | n=1.35, m=0.26'
+      },
+      'horizon-c': {
+        id: 'horizon-c',
+        name: 'Horizon C (Saprolite Parent Gravel, 60cm+)',
+        mode: 'stratigraphy',
+        category: 'Saprolite Substratum',
+        badge: 'MEASURED',
+        targetPos: new THREE.Vector3(0.0, -2.15, 0.0),
+        p1: 'Weathered metamorphic saprolite gravel and un-consolidated parent rock fragments. Retains residual rock schistosity with low pedological weathering and zero organic carbon content.',
+        p2: 'Zone of deep gravitational water drainage and residual perennial water table access. Extreme drought-stressed seminal taproot apexes reach this zone to prevent complete plant mortality during dry spells.',
+        specs: [
+          { label: 'Horizon Depth', val: '60 cm – 2.6 m+' },
+          { label: 'Bulk Density ρb', val: '1.68 g/cm³' },
+          { label: 'Total Porosity φ', val: '36.2%' },
+          { label: 'Hydraulic Cond Ksat', val: '2.8 cm/h (Gravel)' },
+          { label: 'Gravel Fraction', val: '62% rock clasts' },
+          { label: 'Root Frequency', val: '< 2% total biomass' }
+        ],
+        equation: 'Gravitational Percolation: q_grav = -K(θ) · [∂z/∂z] = -K(θ)'
+      },
+
+      // Root Architecture Tiers
+      'roots-brace': {
+        id: 'roots-brace',
+        name: 'Brace Prop Roots (Aerial Whorls 1 & 2)',
+        mode: 'roots',
+        category: 'Adventitious Aerial Anchors',
+        badge: 'BOTANY',
+        targetPos: new THREE.Vector3(0.25, 0.05, 0.20),
+        p1: 'Adventitious nodal prop roots emerging in two concentric whorls from aerial stalk nodes 1 and 2 (5–12cm above ground). Grow downward at approximately 45° before penetrating topsoil.',
+        p2: 'Provide critical mechanical anti-lodging leverage against high field winds and torrential downpours. Once subterranean, develop high-affinity surface water and nitrate scavenging networks.',
+        specs: [
+          { label: 'Whorl Count', val: '2 Whorls (16 Axes)' },
+          { label: 'Root Diameter', val: '8 – 14 mm tapered' },
+          { label: 'Insertion Angle', val: '45° to 55° Plunge' },
+          { label: 'Pigmentation', val: 'Anthocyanin Violet' },
+          { label: 'Lignin Fraction', val: 'High mechanical' }
+        ],
+        equation: 'Lodging Resistance Force: F_crit = Σ [k_anchor · d_root³ · cos(θ_plunge)]'
+      },
+      'roots-crown': {
+        id: 'roots-crown',
+        name: 'Corona Nodal Crown Roots (18 Axes)',
+        mode: 'roots',
+        category: 'Rhizosphere Nutrient Engine',
+        badge: 'BOTANY',
+        targetPos: new THREE.Vector3(0.35, -0.45, 0.20),
+        p1: '18 subterranean nodal axes radiating outward in a broad paraboloid arc through Horizon A topsoil (4–25cm depth). Forms the primary functional root system of the mature vegetative maize plant.',
+        p2: 'Responsible for >80% of active vegetative transpirational water absorption, mass flow nitrate uptake, and rhizosphere organic acid exudation (citrate, malate) to mobilize insoluble phosphate.',
+        specs: [
+          { label: 'Root Axes', val: '18 Primary Nodes' },
+          { label: 'Target Horizon', val: 'Horizon A (4–25cm)' },
+          { label: 'Diameter Range', val: '3.5 – 6.5 mm' },
+          { label: 'Uptake Share', val: '> 82% N & Water' },
+          { label: 'Branching Order', val: '1st & 2nd Laterals' }
+        ],
+        equation: 'Nutrient Mass Flow: J_s = J_w · C_sol + D_eff · (dC/dr)'
+      },
+      'roots-seminal': {
+        id: 'roots-seminal',
+        name: 'Embryonic Seminal Taproot Axis',
+        mode: 'roots',
+        category: 'Deep Drought Anchor',
+        badge: 'BOTANY',
+        targetPos: new THREE.Vector3(0.35, -1.85, 0.20),
+        p1: 'Original embryonic primary taproot axis emerging directly from the scutellum at germination. Driven by intense positive gravitropism, penetrates vertically deep through Horizons B and C.',
+        p2: 'Reaches depths of 1.8m to 2.15m beneath the surface. Acts as an emergency drought life-support line accessing residual moisture reserves in weathered saprolite when topsoil is depleted.',
+        specs: [
+          { label: 'Max Penetration', val: '2.15 m Depth' },
+          { label: 'Gravitropic Tilt', val: '< 6° from vertical' },
+          { label: 'Diameter', val: '1.8 – 3.2 mm' },
+          { label: 'Target Stratum', val: 'Horizons B & C' },
+          { label: 'Drought Role', val: 'Subsoil Tap Access' }
+        ],
+        equation: 'Deep Extraction Flux: S(z) = S_max · [1 - z / z_max] · α_stress(ψ_m)'
+      },
+      'roots-lateral': {
+        id: 'roots-lateral',
+        name: 'Lateral Feeder Root Mesh (60 Branches)',
+        mode: 'roots',
+        category: 'Diffusive Absorption Web',
+        badge: 'BOTANY',
+        targetPos: new THREE.Vector3(0.35, -0.65, 0.20),
+        p1: 'Dense 3D network of 1st and 2nd order lateral feeder roots branching profusely from crown and seminal axes throughout the Horizon A melanic topsoil.',
+        p2: 'Maximizes physical surface area contact with soil pore water. Diameters of 0.3mm to 0.8mm allow penetration into micro-pore capillaries inaccessible to thicker nodal roots.',
+        specs: [
+          { label: 'Branch Count', val: '60 Modeled Branches' },
+          { label: 'Diameter Range', val: '0.3 – 0.8 mm' },
+          { label: 'Surface Density', val: '4.2 cm root / cm³ soil' },
+          { label: 'Phosphate Zone', val: 'Intensive Rhizosphere' }
+        ],
+        equation: 'Root Length Density: RLD = L_total / V_soil ≈ 4.2 cm/cm³'
+      },
+      'roots-caps': {
+        id: 'roots-caps',
+        name: 'Meristematic Calyptra Root Caps (24 Tips)',
+        mode: 'roots',
+        category: 'Sensory Meristem & Mucigel',
+        badge: 'PHYSIOLOGY',
+        targetPos: new THREE.Vector3(0.35, -0.65, 0.20),
+        p1: 'Protective multi-layered apical calyptra shielding dividing meristem cell initials. Continuously secretes polysaccharide mucigel to lubricate soil pore passage and foster beneficial mycorrhizae.',
+        p2: 'Houses gravitropic amyloplast statocytes that orient root growth along gravity vectors, alongside hydrotropic moisture sensors guiding root elongation toward higher water potential.',
+        specs: [
+          { label: 'Tip Count', val: '24 Modeled Calyptra' },
+          { label: 'Diameter', val: '0.9 – 1.4 mm' },
+          { label: 'Mucigel Layer', val: 'Polysaccharide Gel' },
+          { label: 'Sensory Cells', val: 'Amyloplast Statocytes' }
+        ],
+        equation: 'Gravitropic Kinematics: dθ/dt = -β · sin(θ_tilt) + γ · (dψ_m / dx)'
+      },
+
+      // Solute & Sensor Fringe Fields
+      'ec-solute-halo': {
+        id: 'ec-solute-halo',
+        name: '316L Annular EC Solute Diffusion Envelope',
+        mode: 'solute',
+        category: '10 kHz AC Bipolar Ion Sensitivity',
+        badge: 'MEASURED',
+        targetPos: new THREE.Vector3(-0.55, -0.20, -0.30),
+        p1: 'Volumetric ionic sensitivity envelope generated by the 10 kHz AC bipolar excitation across the dual 316L stainless steel annular rings (15cm and 25cm depths) with 100mm center-to-center spacing.',
+        p2: 'Samples bulk electrical conductivity (σ_b) across Horizon A. Color dynamically indicates salinity hazard: Emerald = Safe (<1.7 dS/m); Amber = Threshold (1.7–3.5 dS/m); Crimson = Osmotic Lockout (>3.5 dS/m).',
+        specs: [
+          { label: 'Annular Spacing', val: '100 mm center-to-center' },
+          { label: 'Excitation Wave', val: '10 kHz Bipolar Square' },
+          { label: 'Cell Constant K', val: '0.42 cm⁻¹' },
+          { label: 'Electrode Alloy', val: 'AISI 316L Stainless' },
+          { label: 'Target Horizon', val: 'Horizon A (15–25cm)' }
+        ],
+        equation: 'Ayers & Westcot Leaching Fraction: LF = EC_w / (5 · EC_e - EC_w) [FAO-56]'
+      },
+      'vwc-dielectric-fringe': {
+        id: 'vwc-dielectric-fringe',
+        name: '1.5 MHz Coplanar Dielectric Fringe Field (~180cm³)',
+        mode: 'solute',
+        category: 'Capacitive Permittivity Envelope',
+        badge: 'MEASURED',
+        targetPos: new THREE.Vector3(-0.55, -0.20, -0.30),
+        p1: 'Ellipsoidal high-frequency (1.5 MHz) electromagnetic fringe field generated by the coplanar copper tracks on the FR4 spade blade spanning 15cm to 25cm depths.',
+        p2: 'Measures bulk dielectric permittivity (κ) within an approximately 180 cm³ volume. High contrast between free water (κ ≈ 80) and dry mineral soil (κ ≈ 3–5) enables 0.1% volumetric moisture resolution.',
+        specs: [
+          { label: 'Fringe Volume', val: '~180 cm³ ellipsoidal' },
+          { label: 'Excitation Clock', val: '1.5 MHz TLC555' },
+          { label: 'Blade Substrate', val: 'FR4 Solder-Masked' },
+          { label: 'Output Signal', val: '1.2V (Sat) – 2.8V (Dry)' }
+        ],
+        equation: 'Topp Dielectric Equation: θ = -0.053 + 0.0292·κ - 5.5e-4·κ² + 4.3e-6·κ³'
+      }
+    };
+
+    // Subsurface Explorer State Controller
+    const subsurfaceState = {
+      active: false,
+      currentMode: 'stratigraphy', // 'stratigraphy' | 'roots' | 'hydrology' | 'solute'
+      selectedTargetId: 'horizon-a',
+      separationPercent: 0,
+      activeRootTier: 'all',
+      isGhostSoil: false
+    };
+
+    // Camera Presets for Subterranean Modes
+    const SUB_CAMERA_PRESETS = {
+      stratigraphy: { pos: new THREE.Vector3(3.2, -0.45, 4.6), target: new THREE.Vector3(0.0, -0.85, 0.0) },
+      roots:        { pos: new THREE.Vector3(2.5, -0.35, 3.8), target: new THREE.Vector3(0.25, -0.55, 0.15) },
+      hydrology:    { pos: new THREE.Vector3(2.8, -0.65, 4.2), target: new THREE.Vector3(0.35, -0.75, 0.20) },
+      solute:       { pos: new THREE.Vector3(-0.55, -0.22, 1.8), target: new THREE.Vector3(-0.55, -0.22, -0.30) }
+    };
+
+    // Initialize Subsurface Explorer
+    function initSubsurfaceExplorer() {
+      // Header Enter Button
+      const btnEnterSub = document.getElementById('btn-enter-subsurface');
+      if (btnEnterSub) {
+        btnEnterSub.addEventListener('click', () => {
+          enterSubsurfaceExplorer();
+        });
+      }
+
+      // Top Bar Leave Button
+      const btnLeaveSub = document.getElementById('btn-leave-subsurface');
+      if (btnLeaveSub) {
+        btnLeaveSub.addEventListener('click', () => {
+          leaveSubsurfaceExplorer();
+        });
+      }
+
+      // Reset View Button
+      const btnReset = document.getElementById('btn-sub-reset-view');
+      if (btnReset) {
+        btnReset.addEventListener('click', () => {
+          sound.playPing(600);
+          const p = SUB_CAMERA_PRESETS[subsurfaceState.currentMode];
+          gsap.to(camera.position, { x: p.pos.x, y: p.pos.y, z: p.pos.z, duration: 1.0, ease: "power2.inOut" });
+          gsap.to(controls.target, { x: p.target.x, y: p.target.y, z: p.target.z, duration: 1.0, ease: "power2.inOut" });
+        });
+      }
+
+      // Mode Switchers
+      ['strata', 'roots', 'hydro', 'solute'].forEach(m => {
+        const btn = document.getElementById(`btn-sub-${m}`);
+        if (btn) {
+          const mapMode = (m === 'strata' ? 'stratigraphy' : (m === 'roots' ? 'roots' : (m === 'hydro' ? 'hydrology' : 'solute')));
+          btn.addEventListener('click', () => setSubsurfaceMode(mapMode));
+        }
+      });
+
+      // Bottom Dock View Mode Buttons
+      document.getElementById('btn-sub-dock-cutaway')?.addEventListener('click', () => {
+        setInspectionMode('cutaway');
+        updateSubDockButtons('btn-sub-dock-cutaway');
+      });
+      document.getElementById('btn-sub-dock-solid')?.addEventListener('click', () => {
+        setInspectionMode('solid');
+        updateSubDockButtons('btn-sub-dock-solid');
+      });
+      document.getElementById('btn-sub-dock-rootfocus')?.addEventListener('click', () => {
+        setInspectionMode('rootfocus');
+        updateSubDockButtons('btn-sub-dock-rootfocus');
+      });
+
+      // Ghost Soil Toggle
+      document.getElementById('btn-sub-ghost-soil')?.addEventListener('click', (e) => {
+        subsurfaceState.isGhostSoil = !subsurfaceState.isGhostSoil;
+        e.currentTarget.classList.toggle('active', subsurfaceState.isGhostSoil);
+        sound.playPing(subsurfaceState.isGhostSoil ? 760 : 520);
+        toggleGhostSoil(subsurfaceState.isGhostSoil);
+      });
+
+      // Streamlines Toggle
+      document.getElementById('btn-sub-tog-streamlines')?.addEventListener('click', (e) => {
+        hydrologyGroup.visible = !hydrologyGroup.visible;
+        e.currentTarget.classList.toggle('active', hydrologyGroup.visible);
+        sound.playPing(hydrologyGroup.visible ? 780 : 500);
+      });
+
+      // Salinity Halo Toggle
+      document.getElementById('btn-sub-tog-halo')?.addEventListener('click', (e) => {
+        soluteGroup.visible = !soluteGroup.visible;
+        e.currentTarget.classList.toggle('active', soluteGroup.visible);
+        sound.playPing(soluteGroup.visible ? 840 : 480);
+      });
+
+      // Dossier Focus & Isolate Buttons
+      document.getElementById('btn-sub-focus-target')?.addEventListener('click', () => {
+        const data = SUBSURFACE_DATA[subsurfaceState.selectedTargetId];
+        if (data && data.targetPos) {
+          sound.playPing(880);
+          gsap.to(controls.target, {
+            x: data.targetPos.x,
+            y: data.targetPos.y,
+            z: data.targetPos.z,
+            duration: 1.0,
+            ease: "power2.inOut"
+          });
+        }
+      });
+
+      document.getElementById('btn-sub-isolate-target')?.addEventListener('click', () => {
+        sound.playPing(740);
+        if (subsurfaceState.currentMode === 'roots') {
+          isolateRootTier(subsurfaceState.selectedTargetId.replace('roots-', ''));
+        } else if (subsurfaceState.currentMode === 'stratigraphy') {
+          isolateSoilHorizon(subsurfaceState.selectedTargetId);
+        }
+      });
+    }
+
+    function updateSubDockButtons(activeId) {
+      ['btn-sub-dock-cutaway', 'btn-sub-dock-solid', 'btn-sub-dock-rootfocus'].forEach(id => {
+        document.getElementById(id)?.classList.toggle('active', id === activeId);
+      });
+    }
+
+    // Toggle 20% Ghost Soil Transparency
+    function toggleGhostSoil(ghost) {
+      [matHorizonO, matHorizonA, matHorizonB, matHorizonC].forEach(mat => {
+        if (mat) {
+          mat.transparent = ghost;
+          mat.opacity = ghost ? 0.22 : 1.0;
+        }
+      });
+    }
+
+    // Enter Subsurface Explorer Mode
+    function enterSubsurfaceExplorer(initialMode = 'stratigraphy', targetId = null) {
+      if (walkState.active) leaveWalkMode();
+      if (labState.active) leaveDeviceLaboratory();
+
+      sound.playPing(780);
+      subsurfaceState.active = true;
+
+      // Show overlay
+      const overlay = document.getElementById('subsurface-explorer-overlay');
+      if (overlay) overlay.classList.add('active');
+
+      // Hide orbit timeline & narrative panel
+      const narrativePanel = document.getElementById('narrative-panel');
+      const chapterRail = document.querySelector('.chapter-rail');
+      const timelineDock = document.querySelector('.timeline-dock');
+      const visToolbar = document.querySelector('.visibility-toolbar');
+      if (narrativePanel) narrativePanel.style.display = 'none';
+      if (chapterRail) chapterRail.style.display = 'none';
+      if (timelineDock) timelineDock.style.display = 'none';
+      if (visToolbar) visToolbar.style.display = 'none';
+
+      // Ensure geology and plant are visible in cutaway mode
+      setInspectionMode('cutaway');
+      geologyGroup.visible = true;
+      plantGroup.visible = true;
+
+      setSubsurfaceMode(initialMode);
+      if (targetId) selectSubsurfaceTarget(targetId);
+
+      if (typeof lucide !== 'undefined') lucide.createIcons();
+    }
+
+    // Leave Subsurface Explorer Mode
+    function leaveSubsurfaceExplorer() {
+      if (!subsurfaceState.active) return;
+      sound.playPing(520);
+
+      subsurfaceState.active = false;
+
+      // Hide overlay
+      const overlay = document.getElementById('subsurface-explorer-overlay');
+      if (overlay) overlay.classList.remove('active');
+
+      // Re-enable ghost soil if active
+      if (subsurfaceState.isGhostSoil) {
+        toggleGhostSoil(false);
+        subsurfaceState.isGhostSoil = false;
+        document.getElementById('btn-sub-ghost-soil')?.classList.remove('active');
+      }
+
+      // Collapse strata if separated
+      applyLayerSeparationFraction(0.0);
+      isolateRootTier('all');
+
+      // Restore orbit UI
+      const narrativePanel = document.getElementById('narrative-panel');
+      const chapterRail = document.querySelector('.chapter-rail');
+      const timelineDock = document.querySelector('.timeline-dock');
+      const visToolbar = document.querySelector('.visibility-toolbar');
+      if (narrativePanel) narrativePanel.style.display = 'block';
+      if (chapterRail) chapterRail.style.display = 'flex';
+      if (timelineDock) timelineDock.style.display = 'flex';
+      if (visToolbar) visToolbar.style.display = 'flex';
+
+      // Restore hero camera composition
+      gsap.to(camera.position, { x: 3.8, y: 0.45, z: 6.2, duration: 1.2, ease: "power2.inOut" });
+      gsap.to(controls.target, { x: 0.05, y: -0.25, z: 0.0, duration: 1.2, ease: "power2.inOut" });
+
+      if (typeof lucide !== 'undefined') lucide.createIcons();
+    }
+
+    // Set Subsurface Mode
+    function setSubsurfaceMode(modeKey) {
+      subsurfaceState.currentMode = modeKey;
+
+      // Update Top Segmented Buttons
+      const modeBtnMap = { stratigraphy: 'btn-sub-strata', roots: 'btn-sub-roots', hydrology: 'btn-sub-hydro', solute: 'btn-sub-solute' };
+      Object.keys(modeBtnMap).forEach(k => {
+        document.getElementById(modeBtnMap[k])?.classList.toggle('active', k === modeKey);
+      });
+
+      // Move Camera to Mode Preset
+      const p = SUB_CAMERA_PRESETS[modeKey] || SUB_CAMERA_PRESETS.stratigraphy;
+      gsap.to(camera.position, { x: p.pos.x, y: p.pos.y, z: p.pos.z, duration: 1.2, ease: "power2.inOut" });
+      gsap.to(controls.target, { x: p.target.x, y: p.target.y, z: p.target.z, duration: 1.2, ease: "power2.inOut" });
+
+      // Render Dynamic Controls in Top Bar
+      renderSubDynamicControls(modeKey);
+
+      // Render Left Hierarchy List
+      renderSubLeftHierarchy(modeKey);
+
+      // Default Target Selection per mode
+      if (modeKey === 'stratigraphy') selectSubsurfaceTarget('horizon-a');
+      else if (modeKey === 'roots') selectSubsurfaceTarget('roots-crown');
+      else if (modeKey === 'hydrology') {
+        hydrologyGroup.visible = true;
+        plumeMesh.visible = true;
+        selectSubsurfaceTarget('horizon-a');
+      } else if (modeKey === 'solute') {
+        soluteGroup.visible = true;
+        selectSubsurfaceTarget('ec-solute-halo');
+      }
+
+      if (typeof lucide !== 'undefined') lucide.createIcons();
+    }
+
+    // Render Dynamic Contextual Controls in Top Bar
+    function renderSubDynamicControls(modeKey) {
+      const container = document.getElementById('sub-dynamic-controls');
+      if (!container) return;
+
+      if (modeKey === 'stratigraphy') {
+        container.innerHTML = `
+          <div class="sub-slider-wrap">
+            <span class="sub-control-label">STRATA DISSECTION:</span>
+            <input type="range" class="sub-range" id="slider-sub-strata" min="0" max="100" value="${subsurfaceState.separationPercent}">
+            <span class="sub-slider-val" id="val-sub-strata">${subsurfaceState.separationPercent}%</span>
+          </div>
+          <button class="btn-action-small" id="btn-sub-step-strata" style="font-size:0.60rem; padding:4px 8px;">
+            <i data-lucide="move-vertical" style="width:11px; height:11px;"></i> Separate
+          </button>
+        `;
+        document.getElementById('slider-sub-strata').addEventListener('input', (e) => {
+          const val = parseInt(e.target.value, 10);
+          subsurfaceState.separationPercent = val;
+          document.getElementById('val-sub-strata').innerText = `${val}%`;
+          applyLayerSeparationFraction(val / 100.0);
+        });
+        document.getElementById('btn-sub-step-strata').addEventListener('click', () => {
+          const nextVal = (subsurfaceState.separationPercent > 50) ? 0 : 100;
+          gsap.to(subsurfaceState, {
+            separationPercent: nextVal,
+            duration: 0.8,
+            ease: "power2.inOut",
+            onUpdate: () => {
+              const rVal = Math.round(subsurfaceState.separationPercent);
+              const sl = document.getElementById('slider-sub-strata');
+              const vl = document.getElementById('val-sub-strata');
+              if (sl) sl.value = rVal;
+              if (vl) vl.innerText = `${rVal}%`;
+              applyLayerSeparationFraction(rVal / 100.0);
+            }
+          });
+        });
+      } else if (modeKey === 'roots') {
+        container.innerHTML = `
+          <div class="lab-segmented-group">
+            <button class="lab-seg-btn active" data-tier="all">All</button>
+            <button class="lab-seg-btn" data-tier="brace">Brace</button>
+            <button class="lab-seg-btn" data-tier="crown">Crown</button>
+            <button class="lab-seg-btn" data-tier="seminal">Seminal</button>
+            <button class="lab-seg-btn" data-tier="lateral">Feeders</button>
+            <button class="lab-seg-btn" data-tier="caps">Caps</button>
+          </div>
+        `;
+        container.querySelectorAll('.lab-seg-btn').forEach(b => {
+          b.addEventListener('click', () => {
+            container.querySelectorAll('.lab-seg-btn').forEach(btn => btn.classList.remove('active'));
+            b.classList.add('active');
+            const tier = b.getAttribute('data-tier');
+            isolateRootTier(tier);
+          });
+        });
+      } else if (modeKey === 'hydrology') {
+        container.innerHTML = `
+          <div class="sub-slider-wrap">
+            <span class="sub-control-label">REGIME:</span>
+            <select id="select-sub-hydro-regime" style="background:#000; color:#fff; border:none; font-family:var(--font-mono); font-size:0.62rem; outline:none; cursor:pointer;">
+              <option value="optimal">Field Capacity (-33 kPa)</option>
+              <option value="drought">Drought Deficit (-1500 kPa)</option>
+              <option value="saturation">Waterlogged (0 kPa)</option>
+              <option value="saline">Osmotic Lockout</option>
+            </select>
+          </div>
+        `;
+        document.getElementById('select-sub-hydro-regime').addEventListener('change', (e) => {
+          const sc = HYDRATION_SCENARIOS[e.target.value];
+          if (!sc) return;
+          sound.playWaterInfiltration();
+          simState.vwcRaw = sc.vwc;
+          simState.ecRaw = sc.ec;
+          simState.flowSpeed = sc.flowSpeed;
+          simState.matricPotential = sc.matric;
+          plumeMesh.scale.set(sc.plumeScale, sc.plumeScale * 1.45, sc.plumeScale * 0.95);
+          plumeMat.opacity = sc.plumeOpacity;
+          calculateAgronomicEngine();
+        });
+      } else if (modeKey === 'solute') {
+        container.innerHTML = `
+          <div class="sub-slider-wrap">
+            <span class="sub-control-label">BULK EC:</span>
+            <input type="range" class="sub-range" id="slider-sub-ec" min="0.5" max="6.0" step="0.1" value="${simState.ecRaw.toFixed(1)}">
+            <span class="sub-slider-val" id="val-sub-ec">${simState.ecRaw.toFixed(1)} dS/m</span>
+          </div>
+        `;
+        document.getElementById('slider-sub-ec').addEventListener('input', (e) => {
+          const val = parseFloat(e.target.value);
+          simState.ecRaw = val;
+          document.getElementById('val-sub-ec').innerText = `${val.toFixed(1)} dS/m`;
+          updateSalinityHalos(val);
+          calculateAgronomicEngine();
+        });
+      }
+    }
+
+    // Continuous Layer Separation Displacement
+    function applyLayerSeparationFraction(t) {
+      horizonOGroup.position.y = t * 0.55;
+      horizonAGroup.position.y = t * 0.20;
+      horizonBGroup.position.y = -t * 0.30;
+      horizonCGroup.position.y = -t * 0.80;
+    }
+
+    // Isolate Soil Horizon
+    function isolateSoilHorizon(horizonId) {
+      const allH = [
+        { id: 'horizon-o', grp: horizonOGroup },
+        { id: 'horizon-a', grp: horizonAGroup },
+        { id: 'horizon-b', grp: horizonBGroup },
+        { id: 'horizon-c', grp: horizonCGroup }
+      ];
+
+      allH.forEach(h => {
+        const matches = (h.id === horizonId);
+        h.grp.traverse(child => {
+          if (child.isMesh) {
+            child.material.transparent = !matches;
+            child.material.opacity = matches ? 1.0 : 0.18;
+          }
+        });
+      });
+    }
+
+    // Isolate Root Tier
+    function isolateRootTier(tier) {
+      subsurfaceState.activeRootTier = tier;
+      sound.playPing(740);
+
+      const rootGroups = [
+        { key: 'brace',   grp: anatomyParts.braceRoots },
+        { key: 'crown',   grp: anatomyParts.crownRoots },
+        { key: 'seminal', grp: anatomyParts.seminalRoots },
+        { key: 'lateral', grp: anatomyParts.lateralRoots },
+        { key: 'caps',    grp: anatomyParts.rootTips }
+      ];
+
+      rootGroups.forEach(rg => {
+        const isMatch = (tier === 'all' || rg.key === tier);
+        rg.grp.traverse(child => {
+          if (child.isMesh) {
+            child.material.transparent = !isMatch;
+            child.material.opacity = isMatch ? 1.0 : 0.14;
+          }
+        });
+      });
+
+      if (tier === 'caps') {
+        selectSubsurfaceTarget('roots-caps');
+      } else if (tier === 'brace') {
+        selectSubsurfaceTarget('roots-brace');
+      } else if (tier === 'crown') {
+        selectSubsurfaceTarget('roots-crown');
+      } else if (tier === 'seminal') {
+        selectSubsurfaceTarget('roots-seminal');
+      } else if (tier === 'lateral') {
+        selectSubsurfaceTarget('roots-lateral');
+      }
+    }
+
+    // Render Subsurface Left Hierarchy Panel
+    function renderSubLeftHierarchy(modeKey) {
+      const container = document.getElementById('sub-left-scroll');
+      const titleEl = document.getElementById('sub-left-title');
+      const subEl = document.getElementById('sub-left-subtitle');
+      const badgeEl = document.getElementById('sub-left-badge');
+      if (!container) return;
+      container.innerHTML = '';
+
+      if (modeKey === 'stratigraphy') {
+        if (titleEl) titleEl.innerText = 'Pedological Strata';
+        if (subEl) subEl.innerText = 'SOIL HORIZON PROFILE';
+        if (badgeEl) badgeEl.innerText = '4 HORIZONS';
+
+        ['horizon-o', 'horizon-a', 'horizon-b', 'horizon-c'].forEach(id => {
+          const item = SUBSURFACE_DATA[id];
+          const card = document.createElement('div');
+          card.className = 'sub-card' + (id === subsurfaceState.selectedTargetId ? ' active' : '');
+          card.setAttribute('data-id', id);
+          card.innerHTML = `
+            <div class="sub-card-header">
+              <span class="sub-card-title">${item.name}</span>
+              <span class="badge-evidence" style="font-size:0.50rem; padding:1px 5px;">${item.badge}</span>
+            </div>
+            <div class="sub-card-tag">${item.category}</div>
+            <div class="sub-card-metrics">
+              <div><span class="metric-label">ρb:</span> <span class="metric-val">${item.specs[1].val}</span></div>
+              <div><span class="metric-label">Porosity:</span> <span class="metric-val">${item.specs[2].val}</span></div>
+              <div><span class="metric-label">Ksat:</span> <span class="metric-val">${item.specs[3].val}</span></div>
+              <div><span class="metric-label">Depth:</span> <span class="metric-val">${item.specs[0].val}</span></div>
+            </div>
+          `;
+          card.addEventListener('click', () => {
+            selectSubsurfaceTarget(id);
+            sound.playPing(720);
+          });
+          container.appendChild(card);
+        });
+      } else if (modeKey === 'roots') {
+        if (titleEl) titleEl.innerText = 'Root Architecture';
+        if (subEl) subEl.innerText = 'MONOCOT ROOT SUBSYSTEMS';
+        if (badgeEl) badgeEl.innerText = '5 TIERS';
+
+        ['roots-brace', 'roots-crown', 'roots-seminal', 'roots-lateral', 'roots-caps'].forEach(id => {
+          const item = SUBSURFACE_DATA[id];
+          const card = document.createElement('div');
+          card.className = 'sub-card' + (id === subsurfaceState.selectedTargetId ? ' active' : '');
+          card.setAttribute('data-id', id);
+          card.innerHTML = `
+            <div class="sub-card-header">
+              <span class="sub-card-title">${item.name}</span>
+              <span class="badge-evidence" style="font-size:0.50rem; padding:1px 5px;">${item.badge}</span>
+            </div>
+            <div class="sub-card-tag">${item.category}</div>
+            <div class="sub-card-metrics">
+              <div><span class="metric-label">Count:</span> <span class="metric-val">${item.specs[0].val}</span></div>
+              <div><span class="metric-label">Diam:</span> <span class="metric-val">${item.specs[1].val}</span></div>
+            </div>
+          `;
+          card.addEventListener('click', () => {
+            selectSubsurfaceTarget(id);
+            sound.playPing(720);
+          });
+          container.appendChild(card);
+        });
+      } else if (modeKey === 'hydrology') {
+        if (titleEl) titleEl.innerText = 'Darcy Hydrology';
+        if (subEl) subEl.innerText = 'UNSATURATED WATER FLUX';
+        if (badgeEl) badgeEl.innerText = 'CAPILLARY FLOW';
+
+        container.innerHTML = `
+          <div class="sub-card active">
+            <div class="sub-card-title">Rhizosphere Capillary Infiltration</div>
+            <div class="sub-card-tag">Transpirational Pull Convergence</div>
+            <p style="font-size:0.68rem; color:var(--text-muted); line-height:1.45; margin-top:6px;">
+              24 macroscopic streamlines pulling upward and inward toward active calyptra root caps, driven by transpiration suction gradient (ψ_leaf = -1.2 MPa vs ψ_soil = -33 kPa).
+            </p>
+          </div>
+          <div class="sub-card" style="margin-top:6px;">
+            <div class="sub-card-title">Deep Gravitational Percolation</div>
+            <div class="sub-card-tag">Horizon B -> Horizon C Saprolite</div>
+            <p style="font-size:0.68rem; color:var(--text-muted); line-height:1.45; margin-top:6px;">
+              Vertical leaching streamlines draining excess gravitational moisture past the 25cm root zone into coarse parent material gravel.
+            </p>
+          </div>
+        `;
+      } else if (modeKey === 'solute') {
+        if (titleEl) titleEl.innerText = 'Solute Salinity';
+        if (subEl) subEl.innerText = 'ION DIFFUSION & SENSORS';
+        if (badgeEl) badgeEl.innerText = '10 kHz AC / 1.5 MHz';
+
+        ['ec-solute-halo', 'vwc-dielectric-fringe'].forEach(id => {
+          const item = SUBSURFACE_DATA[id];
+          const card = document.createElement('div');
+          card.className = 'sub-card' + (id === subsurfaceState.selectedTargetId ? ' active' : '');
+          card.setAttribute('data-id', id);
+          card.innerHTML = `
+            <div class="sub-card-header">
+              <span class="sub-card-title">${item.name}</span>
+              <span class="badge-evidence" style="font-size:0.50rem; padding:1px 5px;">${item.badge}</span>
+            </div>
+            <div class="sub-card-tag">${item.category}</div>
+          `;
+          card.addEventListener('click', () => {
+            selectSubsurfaceTarget(id);
+            sound.playPing(720);
+          });
+          container.appendChild(card);
+        });
+      }
+    }
+
+    // Select Target Element in Subsurface Explorer
+    function selectSubsurfaceTarget(targetId) {
+      const data = SUBSURFACE_DATA[targetId];
+      if (!data) return;
+
+      subsurfaceState.selectedTargetId = targetId;
+
+      // Update Active Card in Left List
+      document.querySelectorAll('.sub-card').forEach(c => {
+        c.classList.toggle('active', c.getAttribute('data-id') === targetId);
+      });
+
+      // Render Right Dossier Panel
+      renderSubsurfaceDossier(data);
+    }
+
+    // Render Subsurface Element Dossier
+    function renderSubsurfaceDossier(data) {
+      document.getElementById('sub-dossier-category').innerText = `${data.mode.toUpperCase()} // ${data.category.toUpperCase()}`;
+      document.getElementById('sub-dossier-title').innerText = data.name;
+      document.getElementById('sub-dossier-badge').innerText = data.badge;
+
+      document.getElementById('sub-dossier-p1').innerText = data.p1;
+      document.getElementById('sub-dossier-p2').innerText = data.p2;
+      document.getElementById('sub-dossier-equation').innerText = data.equation;
+
+      // Populate Specs Grid
+      const grid = document.getElementById('sub-dossier-specs');
+      if (grid) {
+        let html = '';
+        data.specs.forEach(s => {
+          html += `<div class="spec-item"><div class="spec-label">${s.label}</div><div class="spec-value">${s.val}</div></div>`;
+        });
+        grid.innerHTML = html;
+      }
+    }
+
+    initSubsurfaceExplorer();
     initDeviceLaboratory();
     initWalkMode();
 
