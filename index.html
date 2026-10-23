@@ -748,6 +748,478 @@
         justify-content: center;
       }
     }
+  
+    /* =========================================================================
+       DEVICE LABORATORY (CAD STUDIO & HARDWARE DISSECTION MODE)
+       ========================================================================= */
+    .device-lab-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      z-index: 50;
+      pointer-events: none;
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.35s cubic-bezier(0.16, 1, 0.3, 1), visibility 0.35s;
+    }
+
+    .device-lab-overlay.active {
+      opacity: 1;
+      visibility: visible;
+      pointer-events: auto;
+    }
+
+    /* Top Studio Bar */
+    .lab-top-bar {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 56px;
+      background: var(--bg-panel-elevated);
+      backdrop-filter: blur(28px);
+      -webkit-backdrop-filter: blur(28px);
+      border-bottom: 1px solid var(--border-subtle);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 20px;
+      pointer-events: auto;
+      z-index: 55;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.5);
+    }
+
+    .lab-bar-left, .lab-bar-center, .lab-bar-right {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .btn-leave-lab {
+      background: rgba(0, 255, 135, 0.14) !important;
+      border: 1px solid var(--accent-emerald) !important;
+      color: #fff !important;
+      font-weight: 700 !important;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      cursor: pointer;
+      box-shadow: 0 0 12px rgba(0,255,135,0.2);
+    }
+    .btn-leave-lab:hover {
+      background: rgba(0, 255, 135, 0.28) !important;
+      box-shadow: 0 0 18px rgba(0,255,135,0.4) !important;
+    }
+
+    .lab-brand-badge {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding-left: 14px;
+      border-left: 1px solid rgba(255,255,255,0.12);
+    }
+    .lab-brand-title {
+      font-family: var(--font-display);
+      font-size: 0.85rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      color: #fff;
+    }
+    .lab-brand-sub {
+      font-family: var(--font-mono);
+      font-size: 0.55rem;
+      color: var(--accent-cyan);
+      letter-spacing: 0.08em;
+    }
+
+    .lab-segmented-group {
+      display: flex;
+      align-items: center;
+      background: rgba(0,0,0,0.45);
+      border: 1px solid var(--border-subtle);
+      border-radius: 999px;
+      padding: 2px 3px;
+      gap: 2px;
+    }
+
+    .lab-seg-btn {
+      background: none;
+      border: none;
+      color: var(--text-muted);
+      font-family: var(--font-mono);
+      font-size: 0.62rem;
+      padding: 5px 12px;
+      border-radius: 999px;
+      cursor: pointer;
+      transition: all 0.2s;
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+    }
+    .lab-seg-btn:hover {
+      color: #fff;
+      background: rgba(255,255,255,0.06);
+    }
+    .lab-seg-btn.active {
+      color: #fff;
+      background: rgba(0,229,255,0.18);
+      border: 1px solid var(--accent-cyan);
+      font-weight: 700;
+      box-shadow: 0 0 10px rgba(0,229,255,0.25);
+    }
+
+    .lab-slider-wrap {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(0,0,0,0.35);
+      padding: 5px 12px;
+      border-radius: 999px;
+      border: 1px solid var(--border-subtle);
+    }
+    .lab-control-label {
+      font-family: var(--font-mono);
+      font-size: 0.58rem;
+      color: var(--text-muted);
+      letter-spacing: 0.06em;
+    }
+    .lab-range {
+      width: 90px;
+      height: 4px;
+      accent-color: var(--accent-cyan);
+      cursor: pointer;
+    }
+    .lab-slider-val {
+      font-family: var(--font-mono);
+      font-size: 0.65rem;
+      color: var(--accent-cyan);
+      min-width: 32px;
+      text-align: right;
+    }
+
+    /* Left CAD Component Tree */
+    .lab-panel-left {
+      position: absolute;
+      top: 72px;
+      left: 24px;
+      bottom: 24px;
+      width: 330px;
+      background: var(--bg-panel-elevated);
+      backdrop-filter: blur(28px);
+      -webkit-backdrop-filter: blur(28px);
+      border: 1px solid var(--border-subtle);
+      border-radius: 16px;
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+      pointer-events: auto;
+      box-shadow: 0 16px 45px rgba(0,0,0,0.6);
+      z-index: 52;
+    }
+
+    /* Right Technical Dossier Panel */
+    .lab-panel-right {
+      position: absolute;
+      top: 72px;
+      right: 24px;
+      bottom: 24px;
+      width: 410px;
+      background: var(--bg-panel-elevated);
+      backdrop-filter: blur(28px);
+      -webkit-backdrop-filter: blur(28px);
+      border: 1px solid var(--border-subtle);
+      border-radius: 16px;
+      padding: 18px;
+      display: flex;
+      flex-direction: column;
+      pointer-events: auto;
+      box-shadow: 0 16px 45px rgba(0,0,0,0.6);
+      z-index: 52;
+    }
+
+    .lab-panel-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      padding-bottom: 12px;
+      border-bottom: 1px solid var(--border-subtle);
+      margin-bottom: 12px;
+    }
+    .lab-panel-subtitle {
+      font-family: var(--font-mono);
+      font-size: 0.55rem;
+      color: var(--accent-cyan);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+    .lab-panel-title {
+      font-family: var(--font-display);
+      font-size: 1.15rem;
+      font-weight: 700;
+      color: #fff;
+    }
+
+    .lab-search-box {
+      display: flex;
+      align-items: center;
+      background: rgba(0,0,0,0.45);
+      border: 1px solid var(--border-subtle);
+      border-radius: 8px;
+      margin-bottom: 12px;
+      padding: 2px 6px;
+    }
+    .lab-search-input {
+      background: none;
+      border: none;
+      outline: none;
+      color: #fff;
+      font-family: var(--font-sans);
+      font-size: 0.72rem;
+      padding: 7px 8px;
+      width: 100%;
+    }
+    .lab-clear-btn {
+      background: none;
+      border: none;
+      color: var(--text-muted);
+      cursor: pointer;
+      padding: 0 6px;
+      font-size: 1rem;
+    }
+
+    .lab-tree-list {
+      flex: 1;
+      overflow-y: auto;
+      padding-right: 4px;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+    .lab-tree-category {
+      font-family: var(--font-mono);
+      font-size: 0.58rem;
+      color: var(--text-dim);
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      padding: 6px 8px 3px 8px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid rgba(255,255,255,0.05);
+      margin-top: 6px;
+    }
+    .lab-tree-item {
+      padding: 7px 10px;
+      border-radius: 8px;
+      background: rgba(255,255,255,0.03);
+      border: 1px solid transparent;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      transition: all 0.2s;
+    }
+    .lab-tree-item:hover {
+      background: rgba(255,255,255,0.07);
+      border-color: rgba(255,255,255,0.12);
+    }
+    .lab-tree-item.active {
+      background: rgba(0, 255, 135, 0.14);
+      border-color: var(--accent-emerald);
+      box-shadow: 0 0 12px rgba(0,255,135,0.18);
+    }
+    .lab-tree-item-title {
+      font-family: var(--font-sans);
+      font-size: 0.70rem;
+      color: #fff;
+      display: flex;
+      align-items: center;
+      gap: 7px;
+    }
+    .lab-tree-item-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--accent-cyan);
+    }
+
+    .lab-dossier-content {
+      flex: 1;
+      overflow-y: auto;
+      padding-right: 4px;
+      margin-bottom: 12px;
+    }
+    .dossier-section {
+      padding: 9px 0;
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+    }
+    .dossier-section-title {
+      font-family: var(--font-mono);
+      font-size: 0.56rem;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      margin-bottom: 5px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .dossier-p {
+      font-size: 0.70rem;
+      line-height: 1.5;
+      color: var(--text-main);
+    }
+    .dossier-table-wrap {
+      background: rgba(0,0,0,0.35);
+      border-radius: 8px;
+      border: 1px solid rgba(255,255,255,0.05);
+      overflow: hidden;
+      margin-top: 4px;
+    }
+    .dossier-io-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-family: var(--font-mono);
+      font-size: 0.58rem;
+    }
+    .dossier-io-table td, .dossier-io-table th {
+      padding: 5px 8px;
+      text-align: left;
+      border-bottom: 1px solid rgba(255,255,255,0.05);
+    }
+    .dossier-io-table th {
+      background: rgba(255,255,255,0.03);
+      color: var(--text-dim);
+    }
+    .dossier-specs-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 6px;
+      margin-top: 4px;
+    }
+    .spec-item {
+      background: rgba(0,0,0,0.3);
+      border-radius: 6px;
+      padding: 6px 8px;
+      border: 1px solid rgba(255,255,255,0.04);
+    }
+    .spec-label {
+      font-family: var(--font-mono);
+      font-size: 0.52rem;
+      color: var(--text-dim);
+      text-transform: uppercase;
+    }
+    .spec-value {
+      font-family: var(--font-mono);
+      font-size: 0.65rem;
+      color: var(--accent-cyan);
+      font-weight: 700;
+      margin-top: 1px;
+    }
+    .dossier-truth-box {
+      background: rgba(14, 165, 233, 0.08);
+      border-left: 2px solid var(--accent-cyan);
+      padding: 6px 8px;
+      font-size: 0.63rem;
+      line-height: 1.45;
+      color: #bae6fd;
+      border-radius: 0 6px 6px 0;
+      margin-top: 4px;
+    }
+
+    .lab-panel-footer {
+      display: flex;
+      gap: 8px;
+      padding-top: 10px;
+      border-top: 1px solid var(--border-subtle);
+    }
+
+    /* Bottom Persistent Wiring Dock */
+    .lab-wiring-dock {
+      position: absolute;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: var(--bg-panel-elevated);
+      backdrop-filter: blur(28px);
+      -webkit-backdrop-filter: blur(28px);
+      border: 1px solid var(--border-accent);
+      border-radius: 999px;
+      padding: 7px 18px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 5px;
+      pointer-events: auto;
+      z-index: 54;
+      box-shadow: 0 14px 40px rgba(0,0,0,0.65);
+    }
+    .wiring-dock-title {
+      font-family: var(--font-mono);
+      font-size: 0.55rem;
+      color: var(--text-muted);
+      letter-spacing: 0.08em;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      text-transform: uppercase;
+    }
+    .wiring-chips-row {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .wire-chip {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.1);
+      padding: 3px 9px;
+      border-radius: 999px;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .wire-chip:hover {
+      background: rgba(255,255,255,0.12);
+    }
+    .wire-chip.active {
+      background: rgba(255,255,255,0.18);
+      border-color: #fff;
+      box-shadow: 0 0 10px rgba(255,255,255,0.25);
+    }
+    .chip-color {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+    }
+    .chip-label {
+      font-family: var(--font-mono);
+      font-size: 0.58rem;
+      color: #fff;
+    }
+
+    @media (max-width: 1180px) {
+      .lab-panel-left {
+        width: 280px;
+        left: 10px;
+      }
+      .lab-panel-right {
+        width: 320px;
+        right: 10px;
+      }
+      .wiring-chips-row {
+        flex-wrap: wrap;
+        justify-content: center;
+      }
+      .lab-wiring-dock {
+        border-radius: 16px;
+        width: 90vw;
+      }
+    }
+
   </style>
 </head>
 <body>
@@ -783,6 +1255,11 @@
       <!-- Signature Continuous Cutaway Sequence Trigger -->
       <button class="btn-pill btn-signature" id="btn-signature-reveal" title="Trigger 12-stage signature cinematic cutaway">
         <i data-lucide="sparkles" style="width: 13px; height: 13px;"></i> Reveal Hidden System
+      </button>
+
+      <!-- Device Engineering Laboratory Mode -->
+      <button class="btn-pill" id="btn-enter-lab" title="Open Dedicated 3D Hardware Engineering Laboratory">
+        <i data-lucide="cpu" style="width: 13px; height: 13px; color: var(--accent-emerald);"></i> Device Lab
       </button>
 
       <!-- Reset View -->
@@ -886,6 +1363,9 @@
     <button class="btn-action-small" id="btn-focus-component" style="width:100%; justify-content:center;">
       <i data-lucide="crosshair" style="width:12px; height:12px;"></i> Frame Camera on Component
     </button>
+    <button class="btn-action-small" id="btn-inspect-in-lab" style="width:100%; justify-content:center; margin-top:6px; background:rgba(0,255,135,0.12); border-color:var(--accent-emerald);">
+      <i data-lucide="scan" style="width:12px; height:12px; color:var(--accent-emerald);"></i> Inspect in Device Lab
+    </button>
   </div>
 
   <!-- Right Chapter Navigation Rail (10 Interactive Story Chapters) -->
@@ -960,6 +1440,215 @@
   <div class="inspector-modal" id="inspector-modal">
     <button class="modal-close" id="btn-close-modal"><i data-lucide="x"></i></button>
     <div id="modal-body-content"></div>
+  </div>
+
+  <!-- DEDICATED 3D DEVICE LABORATORY OVERLAY -->
+  <div id="device-lab-overlay" class="device-lab-overlay">
+    <!-- Lab Top Bar Navigation -->
+    <header class="lab-top-bar">
+      <div class="lab-bar-left">
+        <button class="btn-pill btn-leave-lab" id="btn-leave-lab" title="Return to agricultural field view">
+          <i data-lucide="chevron-left" style="width:14px; height:14px;"></i> Return to Research Field
+        </button>
+        <div class="lab-brand-badge">
+          <div class="brand-dot"></div>
+          <span class="lab-brand-title">DEVICE LABORATORY</span>
+          <span class="lab-brand-sub">CAD STUDIO INSPECTION</span>
+        </div>
+      </div>
+
+      <div class="lab-bar-center">
+        <!-- Target Assembly Selector -->
+        <div class="lab-segmented-group" id="lab-assembly-selector">
+          <button class="lab-seg-btn active" data-dev="gateway" id="btn-lab-dev-gateway">
+            <i data-lucide="box" style="width:12px; height:12px;"></i> ESP32 Gateway
+          </button>
+          <button class="lab-seg-btn" data-dev="probe" id="btn-lab-dev-probe">
+            <i data-lucide="crosshair" style="width:12px; height:12px;"></i> 3-in-1 Soil Probe
+          </button>
+          <button class="lab-seg-btn" data-dev="integrated" id="btn-lab-dev-integrated">
+            <i data-lucide="layers" style="width:12px; height:12px;"></i> Full System
+          </button>
+        </div>
+
+        <div class="toolbar-divider" style="margin: 0 8px;"></div>
+
+        <!-- Inspection View Mode -->
+        <div class="lab-segmented-group" id="lab-mode-selector">
+          <button class="lab-seg-btn active" data-mode="assembled" id="btn-lab-mode-assembled">
+            <i data-lucide="minimize-2" style="width:12px; height:12px;"></i> Assembled
+          </button>
+          <button class="lab-seg-btn" data-mode="exploded" id="btn-lab-mode-exploded">
+            <i data-lucide="layers" style="width:12px; height:12px;"></i> Exploded
+          </button>
+          <button class="lab-seg-btn" data-mode="wiring" id="btn-lab-mode-wiring">
+            <i data-lucide="git-branch" style="width:12px; height:12px;"></i> Wiring & Pinouts
+          </button>
+        </div>
+      </div>
+
+      <div class="lab-bar-right">
+        <!-- Continuous Explosion Slider -->
+        <div class="lab-slider-wrap">
+          <span class="lab-control-label">DISSECTION:</span>
+          <input type="range" class="lab-range" id="slider-lab-explode" min="0" max="100" value="0" step="1">
+          <span class="lab-slider-val" id="readout-lab-explode">0%</span>
+        </div>
+
+        <button class="btn-pill" id="btn-lab-autorotate" title="Toggle 360° Studio Turntable Rotation">
+          <i data-lucide="rotate-ccw" style="width:13px; height:13px;"></i> Auto-Rotate
+        </button>
+
+        <button class="btn-pill" id="btn-lab-reset-view" title="Reset macro camera framing">
+          <i data-lucide="scan" style="width:13px; height:13px;"></i> Reset Macro View
+        </button>
+      </div>
+    </header>
+
+    <!-- Left Panel: CAD Component Tree -->
+    <aside class="lab-panel-left" id="lab-panel-left">
+      <div class="lab-panel-header">
+        <div>
+          <div class="lab-panel-subtitle">SUBSYSTEM HIERARCHY</div>
+          <h3 class="lab-panel-title">Component Tree</h3>
+        </div>
+        <span class="badge-evidence" style="font-size:0.55rem;">BOM: $34.80</span>
+      </div>
+
+      <!-- Quick Search / Filter Input -->
+      <div class="lab-search-box">
+        <i data-lucide="info" style="width:13px; height:13px; color:var(--text-muted); margin-left:8px;"></i>
+        <input type="text" id="input-lab-filter" class="lab-search-input" placeholder="Filter components or pins...">
+        <button id="btn-clear-filter" class="lab-clear-btn" style="display:none;">&times;</button>
+      </div>
+
+      <!-- Scrollable Tree Container -->
+      <div class="lab-tree-list" id="lab-tree-list">
+        <!-- Injected dynamically with categories & items -->
+      </div>
+    </aside>
+
+    <!-- Right Panel: Technical Component Dossier -->
+    <aside class="lab-panel-right" id="lab-panel-right">
+      <div class="lab-panel-header">
+        <div>
+          <div class="lab-panel-subtitle" id="dossier-category">CORE MCU // LOGIC</div>
+          <h3 class="lab-panel-title" id="dossier-title">Seeed Xiao ESP32-S3</h3>
+        </div>
+        <span class="badge-evidence" id="dossier-badge">CALIBRATED</span>
+      </div>
+
+      <div class="lab-dossier-content" id="lab-dossier-scroll">
+        <!-- Section 1: Plain Language Function -->
+        <div class="dossier-section">
+          <div class="dossier-section-title">
+            <i data-lucide="info" style="width:12px; height:12px; color:var(--accent-emerald);"></i>
+            FUNCTION & SELECTION RATIONALE
+          </div>
+          <p class="dossier-p" id="dossier-plain-lang">
+            Dual-core 240MHz edge computing processor chosen for low deep-sleep power (14µA) and deterministic floating-point execution of soil physics algorithms without cloud dependency.
+          </p>
+        </div>
+
+        <!-- Section 2: Zerthiva Agronomic Mission -->
+        <div class="dossier-section">
+          <div class="dossier-section-title">
+            <i data-lucide="sparkles" style="width:12px; height:12px; color:var(--accent-cyan);"></i>
+            ZERTHIVA SYSTEM CONTRIBUTION
+          </div>
+          <p class="dossier-p" id="dossier-zerthiva-role">
+            Executes autonomous Rhoades temperature-compensated electrical conductivity calculations and evaluates Maas-Hoffman yield thresholds locally.
+          </p>
+        </div>
+
+        <!-- Section 3: Signal & Power I/O Paths -->
+        <div class="dossier-section">
+          <div class="dossier-section-title">
+            <i data-lucide="git-branch" style="width:12px; height:12px; color:var(--accent-amber);"></i>
+            SIGNAL & POWER I/O PATHWAYS
+          </div>
+          <div class="dossier-table-wrap">
+            <table class="dossier-io-table" id="dossier-io-table">
+              <!-- Dynamically populated -->
+            </table>
+          </div>
+        </div>
+
+        <!-- Section 4: Verified Technical Specifications -->
+        <div class="dossier-section">
+          <div class="dossier-section-title">
+            <i data-lucide="cpu" style="width:12px; height:12px; color:var(--accent-emerald);"></i>
+            VERIFIED ELECTRICAL & MECHANICAL SPECS
+          </div>
+          <div class="dossier-specs-grid" id="dossier-specs-grid">
+            <!-- Dynamically populated -->
+          </div>
+        </div>
+
+        <!-- Section 5: Truth in Labeling & Scientific Grounding -->
+        <div class="dossier-section" style="border-bottom:none;">
+          <div class="dossier-section-title">
+            <i data-lucide="file-text" style="width:12px; height:12px; color:var(--text-muted);"></i>
+            TRUTH IN LABELING // VERIFICATION BASIS
+          </div>
+          <div class="dossier-truth-box" id="dossier-truth-text">
+            Operating voltage and pinouts verified against manufacturer datasheet. Active current verified during continuous 240MHz execution bench trials.
+          </div>
+        </div>
+      </div>
+
+      <div class="lab-panel-footer">
+        <button class="btn-action-small" id="btn-lab-focus-part" style="flex:1; justify-content:center;">
+          <i data-lucide="crosshair" style="width:12px; height:12px;"></i> Frame Component
+        </button>
+        <button class="btn-action-small" id="btn-lab-isolate-part" style="flex:1; justify-content:center;">
+          <i data-lucide="scan" style="width:12px; height:12px;"></i> Isolate Part
+        </button>
+      </div>
+    </aside>
+
+    <!-- Bottom Dock: Persistent Wiring Bus Legend -->
+    <div class="lab-wiring-dock" id="lab-wiring-dock">
+      <div class="wiring-dock-title">
+        <i data-lucide="git-branch" style="width:13px; height:13px; color:var(--accent-cyan);"></i>
+        <span>WIRING BUS ARCHITECTURE & PINOUT ROUTING</span>
+      </div>
+      <div class="wiring-chips-row" id="wiring-chips-container">
+        <!-- Color-coded interactive chips -->
+        <div class="wire-chip active" data-wire="all">
+          <span class="chip-color" style="background:#fff;"></span>
+          <span class="chip-label">All Conductors</span>
+        </div>
+        <div class="wire-chip" data-wire="vcc">
+          <span class="chip-color" style="background:#ef4444;"></span>
+          <span class="chip-label">+3.3V VCC (Power Rail)</span>
+        </div>
+        <div class="wire-chip" data-wire="gnd">
+          <span class="chip-color" style="background:#64748b;"></span>
+          <span class="chip-label">GND (System Ground)</span>
+        </div>
+        <div class="wire-chip" data-wire="ec">
+          <span class="chip-color" style="background:#facc15;"></span>
+          <span class="chip-label">Analog EC (GPIO34)</span>
+        </div>
+        <div class="wire-chip" data-wire="vwc">
+          <span class="chip-color" style="background:#22c55e;"></span>
+          <span class="chip-label">Capacitive VWC (GPIO35)</span>
+        </div>
+        <div class="wire-chip" data-wire="temp">
+          <span class="chip-color" style="background:#f8fafc;"></span>
+          <span class="chip-label">1-Wire Temp (GPIO4)</span>
+        </div>
+        <div class="wire-chip" data-wire="comms">
+          <span class="chip-color" style="background:#06b6d4;"></span>
+          <span class="chip-label">UART2 & SPI Buses</span>
+        </div>
+        <div class="wire-chip" data-wire="rf">
+          <span class="chip-color" style="background:#f97316;"></span>
+          <span class="chip-label">RF Antennas</span>
+        </div>
+      </div>
+    </div>
   </div>
 
   <!-- Main Three.js Application Logic -->
@@ -2509,7 +3198,9 @@
       { color: 0xf8fafc, name: '1-Wire Digital Temp Bus (GPIO4)', xOff: 0.004, zOff: 0.002 }
     ];
 
-    wireConfigs.forEach((wc) => {
+    const wireMeshes = [];
+    const wireKeyMap = ['vcc', 'gnd', 'ec', 'vwc', 'temp'];
+    wireConfigs.forEach((wc, idx) => {
       const wCurve = new THREE.CatmullRomCurve3([
         new THREE.Vector3(-0.012 + wc.xOff, 0.105, 0.014 + wc.zOff),
         new THREE.Vector3(-0.008 + wc.xOff, 0.065, 0.008 + wc.zOff),
@@ -2519,8 +3210,9 @@
       const wGeo = new THREE.TubeGeometry(wCurve, 14, 0.0014, 5, false);
       const wMat = new THREE.MeshStandardMaterial({ color: wc.color, roughness: 0.52 });
       const wMesh = new THREE.Mesh(wGeo, wMat);
-      wMesh.userData = { id: 'wire-harness', name: `Silicone Sensor Wire: ${wc.name}`, type: 'HARDWARE', badge: 'CALIBRATED' };
+      wMesh.userData = { id: 'wire-harness', wireKey: wireKeyMap[idx], name: `Silicone Sensor Wire: ${wc.name}`, type: 'HARDWARE', badge: 'CALIBRATED' };
       hwParts.cableHarness.add(wMesh);
+      wireMeshes.push({ mesh: wMesh, wireKey: wireKeyMap[idx], defaultColor: wc.color });
     });
 
     // Outer rugged protective cable jacket below gland
@@ -2591,6 +3283,17 @@
     tipMesh.position.y = -0.31; // Probe apex tip in Horizon A
     tipMesh.userData = { id: 'temp-tip', name: 'Maxim DS18B20 1-Wire Thermal Capsule Tip (GPIO4)', type: 'HARDWARE', badge: 'MEASURED' };
     hwParts.probeShaft.add(tipMesh);
+
+    // Global Registry for Micro Dissection of Subsurface Probe
+    const probeParts = {
+      stem: probeStem,
+      ecRing1: ecRing1,
+      ecRing2: ecRing2,
+      bladeMesh: bladeMesh,
+      calibLineMesh: calibLineMesh,
+      tipCollarMesh: tipCollarMesh,
+      tipMesh: tipMesh
+    };
 
     /* =========================================================================
        7. RESTRAINED SCIENTIFIC HYDROLOGY (PLANT ROOT CONVERGENCE STREAMLINES)
@@ -3038,6 +3741,22 @@
       mouse.y = -(e.clientY / window.innerHeight) * 2 + 1;
       raycaster.setFromCamera(mouse, camera);
 
+      // If Device Laboratory is active, handle studio raycasting
+      if (typeof labState !== 'undefined' && labState.active) {
+        const labHits = raycaster.intersectObjects([hardwareGroup], true);
+        if (labHits.length > 0) {
+          let picked = labHits[0].object;
+          while (picked && !picked.userData?.id && picked.parent && picked !== hardwareGroup) {
+            picked = picked.parent;
+          }
+          if (picked && picked.userData?.id && HARDWARE_COMPONENTS_DATA[picked.userData.id]) {
+            selectLabComponent(picked.userData.id);
+            sound.playPing(880);
+          }
+        }
+        return;
+      }
+
       const interactable = [plantGroup, geologyGroup, hardwareGroup, hydrologyGroup];
       const hits = raycaster.intersectObjects(interactable, true);
 
@@ -3163,6 +3882,10 @@
 
       document.getElementById('card-desc').innerText = desc;
       document.getElementById('card-meta').innerText = meta;
+      const btnInspectInLab = document.getElementById('btn-inspect-in-lab');
+      if (btnInspectInLab) {
+        btnInspectInLab.style.display = (data.type === 'HARDWARE' || (typeof HARDWARE_COMPONENTS_DATA !== 'undefined' && HARDWARE_COMPONENTS_DATA[data.id])) ? 'inline-flex' : 'none';
+      }
       componentCard.style.display = 'block';
     }
 
@@ -3424,9 +4147,15 @@
                 <i data-lucide="layers" style="width:12px; height:12px;"></i> Explode Again
               </button>
             </div>
+            <div class="module-row" style="margin-top:6px;">
+              <button class="btn-action-small" id="btn-ch7-enter-lab" style="flex:1; justify-content:center; background:rgba(0,255,135,0.15); border-color:var(--accent-emerald);">
+                <i data-lucide="cpu" style="width:12px; height:12px; color:var(--accent-emerald);"></i> Open Dedicated Device Laboratory
+              </button>
+            </div>
           `);
           document.getElementById('btn-re-assemble-hw').addEventListener('click', assembleHardware);
           document.getElementById('btn-re-explode-hw').addEventListener('click', explodeHardware);
+          document.getElementById('btn-ch7-enter-lab').addEventListener('click', () => enterDeviceLaboratory());
         }
       },
       // 7: CHAPTER 08 // MONITORING SEQUENCE
@@ -3925,9 +4654,22 @@
         });
       }
 
-      // Hotspot projections
-      updateHotspotPosition('hotspot-probe', new THREE.Vector3(-0.55, -0.20, -0.30));
-      updateHotspotPosition('hotspot-node', new THREE.Vector3(-0.55, 0.32, -0.30));
+      // Hotspot projections (hidden in studio lab mode)
+      if (typeof labState !== 'undefined' && labState.active) {
+        const hp1 = document.getElementById('hotspot-probe');
+        const hp2 = document.getElementById('hotspot-node');
+        if (hp1) hp1.style.display = 'none';
+        if (hp2) hp2.style.display = 'none';
+        if (labState.autoRotate) {
+          controls.autoRotate = true;
+          controls.autoRotateSpeed = 1.6;
+        } else {
+          controls.autoRotate = false;
+        }
+      } else {
+        updateHotspotPosition('hotspot-probe', new THREE.Vector3(-0.55, -0.20, -0.30));
+        updateHotspotPosition('hotspot-node', new THREE.Vector3(-0.55, 0.32, -0.30));
+      }
 
       controls.update();
       renderer.render(scene, camera);
@@ -3938,6 +4680,1203 @@
       camera.updateProjectionMatrix();
       renderer.setSize(window.innerWidth, window.innerHeight);
     });
+
+
+    /* =========================================================================
+       16. PHASE 1: DEDICATED 3D DEVICE LABORATORY & STUDIO CAD DISSECTION
+       ========================================================================= */
+
+    // Studio CAD Turntable Pedestal
+    const studioPedestal = new THREE.Group();
+    studioPedestal.position.set(0, -0.01, 0);
+    studioPedestal.visible = false;
+    scene.add(studioPedestal);
+
+    // Dark circular graphite pedestal disc
+    const pedestalGeo = new THREE.CylinderGeometry(0.28, 0.29, 0.016, 64);
+    const pedestalMat = new THREE.MeshStandardMaterial({
+      color: 0x091118,
+      roughness: 0.38,
+      metalness: 0.85
+    });
+    const pedestalMesh = new THREE.Mesh(pedestalGeo, pedestalMat);
+    pedestalMesh.receiveShadow = true;
+    pedestalMesh.position.y = -0.008;
+    studioPedestal.add(pedestalMesh);
+
+    // Outer cyan/emerald emissive rim
+    const rimAccentGeo = new THREE.TorusGeometry(0.282, 0.0018, 8, 64);
+    rimAccentGeo.rotateX(Math.PI / 2);
+    const rimAccentMat = new THREE.MeshStandardMaterial({
+      color: 0x00ff87,
+      emissive: 0x00ff87,
+      emissiveIntensity: 0.9,
+      roughness: 0.2
+    });
+    const rimAccentMesh = new THREE.Mesh(rimAccentGeo, rimAccentMat);
+    rimAccentMesh.position.y = 0.0002;
+    studioPedestal.add(rimAccentMesh);
+
+    // Concentric CAD millimeter rings
+    const cadLineMat = new THREE.LineBasicMaterial({ color: 0x1e3a5f, transparent: true, opacity: 0.55 });
+    const cadMajorMat = new THREE.LineBasicMaterial({ color: 0x38bdf8, transparent: true, opacity: 0.85 });
+    const cadRadii = [0.03, 0.06, 0.09, 0.12, 0.15, 0.18, 0.21, 0.24, 0.27];
+    cadRadii.forEach(r => {
+      const pts = [];
+      for (let i = 0; i <= 64; i++) {
+        const a = (i / 64) * Math.PI * 2;
+        pts.push(new THREE.Vector3(Math.cos(a) * r, 0.0006, Math.sin(a) * r));
+      }
+      const ringGeo = new THREE.BufferGeometry().setFromPoints(pts);
+      const ringLine = new THREE.Line(ringGeo, (r === 0.15 || r === 0.24) ? cadMajorMat : cadLineMat);
+      studioPedestal.add(ringLine);
+    });
+
+    // Radial CAD crosshairs (16 axes)
+    for (let i = 0; i < 16; i++) {
+      const angle = (i / 16) * Math.PI * 2;
+      const isMajor = (i % 4 === 0);
+      const r1 = isMajor ? 0.02 : 0.06;
+      const r2 = 0.27;
+      const spokeGeo = new THREE.BufferGeometry().setFromPoints([
+        new THREE.Vector3(Math.cos(angle) * r1, 0.0006, Math.sin(angle) * r1),
+        new THREE.Vector3(Math.cos(angle) * r2, 0.0006, Math.sin(angle) * r2)
+      ]);
+      const spokeLine = new THREE.Line(spokeGeo, isMajor ? cadMajorMat : cadLineMat);
+      studioPedestal.add(spokeLine);
+    }
+
+    // Studio 3-Point Lighting Setup
+    const studioLightsGroup = new THREE.Group();
+    studioLightsGroup.visible = false;
+    scene.add(studioLightsGroup);
+
+    // 1. Studio Key Light
+    const studioKeyLight = new THREE.DirectionalLight(0xfff8ee, 2.5);
+    studioKeyLight.position.set(1.4, 2.2, 1.6);
+    studioKeyLight.castShadow = true;
+    studioKeyLight.shadow.mapSize.width = 1024;
+    studioKeyLight.shadow.mapSize.height = 1024;
+    studioKeyLight.shadow.bias = -0.0001;
+    studioLightsGroup.add(studioKeyLight);
+
+    // 2. Studio Soft Fill Light
+    const studioFillLight = new THREE.DirectionalLight(0xa5c9eb, 1.15);
+    studioFillLight.position.set(-1.8, 1.3, -1.2);
+    studioLightsGroup.add(studioFillLight);
+
+    // 3. Studio Rim / Contour Edge Light
+    const studioRimLight = new THREE.DirectionalLight(0x38bdf8, 1.85);
+    studioRimLight.position.set(-0.6, 1.8, -2.4);
+    studioLightsGroup.add(studioRimLight);
+
+    // 4. Subtle Uplight from turntable center
+    const studioUplight = new THREE.PointLight(0x00ff87, 0.45, 1.2);
+    studioUplight.position.set(0, 0.03, 0);
+    studioLightsGroup.add(studioUplight);
+
+    // Verified 19-Component Technical Dossier Database
+    const HARDWARE_COMPONENTS_DATA = {
+      'pv-solar': {
+        id: 'pv-solar',
+        name: '5W Monocrystal PV Collector Wafer',
+        subsystem: 'power',
+        subsystemLabel: 'Power Subsystem',
+        category: 'Power & Energy Harvesting',
+        badge: 'CALIBRATED',
+        targetAssembly: 'gateway',
+        plainLanguage: 'High-efficiency 14cm circular silicon wafer laminated under Schott anti-reflective glass. Converts direct and diffuse sunlight to DC electricity to sustain continuous autonomous field monitoring.',
+        zerthivaRole: 'Primary energy harvester. Restores complete daily operational battery consumption within 45 minutes of morning sunlight, enabling indefinite off-grid deployment.',
+        ioPaths: [
+          { pin: 'PV+ / PV-', type: 'Analog DC Power', desc: 'Up to 6.2V Voc routed via 1N5819 Schottky reverse-blocking diode into TP4056' }
+        ],
+        specs: [
+          { label: 'Peak Power', val: '5.0 Watts' },
+          { label: 'Open Circuit Voc', val: '6.2 Volts' },
+          { label: 'Short Circuit Isc', val: '0.88 Amps' },
+          { label: 'Cell Efficiency', val: '21.4%' },
+          { label: 'Wafer Diameter', val: '140 mm' },
+          { label: 'Protective Cover', val: '2.5mm Tempered Glass' }
+        ],
+        truthInLabeling: 'Standard test condition ratings verified against photovoltaic laboratory cell characterization (1000 W/m², AM1.5, 25°C).'
+      },
+      'battery-18650': {
+        id: 'battery-18650',
+        name: '18650 2200mAh Li-ion Cell + TP4056 BMS',
+        subsystem: 'power',
+        subsystemLabel: 'Power Subsystem',
+        category: 'Power Storage & Battery Management',
+        badge: 'CALIBRATED',
+        targetAssembly: 'gateway',
+        plainLanguage: 'Rechargeable 3.7V cylindrical lithium-ion cell with onboard TP4056 linear charger and DW01A/FS8205A overcharge and over-discharge safety circuit.',
+        zerthivaRole: 'Provides 90 days continuous field autonomy during extended overcast monsoon weather by cycling between 14µA deep sleep and brief 200ms telemetry bursts.',
+        ioPaths: [
+          { pin: 'BAT+ / BAT-', type: 'Cell Terminals', desc: 'Connected to DW01A protection IC with 2.8V cutoff' },
+          { pin: 'VOUT+', type: 'Regulated Rail', desc: 'Feeds ME6211 3.3V ultra-low-dropout regulator' }
+        ],
+        specs: [
+          { label: 'Nominal Voltage', val: '3.7V DC (3.0–4.2V)' },
+          { label: 'Cell Capacity', val: '2200 mAh (8.14 Wh)' },
+          { label: 'Solar Charge Rate', val: '450 mA limited' },
+          { label: 'Cutoff Threshold', val: '2.8V ± 0.05V' },
+          { label: 'Deep Sleep Draw', val: '14 µA (System)' },
+          { label: 'Chemistry', val: 'NMC Li-ion' }
+        ],
+        truthInLabeling: 'Quiescent draw (14µA) and discharge curve bench-tested with Nordic Power Profiler Kit II under 0.2C rate.'
+      },
+      'sentry-beacon': {
+        id: 'sentry-beacon',
+        name: '360° Fresnel RGB Optical Sentry Ring',
+        subsystem: 'enclosure',
+        subsystemLabel: 'Physical & Enclosure',
+        category: 'Visual Signaling & Optical Telemetry',
+        badge: 'MEASURED',
+        targetAssembly: 'gateway',
+        plainLanguage: 'High-visibility 360-degree cylindrical Fresnel diffuser prism driven by 3 PWM channels. Emits discrete color flashes visible up to 200 meters across open agricultural fields.',
+        zerthivaRole: 'Visual field diagnostics: Steady Emerald Green = Soil moisture & EC within safe agronomic boundaries; Strobe Crimson = Immediate irrigation or salt-flush required; Flashing Cyan = Cellular data transmission in progress.',
+        ioPaths: [
+          { pin: 'GPIO25', type: 'PWM / Digital Out', desc: 'Red LED cathode drive (220Ω series limiter)' },
+          { pin: 'GPIO26', type: 'PWM / Digital Out', desc: 'Green LED cathode drive (220Ω series limiter)' },
+          { pin: 'GPIO27', type: 'PWM / Digital Out', desc: 'Blue LED cathode drive (220Ω series limiter)' }
+        ],
+        specs: [
+          { label: 'Luminance', val: '450 mcd @ 20mA' },
+          { label: 'Viewing Angle', val: '360° Horiz / 45° Vert' },
+          { label: 'Duty Cycle', val: '1% periodic pulse' },
+          { label: 'Average Current', val: '0.4 mA avg' },
+          { label: 'Optical Material', val: 'Optical Polycarbonate' },
+          { label: 'Visibility Range', val: '200m Line of Sight' }
+        ],
+        truthInLabeling: 'Optical ring lux measured at 50m distance in outdoor dusk conditions.'
+      },
+      'asa-chassis': {
+        id: 'asa-chassis',
+        name: 'Weatherproof ASA Polymer Enclosure (IP67)',
+        subsystem: 'enclosure',
+        subsystemLabel: 'Physical & Enclosure',
+        category: 'Environmental Protection & Chassis',
+        badge: 'MECHANICAL',
+        targetAssembly: 'gateway',
+        plainLanguage: 'Impact-resistant Acrylonitrile Styrene Acrylate body engineered for extreme agricultural field climates (-20°C to +70°C). Superior to ABS in UV degradation resistance.',
+        zerthivaRole: 'Shields internal microelectronics, wireless radios, and lithium battery against torrential tropical rains, intense UV sun exposure (>5000 hours), and agrochemical vapors.',
+        ioPaths: [
+          { pin: 'Flange Seal', type: 'Mechanical Barrier', desc: 'Dual nitrile O-ring groove interface' },
+          { pin: 'Base Port', type: 'Cable Interface', desc: 'PG7 cable compression gland port' }
+        ],
+        specs: [
+          { label: 'Ingress Rating', val: 'IP67 Submersible' },
+          { label: 'Material', val: 'UV-Stabilized ASA' },
+          { label: 'Wall Thickness', val: '3.2 mm' },
+          { label: 'Operating Temp', val: '-40°C to +85°C' },
+          { label: 'Outer Diameter', val: '108 mm' },
+          { label: 'Total Height', val: '180 mm' }
+        ],
+        truthInLabeling: 'Material mechanical properties from INEOS Styrolution ASA technical datasheet. IP67 seal validated through water immersion testing.'
+      },
+      'nitrile-seals': {
+        id: 'nitrile-seals',
+        name: 'Dual Nitrile O-Ring Compression Seals',
+        subsystem: 'enclosure',
+        subsystemLabel: 'Physical & Enclosure',
+        category: 'Environmental Sealing',
+        badge: 'MECHANICAL',
+        targetAssembly: 'gateway',
+        plainLanguage: 'Twin Buna-N 70 durometer elastomeric O-rings seated in precision CNC-turned chassis grooves.',
+        zerthivaRole: 'Forms redundant moisture barriers that prevent atmospheric humidity and capillary rain entry into the gateway enclosure.',
+        ioPaths: [
+          { pin: 'Seal Ring 1', type: 'Primary Barrier', desc: 'Radial compression seal against lid' },
+          { pin: 'Seal Ring 2', type: 'Secondary Barrier', desc: 'Backup seal against thermal cycling expansion' }
+        ],
+        specs: [
+          { label: 'Hardness', val: '70 Shore A' },
+          { label: 'Cross-Section', val: '2.8 mm' },
+          { label: 'Operating Temp', val: '-30°C to +100°C' },
+          { label: 'Material', val: 'NBR (Nitrile)' }
+        ],
+        truthInLabeling: 'Standard ASTM D2000 nitrile elastomer specification.'
+      },
+      'esp32-mcu': {
+        id: 'esp32-mcu',
+        name: 'Seeed Xiao ESP32-S3 MCU Board',
+        subsystem: 'core',
+        subsystemLabel: 'Processing & Core Logic',
+        badge: 'CALIBRATED',
+        targetAssembly: 'gateway',
+        plainLanguage: 'Ultra-compact 21×17.5mm edge processor with dual-core 240MHz Xtensa LX7 and hardware floating-point acceleration. Executes soil physics models locally.',
+        zerthivaRole: 'Core intelligence hub: acquires 12-bit ADC signals, normalizes EC to 25°C via Rhoades equation, evaluates Maas-Hoffman crop yield thresholds, and logs records to SD card and GSM modem.',
+        ioPaths: [
+          { pin: 'GPIO34 (ADC1_CH6)', type: 'Analog In', desc: 'Attenuated 10kHz AC EC bipolar voltage' },
+          { pin: 'GPIO35 (ADC1_CH7)', type: 'Analog In', desc: 'Capacitive 1.5MHz soil moisture voltage' },
+          { pin: 'GPIO4', type: '1-Wire Digital', desc: 'Maxim DS18B20 digital thermal bus' },
+          { pin: 'UART2 (GPIO16/17)', type: 'Serial Bus', desc: 'SIM800L cellular AT commands @ 115200' },
+          { pin: 'SPI (GPIO5/18/19/23)', type: 'High-Speed SPI', desc: 'MicroSD telemetry logger card bus' }
+        ],
+        specs: [
+          { label: 'Processor', val: 'Dual-Core Xtensa LX7' },
+          { label: 'Clock Speed', val: '240 MHz Max' },
+          { label: 'SRAM / Flash', val: '512KB + 8MB PSRAM' },
+          { label: 'Deep Sleep Current', val: '14 µA (RTC Enabled)' },
+          { label: 'Active Power', val: '68 mA nominal' },
+          { label: 'Operating Voltage', val: '3.3V DC (ME6211 LDO)' }
+        ],
+        truthInLabeling: 'Electrical specifications bench-verified from Espressif ESP32-S3 technical reference manual and Nordic PPK2 profiling.'
+      },
+      'esp32-antenna': {
+        id: 'esp32-antenna',
+        name: 'Meandered 2.4GHz Wi-Fi/BLE PCB Antenna',
+        subsystem: 'core',
+        subsystemLabel: 'Processing & Core Logic',
+        badge: 'CALIBRATED',
+        targetAssembly: 'gateway',
+        plainLanguage: 'Inverted-F printed circuit board trace antenna tuned for 2.400–2.484 GHz.',
+        zerthivaRole: 'Connects to local farm smartphone app for offline sensor calibration, telemetry downloads, and peer-to-peer node mesh syncing up to 45m line-of-sight.',
+        ioPaths: [
+          { pin: 'RF Trace', type: '50Ω Waveguide', desc: 'Direct transmission line from ESP32 RF output pin' }
+        ],
+        specs: [
+          { label: 'Frequency Band', val: '2.412–2.484 GHz' },
+          { label: 'Peak Gain', val: '+2.0 dBi' },
+          { label: 'VSWR', val: '< 2.0:1' },
+          { label: 'Nominal Impedance', val: '50 Ω' },
+          { label: 'Line of Sight Range', val: '45 meters' }
+        ],
+        truthInLabeling: 'Antenna return loss S11 characterized on Seeed Studio evaluation board.'
+      },
+      'esp32-headers': {
+        id: 'esp32-headers',
+        name: 'Dual 7-Pin 2.54mm Breakout Headers',
+        subsystem: 'core',
+        subsystemLabel: 'Processing & Core Logic',
+        badge: 'MECHANICAL',
+        targetAssembly: 'gateway',
+        plainLanguage: 'Gold-plated 2.54mm pitch dual-row male/female header pins providing modular component replacement.',
+        zerthivaRole: 'Enables field replacement of the ESP32 mainboard without unsoldering sensor leads or power wiring.',
+        ioPaths: [
+          { pin: 'Pins 1–7 (Left)', type: 'Header Rail', desc: 'Power, GND, ADC inputs, 1-Wire bus' },
+          { pin: 'Pins 8–14 (Right)', type: 'Header Rail', desc: 'UART2, SPI chip select, sentry LED PWM' }
+        ],
+        specs: [
+          { label: 'Pin Pitch', val: '2.54 mm (0.1 in)' },
+          { label: 'Plating', val: '0.8µm Gold over Nickel' },
+          { label: 'Current Rating', val: '3.0 A per pin' },
+          { label: 'Contact Resistance', val: '< 20 mΩ' }
+        ],
+        truthInLabeling: 'Standard industrial gold-plated phosphor bronze contact specifications.'
+      },
+      'mod-sim800l': {
+        id: 'mod-sim800l',
+        name: 'SIM800L GSM/GPRS Cellular Uplink Modem',
+        subsystem: 'comms',
+        subsystemLabel: 'Communications & Telemetry',
+        badge: 'CALIBRATED',
+        targetAssembly: 'gateway',
+        plainLanguage: 'Quad-band cellular transceiver enabling smallholder farmers without smartphones to receive automated SMS alerts and batch data syncs over 2G cellular towers.',
+        zerthivaRole: 'Transmits critical agronomic advisories (e.g. "Salinity critical: Irrigate 18mm with clean water to flush root zone") directly to basic feature phones.',
+        ioPaths: [
+          { pin: 'UART2 TXD (GPIO17)', type: 'Serial Input', desc: 'AT command string reception from ESP32' },
+          { pin: 'UART2 RXD (GPIO16)', type: 'Serial Output', desc: 'Network status and SMS response telemetry' },
+          { pin: 'VBAT', type: 'High-Current Rail', desc: '3.8V–4.2V rail buffered with 1000µF capacitor' }
+        ],
+        specs: [
+          { label: 'Frequencies', val: '850/900/1800/1900 MHz' },
+          { label: 'GPRS Capability', val: 'Class 12 (85.6 kbps)' },
+          { label: 'Peak Burst Current', val: '2.0 A (577µs burst)' },
+          { label: 'Modem Sleep Draw', val: '0.98 mA' },
+          { label: 'Sensitivity', val: '-102 dBm' }
+        ],
+        truthInLabeling: 'SIMCom SIM800L hardware design guide specifications; 1000µF low-ESR buffer capacitor mandatory to prevent brownout reset during GSM bursts.'
+      },
+      'sim800-antenna': {
+        id: 'sim800-antenna',
+        name: 'Helical Coiled Gold Spring Antenna',
+        subsystem: 'comms',
+        subsystemLabel: 'Communications & Telemetry',
+        badge: 'CALIBRATED',
+        targetAssembly: 'gateway',
+        plainLanguage: 'High-Q copper-alloy quarter-wave helical coil mounted entirely inside the IP67 enclosure to prevent external snagging or damage in agricultural fields.',
+        zerthivaRole: 'Radiates cellular uplink signals, maintaining connection to rural mobile base stations with receive sensitivity down to -102 dBm.',
+        ioPaths: [
+          { pin: 'ANT Solder Pad', type: 'RF Feed', desc: 'Matched 50Ω connection to SIM800L output' }
+        ],
+        specs: [
+          { label: 'Frequency Bands', val: '824–960 & 1710–1990 MHz' },
+          { label: 'Omni Gain', val: '~1.5 dBi' },
+          { label: 'Physical Length', val: '38 mm coiled' },
+          { label: 'VSWR', val: '< 2.5:1' }
+        ],
+        truthInLabeling: 'Resonance tuning and VSWR measured on vector network analyzer (VNA) inside ASA chassis.'
+      },
+      'mod-sdcard': {
+        id: 'mod-sdcard',
+        name: 'MicroSD SPI Telemetry Logger Shield',
+        subsystem: 'comms',
+        subsystemLabel: 'Communications & Telemetry',
+        badge: 'CALIBRATED',
+        targetAssembly: 'gateway',
+        plainLanguage: 'Hardware SPI memory interface logging rolling CSV telemetry records every 15 minutes to an industrial Class 10 flash card.',
+        zerthivaRole: 'Guarantees zero data loss during mobile network outages or remote farm deployments, preserving complete seasonal records for agronomist auditing.',
+        ioPaths: [
+          { pin: 'CS (GPIO5)', type: 'SPI Chip Select', desc: 'Active-low bus selection line' },
+          { pin: 'MOSI (GPIO23)', type: 'SPI Master Out', desc: 'Serialized sector write command stream' },
+          { pin: 'MISO (GPIO19)', type: 'SPI Master In', desc: 'Sector read feedback line' },
+          { pin: 'SCK (GPIO18)', type: 'SPI Clock', desc: '10MHz SPI bus clock' }
+        ],
+        specs: [
+          { label: 'Bus Protocol', val: 'SPI Mode 0 (FAT32)' },
+          { label: 'Write Current', val: '24 mA active' },
+          { label: 'Supported Size', val: '8GB to 32GB' },
+          { label: 'Logging Interval', val: '15-min rolling CSV' }
+        ],
+        truthInLabeling: 'FAT32 SPI driver benchmarks verified on MicroPython firmware builds.'
+      },
+      'cable-gland': {
+        id: 'cable-gland',
+        name: 'PG7 IP67 Liquid-Tight Cable Compression Gland',
+        subsystem: 'enclosure',
+        subsystemLabel: 'Physical & Enclosure',
+        badge: 'MECHANICAL',
+        targetAssembly: 'gateway',
+        plainLanguage: 'Heavy-duty threaded nylon gland with internal neoprene compression bushing and outer locking nut.',
+        zerthivaRole: 'Creates a waterproof seal around the 5-conductor silicone cable as it exits the enclosure body towards the soil.',
+        ioPaths: [
+          { pin: 'PG7 Thread', type: '12.5mm Port', desc: 'Clamps cable outer diameter 3.0mm–6.5mm' }
+        ],
+        specs: [
+          { label: 'Thread Size', val: 'PG7 (12.5 mm)' },
+          { label: 'Clamping Range', val: '3.0 mm – 6.5 mm' },
+          { label: 'Ingress Rating', val: 'IP68 / IP67' },
+          { label: 'Material', val: 'Polyamide 66' }
+        ],
+        truthInLabeling: 'Certified DIN 40430 standard component rating.'
+      },
+      'jst-header': {
+        id: 'jst-header',
+        name: 'JST-XH 5-Pin Latched Sensor Disconnect Header',
+        subsystem: 'enclosure',
+        subsystemLabel: 'Physical & Enclosure',
+        badge: 'MECHANICAL',
+        targetAssembly: 'gateway',
+        plainLanguage: 'Positive-locking nylon polarized connector preventing inverted wiring during probe installation or maintenance.',
+        zerthivaRole: 'Allows quick detachment of the probe assembly for calibration in standard reference solutions without disassembling the main gateway electronics.',
+        ioPaths: [
+          { pin: 'Pins 1–5', type: 'Terminal Rows', desc: 'VCC, GND, EC Analog, VWC Analog, 1-Wire Temp' }
+        ],
+        specs: [
+          { label: 'Connector Pitch', val: '2.50 mm' },
+          { label: 'Locking Type', val: 'Friction Ramp & Latch' },
+          { label: 'Current Rating', val: '3.0 A AC/DC' },
+          { label: 'Insulation', val: 'Nylon 66 UL94V-0' }
+        ],
+        truthInLabeling: 'JST XH standard technical specification.'
+      },
+      'wire-harness': {
+        id: 'wire-harness',
+        name: '5-Core Silicone Sensor Wire Harness',
+        subsystem: 'enclosure',
+        subsystemLabel: 'Physical & Enclosure',
+        badge: 'CALIBRATED',
+        targetAssembly: 'gateway',
+        plainLanguage: 'Ultra-flexible 26 AWG multi-conductor cable insulated in high-temperature silicone rubber (-60°C to +200°C).',
+        zerthivaRole: 'Carries analog microvolt signals and high-frequency capacitive waveforms without dielectric absorption, signal attenuation, or seasonal hardening.',
+        ioPaths: [
+          { pin: 'Red Wire', type: '+3.3V Power', desc: 'Switched high-side P-FET VCC rail' },
+          { pin: 'Black Wire', type: 'GND', desc: 'Low-impedance analog & digital return' },
+          { pin: 'Yellow Wire', type: 'EC Signal', desc: '10 kHz AC bipolar voltage (GPIO34)' },
+          { pin: 'Green Wire', type: 'VWC Signal', desc: 'Capacitive 1.5 MHz analog voltage (GPIO35)' },
+          { pin: 'White Wire', type: '1-Wire Temp', desc: 'Maxim DS18B20 digital bus (GPIO4)' }
+        ],
+        specs: [
+          { label: 'Conductor Size', val: '26 AWG Tinned Copper' },
+          { label: 'Loop Resistance', val: '< 0.13 Ω/meter' },
+          { label: 'Cable Insulation', val: 'Flexible Silicone Rubber' },
+          { label: 'Voltage Rating', val: '300V RMS' }
+        ],
+        truthInLabeling: 'Loop resistance and inter-conductor capacitance (<45 pF/m) bench-verified.'
+      },
+      'probe-shaft': {
+        id: 'probe-shaft',
+        name: 'Subsurface Probe Stem (32cm Depth with Laser Marks)',
+        subsystem: 'sensing',
+        subsystemLabel: 'Subsurface Sensing Array',
+        badge: 'MECHANICAL',
+        targetAssembly: 'probe',
+        plainLanguage: 'High-strength 16mm fiberglass-reinforced nylon rod with laser-etched depth collar markings at 5cm, 10cm, 15cm, 20cm, and 25cm.',
+        zerthivaRole: 'Structural chassis inserted into the soil profile; positions the 3 sensing elements across Horizon A (topsoil, 15–25cm) where maize roots extract over 80% of water and nutrients.',
+        ioPaths: [
+          { pin: 'Internal Conduit', type: 'Wiring Channel', desc: 'Passes 5 silicone conductors to electrodes, PCB, and tip' }
+        ],
+        specs: [
+          { label: 'Total Length', val: '320 mm' },
+          { label: 'Outer Diameter', val: '16 mm' },
+          { label: 'Material', val: 'PA6-GF30 (Glass-Nylon)' },
+          { label: 'Laser Depth Markings', val: '5, 10, 15, 20, 25 cm' },
+          { label: 'Flexural Strength', val: '180 MPa' }
+        ],
+        truthInLabeling: 'Physical dimension and soil insertion durability validated in silt loam and compacted clay test plots.'
+      },
+      'ec-ring-upper': {
+        id: 'ec-ring-upper',
+        name: '316L Stainless Annular EC Electrode (Upper 15cm)',
+        subsystem: 'sensing',
+        subsystemLabel: 'Subsurface Sensing Array',
+        badge: 'MEASURED',
+        targetAssembly: 'probe',
+        plainLanguage: 'Precision-machined marine-grade AISI 316L stainless steel annular ring flush-mounted at 15cm depth in the root zone.',
+        zerthivaRole: 'Upper electrode of the 4-terminal bipolar AC cell; measures bulk electrical conductivity (σ_b) under 10 kHz AC excitation to prevent electrode electrolysis and galvanic corrosion.',
+        ioPaths: [
+          { pin: 'Electrode 1', type: 'AC Drive / Sense', desc: 'Connected via precision bridge to ESP32 GPIO34 (ADC1_CH6)' }
+        ],
+        specs: [
+          { label: 'Alloy Composition', val: 'AISI 316L Stainless' },
+          { label: 'Dimensions', val: '17.5mm OD x 18mm Height' },
+          { label: 'Cell Constant', val: 'K = 0.42 cm⁻¹' },
+          { label: 'AC Excitation', val: '10 kHz Bipolar Wave' },
+          { label: 'Surface Finish', val: 'Electropolished Ra < 0.2µm' }
+        ],
+        truthInLabeling: 'Cell constant calibrated in standard KCl solutions (1.413 mS/cm and 12.88 mS/cm at 25°C).'
+      },
+      'ec-ring-lower': {
+        id: 'ec-ring-lower',
+        name: '316L Stainless Annular EC Electrode (Lower 25cm)',
+        subsystem: 'sensing',
+        subsystemLabel: 'Subsurface Sensing Array',
+        badge: 'MEASURED',
+        targetAssembly: 'probe',
+        plainLanguage: 'Matching lower 316L stainless electrode positioned 100mm below the upper ring, measuring salinity at the Horizon A/B root zone boundary.',
+        zerthivaRole: 'Completes the AC current path through the soil matrix; enables Rhoades pore water EC (EC_e) extraction: EC_e = (σ_b - σ_ws) / (a θ² + b θ).',
+        ioPaths: [
+          { pin: 'Electrode 2', type: 'AC Return / Sense', desc: 'Alternate phase excitation line via transistor H-bridge' }
+        ],
+        specs: [
+          { label: 'Center Spacing', val: '100 mm from Upper Ring' },
+          { label: 'Material', val: 'AISI 316L Stainless' },
+          { label: 'Excitation', val: '10 kHz Square Wave' },
+          { label: 'Target Horizon', val: 'Horizon A/B Boundary' }
+        ],
+        truthInLabeling: 'Rhoades soil salinity model parameters verified against USDA Agricultural Handbook 60 standard reference procedures.'
+      },
+      'vwc-blade': {
+        id: 'vwc-blade',
+        name: 'Capacitive Soil Moisture Sensor v1.2 Blade',
+        subsystem: 'sensing',
+        subsystemLabel: 'Subsurface Sensing Array',
+        badge: 'MEASURED',
+        targetAssembly: 'probe',
+        plainLanguage: 'FR4 coplanar capacitor blade driven by a high-frequency (1.5 MHz) TLC555 timer oscillator circuit, insulated with solder-mask conformal coating.',
+        zerthivaRole: 'Measures soil volumetric water content (θ) by sensing changes in the bulk dielectric permittivity (κ ≈ 80 for water vs ≈ 3–5 for mineral soil) without metallic contact or ionic corrosion.',
+        ioPaths: [
+          { pin: 'AOUT (GPIO35)', type: 'Analog Voltage', desc: '0-3.3V analog DC signal inversely proportional to soil water content' }
+        ],
+        specs: [
+          { label: 'Oscillator Type', val: '1.5 MHz TLC555 Timer' },
+          { label: 'Output Voltage', val: '1.2V (Sat) to 2.8V (Dry)' },
+          { label: 'Resolution', val: '0.1% VWC' },
+          { label: 'Active Length', val: '160 mm' },
+          { label: 'Fringe Volume', val: '~180 cm³ ellipsoidal' }
+        ],
+        truthInLabeling: 'Dual-point calibration curve (V_dry = 2.82V, V_sat = 1.24V) established on physical hardware in oven-dried soil and distilled water.'
+      },
+      'temp-tip': {
+        id: 'temp-tip',
+        name: 'Maxim DS18B20 1-Wire Thermal Capsule Tip',
+        subsystem: 'sensing',
+        subsystemLabel: 'Subsurface Sensing Array',
+        badge: 'MEASURED',
+        targetAssembly: 'probe',
+        plainLanguage: 'Stainless steel 6×45mm thermal capsule housing a Maxim DS18B20 digital thermometer embedded in thermally-conductive epoxy at the probe apex (32cm depth).',
+        zerthivaRole: 'Provides the precise subterranean temperature reference needed for Rhoades EC normalization: EC₂₅ = EC_T / [1 + 0.0191 · (T - 25)]. Prevents severe (~2% per °C) seasonal temperature distortions in salinity advisories.',
+        ioPaths: [
+          { pin: 'DQ (GPIO4)', type: '1-Wire Bidirectional', desc: '9–12 bit digital serial bus with 4.7kΩ pull-up to 3.3V' }
+        ],
+        specs: [
+          { label: 'Digital Resolution', val: '12-bit (0.0625°C)' },
+          { label: 'Thermometer Accuracy', val: '±0.5°C (-10°C to +85°C)' },
+          { label: 'Factory ROM Code', val: '64-bit unique hardware ID' },
+          { label: 'Protocol', val: 'Maxim 1-Wire Single Bus' },
+          { label: 'Conversion Speed', val: '750 ms (12-bit mode)' }
+        ],
+        truthInLabeling: 'Thermometer accuracy verified against certified Fluke reference probe across 5°C to 45°C water bath.'
+      }
+    };
+
+    // Subsystems Grouping Hierarchy
+    const HARDWARE_SUBSYSTEMS = [
+      { key: 'power', label: '1. Power Subsystem', icon: 'zap', ids: ['pv-solar', 'battery-18650'] },
+      { key: 'core', label: '2. Processing & Core Logic', icon: 'cpu', ids: ['esp32-mcu', 'esp32-antenna', 'esp32-headers'] },
+      { key: 'comms', label: '3. Communications & Telemetry', icon: 'radio', ids: ['mod-sim800l', 'sim800-antenna', 'mod-sdcard'] },
+      { key: 'enclosure', label: '4. Physical & Enclosure', icon: 'shield', ids: ['asa-chassis', 'nitrile-seals', 'sentry-beacon', 'cable-gland', 'jst-header', 'wire-harness'] },
+      { key: 'sensing', label: '5. Subsurface Sensing Array', icon: 'crosshair', ids: ['probe-shaft', 'ec-ring-upper', 'ec-ring-lower', 'vwc-blade', 'temp-tip'] }
+    ];
+
+    // Global Laboratory State Engine
+    const labState = {
+      active: false,
+      deviceView: 'gateway',      // 'gateway' | 'probe' | 'integrated'
+      inspectionMode: 'assembled', // 'assembled' | 'exploded' | 'wiring'
+      explodePercent: 0,
+      selectedPartId: 'esp32-mcu',
+      autoRotate: false,
+      activeWireFilter: 'all',
+      highlightedMeshes: [],
+      savedFieldState: null
+    };
+
+    // Camera preset framings for Macro Studio
+    const LAB_CAMERA_PRESETS = {
+      gateway: {
+        pos: new THREE.Vector3(0.24, 0.22, 0.38),
+        target: new THREE.Vector3(0.0, 0.14, 0.0),
+        pedestalY: -0.01
+      },
+      probe: {
+        pos: new THREE.Vector3(0.20, -0.15, 0.34),
+        target: new THREE.Vector3(0.0, -0.20, 0.0),
+        pedestalY: -0.34
+      },
+      integrated: {
+        pos: new THREE.Vector3(0.38, 0.05, 0.58),
+        target: new THREE.Vector3(0.0, -0.04, 0.0),
+        pedestalY: -0.34
+      }
+    };
+
+    // Initialize Device Laboratory
+    function initDeviceLaboratory() {
+      renderLabTree();
+      if (typeof lucide !== 'undefined') lucide.createIcons();
+
+      // Top Bar Leave Button
+      document.getElementById('btn-leave-lab').addEventListener('click', () => {
+        leaveDeviceLaboratory();
+      });
+
+      // Top Header Enter Button
+      const headerEnterBtn = document.getElementById('btn-enter-lab');
+      if (headerEnterBtn) {
+        headerEnterBtn.addEventListener('click', () => {
+          enterDeviceLaboratory();
+        });
+      }
+
+      // Component Card Inspect in Lab Button
+      const cardInspectBtn = document.getElementById('btn-inspect-in-lab');
+      if (cardInspectBtn) {
+        cardInspectBtn.addEventListener('click', () => {
+          if (selectedComponentObj && selectedComponentObj.userData?.id) {
+            enterDeviceLaboratory(selectedComponentObj.userData.id);
+          } else {
+            enterDeviceLaboratory();
+          }
+        });
+      }
+
+      // Device Assembly Switcher
+      ['gateway', 'probe', 'integrated'].forEach(key => {
+        const btn = document.getElementById(`btn-lab-dev-${key}`);
+        if (btn) {
+          btn.addEventListener('click', () => setLabDeviceView(key));
+        }
+      });
+
+      // Inspection Mode Switcher
+      ['assembled', 'exploded', 'wiring'].forEach(mode => {
+        const btn = document.getElementById(`btn-lab-mode-${mode}`);
+        if (btn) {
+          btn.addEventListener('click', () => setLabInspectionMode(mode));
+        }
+      });
+
+      // Continuous Explosion Slider
+      const slider = document.getElementById('slider-lab-explode');
+      if (slider) {
+        slider.addEventListener('input', (e) => {
+          const val = parseInt(e.target.value, 10);
+          applyHardwareExplosionFraction(val / 100.0);
+        });
+      }
+
+      // Auto-Rotate Toggle
+      const autoRotBtn = document.getElementById('btn-lab-autorotate');
+      if (autoRotBtn) {
+        autoRotBtn.addEventListener('click', () => {
+          labState.autoRotate = !labState.autoRotate;
+          autoRotBtn.classList.toggle('active', labState.autoRotate);
+          sound.playPing(labState.autoRotate ? 780 : 540);
+        });
+      }
+
+      // Reset Macro View Button
+      const resetViewBtn = document.getElementById('btn-lab-reset-view');
+      if (resetViewBtn) {
+        resetViewBtn.addEventListener('click', () => resetLabMacroView());
+      }
+
+      // Search Filter
+      const searchInput = document.getElementById('input-lab-filter');
+      const clearBtn = document.getElementById('btn-clear-filter');
+      if (searchInput) {
+        searchInput.addEventListener('input', (e) => {
+          const q = e.target.value.trim().toLowerCase();
+          filterLabTree(q);
+          if (clearBtn) clearBtn.style.display = q ? 'block' : 'none';
+        });
+      }
+      if (clearBtn) {
+        clearBtn.addEventListener('click', () => {
+          searchInput.value = '';
+          clearBtn.style.display = 'none';
+          filterLabTree('');
+        });
+      }
+
+      // Dossier Action Buttons
+      const btnFocusPart = document.getElementById('btn-lab-focus-part');
+      if (btnFocusPart) {
+        btnFocusPart.addEventListener('click', () => {
+          focusOnLabComponent(labState.selectedPartId);
+        });
+      }
+      const btnIsolatePart = document.getElementById('btn-lab-isolate-part');
+      if (btnIsolatePart) {
+        btnIsolatePart.addEventListener('click', () => {
+          isolateLabComponent(labState.selectedPartId);
+        });
+      }
+
+      // Wiring Dock Color Chips
+      const chips = document.querySelectorAll('.wire-chip');
+      chips.forEach(chip => {
+        chip.addEventListener('click', () => {
+          chips.forEach(c => c.classList.remove('active'));
+          chip.classList.add('active');
+          const wireKey = chip.getAttribute('data-wire');
+          setWiringFilter(wireKey);
+        });
+      });
+    }
+
+    // Render CAD Component Tree
+    function renderLabTree() {
+      const treeContainer = document.getElementById('lab-tree-list');
+      if (!treeContainer) return;
+      treeContainer.innerHTML = '';
+
+      HARDWARE_SUBSYSTEMS.forEach(sub => {
+        const catHeader = document.createElement('div');
+        catHeader.className = 'lab-tree-category';
+        catHeader.innerHTML = `<span>${sub.label}</span><span>(${sub.ids.length})</span>`;
+        treeContainer.appendChild(catHeader);
+
+        sub.ids.forEach(id => {
+          const itemData = HARDWARE_COMPONENTS_DATA[id];
+          if (!itemData) return;
+
+          const itemEl = document.createElement('div');
+          itemEl.className = 'lab-tree-item' + (id === labState.selectedPartId ? ' active' : '');
+          itemEl.setAttribute('data-id', id);
+          itemEl.innerHTML = `
+            <div class="lab-tree-item-title">
+              <span class="lab-tree-item-dot" style="background:${getSubsystemColor(sub.key)};"></span>
+              <span>${itemData.name}</span>
+            </div>
+            <span class="badge-evidence" style="font-size:0.52rem; padding:1px 5px;">${itemData.badge}</span>
+          `;
+          itemEl.addEventListener('click', () => {
+            selectLabComponent(id);
+            sound.playPing(720);
+          });
+          treeContainer.appendChild(itemEl);
+        });
+      });
+    }
+
+    function getSubsystemColor(key) {
+      switch(key) {
+        case 'power': return '#f59e0b';
+        case 'core': return '#00ff87';
+        case 'comms': return '#00e5ff';
+        case 'enclosure': return '#94a3b8';
+        case 'sensing': return '#38bdf8';
+        default: return '#00ff87';
+      }
+    }
+
+    // Filter Component Tree
+    function filterLabTree(query) {
+      const items = document.querySelectorAll('.lab-tree-item');
+      items.forEach(el => {
+        const id = el.getAttribute('data-id');
+        const data = HARDWARE_COMPONENTS_DATA[id];
+        if (!data) return;
+        const matches = !query ||
+          data.name.toLowerCase().includes(query) ||
+          data.category.toLowerCase().includes(query) ||
+          data.plainLanguage.toLowerCase().includes(query) ||
+          data.ioPaths.some(p => p.pin.toLowerCase().includes(query) || p.desc.toLowerCase().includes(query));
+        el.style.display = matches ? 'flex' : 'none';
+      });
+    }
+
+    // Enter Device Laboratory Mode
+    function enterDeviceLaboratory(targetPartId = null, targetDevice = null) {
+      if (labState.active) {
+        if (targetPartId) selectLabComponent(targetPartId);
+        return;
+      }
+
+      sound.playPing(660);
+
+      // 1. Save field context
+      labState.savedFieldState = {
+        camPos: camera.position.clone(),
+        camTarget: controls.target.clone(),
+        minDist: controls.minDistance,
+        maxDist: controls.maxDistance,
+        maxPolar: controls.maxPolarAngle,
+        chapter: activeChapterIndex,
+        geologyVis: geologyGroup.visible,
+        plantVis: plantGroup.visible,
+        hydroVis: hydrologyGroup.visible
+      };
+
+      // 2. Hide field UI overlays
+      const narrativePanel = document.getElementById('narrative-panel');
+      const chapterRail = document.querySelector('.chapter-rail');
+      const timelineDock = document.querySelector('.timeline-dock');
+      const visToolbar = document.querySelector('.visibility-toolbar');
+      const compCard = document.getElementById('component-card');
+      const modal = document.getElementById('inspector-modal');
+
+      if (narrativePanel) narrativePanel.style.display = 'none';
+      if (chapterRail) chapterRail.style.display = 'none';
+      if (timelineDock) timelineDock.style.display = 'none';
+      if (visToolbar) visToolbar.style.display = 'none';
+      if (compCard) compCard.style.display = 'none';
+      if (modal) modal.classList.remove('active');
+
+      // 3. Hide field scene elements
+      geologyGroup.visible = false;
+      plantGroup.visible = false;
+      hydrologyGroup.visible = false;
+
+      // 4. Activate studio lighting & turntable pedestal
+      studioPedestal.visible = true;
+      studioLightsGroup.visible = true;
+      gsap.to(keySunLight, { intensity: 0.25, duration: 0.8 });
+      gsap.to(skyFillLight, { intensity: 0.15, duration: 0.8 });
+      gsap.to(earthenBounce, { intensity: 0.05, duration: 0.8 });
+
+      // 5. Position hardwareGroup at studio origin (0, 0, 0)
+      gsap.to(hardwareGroup.position, {
+        x: 0.0,
+        y: 0.0,
+        z: 0.0,
+        duration: 1.2,
+        ease: "power2.inOut"
+      });
+
+      // 6. Set controls for macro CAD inspection
+      controls.minDistance = 0.08;
+      controls.maxDistance = 1.8;
+      controls.maxPolarAngle = Math.PI - 0.05;
+
+      // 7. Choose initial device framing
+      let initialDevice = targetDevice || 'gateway';
+      if (targetPartId && HARDWARE_COMPONENTS_DATA[targetPartId]) {
+        initialDevice = HARDWARE_COMPONENTS_DATA[targetPartId].targetAssembly || 'gateway';
+      }
+      setLabDeviceView(initialDevice, false);
+
+      // 8. Select target component
+      const targetId = targetPartId || (initialDevice === 'probe' ? 'ec-ring-upper' : 'esp32-mcu');
+      selectLabComponent(targetId);
+
+      // 9. Show overlay
+      const overlay = document.getElementById('device-lab-overlay');
+      if (overlay) overlay.classList.add('active');
+
+      if (typeof lucide !== 'undefined') lucide.createIcons();
+      labState.active = true;
+    }
+
+    // Leave Device Laboratory & Return to Research Field
+    function leaveDeviceLaboratory() {
+      if (!labState.active) return;
+      sound.playPing(520);
+
+      // 1. Hide lab overlay
+      const overlay = document.getElementById('device-lab-overlay');
+      if (overlay) overlay.classList.remove('active');
+
+      // 2. Reset explosion and auto-rotation
+      labState.autoRotate = false;
+      controls.autoRotate = false;
+      const autoRotBtn = document.getElementById('btn-lab-autorotate');
+      if (autoRotBtn) autoRotBtn.classList.remove('active');
+      applyHardwareExplosionFraction(0.0);
+      setLabInspectionMode('assembled');
+
+      // 3. Clear mesh highlights
+      clearLabHighlights();
+
+      // 4. Return hardware to field coordinates
+      gsap.to(hardwareGroup.position, {
+        x: -0.55,
+        y: 0.02,
+        z: -0.30,
+        duration: 1.2,
+        ease: "power2.inOut"
+      });
+
+      // 5. Turn off studio lighting & pedestal
+      studioPedestal.visible = false;
+      studioLightsGroup.visible = false;
+      gsap.to(keySunLight, { intensity: 2.85, duration: 0.8 });
+      gsap.to(skyFillLight, { intensity: 0.80, duration: 0.8 });
+      gsap.to(earthenBounce, { intensity: 0.70, duration: 0.8 });
+
+      // 6. Restore field scene visibility
+      if (labState.savedFieldState) {
+        geologyGroup.visible = labState.savedFieldState.geologyVis;
+        plantGroup.visible = labState.savedFieldState.plantVis;
+        hydrologyGroup.visible = labState.savedFieldState.hydroVis;
+
+        controls.minDistance = labState.savedFieldState.minDist;
+        controls.maxDistance = labState.savedFieldState.maxDist;
+        controls.maxPolarAngle = labState.savedFieldState.maxPolar;
+
+        gsap.to(camera.position, {
+          x: labState.savedFieldState.camPos.x,
+          y: labState.savedFieldState.camPos.y,
+          z: labState.savedFieldState.camPos.z,
+          duration: 1.4,
+          ease: "power2.inOut"
+        });
+        gsap.to(controls.target, {
+          x: labState.savedFieldState.camTarget.x,
+          y: labState.savedFieldState.camTarget.y,
+          z: labState.savedFieldState.camTarget.z,
+          duration: 1.4,
+          ease: "power2.inOut"
+        });
+      }
+
+      // 7. Restore field UI panels
+      const narrativePanel = document.getElementById('narrative-panel');
+      const chapterRail = document.querySelector('.chapter-rail');
+      const timelineDock = document.querySelector('.timeline-dock');
+      const visToolbar = document.querySelector('.visibility-toolbar');
+
+      if (narrativePanel) narrativePanel.style.display = 'block';
+      if (chapterRail) chapterRail.style.display = 'flex';
+      if (timelineDock) timelineDock.style.display = 'flex';
+      if (visToolbar) visToolbar.style.display = 'flex';
+
+      labState.active = false;
+    }
+
+    // Set Device Assembly View (Gateway vs Probe vs Full System)
+    function setLabDeviceView(deviceKey, animate = true) {
+      labState.deviceView = deviceKey;
+
+      // Update segmented button UI
+      ['gateway', 'probe', 'integrated'].forEach(k => {
+        const btn = document.getElementById(`btn-lab-dev-${k}`);
+        if (btn) btn.classList.toggle('active', k === deviceKey);
+      });
+
+      const preset = LAB_CAMERA_PRESETS[deviceKey] || LAB_CAMERA_PRESETS.gateway;
+      studioPedestal.position.y = preset.pedestalY;
+
+      const dur = animate ? 1.2 : 0.0;
+      gsap.to(camera.position, {
+        x: preset.pos.x,
+        y: preset.pos.y,
+        z: preset.pos.z,
+        duration: dur,
+        ease: "power2.inOut"
+      });
+      gsap.to(controls.target, {
+        x: preset.target.x,
+        y: preset.target.y,
+        z: preset.target.z,
+        duration: dur,
+        ease: "power2.inOut"
+      });
+    }
+
+    // Set Inspection Mode (Assembled vs Exploded vs Wiring)
+    function setLabInspectionMode(modeKey) {
+      labState.inspectionMode = modeKey;
+
+      ['assembled', 'exploded', 'wiring'].forEach(m => {
+        const btn = document.getElementById(`btn-lab-mode-${m}`);
+        if (btn) btn.classList.toggle('active', m === modeKey);
+      });
+
+      const wiringDock = document.getElementById('lab-wiring-dock');
+
+      if (modeKey === 'assembled') {
+        gsap.to(labState, {
+          explodePercent: 0,
+          duration: 0.8,
+          ease: "power2.inOut",
+          onUpdate: () => applyHardwareExplosionFraction(labState.explodePercent / 100.0)
+        });
+        if (wiringDock) wiringDock.style.display = 'none';
+        resetWiringHighlight();
+      } else if (modeKey === 'exploded') {
+        gsap.to(labState, {
+          explodePercent: 100,
+          duration: 1.0,
+          ease: "back.out(1.2)",
+          onUpdate: () => applyHardwareExplosionFraction(labState.explodePercent / 100.0)
+        });
+        if (wiringDock) wiringDock.style.display = 'none';
+        resetWiringHighlight();
+      } else if (modeKey === 'wiring') {
+        // Wiring mode: partially explode so wires are unobstructed
+        if (labState.explodePercent < 40) {
+          gsap.to(labState, {
+            explodePercent: 45,
+            duration: 0.8,
+            ease: "power2.out",
+            onUpdate: () => applyHardwareExplosionFraction(labState.explodePercent / 100.0)
+          });
+        }
+        if (wiringDock) wiringDock.style.display = 'flex';
+        setWiringFilter('all');
+      }
+    }
+
+    // Continuous Hardware Explosion Interpolation (0.0 to 1.0)
+    function applyHardwareExplosionFraction(t) {
+      t = Math.max(0.0, Math.min(1.0, t));
+      labState.explodePercent = Math.round(t * 100);
+
+      const slider = document.getElementById('slider-lab-explode');
+      const readout = document.getElementById('readout-lab-explode');
+      if (slider) slider.value = labState.explodePercent;
+      if (readout) readout.innerText = `${labState.explodePercent}%`;
+
+      // Gateway Exploded CAD offsets
+      hwParts.solarWafer.position.y = 0.28 + (0.60 - 0.28) * t;
+      hwParts.sentryRing.position.y = 0.25 + (0.44 - 0.25) * t;
+      hwParts.enclosure.position.y  = 0.00 + (0.16 - 0.00) * t;
+
+      hwParts.esp32Core.position.x   = -0.16 * t;
+      hwParts.esp32Core.position.y   = 0.20 * t;
+      hwParts.esp32Core.position.z   = 0.02 * t;
+
+      hwParts.sim800Mod.position.x   = 0.16 * t;
+      hwParts.sim800Mod.position.y   = 0.22 * t;
+      hwParts.sim800Mod.position.z   = -0.08 * t;
+
+      hwParts.sdCardMod.position.x   = 0.16 * t;
+      hwParts.sdCardMod.position.y   = 0.12 * t;
+      hwParts.sdCardMod.position.z   = 0.08 * t;
+
+      hwParts.batteryPack.position.x = -0.16 * t;
+      hwParts.batteryPack.position.y = 0.06 * t;
+      hwParts.batteryPack.position.z = -0.04 * t;
+
+      hwParts.cableHarness.position.y = -0.06 * t;
+      hwParts.probeShaft.position.y   = -0.20 * t;
+
+      // Subsurface Probe Dissection offsets
+      if (typeof probeParts !== 'undefined' && probeParts) {
+        if (probeParts.ecRing1) probeParts.ecRing1.position.y = -0.15 + (0.07) * t;
+        if (probeParts.ecRing2) probeParts.ecRing2.position.y = -0.25 + (-0.06) * t;
+        if (probeParts.bladeMesh) probeParts.bladeMesh.position.x = (0.07) * t;
+        if (probeParts.tipCollarMesh) probeParts.tipCollarMesh.position.y = -0.285 + (-0.06) * t;
+        if (probeParts.tipMesh) probeParts.tipMesh.position.y = -0.31 + (-0.08) * t;
+      }
+    }
+
+    // Select Component in Laboratory Mode (Bi-directional)
+    function selectLabComponent(partId) {
+      const data = HARDWARE_COMPONENTS_DATA[partId];
+      if (!data) return;
+
+      labState.selectedPartId = partId;
+
+      // Update tree active item
+      const treeItems = document.querySelectorAll('.lab-tree-item');
+      treeItems.forEach(item => {
+        const active = (item.getAttribute('data-id') === partId);
+        item.classList.toggle('active', active);
+        if (active) item.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+      });
+
+      // Highlight corresponding 3D meshes
+      highlightLabMeshes(partId);
+
+      // Render Technical Dossier
+      renderLabDossier(data);
+    }
+
+    // Highlight corresponding 3D meshes with emissive cyan halo
+    function highlightLabMeshes(partId) {
+      clearLabHighlights();
+
+      hardwareGroup.traverse(child => {
+        if (child.isMesh && child.userData?.id === partId) {
+          labState.highlightedMeshes.push({
+            mesh: child,
+            origEmissive: child.material.emissive ? child.material.emissive.clone() : new THREE.Color(0,0,0),
+            origEmissiveIntensity: child.material.emissiveIntensity || 0
+          });
+          if (child.material) {
+            child.material.emissive = new THREE.Color(0x00e5ff);
+            child.material.emissiveIntensity = 1.4;
+          }
+        }
+      });
+    }
+
+    // Clear active highlights
+    function clearLabHighlights() {
+      labState.highlightedMeshes.forEach(h => {
+        if (h.mesh && h.mesh.material) {
+          h.mesh.material.emissive.copy(h.origEmissive);
+          h.mesh.material.emissiveIntensity = h.origEmissiveIntensity;
+        }
+      });
+      labState.highlightedMeshes = [];
+    }
+
+    // Render Component Technical Dossier Panel
+    function renderLabDossier(data) {
+      document.getElementById('dossier-category').innerText = `${data.subsystemLabel.toUpperCase()} // ${data.category.toUpperCase()}`;
+      document.getElementById('dossier-title').innerText = data.name;
+      document.getElementById('dossier-badge').innerText = data.badge;
+
+      document.getElementById('dossier-plain-lang').innerText = data.plainLanguage;
+      document.getElementById('dossier-zerthiva-role').innerText = data.zerthivaRole;
+      document.getElementById('dossier-truth-text').innerText = data.truthInLabeling;
+
+      // Populate I/O Table
+      const ioTable = document.getElementById('dossier-io-table');
+      if (ioTable) {
+        let html = '<tr><th>Pin / Line</th><th>Type</th><th>Protocol / Description</th></tr>';
+        data.ioPaths.forEach(p => {
+          html += `<tr><td style="color:#fff; font-weight:700;">${p.pin}</td><td style="color:var(--accent-amber);">${p.type}</td><td style="color:var(--text-muted);">${p.desc}</td></tr>`;
+        });
+        ioTable.innerHTML = html;
+      }
+
+      // Populate Specs Grid
+      const specsGrid = document.getElementById('dossier-specs-grid');
+      if (specsGrid) {
+        let html = '';
+        data.specs.forEach(s => {
+          html += `<div class="spec-item"><div class="spec-label">${s.label}</div><div class="spec-value">${s.val}</div></div>`;
+        });
+        specsGrid.innerHTML = html;
+      }
+    }
+
+    // Focus Macro Camera on Selected Component
+    function focusOnLabComponent(partId) {
+      let targetMesh = null;
+      hardwareGroup.traverse(child => {
+        if (child.isMesh && child.userData?.id === partId && !targetMesh) {
+          targetMesh = child;
+        }
+      });
+
+      if (targetMesh) {
+        sound.playPing(840);
+        const worldPos = new THREE.Vector3();
+        targetMesh.getWorldPosition(worldPos);
+
+        gsap.to(controls.target, {
+          x: worldPos.x,
+          y: worldPos.y,
+          z: worldPos.z,
+          duration: 1.0,
+          ease: "power2.inOut"
+        });
+      }
+    }
+
+    // Isolate component in 3D (ghost others)
+    function isolateLabComponent(partId) {
+      sound.playPing(760);
+      hardwareGroup.traverse(child => {
+        if (child.isMesh) {
+          if (child.userData?.id === partId) {
+            child.material.opacity = 1.0;
+            child.material.transparent = false;
+          } else {
+            child.material.transparent = true;
+            child.material.opacity = 0.20;
+          }
+        }
+      });
+    }
+
+    // Reset macro camera framing to current assembly preset
+    function resetLabMacroView() {
+      sound.playPing(600);
+      setLabDeviceView(labState.deviceView, true);
+      // Restore full opacity on all meshes
+      hardwareGroup.traverse(child => {
+        if (child.isMesh) {
+          child.material.transparent = false;
+          child.material.opacity = 1.0;
+        }
+      });
+    }
+
+    // Wiring Filter & Trace Glow
+    function setWiringFilter(wireKey) {
+      labState.activeWireFilter = wireKey;
+
+      if (typeof wireMeshes === 'undefined' || !wireMeshes) return;
+
+      wireMeshes.forEach(w => {
+        const matches = (wireKey === 'all' || w.wireKey === wireKey);
+        if (matches) {
+          w.mesh.material.emissive.set(w.defaultColor);
+          w.mesh.material.emissiveIntensity = 2.8;
+          w.mesh.material.opacity = 1.0;
+        } else {
+          w.mesh.material.emissiveIntensity = 0.15;
+          w.mesh.material.opacity = 0.25;
+        }
+      });
+
+      // Dim enclosure body so wires shine through
+      if (hwParts && hwParts.enclosure) {
+        hwParts.enclosure.traverse(child => {
+          if (child.isMesh) {
+            child.material.transparent = true;
+            child.material.opacity = 0.25;
+          }
+        });
+      }
+    }
+
+    function resetWiringHighlight() {
+      if (typeof wireMeshes !== 'undefined' && wireMeshes) {
+        wireMeshes.forEach(w => {
+          w.mesh.material.emissive.set(0x000000);
+          w.mesh.material.emissiveIntensity = 0.0;
+          w.mesh.material.opacity = 1.0;
+        });
+      }
+      if (hwParts && hwParts.enclosure) {
+        hwParts.enclosure.traverse(child => {
+          if (child.isMesh) {
+            child.material.transparent = false;
+            child.material.opacity = 1.0;
+          }
+        });
+      }
+    }
+
+    initDeviceLaboratory();
 
     // Start with the opening cinematic sweep
     startCinematicOpening();
