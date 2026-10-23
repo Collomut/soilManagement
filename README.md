@@ -1,11 +1,12 @@
-﻿# 🌱 Zerthiva: Soil Intelligence System (SIS)
+# 🌱 Zerthiva: Soil Intelligence System (SIS)
 > *"Know Your Soil. Feed Your Field."*
 
-[![Competition](https://img.shields.io/badge/Innovation_Competition-Master_Submission-059669?style=for-the-badge)](./index.html)
-[![Stage](https://img.shields.io/badge/Project_Stage-Prototype-d97706?style=for-the-badge)](./index.html)
-[![Hardware](https://img.shields.io/badge/Hardware_Cost-$34.80_BOM-0284c7?style=for-the-badge)](./index.html)
-[![Offline](https://img.shields.io/badge/Operation-100%25_Offline-10b981?style=for-the-badge)](./index.html)
+[![Competition](https://img.shields.io/badge/Innovation_Competition-Master_Submission-059669?style=for-the-badge)](https://collomut.github.io/soilManagement/)
 [![Live Site](https://img.shields.io/badge/Live_Site-GitHub_Pages-059669?style=for-the-badge&logo=github)](https://collomut.github.io/soilManagement/)
+[![3D Viewer](https://img.shields.io/badge/3D_Viewer-Live_Simulation-0284c7?style=for-the-badge&logo=three.js)](https://collomut.github.io/soilManagement/zerthiva_interactive_3d.html)
+[![3D Branch](https://img.shields.io/badge/Branch-trial3d-10b981?style=for-the-badge&logo=git)](https://github.com/Collomut/soilManagement/tree/trial3d)
+[![Hardware](https://img.shields.io/badge/Hardware_Cost-$34.80_BOM-0284c7?style=for-the-badge)](https://collomut.github.io/soilManagement/#section14)
+[![Offline](https://img.shields.io/badge/Operation-100%25_Offline-10b981?style=for-the-badge)](https://collomut.github.io/soilManagement/#section11)
 
 **Zerthiva** is an affordable, field-deployed soil intelligence system that monitors soil salinity (apparent bulk Electrical Conductivity) and volumetric moisture in real time, provides precision irrigation timing guidance based on soil water depletion, and issues crop-specific salinity lockout and leaching alerts to prevent osmotic drought and irreversible soil degradation.
 
@@ -13,14 +14,14 @@
 
 ## 📑 Core Documentation Access
 
-This repository contains the complete 58-section master project plan and technical dossier:
+This repository contains the complete 58-section master project plan, technical dossier, and 3D simulation:
 
-* 🌐 **[Interactive 3D Soil Intelligence Viewer](./zerthiva_interactive_3d.html)**  
+* 🌾 **[Interactive 3D Soil Intelligence Viewer (Live WebGL)](https://collomut.github.io/soilManagement/zerthiva_interactive_3d.html)** · [🌿 Explore the `trial3d` Branch](https://github.com/Collomut/soilManagement/tree/trial3d)  
   *Cinematic WebGL real-time 3D soil cutaway visualization with autonomous agronomic simulation, live sensor telemetry, and PBR-rendered soil layers.*
-* 🌐 **[Interactive Web Documentation](./index.html)**  
+* 🌐 **[Interactive Web Documentation (Live Platform)](https://collomut.github.io/soilManagement/)**  
   *The full self-contained master document featuring live real-time position scrollspy, categorized 5-tier sidebar navigation, dynamic reading progress bar, bold topic hierarchy, and responsive data tables.*
 * 🖨️ **Print & PDF Export:**  
-  *Open `index.html` in Chrome or Edge and press `Ctrl+P` (Save as PDF). Built-in `@media print` rules automatically format the document into a clean, 74-page master submission with section page breaks, edge-to-edge margins, and hidden navigation.*
+  *Open [index.html](https://collomut.github.io/soilManagement/) in Chrome or Edge and press `Ctrl+P` (Save as PDF). Built-in `@media print` rules automatically format the document into a clean, 74-page master submission with section page breaks, edge-to-edge margins, and hidden navigation.*
 
 ---
 
@@ -39,7 +40,7 @@ Globally, soil salinization destroys **1.5 million hectares of arable land annua
 
 ## 🛠️ The Solution & System Architecture
 
-Zerthiva resolves this with a **\$34.80 BOM field node**:
+Zerthiva resolves this with a **$34.80 BOM field node**:
 
 ```
  [ Field Soil ] 
