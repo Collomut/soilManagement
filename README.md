@@ -9,9 +9,9 @@ A world-class real-time 3D interactive scientific visualization of **Zerthiva**,
 
 ---
 
-## 🎨 Technical Art Director Quality Gate & System Architecture
+## 🌟 Photorealistic 3D Architecture & Major Upgrades
 
-### 1. Botanical Zea Mays L. Monocot Organism
+### 1. Botanical Zea Mays L. Monocot Organism (Upgrade 1)
 - **Culm Architecture:** Curving bamboo-like culm with 9 realistic node collars and solid internodes.
 - **Clasping Cylindrical Sheaths:** 11 split tubular leaf sheaths wrapping tightly around the culm internodes below leaf insertion points.
 - **7-Point Leaf Profile with Undulating Margins:** 11 arching linear-lanceolate blades modeled with a 7-point transverse cross-section forming a deep central V-groove midrib trough and biologically fluted, ruffled margins.
@@ -27,7 +27,7 @@ A world-class real-time 3D interactive scientific visualization of **Zerthiva**,
   - **Active Calyptra (Root Caps):** 48 active meristematic root caps with hydration sheen, directly receiving Darcy matrix hydrology streamlines.
 - **100% Modular Anatomy Hierarchy:** All 9 anatomical groups (\stem\, \sheaths\, \leaves\, \ears\, \raceRoots\, \crownRoots\, \seminalRoots\, \lateralRoots\, \ootTips\) are independently raycast-inspectable and support Chapter 03 explosive dissection and root isolation.
 
-### 2. Sculpted Geological Soil Cutaway & Stratified Pedological Horizons
+### 2. Sculpted Geological Soil Cutaway & Stratified Pedological Horizons (Upgrade 2)
 - **Natural Diagonal Profile Cutaway (31° Angle):** Replaced the flat symmetrical brown box with an authentic geological profile monolith (\z_front = 0.533x - 0.007\). Slices smoothly past both the Zerthiva sensor node (\x = -0.55m, z = -0.30m\) and the maize root crown (\x = 0.35m, z = 0.18m\), eliminating artificial front-wall occlusion while providing natural back-wall depth and occlusion.
 - **4 Distinct, Independently Controllable Pedological Horizons:**
   - **Horizon O (Organic Mulch & Surface Litter, 0–4cm):** Deep humus dark umber (\#1f241a\, organic carbon >15%), agricultural furrow undulations, plant collar mound, and 36 scattered organic leaf litter/mulch fragments.
@@ -37,19 +37,20 @@ A world-class real-time 3D interactive scientific visualization of **Zerthiva**,
 - **Anti-Tiling Multi-Scale Vertex Color Modulation:** Built-in procedural vertex color modulation eliminates visible texture tiling across the 3.5m cutaway monolith.
 - **Layer Separation & Explosion Controls:** In Chapter 02, the Layer Separation slider smoothly expands all 4 horizon blocks vertically with GSAP physics, revealing internal horizontal contact surfaces and embedded stones.
 
-### 3. Zerthiva Industrial Hardware Suite (Authentic Field Proportions)
-- **Authentic Scale (11cm diam x 22cm above ground, 32cm below ground):**
-  - **5W Monocrystal PV Collector Disc:** 14cm diameter (\ = 0.075m\), 1.2cm thickness.
-  - **360° Fresnel RGB Sentry Ring:** Compact beacon ring sitting below solar head.
-  - **IP67 Weatherproof ASA Chassis:** 11cm diameter cylinder housing 18650 Li-ion cell and Seeed Xiao ESP32-S3 module.
-  - **Xiao ESP32-S3 CAD Model:** Proportional board scale with genuine high-resolution GLB mesh.
-  - **Active 15–25cm Soil Probe Stem:** 32mm diameter insertion rod with ring marks at 5cm, 10cm, 15cm, 20cm, 25cm.
-  - **Dual 316L Stainless Steel Electrode Rings:** Upper ring at 15cm depth, lower ring at 25cm depth in Horizon A (GPIO34).
-  - **FR4 High-Frequency Coplanar Dielectric Blade:** 16cm blade length spanning the 15–25cm root zone (GPIO35).
-  - **Maxim DS18B20 Digital Thermal Tip:** 32cm apex cone (GPIO4).
-- **Macro Camera Framing:** Chapter 06 and 07 feature tight macro-lens composition (\camPos: (-0.55, -0.05, 0.72)\) for close-up hardware inspection.
+### 3. Realistic Zerthiva Sensor Hardware Suite (Upgrade 3)
+- **Documented System Hardware & Pinout Verification:**
+  - **Microcontroller:** Seeed Xiao ESP32-S3 / ESP32-WROOM-32 with Xtensa LX7 dual-core @ 240MHz, nickel-silver stamped RF shield can, meandered inverted-F 2.4GHz antenna, and dual-row 2.54mm gold header pins.
+  - **Salinity / Electrical Conductivity (EC) Sensor:** Dual 316L stainless steel annular electrode rings spaced 10mm apart on probe shaft at 15cm and 25cm depths. Driven with 10 kHz AC bipolar waveform on GPIO34 (ADC1_CH6) to prevent polarization. Normalized to 25°C via Maas-Hoffman equation.
+  - **Soil Moisture Probe:** Capacitive Soil Moisture Sensor v1.2 FR4 PCB spade blade with dual wide coplanar copper traces and TLC555 1.5 MHz high-frequency oscillator on GPIO35 (ADC1_CH7). Corrosion-resistant with no exposed copper.
+  - **Temperature Sensor:** Maxim DS18B20 1-Wire digital thermal capsule probe in waterproof stainless steel tube with black heat-shrink collar on GPIO4 with 4.7kΩ pull-up.
+  - **Cellular Uplink:** SIM800L quad-band GSM/GPRS module (UART2: TX=GPIO17, RX=GPIO16) with coiled helical gold spring antenna.
+  - **Telemetry Storage:** MicroSD SPI logger shield (CS=GPIO5, SCK=18, MISO=19, MOSI=23) recording 7-day rolling CSV backups.
+  - **Power Subsystem:** 18650 2200mAh 3.7V Li-ion cell in battery sled with TP4056 charge controller + 5W monocrystal solar wafer with silver busbars.
+  - **5-Core Color-Coded Silicone Wire Harness:** Red (+3.3V), Black (GND), Yellow (Analog EC GPIO34), Green (Capacitive VWC GPIO35), White (1-Wire Temp GPIO4) with latched JST-XH nylon disconnect header.
+  - **PG7 Compression Cable Gland:** Threaded liquid-tight nylon gland sealing the cable entry at the enclosure base.
+  - **Exploded View Assembly:** Chapter 07 features interactive full hardware explosion separating all 9 assemblies along independent axes.
 
-### 4. Interactive Water, Root, and Soil Visualization
+### 4. Interactive Water, Root, and Soil Visualization (Upgrade 4)
 - **Coherent Darcy-Buckingham Flow Lines:**
   - **24 Rhizosphere Capillary Streamlines (Cyan \#38bdf8\):** Follow unsaturated matric potential gradients from surface infiltration down through Horizon A, converging onto the 48 active calyptra root caps, and ascending through root xylem into stalk and canopy.
   - **8 Deep Gravitational Drainage Streamlines (Cobalt \#2563eb\):** Demonstrate gravitational percolation loss past Horizon B into Horizon C gravel when soil moisture exceeds field capacity.

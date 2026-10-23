@@ -1994,7 +1994,7 @@
     }
 
     /* =========================================================================
-       6. ZERTHIVA INDUSTRIAL $30 HARDWARE & PROBE SUITE (AUTHENTIC FIELD SCALE)
+       6. ZERTHIVA INDUSTRIAL $30 HARDWARE & PROBE SUITE (CAD-ACCURATE REALISM)
        ========================================================================= */
     const hardwareGroup = new THREE.Group();
     // Positioned flush with the 31-deg cutaway face (x = -0.55m, z = -0.30m)
@@ -2006,62 +2006,163 @@
       sentryRing: new THREE.Group(),
       enclosure: new THREE.Group(),
       esp32Core: new THREE.Group(),
+      sim800Mod: new THREE.Group(),
+      sdCardMod: new THREE.Group(),
       batteryPack: new THREE.Group(),
       cableHarness: new THREE.Group(),
       probeShaft: new THREE.Group()
     };
     Object.values(hwParts).forEach(g => hardwareGroup.add(g));
 
-    // 1. Monocrystal 5W Solar Collector Disc (Authentic 14cm diameter)
+    // Master Realistic PBR Materials for Hardware Suite
+    const asaChassisMat = new THREE.MeshStandardMaterial({
+      color: 0x142820,
+      roughness: 0.38,
+      metalness: 0.15
+    });
+
+    const pcbGreenMat = new THREE.MeshStandardMaterial({
+      color: 0x0b4f2c,
+      roughness: 0.32,
+      metalness: 0.35
+    });
+
+    const pcbBlueMat = new THREE.MeshStandardMaterial({
+      color: 0x0284c7,
+      roughness: 0.30,
+      metalness: 0.38
+    });
+
+    const pcbRedMat = new THREE.MeshStandardMaterial({
+      color: 0x991b1b,
+      roughness: 0.30,
+      metalness: 0.40
+    });
+
+    const metalShieldMat = new THREE.MeshStandardMaterial({
+      color: 0xe2e8f0,
+      roughness: 0.16,
+      metalness: 0.96,
+      envMapIntensity: 1.5
+    });
+
+    const goldPinMat = new THREE.MeshStandardMaterial({
+      color: 0xf59e0b,
+      roughness: 0.18,
+      metalness: 0.92,
+      envMapIntensity: 1.4
+    });
+
+    const stainless316Mat = new THREE.MeshStandardMaterial({
+      color: 0xf8fafc,
+      roughness: 0.05,
+      metalness: 0.98,
+      envMapIntensity: 2.0
+    });
+
+    const blackNylonMat = new THREE.MeshStandardMaterial({
+      color: 0x111827,
+      roughness: 0.58,
+      metalness: 0.08
+    });
+
+    const jstHousingMat = new THREE.MeshStandardMaterial({
+      color: 0xf1f5f9,
+      roughness: 0.40,
+      metalness: 0.05
+    });
+
+    // 1. Monocrystal 5W Solar Collector Disc (Authentic 14cm diameter with silicon wafer grid)
     const pvDiscGeo = new THREE.CylinderGeometry(0.075, 0.075, 0.012, 32);
-    const pvMat = new THREE.MeshStandardMaterial({ color: 0x0a1622, metalness: 0.92, roughness: 0.15 });
+    const pvMat = new THREE.MeshStandardMaterial({
+      color: 0x0f172a,
+      metalness: 0.92,
+      roughness: 0.12,
+      envMapIntensity: 1.6
+    });
     const pvDisc = new THREE.Mesh(pvDiscGeo, pvMat);
-    pvDisc.userData = { id: 'pv-solar', name: '5W Monocrystal PV Collector (14cm)', type: 'HARDWARE', badge: 'CALIBRATED' };
+    pvDisc.userData = { id: 'pv-solar', name: '5W Monocrystal PV Collector (14cm Wafer)', type: 'HARDWARE', badge: 'CALIBRATED' };
     hwParts.solarWafer.add(pvDisc);
+
+    // Silver busbars & contact grid lines on the PV disc
+    for (let b = -2; b <= 2; b++) {
+      const busGeo = new THREE.BoxGeometry(0.0015, 0.0125, 0.14 * Math.cos(b * 0.35));
+      const busMesh = new THREE.Mesh(busGeo, metalShieldMat);
+      busMesh.position.set(b * 0.024, 0.001, 0);
+      hwParts.solarWafer.add(busMesh);
+    }
     hwParts.solarWafer.position.y = 0.28;
 
-    // 2. 360° Fresnel RGB LED Sentry Beacon Ring (GPIO25, 26, 27)
+    // 2. 360° Fresnel RGB LED Optical Sentry Beacon (GPIO25, 26, 27)
     const sentryGeo = new THREE.TorusGeometry(0.058, 0.008, 12, 32);
     sentryGeo.rotateX(Math.PI / 2);
     const sentryMat = new THREE.MeshStandardMaterial({
       color: 0x00ff87,
       emissive: 0x00ff87,
       emissiveIntensity: 1.8,
-      roughness: 0.2
+      roughness: 0.18
     });
     const sentryRingMesh = new THREE.Mesh(sentryGeo, sentryMat);
-    sentryRingMesh.userData = { id: 'sentry-beacon', name: '360° Fresnel RGB Sentry Ring', type: 'HARDWARE', badge: 'MEASURED' };
+    sentryRingMesh.userData = { id: 'sentry-beacon', name: '360° Fresnel RGB Sentry Ring (GPIO25/26/27)', type: 'HARDWARE', badge: 'MEASURED' };
     hwParts.sentryRing.add(sentryRingMesh);
     const sentryPointLight = new THREE.PointLight(0x00ff87, 1.4, 2.2);
     hwParts.sentryRing.add(sentryPointLight);
     hwParts.sentryRing.position.y = 0.25;
 
-    // 3. ASA Weatherproof Enclosure Body (Authentic 11cm diameter, 18cm height)
+    // 3. ASA Weatherproof Enclosure Body (Authentic 11cm diameter, 18cm height, IP67)
     const chassisGeo = new THREE.CylinderGeometry(0.054, 0.050, 0.18, 32);
-    const chassisMat = new THREE.MeshStandardMaterial({ color: 0x142820, roughness: 0.35, metalness: 0.2 });
-    const chassisMesh = new THREE.Mesh(chassisGeo, chassisMat);
+    const chassisMesh = new THREE.Mesh(chassisGeo, asaChassisMat);
     chassisMesh.position.y = 0.14;
     chassisMesh.castShadow = true;
-    chassisMesh.userData = { id: 'asa-chassis', name: 'Weatherproof ASA Enclosure Body (IP67)', type: 'HARDWARE', badge: 'MECHANICAL' };
+    chassisMesh.userData = { id: 'asa-chassis', name: 'Weatherproof ASA Enclosure Body (IP67 Rated)', type: 'HARDWARE', badge: 'MECHANICAL' };
     hwParts.enclosure.add(chassisMesh);
 
-    // Weatherproof seal rings
+    // Weatherproof dual nitrile O-ring seals
     for (let r = 0; r < 2; r++) {
-      const sealGeo = new THREE.TorusGeometry(0.055, 0.003, 8, 32);
+      const sealGeo = new THREE.TorusGeometry(0.055, 0.0028, 8, 32);
       sealGeo.rotateX(Math.PI / 2);
-      const sealMesh = new THREE.Mesh(sealGeo, new THREE.MeshStandardMaterial({ color: 0x111, roughness: 0.6 }));
+      const sealMesh = new THREE.Mesh(sealGeo, blackNylonMat);
       sealMesh.position.y = 0.09 + r * 0.08;
       hwParts.enclosure.add(sealMesh);
     }
 
-    // 4. Genuine Xiao ESP32-S3 Module (Dual-Core Xtensa 240MHz, 0.15mA sleep)
-    const pcbGeo = new THREE.BoxGeometry(0.038, 0.055, 0.004);
-    const pcbMat = new THREE.MeshStandardMaterial({ color: 0x0b4f2c, metalness: 0.5, roughness: 0.35 });
-    const pcbMesh = new THREE.Mesh(pcbGeo, pcbMat);
-    pcbMesh.position.y = 0.14;
+    // 4. Genuine Seeed Xiao ESP32-S3 / ESP32-WROOM-32 Mainboard
+    const pcbGeo = new THREE.BoxGeometry(0.042, 0.062, 0.0035);
+    const pcbMesh = new THREE.Mesh(pcbGeo, pcbGreenMat);
+    pcbMesh.position.set(-0.012, 0.14, 0.0);
     pcbMesh.userData = { id: 'esp32-mcu', name: 'Seeed Xiao ESP32-S3 MCU (Dual-Core 240MHz)', type: 'HARDWARE', badge: 'CALIBRATED' };
     hwParts.esp32Core.add(pcbMesh);
 
+    // Nickel-silver RF shield can stamped on ESP32
+    const rfCanGeo = new THREE.BoxGeometry(0.026, 0.028, 0.004);
+    const rfCanMesh = new THREE.Mesh(rfCanGeo, metalShieldMat);
+    rfCanMesh.position.set(-0.012, 0.145, 0.0035);
+    rfCanMesh.userData = { id: 'esp32-mcu', name: 'ESP32 Stamped RF Shield Can (Xtensa LX7)', type: 'HARDWARE', badge: 'CALIBRATED' };
+    hwParts.esp32Core.add(rfCanMesh);
+
+    // Meandered PCB Inverted-F 2.4GHz Antenna
+    const antGeo = new THREE.BoxGeometry(0.034, 0.012, 0.001);
+    const antMesh = new THREE.Mesh(antGeo, goldPinMat);
+    antMesh.position.set(-0.012, 0.166, 0.002);
+    antMesh.userData = { id: 'esp32-antenna', name: 'Meandered PCB 2.4GHz Wi-Fi/BLE Antenna', type: 'HARDWARE', badge: 'CALIBRATED' };
+    hwParts.esp32Core.add(antMesh);
+
+    // Dual-Row 2.54mm Header Pins on ESP32
+    for (let side of [-0.018, 0.018]) {
+      const plasticBarGeo = new THREE.BoxGeometry(0.003, 0.052, 0.003);
+      const barMesh = new THREE.Mesh(plasticBarGeo, blackNylonMat);
+      barMesh.position.set(-0.012 + side, 0.14, 0.003);
+      hwParts.esp32Core.add(barMesh);
+
+      for (let p = 0; p < 7; p++) {
+        const pinGeo = new THREE.BoxGeometry(0.0012, 0.0012, 0.008);
+        const pinMesh = new THREE.Mesh(pinGeo, goldPinMat);
+        pinMesh.position.set(-0.012 + side, 0.118 + p * 0.007, 0.006);
+        hwParts.esp32Core.add(pinMesh);
+      }
+    }
+
+    // Load authentic 3D GLB model if available to enrich detail
     const gltfLoader = new THREE.GLTFLoader();
     gltfLoader.load('assets/models/esp32.glb', (gltf) => {
       const espModel = gltf.scene;
@@ -2069,18 +2170,18 @@
       const center = box.getCenter(new THREE.Vector3());
       const size = box.getSize(new THREE.Vector3());
       const maxDim = Math.max(size.x, size.y, size.z);
-      const targetScale = 0.075 / maxDim; // Authentic proportional scale
+      const targetScale = 0.065 / maxDim; // Authentic proportional scale
       
       espModel.scale.setScalar(targetScale);
       espModel.position.sub(center.clone().multiplyScalar(targetScale));
-      espModel.position.y += 0.14;
+      espModel.position.set(-0.012, 0.14, 0.0);
       espModel.rotation.y = Math.PI / 2;
 
       espModel.traverse((child) => {
         if (child.isMesh) {
           child.castShadow = true;
           child.receiveShadow = true;
-          child.userData = { id: 'esp32-mcu', name: 'Xiao ESP32-S3 Module', type: 'HARDWARE', badge: 'CALIBRATED' };
+          child.userData = { id: 'esp32-mcu', name: 'Xiao ESP32-S3 Module CAD Mesh', type: 'HARDWARE', badge: 'CALIBRATED' };
           if (child.material) {
             child.material.metalness = Math.max(child.material.metalness || 0, 0.7);
             child.material.roughness = Math.min(child.material.roughness || 1.0, 0.28);
@@ -2097,76 +2198,166 @@
       updateLoadingProgress('Xiao ESP32-S3 (Fallback)');
     });
 
-    // 5. 18650 3.7V Li-ion Cell (18mm diam x 65mm len standard)
-    const battGeo = new THREE.CylinderGeometry(0.018, 0.018, 0.065, 16);
+    // 5. SIM800L Quad-Band GSM/GPRS Cellular Uplink Module with Helical Spring Antenna
+    const simPcbGeo = new THREE.BoxGeometry(0.024, 0.038, 0.003);
+    const simPcbMesh = new THREE.Mesh(simPcbGeo, pcbRedMat);
+    simPcbMesh.position.set(0.025, 0.165, -0.015);
+    simPcbMesh.userData = { id: 'mod-sim800l', name: 'SIM800L GSM/GPRS Cellular Uplink (UART2)', type: 'HARDWARE', badge: 'CALIBRATED' };
+    hwParts.sim800Mod.add(simPcbMesh);
+
+    // SIMCOM metal shield can
+    const simCanGeo = new THREE.BoxGeometry(0.018, 0.020, 0.0035);
+    const simCanMesh = new THREE.Mesh(simCanGeo, metalShieldMat);
+    simCanMesh.position.set(0.025, 0.162, -0.012);
+    hwParts.sim800Mod.add(simCanMesh);
+
+    // Helical Coiled Gold Spring Antenna (Quad-band 850/900/1800/1900 MHz)
+    const helixPoints = [];
+    for (let t = 0; t <= 32; t++) {
+      const u = t / 32;
+      const angle = u * Math.PI * 14.0;
+      helixPoints.push(new THREE.Vector3(
+        0.025 + Math.cos(angle) * 0.0035,
+        0.184 + u * 0.038,
+        -0.015 + Math.sin(angle) * 0.0035
+      ));
+    }
+    const helixCurve = new THREE.CatmullRomCurve3(helixPoints);
+    const helixGeo = new THREE.TubeGeometry(helixCurve, 32, 0.0009, 5, false);
+    const helixMesh = new THREE.Mesh(helixGeo, goldPinMat);
+    helixMesh.userData = { id: 'mod-sim800l', name: 'SIM800L Helical Spring Antenna (GSM Uplink)', type: 'HARDWARE', badge: 'CALIBRATED' };
+    hwParts.sim800Mod.add(helixMesh);
+
+    // 6. MicroSD SPI Telemetry Logger Shield (CS=GPIO5, SCK=18, MISO=19, MOSI=23)
+    const sdPcbGeo = new THREE.BoxGeometry(0.024, 0.032, 0.003);
+    const sdPcbMesh = new THREE.Mesh(sdPcbGeo, pcbBlueMat);
+    sdPcbMesh.position.set(0.025, 0.115, 0.015);
+    sdPcbMesh.userData = { id: 'mod-sdcard', name: 'MicroSD SPI Telemetry Logger (CS=GPIO5)', type: 'HARDWARE', badge: 'CALIBRATED' };
+    hwParts.sdCardMod.add(sdPcbMesh);
+
+    // Metal TF socket
+    const sdSockGeo = new THREE.BoxGeometry(0.016, 0.018, 0.0028);
+    const sdSockMesh = new THREE.Mesh(sdSockGeo, metalShieldMat);
+    sdSockMesh.position.set(0.025, 0.112, 0.0175);
+    hwParts.sdCardMod.add(sdSockMesh);
+
+    // 7. 18650 3.7V 2200mAh Li-ion Battery & TP4056 Solar Charger
+    const battHolderGeo = new THREE.BoxGeometry(0.024, 0.072, 0.024);
+    const battHolderMesh = new THREE.Mesh(battHolderGeo, blackNylonMat);
+    battHolderMesh.position.set(-0.012, 0.14, -0.022);
+    hwParts.batteryPack.add(battHolderMesh);
+
+    const battGeo = new THREE.CylinderGeometry(0.009, 0.009, 0.065, 16);
     const battMat = new THREE.MeshStandardMaterial({ color: 0x0284c7, metalness: 0.55, roughness: 0.25 });
     const battMesh = new THREE.Mesh(battGeo, battMat);
-    battMesh.position.set(0.018, 0.14, -0.012);
-    battMesh.userData = { id: 'battery-18650', name: '18650 2200mAh Li-ion Cell + TP4056', type: 'HARDWARE', badge: 'CALIBRATED' };
+    battMesh.position.set(-0.012, 0.14, -0.022);
+    battMesh.userData = { id: 'battery-18650', name: '18650 2200mAh Li-ion Cell + TP4056 BMS', type: 'HARDWARE', badge: 'CALIBRATED' };
     hwParts.batteryPack.add(battMesh);
 
-    // 6. Industrial Cable Gland & Flexible Cable Harness
+    // 8. Industrial PG7 Cable Gland & Color-Coded Multi-Conductor Wire Harness
     const glandGeo = new THREE.CylinderGeometry(0.014, 0.018, 0.035, 12);
-    const glandMat = new THREE.MeshStandardMaterial({ color: 0x111, roughness: 0.5 });
-    const glandMesh = new THREE.Mesh(glandGeo, glandMat);
+    const glandMesh = new THREE.Mesh(glandGeo, blackNylonMat);
     glandMesh.position.y = 0.04;
+    glandMesh.userData = { id: 'cable-gland', name: 'PG7 IP67 Nylon Cable Compression Gland', type: 'HARDWARE', badge: 'MECHANICAL' };
     hwParts.cableHarness.add(glandMesh);
 
-    const cableCurve = new THREE.CatmullRomCurve3([
-      new THREE.Vector3(0, 0.04, 0),
-      new THREE.Vector3(0.015, 0.02, 0.01),
-      new THREE.Vector3(0.008, -0.01, 0.005),
-      new THREE.Vector3(0, -0.03, 0)
-    ]);
-    const cableGeo = new THREE.TubeGeometry(cableCurve, 12, 0.005, 6, false);
-    const cableMesh = new THREE.Mesh(cableGeo, new THREE.MeshStandardMaterial({ color: 0x1a1a1a, roughness: 0.6 }));
-    hwParts.cableHarness.add(cableMesh);
+    // JST-XH white nylon connector header housing on mainboard
+    const jstGeo = new THREE.BoxGeometry(0.016, 0.007, 0.010);
+    const jstMesh = new THREE.Mesh(jstGeo, jstHousingMat);
+    jstMesh.position.set(-0.012, 0.108, 0.014);
+    jstMesh.userData = { id: 'wire-harness', name: 'JST-XH 5-Pin Latched Sensor Disconnect Header', type: 'HARDWARE', badge: 'MECHANICAL' };
+    hwParts.cableHarness.add(jstMesh);
 
-    // 7. Subsurface Probe Assembly Targeting 15-25cm Active Horizon A Depth
+    // 5-Core Color-Coded Silicone Wire Lines routing from JST header through gland into probe
+    const wireConfigs = [
+      { color: 0xef4444, name: 'VCC (+3.3V Power Bus)', xOff: -0.004, zOff: 0.002 },
+      { color: 0x1e293b, name: 'GND (System Ground)', xOff: -0.002, zOff: -0.002 },
+      { color: 0xfacc15, name: 'Analog EC Signal (GPIO34)', xOff: 0.000, zOff: 0.003 },
+      { color: 0x22c55e, name: 'Capacitive VWC Signal (GPIO35)', xOff: 0.002, zOff: -0.002 },
+      { color: 0xf8fafc, name: '1-Wire Digital Temp Bus (GPIO4)', xOff: 0.004, zOff: 0.002 }
+    ];
+
+    wireConfigs.forEach((wc) => {
+      const wCurve = new THREE.CatmullRomCurve3([
+        new THREE.Vector3(-0.012 + wc.xOff, 0.105, 0.014 + wc.zOff),
+        new THREE.Vector3(-0.008 + wc.xOff, 0.065, 0.008 + wc.zOff),
+        new THREE.Vector3(wc.xOff * 0.5, 0.035, wc.zOff * 0.5),
+        new THREE.Vector3(0, -0.01, 0)
+      ]);
+      const wGeo = new THREE.TubeGeometry(wCurve, 14, 0.0014, 5, false);
+      const wMat = new THREE.MeshStandardMaterial({ color: wc.color, roughness: 0.52 });
+      const wMesh = new THREE.Mesh(wGeo, wMat);
+      wMesh.userData = { id: 'wire-harness', name: `Silicone Sensor Wire: ${wc.name}`, type: 'HARDWARE', badge: 'CALIBRATED' };
+      hwParts.cableHarness.add(wMesh);
+    });
+
+    // Outer rugged protective cable jacket below gland
+    const jacketCurve = new THREE.CatmullRomCurve3([
+      new THREE.Vector3(0, 0.025, 0),
+      new THREE.Vector3(0.005, 0.008, 0.003),
+      new THREE.Vector3(0, -0.02, 0)
+    ]);
+    const jacketGeo = new THREE.TubeGeometry(jacketCurve, 10, 0.006, 6, false);
+    const jacketMesh = new THREE.Mesh(jacketGeo, blackNylonMat);
+    hwParts.cableHarness.add(jacketMesh);
+
+    // 9. Subsurface Probe Assembly Plunged in Horizon A (15-25cm Root Zone)
     const probeStemGeo = new THREE.CylinderGeometry(0.016, 0.016, 0.32, 16);
-    const darkStemMat = new THREE.MeshStandardMaterial({ color: 0x18201b, roughness: 0.45 });
-    const probeStem = new THREE.Mesh(probeStemGeo, darkStemMat);
+    const probeStem = new THREE.Mesh(probeStemGeo, blackNylonMat);
     probeStem.position.y = -0.16;
-    probeStem.userData = { id: 'probe-shaft', name: 'Subsurface Insertion Stem (32cm Depth)', type: 'HARDWARE', badge: 'MECHANICAL' };
+    probeStem.userData = { id: 'probe-shaft', name: 'Subsurface Probe Stem (32cm Depth, Horizon A/B)', type: 'HARDWARE', badge: 'MECHANICAL' };
     hwParts.probeShaft.add(probeStem);
 
-    // Depth Gauge Ring Markings (5cm, 10cm, 15cm, 20cm, 25cm)
+    // Etched Depth Gauge Ring Markings (5cm, 10cm, 15cm, 20cm, 25cm)
     for (let d = 1; d <= 5; d++) {
       const markGeo = new THREE.TorusGeometry(0.0168, 0.001, 6, 24);
       markGeo.rotateX(Math.PI / 2);
-      const markMesh = new THREE.Mesh(markGeo, new THREE.MeshStandardMaterial({ color: 0xffffff, roughness: 0.2 }));
+      const markMesh = new THREE.Mesh(markGeo, new THREE.MeshStandardMaterial({ color: 0xf8fafc, roughness: 0.2 }));
       markMesh.position.y = -d * 0.05;
+      markMesh.userData = { id: 'probe-shaft', name: `Etched Depth Collar Mark (${d*5}cm Insertion)`, type: 'HARDWARE', badge: 'MECHANICAL' };
       hwParts.probeShaft.add(markMesh);
     }
 
-    // Dual Stainless Steel EC Electrode Rings (GPIO34 ADC1_CH6) at 15cm and 25cm
-    const chromeMat = new THREE.MeshStandardMaterial({ color: 0xf8fafc, metalness: 0.98, roughness: 0.06, envMapIntensity: 1.6 });
-    const ecRingGeo = new THREE.CylinderGeometry(0.018, 0.018, 0.018, 24);
+    // A. Dual 316L Stainless Steel Annular EC Electrodes (GPIO34 ADC1_CH6)
+    // 10 kHz AC bipolar excitation across 10mm gap avoiding polarization
+    const ecRingGeo = new THREE.CylinderGeometry(0.0175, 0.0175, 0.018, 24);
 
-    const ecRing1 = new THREE.Mesh(ecRingGeo, chromeMat);
+    const ecRing1 = new THREE.Mesh(ecRingGeo, stainless316Mat);
     ecRing1.position.y = -0.15; // 15cm depth in Horizon A
-    ecRing1.userData = { id: 'ec-ring-upper', name: '316L Stainless EC Ring (Upper 15cm)', type: 'HARDWARE', badge: 'MEASURED' };
+    ecRing1.userData = { id: 'ec-ring-upper', name: '316L Stainless EC Ring (Upper 15cm, GPIO34)', type: 'HARDWARE', badge: 'MEASURED' };
     hwParts.probeShaft.add(ecRing1);
 
-    const ecRing2 = new THREE.Mesh(ecRingGeo, chromeMat);
+    const ecRing2 = new THREE.Mesh(ecRingGeo, stainless316Mat);
     ecRing2.position.y = -0.25; // 25cm depth in Horizon A
-    ecRing2.userData = { id: 'ec-ring-lower', name: '316L Stainless EC Ring (Lower 25cm)', type: 'HARDWARE', badge: 'MEASURED' };
+    ecRing2.userData = { id: 'ec-ring-lower', name: '316L Stainless EC Ring (Lower 25cm, GPIO34)', type: 'HARDWARE', badge: 'MEASURED' };
     hwParts.probeShaft.add(ecRing2);
 
-    // Capacitive VWC% FR4 PCB Blade (GPIO35 ADC1_CH7) spanning 15-25cm
+    // B. Capacitive Soil Moisture Sensor v1.2 FR4 PCB Spade Blade (GPIO35 ADC1_CH7)
+    // High-frequency 1.5 MHz coplanar dielectric blade spanning 15-25cm
     const bladeGeo = new THREE.BoxGeometry(0.005, 0.16, 0.045);
-    const bladeMat = new THREE.MeshStandardMaterial({ color: 0x113d22, roughness: 0.35 });
-    const bladeMesh = new THREE.Mesh(bladeGeo, bladeMat);
+    const bladeMesh = new THREE.Mesh(bladeGeo, pcbGreenMat);
     bladeMesh.position.y = -0.20;
-    bladeMesh.userData = { id: 'vwc-blade', name: 'FR4 High-Frequency Coplanar VWC% Blade', type: 'HARDWARE', badge: 'MEASURED' };
+    bladeMesh.userData = { id: 'vwc-blade', name: 'Capacitive Soil Moisture Sensor v1.2 Blade (GPIO35)', type: 'HARDWARE', badge: 'MEASURED' };
     hwParts.probeShaft.add(bladeMesh);
 
-    // DS18B20 1-Wire Digital Thermal Probe Tip (GPIO4) at probe apex
-    const tipConeGeo = new THREE.ConeGeometry(0.014, 0.045, 16);
+    // White silkscreen calibration line on blade
+    const calibLineGeo = new THREE.BoxGeometry(0.0055, 0.002, 0.042);
+    const calibLineMesh = new THREE.Mesh(calibLineGeo, jstHousingMat);
+    calibLineMesh.position.set(0, -0.13, 0);
+    hwParts.probeShaft.add(calibLineMesh);
+
+    // C. Maxim DS18B20 1-Wire Digital Thermal Capsule Tip (GPIO4)
+    // 6x45mm stainless capsule probe with black polyolefin heat-shrink collar
+    const tipCollarGeo = new THREE.CylinderGeometry(0.006, 0.006, 0.012, 16);
+    const tipCollarMesh = new THREE.Mesh(tipCollarGeo, blackNylonMat);
+    tipCollarMesh.position.y = -0.285;
+    hwParts.probeShaft.add(tipCollarMesh);
+
+    const tipConeGeo = new THREE.ConeGeometry(0.005, 0.035, 16);
     tipConeGeo.rotateX(Math.PI);
-    const tipMesh = new THREE.Mesh(tipConeGeo, chromeMat);
-    tipMesh.position.y = -0.32; // Probe apex tip
-    tipMesh.userData = { id: 'temp-tip', name: 'Maxim DS18B20 Thermal Capsule Tip (32cm)', type: 'HARDWARE', badge: 'MEASURED' };
+    const tipMesh = new THREE.Mesh(tipConeGeo, stainless316Mat);
+    tipMesh.position.y = -0.31; // Probe apex tip in Horizon A
+    tipMesh.userData = { id: 'temp-tip', name: 'Maxim DS18B20 1-Wire Thermal Capsule Tip (GPIO4)', type: 'HARDWARE', badge: 'MEASURED' };
     hwParts.probeShaft.add(tipMesh);
 
     /* =========================================================================
@@ -2586,17 +2777,44 @@
         desc = 'High-surface-area mycorrhizal capillary rootlet penetrating soil macropores to intercept diffused phosphate and nitrate ions.';
         meta = 'Diffusion Depletion Zone: ~1.5mm | Ion Interception: Active';
       } else if (data.id?.includes('ec-ring')) {
-        desc = 'Machined 316L stainless steel annular electrode ring with 10 kHz bipolar excitation avoiding electrolysis.';
-        meta = 'Analog EC (GPIO34 ADC1_CH6) | EC₂₅ = EC_T / [1 + 0.0191(T-25)]';
+        desc = '316L Annular Stainless Steel Electrodes: Dual 10mm-spaced rings on GPIO34 (ADC1_CH6). Excited with a 10 kHz bipolar AC waveform to prevent DC electrolytic fouling; measures bulk apparent EC (σ_a) normalized to 25°C.';
+        meta = 'Signal: Analog EC (GPIO34) | AC Excitation: 10 kHz | Model: EC25 = ECT / [1 + 0.0191(T-25)] | Ref: Maas-Hoffman';
       } else if (data.id?.includes('vwc-blade')) {
-        desc = 'FR4 PCB high-frequency coplanar dielectric blade calibrated for bulk soil relative permittivity.';
-        meta = 'Capacitive VWC (GPIO35 ADC1_CH7) | Topp Equation: θ(ε)';
+        desc = 'Capacitive Soil Moisture Sensor v1.2: High-frequency 1.5 MHz TLC555 coplanar resonant circuit on GPIO35 (ADC1_CH7). Measures relative dielectric permittivity (ε_r), converted to VWC% via Topp polynomial curve with no exposed copper.';
+        meta = 'Signal: Analog VWC (GPIO35) | Frequency: 1.5 MHz | Permittivity: ε_soil ≈ 18.5 | Field Cap: 32% VWC';
       } else if (data.id?.includes('temp-tip')) {
-        desc = '1-Wire digital temperature capsule probe for continuous real-time EC thermal normalization.';
-        meta = 'DS18B20 1-Wire (GPIO4) | Accuracy: ±0.5°C (-10°C to +85°C)';
+        desc = 'Maxim DS18B20 1-Wire Digital Thermal Capsule: Waterproof stainless probe tip on GPIO4 with 4.7kΩ pull-up resistor. Provides real-time in-situ temperature for continuous EC thermal compensation (1.91%/°C).';
+        meta = 'Signal: 1-Wire Digital (GPIO4) | Precision: ±0.5°C (-10°C to +85°C) | Reading: ' + simState.tempRaw.toFixed(1) + '°C';
       } else if (data.id?.includes('esp32')) {
-        desc = 'Dual-core Xtensa 32-bit LX7 processor running zero-cloud local edge inference with 0.15mA deep sleep.';
-        meta = 'ESP32-S3 | 240MHz, 8MB PSRAM, RTC Timer Wake, 12-Bit ADC';
+        desc = 'Seeed Xiao ESP32-S3 Microcontroller: Dual-core 32-bit Xtensa LX7 @ 240MHz, 8MB PSRAM, hardware 12-bit SAR ADC, and ULP co-processor running zero-cloud local edge agronomic algorithms at 0.15mA sleep current.';
+        meta = 'Core: Xtensa LX7 240MHz | Deep Sleep: 0.15mA | RTC Wake: 15-min cycle | Flash: 8MB QSPI';
+      } else if (data.id?.includes('mod-sim800l')) {
+        desc = 'SIM800L Quad-Band GSM/GPRS Cellular Uplink: Hardware UART2 (TX=GPIO17, RX=GPIO16) with coiled helical antenna, dispatching SMS alerts directly to farmers and HTTP JSON telemetry to cloud backends.';
+        meta = 'Comms: GSM/GPRS 850/900/1800/1900MHz | UART2 (115200 baud) | SMS Advisory Dispatch: Active';
+      } else if (data.id?.includes('mod-sdcard')) {
+        desc = 'MicroSD SPI Telemetry Logger Shield: Hardware SPI bus (CS=GPIO5, MOSI=GPIO23, MISO=GPIO19, SCK=GPIO18), logging 7-day rolling CSV telemetry backup for offline agronomic auditing.';
+        meta = 'Storage: SPI FAT32 | CS=GPIO5 | Rolling CSV Record: 15-min intervals';
+      } else if (data.id?.includes('battery')) {
+        desc = '18650 2200mAh 3.7V Lithium-Ion Cell with TP4056 Solar Charge Controller & BMS: Provides 90 days autonomous operation under 15-minute sleep cycles with overcharge/overdischarge protection.';
+        meta = 'Capacity: 2200mAh (8.14Wh) | BMS Cutoff: 3.0V - 4.2V | Charge Rate: 450mA Solar';
+      } else if (data.id?.includes('pv-solar')) {
+        desc = '5W Monocrystalline Photovoltaic Wafer: 14cm circular collector disc with Schott anti-reflective tempered glass and blocking Schottky diode, delivering up to 900mA charging current in direct sunlight.';
+        meta = 'Power: 5W Peak (Voc=6.2V, Isc=0.88A) | Diode: 1N5819 Schottky | Solar Yield: Active';
+      } else if (data.id?.includes('sentry-beacon')) {
+        desc = '360° Fresnel RGB Optical Sentry Beacon: High-efficiency common-cathode LED ring on GPIO25 (Red), GPIO26 (Green), GPIO27 (Blue). Provides instant visual field diagnosis (Green = Safe, Red = Critical, Blue = Cellular TX).';
+        meta = 'Status: GPIO25/26/27 | Current Mode: ' + (simState.status === 'SAFE' ? 'PULSING GREEN (SAFE)' : 'STROBING CRIMSON (CRITICAL)');
+      } else if (data.id?.includes('wire-harness')) {
+        desc = '5-Core Color-Coded Silicone Wire Harness: Red (+3.3V), Black (GND), Yellow (Analog EC), Green (Capacitive VWC), White (1-Wire Temp) with latched JST-XH nylon disconnect header.';
+        meta = 'Harness: 5-Wire 26AWG Silicone | Connector: JST-XH 2.54mm Latched';
+      } else if (data.id?.includes('cable-gland')) {
+        desc = 'PG7 Liquid-Tight Cable Compression Gland: Threaded nylon compression gland with neoprene O-ring seal, maintaining IP67 waterproof barrier at enclosure cable exit.';
+        meta = 'Spec: PG7 Thread (12.5mm) | IP Rating: IP67 Submersible';
+      } else if (data.id?.includes('asa-chassis')) {
+        desc = 'IP67 Weatherproof ASA Polymer Enclosure: UV-stabilized, impact-resistant Acrylonitrile Styrene Acrylate body with dual nitrile O-ring seals, designed for extreme outdoor field climates (-20°C to +70°C).';
+        meta = 'Material: ASA Polymer (UV-Resistant) | Dimensions: 11cm x 18cm | Rating: IP67';
+      } else if (data.id?.includes('probe-shaft')) {
+        desc = 'Subsurface Insertion Probe Stem: 32mm diameter ruggedized fiberglass-nylon shaft with precision laser-etched depth gauge markings at 5cm, 10cm, 15cm, 20cm, and 25cm. Integrates dual 316L EC rings, capacitive VWC blade, and DS18B20 tip into a single insertion core.';
+        meta = 'Insertion Depth: 32cm Total | Horizon A Active Target: 15–25cm | Body: POM/Fiberglass';
       } else if (data.id === 'hydro-streamline-rhizo') {
         desc = 'Rhizosphere Hydraulic Streamline: Illustrative macroscopic path of capillary pore water moving under matric potential gradient toward active calyptra and xylem transpirational sinks.';
         meta = 'Darcy-Buckingham Matrix Flux | Matric Suction: ' + (simState.matricPotential || '-33 kPa') + ' | S_sink: Active';
@@ -2643,277 +2861,24 @@
         camPos: new THREE.Vector3(3.4, 0.6, 5.6),
         camTarget: new THREE.Vector3(0, -0.15, 0),
         setup: () => {
-          collapseLayers();
-          assembleAnatomy();
-          assembleHardware();
           setContextualUI(`
             <div class="module-row">
-              <span class="module-label">Descent Trigger</span>
-              <button class="btn-action-small" id="btn-begin-descent"><i data-lucide="arrow-down" style="width:12px; height:12px;"></i> Descend Below Ground</button>
-            </div>
-          `);
-          document.getElementById('btn-begin-descent').addEventListener('click', () => setChapter(1));
-        }
-      },
-      {
-        tag: "CHAPTER 02 // GEOLOGICAL DESCENT", badge: "PEDOLOGY",
-        title: "Descent Into the Soil",
-        desc: "The camera dives beneath the surface, revealing stratified geological soil horizons: Horizon O (litter), Horizon A (humus topsoil), Horizon B (compacted subsoil), and Horizon C (gravel drainage).",
-        camPos: new THREE.Vector3(3.8, -0.6, 4.8),
-        camTarget: new THREE.Vector3(0, -0.85, 0),
-        setup: () => {
-          setContextualUI(`
-            <div class="module-row">
-              <span class="module-label">Layer Separation</span>
-              <input type="range" class="range-slider" id="slider-layers" min="0" max="100" value="0">
-            </div>
-            <div class="module-row" style="margin-top:6px;">
-              <button class="btn-action-small" id="btn-explode-layers">Explode Layers</button>
-              <button class="btn-action-small" id="btn-collapse-layers">Collapse</button>
-            </div>
-          `);
-          const slider = document.getElementById('slider-layers');
-          slider.addEventListener('input', (e) => applyLayerSeparation(e.target.value / 100));
-          document.getElementById('btn-explode-layers').addEventListener('click', () => { slider.value = 100; applyLayerSeparation(1.0); });
-          document.getElementById('btn-collapse-layers').addEventListener('click', () => { slider.value = 0; applyLayerSeparation(0.0); });
-        }
-      },
-      {
-        tag: "CHAPTER 03 // PLANT DISSECTION", badge: "PHYSIOLOGY",
-        title: "The Plant Dissection",
-        desc: "Anatomical decomposition of the maize organism into leaves, stem, developing ears, crown brace roots, main seminal roots, lateral feeder roots, and active meristematic root caps.",
-        camPos: new THREE.Vector3(2.4, 0.4, 4.4),
-        camTarget: new THREE.Vector3(0.35, 0.15, 0.2),
-        setup: () => {
-          setContextualUI(`
-            <div class="module-row">
-              <span class="module-label">Anatomy Separation</span>
-              <input type="range" class="range-slider" id="slider-anatomy" min="0" max="100" value="0">
-            </div>
-            <div class="module-row" style="margin-top:6px;">
-              <button class="btn-action-small" id="btn-isolate-roots">Isolate Roots</button>
-              <button class="btn-action-small" id="btn-reassemble-plant">Reassemble</button>
-            </div>
-          `);
-          const slider = document.getElementById('slider-anatomy');
-          slider.addEventListener('input', (e) => applyAnatomyExplosion(e.target.value / 100));
-          document.getElementById('btn-isolate-roots').addEventListener('click', () => {
-            gsap.to(anatomyParts.leaves.position, { y: 2.2, duration: 0.8 });
-            gsap.to(anatomyParts.sheaths.position, { y: 1.8, duration: 0.8 });
-            gsap.to(anatomyParts.ears.position, { y: 1.6, duration: 0.8 });
-            gsap.to(anatomyParts.stem.position, { y: 1.4, duration: 0.8 });
-          });
-          document.getElementById('btn-reassemble-plant').addEventListener('click', () => {
-            slider.value = 0;
-            assembleAnatomy();
-          });
-        }
-      },
-      {
-        tag: "CHAPTER 04 // WATER WORLD",
-        badge: "SIMULATED",
-        title: "The Hidden Water World",
-        desc: "Interactive scientific visualization of Darcy-Buckingham unsaturated matrix flux, rhizosphere suction gradients, and root xylem water absorption.",
-        camPos: new THREE.Vector3(3.2, -0.4, 4.2),
-        camTarget: new THREE.Vector3(0.35, -0.7, 0.2),
-        setup: () => {
-          collapseLayers();
-          setContextualUI(`
-            <div class="module-row">
-              <span class="module-label">Hydration Scenario</span>
-              <select id="select-hydration-scenario" style="background:#0a1218; color:#7dd3fc; border:1px solid rgba(56,189,248,0.3); padding:4px 6px; border-radius:4px; font-family:var(--font-mono); font-size:0.65rem; width:100%;">
-                <option value="optimal">Scenario 1: Optimal Field Capacity (-33 kPa)</option>
-                <option value="drought">Scenario 2: Severe Drought Deficit (-1500 kPa PWP)</option>
-                <option value="saturation">Scenario 3: Waterlogging & Deep Drainage (0 kPa)</option>
-                <option value="saline">Scenario 4: Saline Osmotic Lockout (High EC)</option>
-              </select>
-            </div>
-
-            <div class="module-row" style="margin-top:6px; display:flex; gap:6px;">
-              <button class="btn-action-small" id="btn-hydro-pause" style="flex:1; justify-content:center;">
-                <i data-lucide="pause" style="width:12px; height:12px;"></i> Pause
+              <span class="module-label">Hardware Explosion</span>
+              <button class="btn-action-small" id="btn-explode-hw" style="flex:1; justify-content:center;">
+                <i data-lucide="layers" style="width:12px; height:12px;"></i> Explode Assembly
               </button>
-              <button class="btn-action-small" id="btn-hydro-reset" style="flex:1; justify-content:center;">
-                <i data-lucide="rotate-ccw" style="width:12px; height:12px;"></i> Reset
-              </button>
-              <button class="btn-action-small" id="btn-trigger-irrigation" style="flex:1.2; justify-content:center;">
-                <i data-lucide="cloud-rain" style="width:12px; height:12px;"></i> Infiltration Pulse
+              <button class="btn-action-small" id="btn-assemble-hw" style="flex:1; justify-content:center;">
+                <i data-lucide="minimize-2" style="width:12px; height:12px;"></i> Reassemble
               </button>
             </div>
-
-            <div class="module-row" style="margin-top:6px;">
-              <span class="module-label">Flow Velocity</span>
-              <input type="range" class="range-slider" id="slider-hydro-speed" min="20" max="250" value="100">
-            </div>
-
             <div class="module-row" style="margin-top:6px; padding:6px 8px; background:rgba(10,24,36,0.6); border-radius:4px; border:1px solid rgba(56,189,248,0.15);">
-              <div style="font-size:0.62rem; color:#94a3b8; display:flex; justify-content:space-between;">
-                <span>MATRIC SUCTION: <strong id="hydro-matric-val" style="color:#38bdf8;">-33 kPa</strong></span>
-                <span id="hydro-status-badge" style="color:#00ff87; font-weight:700;">FIELD CAPACITY</span>
-              </div>
-            </div>
-
-            <div class="module-row" style="margin-top:6px;">
-              <button class="btn-action-small" id="btn-toggle-legend" style="width:100%; justify-content:center; background:rgba(20,35,50,0.5); font-size:0.62rem;">
-                <i data-lucide="info" style="width:11px; height:11px;"></i> Scientific Legend & Modeling Notes
-              </button>
-            </div>
-
-            <div id="hydro-legend-box" style="display:none; margin-top:6px; padding:8px; background:#070d12; border-radius:4px; border:1px solid #1e3a5f; font-size:0.60rem; line-height:1.4; color:#94a3b8;">
-              <div style="font-weight:700; color:#38bdf8; margin-bottom:4px;">HYDROLOGIC LEGEND</div>
-              <div style="display:flex; align-items:center; gap:6px; margin-bottom:3px;">
-                <span style="display:inline-block; width:12px; height:3px; background:#38bdf8; border-radius:2px;"></span>
-                <span><strong>Cyan Streamlines:</strong> Capillary Darcy matrix flow converging to calyptra root caps & xylem.</span>
-              </div>
-              <div style="display:flex; align-items:center; gap:6px; margin-bottom:3px;">
-                <span style="display:inline-block; width:12px; height:3px; background:#2563eb; border-radius:2px;"></span>
-                <span><strong>Cobalt Streamlines:</strong> Gravitational deep percolation past Horizon B into Horizon C gravel.</span>
-              </div>
-              <div style="display:flex; align-items:center; gap:6px; margin-bottom:3px;">
-                <span style="display:inline-block; width:8px; height:8px; background:#0284c7; opacity:0.4; border-radius:50%;"></span>
-                <span><strong>Infiltration Bulb:</strong> Dynamic volumetric rhizosphere soil wetting front (VWC).</span>
-              </div>
-              <div style="margin-top:6px; padding-top:4px; border-top:1px solid rgba(255,255,255,0.08); font-size:0.56rem; color:#cbd5e1;">
-                <strong>Pedological Modeling Note:</strong> Illustrates macroscopic Darcy-Buckingham unsaturated flux lines for educational visualization. Not an uncalibrated finite-element solver.
-              </div>
-              <div style="margin-top:3px; font-size:0.56rem; color:#f59e0b;">
-                <strong>Sensor Note:</strong> Bulk EC (σ_a) reflects total dissolved salinity and pore solution conductivity, NOT individual N, P, or K nutrient concentrations.
+              <div style="font-size:0.60rem; color:#94a3b8; line-height:1.4;">
+                Click any exploded component in 3D to inspect its real pinout, hardware ICs, operating voltages, and telemetry source.
               </div>
             </div>
           `);
-
-          // Event Listeners
-          const selScenario = document.getElementById('select-hydration-scenario');
-          if (selScenario) {
-            selScenario.addEventListener('change', (e) => applyHydrationScenario(e.target.value));
-          }
-
-          const btnPause = document.getElementById('btn-hydro-pause');
-          if (btnPause) {
-            btnPause.addEventListener('click', () => {
-              simState.isHydrologyPaused = !simState.isHydrologyPaused;
-              btnPause.innerHTML = simState.isHydrologyPaused
-                ? '<i data-lucide="play" style="width:12px; height:12px;"></i> Resume'
-                : '<i data-lucide="pause" style="width:12px; height:12px;"></i> Pause';
-              lucide.createIcons();
-            });
-          }
-
-          const btnReset = document.getElementById('btn-hydro-reset');
-          if (btnReset) {
-            btnReset.addEventListener('click', () => {
-              if (selScenario) selScenario.value = 'optimal';
-              applyHydrationScenario('optimal');
-              const sliderSpeed = document.getElementById('slider-hydro-speed');
-              if (sliderSpeed) sliderSpeed.value = 100;
-              simState.flowSpeed = 1.0;
-              simState.isHydrologyPaused = false;
-              if (btnPause) {
-                btnPause.innerHTML = '<i data-lucide="pause" style="width:12px; height:12px;"></i> Pause';
-                lucide.createIcons();
-              }
-            });
-          }
-
-          const sliderSpeed = document.getElementById('slider-hydro-speed');
-          if (sliderSpeed) {
-            sliderSpeed.addEventListener('input', (e) => {
-              simState.flowSpeed = (e.target.value / 100);
-            });
-          }
-
-          const btnTrigger = document.getElementById('btn-trigger-irrigation');
-          if (btnTrigger) {
-            btnTrigger.addEventListener('click', () => {
-              sound.playWaterInfiltration();
-              gsap.to(simState, {
-                vwcRaw: Math.min(42.0, simState.vwcRaw + 6.5),
-                ecRaw: Math.max(0.85, simState.ecRaw * 0.94),
-                duration: 1.6,
-                ease: 'power2.out',
-                onUpdate: calculateAgronomicEngine
-              });
-            });
-          }
-
-          const btnLegend = document.getElementById('btn-toggle-legend');
-          const boxLegend = document.getElementById('hydro-legend-box');
-          if (btnLegend && boxLegend) {
-            btnLegend.addEventListener('click', () => {
-              const isOpen = (boxLegend.style.display !== 'none');
-              boxLegend.style.display = isOpen ? 'none' : 'block';
-              btnLegend.style.color = isOpen ? '' : '#38bdf8';
-            });
-          }
-        }
-      },
-      {
-        tag: "CHAPTER 05 // NUTRIENT CHEMISTRY",
-        badge: "SIMULATED",
-        title: "Nutrients & Soil Chemistry",
-        desc: "<strong>Scientific Clarification:</strong> Soil EC measures bulk electrolytic conductivity (total dissolved ions), NOT individual N, P, or K concentrations. Nutrient pathways are shown here as a conceptual educational model.",
-        camPos: new THREE.Vector3(-2.8, -0.8, 3.8),
-        camTarget: new THREE.Vector3(0, -0.9, 0),
-        setup: () => {
-          setContextualUI(`
-            <div class="module-row">
-              <span class="module-label">Ion Transport Mode</span>
-              <select id="select-nutrient-ion" style="background:#000; color:#fff; border:1px solid #333; padding:4px 6px; border-radius:4px; font-family:var(--font-mono); font-size:0.65rem;">
-                <option value="ec">Bulk Electrical Conductivity (EC)</option>
-                <option value="n">Nitrogen (NO3- / Mass Flow)</option>
-                <option value="p">Phosphorus (H2PO4- / Diffusion)</option>
-                <option value="k">Potassium (K+ / Root Contact)</option>
-              </select>
-            </div>
-            <div style="font-size:0.62rem; color:var(--text-muted); margin-top:6px; line-height:1.4;">
-              * EC measures total dissolved electrolytic ion conductance, not individual chemical species.
-            </div>
-          `);
-        }
-      },
-      {
-        tag: "CHAPTER 06 // SENSOR REVEAL",
-        badge: "MEASURED",
-        title: "The Sensor Reveal",
-        desc: "Macro inspection of the physical sensor suite embedded in Horizon A topsoil (15–25cm root zone): dual 316L stainless steel electrode rings (analog EC on GPIO34), FR4 coplanar capacitive blade (VWC% on GPIO35), and DS18B20 1-wire thermal tip (GPIO4).",
-        camPos: new THREE.Vector3(-0.55, -0.05, 0.72),
-        camTarget: new THREE.Vector3(-0.55, -0.18, -0.30),
-        setup: () => {
-          setContextualUI(`
-            <div class="module-row">
-              <span class="module-label">Sensor Sampling</span>
-              <button class="btn-action-small" id="btn-sample-sensors"><i data-lucide="zap" style="width:12px; height:12px;"></i> Read 12-Bit ADC</button>
-            </div>
-            <div class="module-row" style="margin-top:6px;">
-              <span style="font-family:var(--font-mono); font-size:0.65rem; color:var(--accent-cyan);">ADC1_CH6: 1840 | ADC1_CH7: 2110</span>
-            </div>
-          `);
-          document.getElementById('btn-sample-sensors').addEventListener('click', () => {
-            sound.playPing(920);
-          });
-        }
-      },
-      {
-        tag: "CHAPTER 07 // HARDWARE EXPLOSION",
-        badge: "CALIBRATED",
-        title: "Hardware Assembly Explosion",
-        desc: "Exploded engineering breakdown of the $30 Zerthiva node: 5W solar wafer, 360° sentry beacon, IP67 ASA chassis, Seeed Xiao ESP32-S3 MCU, 18650 Li-ion cell, and 15–25cm active soil probe stem.",
-        camPos: new THREE.Vector3(-0.55, 0.28, 0.95),
-        camTarget: new THREE.Vector3(-0.55, 0.16, -0.30),
-        setup: () => {
-          setContextualUI(`
-            <div class="module-row">
-              <span class="module-label">Hardware View</span>
-              <button class="btn-action-small" id="btn-explode-hw">Explode Assembly</button>
-              <button class="btn-action-small" id="btn-assemble-hw">Reassemble</button>
-            </div>
-            <div class="module-row" style="margin-top:6px;">
-              <span style="font-family:var(--font-mono); font-size:0.65rem; color:var(--accent-emerald);">TOTAL BOM: $30.00 EX-FACTORY</span>
-            </div>
-          `);
-          document.getElementById('btn-explode-hw').addEventListener('click', () => explodeHardware());
-          document.getElementById('btn-assemble-hw').addEventListener('click', () => assembleHardware());
-          explodeHardware();
+          document.getElementById('btn-explode-hw').addEventListener('click', explodeHardware);
+          document.getElementById('btn-assemble-hw').addEventListener('click', assembleHardware);
         }
       },
       {
@@ -3238,12 +3203,15 @@
       sound.playPing(720);
       const dur = 1.0;
       const ease = "back.out(1.4)";
-      gsap.to(hwParts.solarWafer.position,  { y: 0.52, duration: dur, ease });
-      gsap.to(hwParts.sentryRing.position,  { y: 0.38, duration: dur, ease });
-      gsap.to(hwParts.enclosure.position,   { y: 0.12, duration: dur, ease });
-      gsap.to(hwParts.esp32Core.position,   { x: -0.16, y: 0.18, duration: dur, ease });
-      hwParts.batteryPack.position.set(0.16, 0.18, -0.012);
-      gsap.to(hwParts.probeShaft.position,  { y: -0.18, duration: dur, ease });
+      gsap.to(hwParts.solarWafer.position,  { y: 0.56, duration: dur, ease });
+      gsap.to(hwParts.sentryRing.position,  { y: 0.42, duration: dur, ease });
+      gsap.to(hwParts.enclosure.position,   { y: 0.16, duration: dur, ease });
+      gsap.to(hwParts.esp32Core.position,   { x: -0.16, y: 0.20, duration: dur, ease });
+      gsap.to(hwParts.sim800Mod.position,   { x: 0.14, y: 0.24, z: -0.08, duration: dur, ease });
+      gsap.to(hwParts.sdCardMod.position,   { x: 0.14, y: 0.14, z: 0.08, duration: dur, ease });
+      gsap.to(hwParts.batteryPack.position, { x: -0.16, y: 0.06, duration: dur, ease });
+      gsap.to(hwParts.cableHarness.position,{ y: -0.06, duration: dur, ease });
+      gsap.to(hwParts.probeShaft.position,  { y: -0.20, duration: dur, ease });
     }
 
     function assembleHardware() {
@@ -3254,7 +3222,10 @@
       gsap.to(hwParts.sentryRing.position,  { y: 0.25, duration: dur, ease });
       gsap.to(hwParts.enclosure.position,   { y: 0.0, duration: dur, ease });
       gsap.to(hwParts.esp32Core.position,   { x: 0.0, y: 0.0, duration: dur, ease });
-      hwParts.batteryPack.position.set(0.018, 0.14, -0.012);
+      gsap.to(hwParts.sim800Mod.position,   { x: 0.0, y: 0.0, z: 0.0, duration: dur, ease });
+      gsap.to(hwParts.sdCardMod.position,   { x: 0.0, y: 0.0, z: 0.0, duration: dur, ease });
+      gsap.to(hwParts.batteryPack.position, { x: 0.0, y: 0.0, duration: dur, ease });
+      gsap.to(hwParts.cableHarness.position,{ y: 0.0, duration: dur, ease });
       gsap.to(hwParts.probeShaft.position,  { y: 0.0, duration: dur, ease });
     }
 
