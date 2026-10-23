@@ -1220,6 +1220,157 @@
       }
     }
 
+  
+    /* =========================================================================
+       PHASE 2: FIRST-PERSON WALK MODE & CONTEXTUAL FIELD INTERACTION
+       ========================================================================= */
+    .walk-hud {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      pointer-events: none;
+      z-index: 45;
+      display: none;
+    }
+    .walk-hud.active {
+      display: block;
+    }
+
+    /* Central Aiming Crosshair / Reticle */
+    .walk-reticle {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      border: 1.5px solid rgba(255, 255, 255, 0.45);
+      pointer-events: none;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .walk-reticle-dot {
+      width: 3px;
+      height: 3px;
+      border-radius: 50%;
+      background: #fff;
+      transition: all 0.2s;
+    }
+    .walk-reticle.targeted {
+      width: 28px;
+      height: 28px;
+      border-color: var(--accent-cyan);
+      background: rgba(0, 229, 255, 0.08);
+      box-shadow: 0 0 16px rgba(0, 229, 255, 0.45);
+    }
+    .walk-reticle.targeted .walk-reticle-dot {
+      background: var(--accent-emerald);
+      width: 5px;
+      height: 5px;
+      box-shadow: 0 0 10px var(--accent-emerald);
+    }
+
+    /* Floating Contextual Interaction Card [E] */
+    .walk-prompt-card {
+      position: absolute;
+      bottom: 125px;
+      left: 50%;
+      transform: translateX(-50%) translateY(20px);
+      background: var(--bg-panel-elevated);
+      backdrop-filter: blur(28px);
+      -webkit-backdrop-filter: blur(28px);
+      border: 1px solid var(--accent-cyan);
+      border-radius: 999px;
+      padding: 8px 22px 8px 12px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      opacity: 0;
+      pointer-events: auto;
+      cursor: pointer;
+      transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+      box-shadow: 0 14px 40px rgba(0,0,0,0.7);
+    }
+    .walk-prompt-card.visible {
+      opacity: 1;
+      transform: translateX(-50%) translateY(0);
+    }
+    .walk-prompt-card:hover {
+      background: rgba(8, 22, 16, 0.96);
+      border-color: var(--accent-emerald);
+      box-shadow: 0 0 20px rgba(0, 255, 135, 0.35);
+    }
+    .walk-key-badge {
+      background: var(--accent-cyan);
+      color: #030705;
+      font-family: var(--font-display);
+      font-size: 0.78rem;
+      font-weight: 800;
+      width: 26px;
+      height: 26px;
+      border-radius: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 0 12px rgba(0,229,255,0.5);
+    }
+    .walk-prompt-info {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+    .walk-prompt-action {
+      font-family: var(--font-display);
+      font-size: 0.84rem;
+      font-weight: 700;
+      color: #fff;
+    }
+    .walk-prompt-sub {
+      font-family: var(--font-mono);
+      font-size: 0.58rem;
+      color: var(--accent-cyan);
+    }
+
+    /* Top Walk Mode Controls Banner */
+    .walk-banner {
+      position: absolute;
+      top: 66px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: rgba(3, 7, 5, 0.85);
+      backdrop-filter: blur(24px);
+      -webkit-backdrop-filter: blur(24px);
+      border: 1px solid var(--border-subtle);
+      border-radius: 999px;
+      padding: 6px 18px;
+      font-family: var(--font-mono);
+      font-size: 0.62rem;
+      color: var(--text-muted);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      pointer-events: auto;
+      box-shadow: 0 8px 25px rgba(0,0,0,0.5);
+    }
+    .walk-chip {
+      background: rgba(255,255,255,0.12);
+      color: #fff;
+      padding: 1px 6px;
+      border-radius: 4px;
+      font-weight: 700;
+      border: 1px solid rgba(255,255,255,0.15);
+    }
+    .walk-chip-action {
+      background: rgba(0, 229, 255, 0.18);
+      color: var(--accent-cyan);
+      border-color: var(--accent-cyan);
+    }
+
   </style>
 </head>
 <body>
@@ -1255,6 +1406,11 @@
       <!-- Signature Continuous Cutaway Sequence Trigger -->
       <button class="btn-pill btn-signature" id="btn-signature-reveal" title="Trigger 12-stage signature cinematic cutaway">
         <i data-lucide="sparkles" style="width: 13px; height: 13px;"></i> Reveal Hidden System
+      </button>
+
+      <!-- First-Person Field Exploration Walk Mode -->
+      <button class="btn-pill" id="btn-toggle-walk" title="Toggle First-Person Field Walk Mode (Shortcut: [V] or [C])">
+        <i data-lucide="footprints" id="icon-walk-mode" style="width: 13px; height: 13px; color: var(--accent-emerald);"></i> Walk Mode
       </button>
 
       <!-- Device Engineering Laboratory Mode -->
@@ -1440,6 +1596,41 @@
   <div class="inspector-modal" id="inspector-modal">
     <button class="modal-close" id="btn-close-modal"><i data-lucide="x"></i></button>
     <div id="modal-body-content"></div>
+  </div>
+
+  <!-- FIRST-PERSON WALK MODE HUD -->
+  <div id="walk-hud" class="walk-hud">
+    <!-- Top Instructional Banner -->
+    <div class="walk-banner" id="walk-banner">
+      <span class="walk-chip walk-chip-action">WASD</span>
+      <span>Walk</span>
+      <span style="opacity:0.3;">•</span>
+      <span class="walk-chip">SHIFT</span>
+      <span>Sprint</span>
+      <span style="opacity:0.3;">•</span>
+      <span class="walk-chip walk-chip-action">E</span>
+      <span>Interact</span>
+      <span style="opacity:0.3;">•</span>
+      <span class="walk-chip">CLICK</span>
+      <span id="label-walk-pointer-status">Mouse Look</span>
+      <span style="opacity:0.3;">•</span>
+      <span class="walk-chip">V</span>
+      <span>Exit Walk</span>
+    </div>
+
+    <!-- Center Aiming Reticle -->
+    <div class="walk-reticle" id="walk-reticle">
+      <div class="walk-reticle-dot"></div>
+    </div>
+
+    <!-- Contextual Target Interaction Card [E] -->
+    <div class="walk-prompt-card" id="walk-prompt-card">
+      <div class="walk-key-badge">E</div>
+      <div class="walk-prompt-info">
+        <div class="walk-prompt-action" id="walk-prompt-action">Inspect Gateway</div>
+        <div class="walk-prompt-sub" id="walk-prompt-sub">ESP32 Field Telemetry Node • 1.4m away</div>
+      </div>
+    </div>
   </div>
 
   <!-- DEDICATED 3D DEVICE LABORATORY OVERLAY -->
@@ -1697,6 +1888,50 @@
         filter.connect(this.ambientGain);
         this.ambientGain.connect(this.ctx.destination);
         whiteNoise.start();
+      }
+
+      playFootstep() {
+        if (!this.ctx || !this.enabled) return;
+        const now = this.ctx.currentTime;
+
+        // 1. Earth/gravel surface friction (short filtered noise burst)
+        const crunchLen = 0.075;
+        const noiseBuf = this.ctx.createBuffer(1, Math.floor(this.ctx.sampleRate * crunchLen), this.ctx.sampleRate);
+        const out = noiseBuf.getChannelData(0);
+        for (let i = 0; i < out.length; i++) {
+          out[i] = (Math.random() * 2 - 1) * Math.exp(-i / (out.length * 0.35));
+        }
+        const noiseSrc = this.ctx.createBufferSource();
+        noiseSrc.buffer = noiseBuf;
+
+        const noiseFilter = this.ctx.createBiquadFilter();
+        noiseFilter.type = 'bandpass';
+        noiseFilter.frequency.setValueAtTime(320 + Math.random() * 80, now);
+        noiseFilter.Q.setValueAtTime(1.8, now);
+
+        const noiseGain = this.ctx.createGain();
+        noiseGain.gain.setValueAtTime(0.045, now);
+        noiseGain.gain.exponentialRampToValueAtTime(0.001, now + crunchLen);
+
+        noiseSrc.connect(noiseFilter);
+        noiseFilter.connect(noiseGain);
+        noiseGain.connect(this.ctx.destination);
+        noiseSrc.start(now);
+
+        // 2. Low-frequency ground contact thud (subtle 85-110 Hz sweep)
+        const osc = this.ctx.createOscillator();
+        const oscGain = this.ctx.createGain();
+        const baseFreq = 85 + Math.random() * 20;
+        osc.frequency.setValueAtTime(baseFreq, now);
+        osc.frequency.exponentialRampToValueAtTime(42, now + 0.08);
+
+        oscGain.gain.setValueAtTime(0.06, now);
+        oscGain.gain.exponentialRampToValueAtTime(0.001, now + 0.08);
+
+        osc.connect(oscGain);
+        oscGain.connect(this.ctx.destination);
+        osc.start(now);
+        osc.stop(now + 0.09);
       }
 
       playPing(freq = 660) {
@@ -4671,7 +4906,37 @@
         updateHotspotPosition('hotspot-node', new THREE.Vector3(-0.55, 0.32, -0.30));
       }
 
-      controls.update();
+      // Phase 2: Drive First-Person Walk Movement & Head Bob
+      const dt = clock.getDelta();
+      if (typeof walkState !== 'undefined' && walkState.active) {
+        updateWalkMovement(dt);
+      } else {
+        controls.update();
+      }
+
+      // Phase 2: Gentle Wind Sway on Surrounding Maize Crop Rows
+      if (typeof cropStalks !== 'undefined' && cropStalks.length > 0) {
+        cropStalks.forEach(cs => {
+          cs.group.rotation.z = Math.sin(t * 1.8 + cs.phase) * 0.022;
+        });
+      }
+
+      // Phase 2: Airborne Pollen Drift Particles
+      if (typeof pollenPoints !== 'undefined' && pollenPositions) {
+        for (let i = 0; i < pollenCount; i++) {
+          pollenPositions[i * 3 + 0] += pollenVelocities[i].vx * dt;
+          pollenPositions[i * 3 + 1] += Math.sin(t * 2.0 + pollenVelocities[i].seed) * 0.003;
+          pollenPositions[i * 3 + 2] += pollenVelocities[i].vz * dt;
+
+          // Wrap boundaries
+          if (pollenPositions[i * 3 + 0] > 9.0)  pollenPositions[i * 3 + 0] = -9.0;
+          if (pollenPositions[i * 3 + 0] < -9.0) pollenPositions[i * 3 + 0] = 9.0;
+          if (pollenPositions[i * 3 + 2] > 9.0)  pollenPositions[i * 3 + 2] = -9.0;
+          if (pollenPositions[i * 3 + 2] < -9.0) pollenPositions[i * 3 + 2] = 9.0;
+        }
+        pollenPoints.geometry.attributes.position.needsUpdate = true;
+      }
+
       renderer.render(scene, camera);
     }
 
@@ -5876,7 +6141,591 @@
       }
     }
 
+
+    /* =========================================================================
+       17. PHASE 2: ACTIVE AGRICULTURAL RESEARCH FIELD & FIRST-PERSON WALK ENGINE
+       ========================================================================= */
+
+    const fieldEnvironmentGroup = new THREE.Group();
+    scene.add(fieldEnvironmentGroup);
+
+    // 1. Extended Agricultural Field Terrain (26m x 26m with furrow rows)
+    const fieldGroundGeo = new THREE.PlaneGeometry(28, 28, 64, 64);
+    fieldGroundGeo.rotateX(-Math.PI / 2);
+
+    // Sculpt furrow ridges and walking pathways around the central trial pit
+    const groundPosAttr = fieldGroundGeo.attributes.position;
+    for (let i = 0; i < groundPosAttr.count; i++) {
+      const vx = groundPosAttr.getX(i);
+      const vz = groundPosAttr.getZ(i);
+
+      // Tilled furrow waves running north-south (Z-axis)
+      let furrow = Math.sin(vx * 7.5) * 0.018 + Math.cos(vz * 3.2) * 0.008;
+
+      // Flatten walking path border around central monolith pit (x in [-2.5, 2.5], z in [-2.5, 2.0])
+      const distToCenter = Math.hypot(vx, vz);
+      if (distToCenter < 2.8) {
+        furrow *= Math.max(0, (distToCenter - 1.8) / 1.0);
+      }
+
+      groundPosAttr.setY(i, furrow - 0.005);
+    }
+    fieldGroundGeo.computeVertexNormals();
+
+    const fieldGroundMat = new THREE.MeshStandardMaterial({
+      color: 0x1c150e, // Organic dark agricultural loam
+      roughness: 0.94,
+      metalness: 0.03,
+      flatShading: false
+    });
+    const fieldGroundMesh = new THREE.Mesh(fieldGroundGeo, fieldGroundMat);
+    fieldGroundMesh.receiveShadow = true;
+    fieldGroundMesh.userData = { id: 'field-soil-terrain', name: 'Agricultural Silt Loam Field Surface', type: 'GEOLOGY', badge: 'MEASURED' };
+    fieldEnvironmentGroup.add(fieldGroundMesh);
+
+    // 2. Surrounding Maize Crop Rows (Authentic 75cm row spacing, 16 plants/row)
+    const cropStalks = [];
+    const cropRowXCoords = [-4.2, -3.2, 3.2, 4.2];
+
+    const cropStalkMat = new THREE.MeshStandardMaterial({
+      color: 0x4d7c0f,
+      roughness: 0.58,
+      metalness: 0.08
+    });
+    const cropLeafMat = new THREE.MeshStandardMaterial({
+      color: 0x3f6212,
+      roughness: 0.45,
+      metalness: 0.05,
+      side: THREE.DoubleSide
+    });
+
+    cropRowXCoords.forEach((rx, rowIdx) => {
+      for (let z = -8.0; z <= 8.0; z += 1.05) {
+        // Natural jitter so rows do not look cloned
+        const jx = rx + (Math.sin(z * 4.2 + rowIdx) * 0.06);
+        const jz = z + (Math.cos(rx * 3.5 + z) * 0.08);
+        const plantHeight = 2.05 + (Math.sin(z * 3.1) * 0.22);
+
+        const stalkGroup = new THREE.Group();
+        stalkGroup.position.set(jx, 0, jz);
+
+        // Culm stem
+        const cGeo = new THREE.CylinderGeometry(0.014, 0.024, plantHeight, 8);
+        const cMesh = new THREE.Mesh(cGeo, cropStalkMat);
+        cMesh.position.y = plantHeight * 0.5;
+        cMesh.castShadow = true;
+        stalkGroup.add(cMesh);
+
+        // 6 Arched foliage leaves pointing toward furrow alley
+        for (let l = 0; l < 6; l++) {
+          const lH = 0.45 + l * 0.28;
+          const leafLen = 0.65 - l * 0.04;
+          const sign = (l % 2 === 0) ? 1 : -1;
+          const leafCurve = new THREE.CatmullRomCurve3([
+            new THREE.Vector3(0, lH, 0),
+            new THREE.Vector3(sign * leafLen * 0.5, lH + 0.12, (l % 3 - 1) * 0.08),
+            new THREE.Vector3(sign * leafLen, lH - 0.14, (l % 3 - 1) * 0.14)
+          ]);
+          const lGeo = new THREE.TubeGeometry(leafCurve, 8, 0.022, 4, false);
+          const lMesh = new THREE.Mesh(lGeo, cropLeafMat);
+          stalkGroup.add(lMesh);
+        }
+
+        fieldEnvironmentGroup.add(stalkGroup);
+        cropStalks.push({ group: stalkGroup, baseZ: jz, phase: (rx * 1.5 + jz * 0.8) });
+      }
+    });
+
+    // 3. Research Plot Marker Stakes with Laser-Etched Metadata Signboards
+    function createPlotSignStake(x, z, angle, title, sub1, sub2) {
+      const stakeGroup = new THREE.Group();
+      stakeGroup.position.set(x, 0, z);
+      stakeGroup.rotation.y = angle;
+
+      // Wooden stake post
+      const postGeo = new THREE.CylinderGeometry(0.018, 0.018, 0.95, 8);
+      const postMat = new THREE.MeshStandardMaterial({ color: 0x5c4033, roughness: 0.82 });
+      const postMesh = new THREE.Mesh(postGeo, postMat);
+      postMesh.position.y = 0.475;
+      postMesh.castShadow = true;
+      stakeGroup.add(postMesh);
+
+      // Angled signboard plate
+      const boardGeo = new THREE.BoxGeometry(0.38, 0.24, 0.012);
+      const boardMat = new THREE.MeshStandardMaterial({ color: 0x0f172a, roughness: 0.35, metalness: 0.85 });
+      const boardMesh = new THREE.Mesh(boardGeo, boardMat);
+      boardMesh.position.set(0, 0.85, 0.01);
+      boardMesh.rotation.x = -0.15;
+      boardMesh.userData = {
+        id: 'plot-sign',
+        name: title,
+        type: 'STATION',
+        badge: 'CALIBRATED',
+        desc: `${sub1} • ${sub2}`
+      };
+      stakeGroup.add(boardMesh);
+
+      // White header band on board
+      const bandGeo = new THREE.BoxGeometry(0.36, 0.035, 0.014);
+      const bandMat = new THREE.MeshStandardMaterial({ color: 0x00ff87, emissive: 0x00ff87, emissiveIntensity: 0.6 });
+      const bandMesh = new THREE.Mesh(bandGeo, bandMat);
+      bandMesh.position.set(0, 0.92, 0.012);
+      bandMesh.rotation.x = -0.15;
+      stakeGroup.add(bandMesh);
+
+      fieldEnvironmentGroup.add(stakeGroup);
+      return stakeGroup;
+    }
+
+    const plotSign1 = createPlotSignStake(
+      2.1, 1.85, -Math.PI / 4,
+      'ZERTHIVA // TRIAL PLOT A-04',
+      'Cultivar: Zea mays L. (Pioneer P1197)',
+      'Subsurface Sensor Core: 15–25cm'
+    );
+
+    const plotSign2 = createPlotSignStake(
+      -2.1, 1.85, Math.PI / 4,
+      'GATEWAY NODE 01 // TELEMETRY',
+      'Seeed Xiao ESP32-S3 + SIM800L Uplink',
+      'Autonomous Power: 5W PV + 18650 BMS'
+    );
+
+    // 4. Airborne Sunlit Pollen Motes & Dust Particles (140 Drifting Points)
+    const pollenCount = 140;
+    const pollenGeo = new THREE.BufferGeometry();
+    const pollenPositions = new Float32Array(pollenCount * 3);
+    const pollenVelocities = [];
+
+    for (let i = 0; i < pollenCount; i++) {
+      pollenPositions[i * 3 + 0] = (Math.random() - 0.5) * 18.0;
+      pollenPositions[i * 3 + 1] = 0.2 + Math.random() * 3.5;
+      pollenPositions[i * 3 + 2] = (Math.random() - 0.5) * 18.0;
+
+      pollenVelocities.push({
+        vx: 0.04 + Math.random() * 0.06,
+        vy: (Math.random() - 0.5) * 0.02,
+        vz: (Math.random() - 0.5) * 0.03,
+        seed: Math.random() * 10
+      });
+    }
+    pollenGeo.setAttribute('position', new THREE.BufferAttribute(pollenPositions, 3));
+
+    const pollenMat = new THREE.PointsMaterial({
+      color: 0xfef08a,
+      size: 0.045,
+      transparent: true,
+      opacity: 0.65,
+      blending: THREE.AdditiveBlending
+    });
+    const pollenPoints = new THREE.Points(pollenGeo, pollenMat);
+    fieldEnvironmentGroup.add(pollenPoints);
+
+    // 5. FIRST-PERSON WALK STATE & CONTROLLER
+    const walkState = {
+      active: false,
+      pos: new THREE.Vector3(2.4, 1.68, 3.2),
+      yaw: -0.65,
+      pitch: -0.12,
+      keys: { forward: false, backward: false, left: false, right: false, sprint: false },
+      walkTimer: 0,
+      footstepTimer: 0,
+      headBobY: 0,
+      headBobX: 0,
+      isPointerLocked: false,
+      activePromptAction: null,
+      activePromptTargetName: null,
+      isDraggingLook: false,
+      dragStartMouse: { x: 0, y: 0 }
+    };
+
+    // Central Raycaster for First-Person Look Targeting
+    const walkLookRaycaster = new THREE.Raycaster();
+
+    function initWalkMode() {
+      // Toggle button in header
+      const walkBtn = document.getElementById('btn-toggle-walk');
+      if (walkBtn) {
+        walkBtn.addEventListener('click', () => {
+          toggleWalkMode();
+        });
+      }
+
+      // Contextual prompt card click
+      const promptCard = document.getElementById('walk-prompt-card');
+      if (promptCard) {
+        promptCard.addEventListener('click', () => {
+          executeWalkPromptAction();
+        });
+      }
+
+      // Keyboard Listeners
+      window.addEventListener('keydown', (e) => {
+        // [V] or [C] key toggles walk mode anytime outside input fields
+        if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
+
+        if (e.code === 'KeyV' || e.code === 'KeyC') {
+          toggleWalkMode();
+          e.preventDefault();
+          return;
+        }
+
+        if (!walkState.active) return;
+
+        if (e.code === 'KeyW' || e.code === 'ArrowUp')    walkState.keys.forward = true;
+        if (e.code === 'KeyS' || e.code === 'ArrowDown')  walkState.keys.backward = true;
+        if (e.code === 'KeyA' || e.code === 'ArrowLeft')  walkState.keys.left = true;
+        if (e.code === 'KeyD' || e.code === 'ArrowRight') walkState.keys.right = true;
+        if (e.code === 'ShiftLeft' || e.code === 'ShiftRight') walkState.keys.sprint = true;
+
+        // [E] key triggers contextual action
+        if (e.code === 'KeyE') {
+          executeWalkPromptAction();
+          e.preventDefault();
+        }
+      });
+
+      window.addEventListener('keyup', (e) => {
+        if (!walkState.active) return;
+        if (e.code === 'KeyW' || e.code === 'ArrowUp')    walkState.keys.forward = false;
+        if (e.code === 'KeyS' || e.code === 'ArrowDown')  walkState.keys.backward = false;
+        if (e.code === 'KeyA' || e.code === 'ArrowLeft')  walkState.keys.left = false;
+        if (e.code === 'KeyD' || e.code === 'ArrowRight') walkState.keys.right = false;
+        if (e.code === 'ShiftLeft' || e.code === 'ShiftRight') walkState.keys.sprint = false;
+      });
+
+      // Pointer Lock on WebGL Canvas click when in Walk Mode
+      renderer.domElement.addEventListener('click', () => {
+        if (walkState.active && !walkState.isPointerLocked) {
+          renderer.domElement.requestPointerLock?.();
+        }
+      });
+
+      document.addEventListener('pointerlockchange', () => {
+        walkState.isPointerLocked = (document.pointerLockElement === renderer.domElement);
+        const statusLabel = document.getElementById('label-walk-pointer-status');
+        if (statusLabel) {
+          statusLabel.innerText = walkState.isPointerLocked ? 'Pointer Locked (ESC to free)' : 'Click to Lock Look';
+        }
+      });
+
+      // Mouse Look
+      window.addEventListener('mousemove', (e) => {
+        if (!walkState.active) return;
+
+        if (walkState.isPointerLocked) {
+          const sensitivity = 0.0022;
+          walkState.yaw -= e.movementX * sensitivity;
+          walkState.pitch -= e.movementY * sensitivity;
+          walkState.pitch = Math.max(-1.25, Math.min(1.25, walkState.pitch));
+        } else if (walkState.isDraggingLook) {
+          const dx = e.clientX - walkState.dragStartMouse.x;
+          const dy = e.clientY - walkState.dragStartMouse.y;
+          walkState.dragStartMouse = { x: e.clientX, y: e.clientY };
+          walkState.yaw -= dx * 0.0035;
+          walkState.pitch -= dy * 0.0035;
+          walkState.pitch = Math.max(-1.25, Math.min(1.25, walkState.pitch));
+        }
+      });
+
+      window.addEventListener('mousedown', (e) => {
+        if (walkState.active && !walkState.isPointerLocked) {
+          if (!e.target.closest('aside') && !e.target.closest('header') && !e.target.closest('.walk-hud')) {
+            walkState.isDraggingLook = true;
+            walkState.dragStartMouse = { x: e.clientX, y: e.clientY };
+          }
+        }
+      });
+
+      window.addEventListener('mouseup', () => {
+        walkState.isDraggingLook = false;
+      });
+    }
+
+    // Toggle Walk Mode vs Orbit Mode
+    function toggleWalkMode() {
+      if (walkState.active) {
+        leaveWalkMode();
+      } else {
+        enterWalkMode();
+      }
+    }
+
+    function enterWalkMode() {
+      if (labState.active) leaveDeviceLaboratory();
+
+      sound.playPing(720);
+      walkState.active = true;
+
+      // Position player camera at ground eye-level outside central pit
+      const currentXZDist = Math.hypot(camera.position.x, camera.position.z);
+      if (currentXZDist > 2.2 && currentXZDist < 9.0) {
+        walkState.pos.x = camera.position.x;
+        walkState.pos.z = camera.position.z;
+      } else {
+        walkState.pos.set(2.4, 1.68, 3.2);
+      }
+
+      // Calculate initial yaw facing the hero plant (0, 0, 0)
+      walkState.yaw = Math.atan2(-walkState.pos.x, -walkState.pos.z);
+      walkState.pitch = -0.15;
+
+      // Disable orbit controls
+      controls.enabled = false;
+
+      // Update Header Button UI
+      const walkBtn = document.getElementById('btn-toggle-walk');
+      if (walkBtn) {
+        walkBtn.classList.add('active');
+        walkBtn.innerHTML = '<i data-lucide="eye" style="width:13px; height:13px; color:var(--accent-cyan);"></i> Orbit Mode';
+      }
+
+      // Show Walk HUD
+      const walkHud = document.getElementById('walk-hud');
+      if (walkHud) walkHud.classList.add('active');
+
+      // Hide orbit visibility toolbar & timeline to clear view
+      const visToolbar = document.querySelector('.visibility-toolbar');
+      const timelineDock = document.querySelector('.timeline-dock');
+      if (visToolbar) visToolbar.style.display = 'none';
+      if (timelineDock) timelineDock.style.display = 'none';
+
+      if (typeof lucide !== 'undefined') lucide.createIcons();
+    }
+
+    function leaveWalkMode() {
+      if (!walkState.active) return;
+      sound.playPing(540);
+
+      walkState.active = false;
+      if (document.exitPointerLock) document.exitPointerLock();
+
+      // Smoothly hand back to OrbitControls
+      controls.enabled = true;
+      controls.target.set(0.05, -0.25, 0.0);
+
+      // Update Header Button UI
+      const walkBtn = document.getElementById('btn-toggle-walk');
+      if (walkBtn) {
+        walkBtn.classList.remove('active');
+        walkBtn.innerHTML = '<i data-lucide="footprints" style="width:13px; height:13px; color:var(--accent-emerald);"></i> Walk Mode';
+      }
+
+      // Hide Walk HUD
+      const walkHud = document.getElementById('walk-hud');
+      if (walkHud) walkHud.classList.remove('active');
+
+      // Restore orbit UI
+      const visToolbar = document.querySelector('.visibility-toolbar');
+      const timelineDock = document.querySelector('.timeline-dock');
+      if (visToolbar) visToolbar.style.display = 'flex';
+      if (timelineDock) timelineDock.style.display = 'flex';
+
+      // Restore camera smoothly
+      gsap.to(camera.position, {
+        x: 3.8,
+        y: 0.45,
+        z: 6.2,
+        duration: 1.2,
+        ease: "power2.inOut"
+      });
+
+      if (typeof lucide !== 'undefined') lucide.createIcons();
+    }
+
+    // Execute active contextual action triggered by [E] or card click
+    function executeWalkPromptAction() {
+      if (!walkState.activePromptAction) return;
+      sound.playPing(880);
+      const action = walkState.activePromptAction;
+      walkState.activePromptAction = null;
+      action();
+    }
+
+    // Update Walk Movement & Physics Each Frame
+    function updateWalkMovement(dt) {
+      if (!walkState.active) return;
+
+      dt = Math.min(dt, 0.08); // Clamp large delta drops
+      const speed = walkState.keys.sprint ? 2.4 : 1.35; // m/s
+
+      // Forward & Strafe vectors based on yaw
+      const forwardX = -Math.sin(walkState.yaw);
+      const forwardZ = -Math.cos(walkState.yaw);
+      const rightX = -Math.sin(walkState.yaw - Math.PI / 2);
+      const rightZ = -Math.cos(walkState.yaw - Math.PI / 2);
+
+      let moveX = 0;
+      let moveZ = 0;
+      if (walkState.keys.forward)  { moveX += forwardX; moveZ += forwardZ; }
+      if (walkState.keys.backward) { moveX -= forwardX; moveZ -= forwardZ; }
+      if (walkState.keys.left)     { moveX -= rightX;   moveZ -= rightZ;   }
+      if (walkState.keys.right)    { moveX += rightX;   moveZ += rightZ;   }
+
+      const moveLen = Math.hypot(moveX, moveZ);
+      const isMoving = (moveLen > 0.001);
+
+      if (isMoving) {
+        moveX = (moveX / moveLen) * speed * dt;
+        moveZ = (moveZ / moveLen) * speed * dt;
+
+        // Collision Check: Prevent walking through central monolith cutaway
+        function testPitCollision(cx, cz) {
+          return (cx >= -2.05 && cx <= 2.05 && cz >= -1.85 && cz <= 1.35);
+        }
+
+        // Test with sliding along free axis
+        if (!testPitCollision(walkState.pos.x + moveX, walkState.pos.z)) {
+          walkState.pos.x += moveX;
+        }
+        if (!testPitCollision(walkState.pos.x, walkState.pos.z + moveZ)) {
+          walkState.pos.z += moveZ;
+        }
+
+        // Soft research field boundaries
+        walkState.pos.x = Math.max(-10.5, Math.min(10.5, walkState.pos.x));
+        walkState.pos.z = Math.max(-10.5, Math.min(10.5, walkState.pos.z));
+
+        // Natural Head Bobbing & Footsteps
+        const bobRate = walkState.keys.sprint ? 14.5 : 9.2;
+        walkState.walkTimer += dt * bobRate;
+        walkState.headBobY = Math.sin(walkState.walkTimer) * 0.024;
+        walkState.headBobX = Math.cos(walkState.walkTimer * 0.5) * 0.012;
+
+        walkState.footstepTimer += dt * bobRate;
+        if (walkState.footstepTimer >= Math.PI) {
+          walkState.footstepTimer -= Math.PI;
+          sound.playFootstep();
+        }
+      } else {
+        walkState.headBobY *= 0.82;
+        walkState.headBobX *= 0.82;
+      }
+
+      // Update Camera Position (Standard 1.68m farmer eye-level)
+      camera.position.set(
+        walkState.pos.x + walkState.headBobX,
+        1.68 + walkState.headBobY,
+        walkState.pos.z
+      );
+
+      // Update Camera Look Direction from Yaw & Pitch
+      const lookDir = new THREE.Vector3(
+        -Math.sin(walkState.yaw) * Math.cos(walkState.pitch),
+        Math.sin(walkState.pitch),
+        -Math.cos(walkState.yaw) * Math.cos(walkState.pitch)
+      ).normalize();
+
+      const lookTarget = camera.position.clone().add(lookDir);
+      camera.lookAt(lookTarget);
+
+      // Center-Screen Contextual Interaction Raycast
+      updateContextualRaycast(lookDir);
+    }
+
+    // Cast Center Ray to Detect Contextual Interactive Objects
+    function updateContextualRaycast(lookDir) {
+      walkLookRaycaster.set(camera.position, lookDir);
+
+      const interactable = [hardwareGroup, geologyGroup, plantGroup, plotSign1, plotSign2];
+      const hits = walkLookRaycaster.intersectObjects(interactable, true);
+
+      let foundTarget = null;
+      let targetDist = 999;
+
+      if (hits.length > 0) {
+        const hit = hits[0];
+        targetDist = hit.distance;
+
+        if (targetDist <= 3.8) {
+          // Identify hit object
+          let cur = hit.object;
+          while (cur && !cur.userData?.id && cur.parent && cur !== scene) {
+            cur = cur.parent;
+          }
+
+          if (cur && cur.userData?.id) {
+            foundTarget = { obj: cur, id: cur.userData.id, dist: targetDist };
+          }
+        }
+      }
+
+      // Proximity fallback check (if looking close to hardware or probe)
+      const hwDist = camera.position.distanceTo(new THREE.Vector3(-0.55, 0.20, -0.30));
+      const probeDist = camera.position.distanceTo(new THREE.Vector3(-0.55, -0.20, -0.30));
+      const plantDist = camera.position.distanceTo(new THREE.Vector3(0.0, 1.2, 0.0));
+
+      const reticleEl = document.getElementById('walk-reticle');
+      const promptCard = document.getElementById('walk-prompt-card');
+      const promptActionEl = document.getElementById('walk-prompt-action');
+      const promptSubEl = document.getElementById('walk-prompt-sub');
+
+      if (foundTarget && foundTarget.id === 'plot-sign') {
+        reticleEl?.classList.add('targeted');
+        promptCard?.classList.add('visible');
+        if (promptActionEl) promptActionEl.innerText = 'Read Plot Agronomic Specifications';
+        if (promptSubEl) promptSubEl.innerText = `${foundTarget.obj.userData.name} • ${foundTarget.dist.toFixed(1)}m away`;
+
+        walkState.activePromptAction = () => {
+          showModalDossier(`
+            <h3 style="font-family:var(--font-display); font-size:1.25rem; color:#fff; margin-bottom:8px;">${foundTarget.obj.userData.name}</h3>
+            <p style="font-size:0.75rem; color:var(--text-muted); line-height:1.5; margin-bottom:12px;">${foundTarget.obj.userData.desc}</p>
+            <div style="background:rgba(0,0,0,0.4); padding:10px; border-radius:8px; font-family:var(--font-mono); font-size:0.65rem; color:var(--accent-cyan);">
+              Soil Texture: Melanic Silt Loam • Sown: Day 42 (VT Anthesis)<br>
+              Target Salinity Threshold: 1.7 dS/m (Maas-Hoffman)<br>
+              Field Gateway: Seeed Xiao ESP32-S3 (240MHz) • 15-min Telemetry
+            </div>
+          `);
+        };
+      } else if (foundTarget && (foundTarget.id.includes('probe') || foundTarget.id.includes('ec-ring') || foundTarget.id.includes('vwc') || foundTarget.id.includes('temp'))) {
+        reticleEl?.classList.add('targeted');
+        promptCard?.classList.add('visible');
+        if (promptActionEl) promptActionEl.innerText = 'Inspect Subsurface 3-in-1 Probe';
+        if (promptSubEl) promptSubEl.innerText = `Dual 316L EC + Capacitive VWC + DS18B20 • ${foundTarget.dist.toFixed(1)}m`;
+
+        walkState.activePromptAction = () => {
+          leaveWalkMode();
+          enterDeviceLaboratory(foundTarget.id, 'probe');
+        };
+      } else if (hwDist <= 3.2 && (foundTarget?.id.includes('esp32') || foundTarget?.id.includes('pv') || foundTarget?.id.includes('sentry') || foundTarget?.id.includes('chassis') || foundTarget?.id.includes('sim800') || foundTarget?.id.includes('sdcard') || foundTarget?.id.includes('battery') || hwDist < 2.2)) {
+        reticleEl?.classList.add('targeted');
+        promptCard?.classList.add('visible');
+        if (promptActionEl) promptActionEl.innerText = 'Enter Device Laboratory';
+        if (promptSubEl) promptSubEl.innerText = `Seeed Xiao ESP32-S3 Gateway & Solar Core • ${hwDist.toFixed(1)}m away`;
+
+        walkState.activePromptAction = () => {
+          leaveWalkMode();
+          enterDeviceLaboratory('esp32-mcu', 'gateway');
+        };
+      } else if (foundTarget && (foundTarget.id.includes('horizon') || foundTarget.id.includes('geology') || foundTarget.id.includes('stratum') || foundTarget.id.includes('field-soil'))) {
+        reticleEl?.classList.add('targeted');
+        promptCard?.classList.add('visible');
+        if (promptActionEl) promptActionEl.innerText = 'Examine Soil Stratigraphy';
+        if (promptSubEl) promptSubEl.innerText = `Pedological Horizons O, A, B, C • ${foundTarget.dist.toFixed(1)}m away`;
+
+        walkState.activePromptAction = () => {
+          leaveWalkMode();
+          goToChapter(1);
+        };
+      } else if (plantDist <= 3.0 && (foundTarget?.id.includes('leaf') || foundTarget?.id.includes('stalk') || foundTarget?.id.includes('tassel') || foundTarget?.id.includes('ear') || plantDist < 2.0)) {
+        reticleEl?.classList.add('targeted');
+        promptCard?.classList.add('visible');
+        if (promptActionEl) promptActionEl.innerText = 'Inspect Maize Plant Canopy';
+        if (promptSubEl) promptSubEl.innerText = `Zea mays L. C4 Photosynthetic Stalk • ${plantDist.toFixed(1)}m away`;
+
+        walkState.activePromptAction = () => {
+          leaveWalkMode();
+          goToChapter(0);
+        };
+      } else {
+        reticleEl?.classList.remove('targeted');
+        promptCard?.classList.remove('visible');
+        walkState.activePromptAction = null;
+      }
+    }
+
     initDeviceLaboratory();
+    initWalkMode();
 
     // Start with the opening cinematic sweep
     startCinematicOpening();
