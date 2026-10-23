@@ -1,4 +1,4 @@
-# 🛠️ Zerthiva — Technical Architecture & Codebase Blueprint
+﻿# 🛠️ Zerthiva — Technical Architecture & Codebase Blueprint
 
 This blueprint provides the complete engineering specifications, folder hierarchy, requirements, and architectural diagrams (DFDs and UMLs) needed to build and launch the **Zerthiva Soil Intelligence System (SIS)** in a private GitHub repository.
 
@@ -511,21 +511,26 @@ class DecisionEngine:
 
     def normalize_temperature(self, raw_ec: float, temp_c: float) -> float:
         """Standardize raw electrical conductivity to 25°C standard baseline"""
-        # Standard temperature compensation coefficient for soil water: 2.0% per °C
-        alpha = 0.020
+        # Standard t# Rhoades temperature compensation coefficient for soil solution EC: 1.91% per °C (verified)
+        alpha = 0.0191
         normalized_ec = raw_ec / (1.0 + alpha * (temp_c - 25.0))
         return round(normalized_ec, 2)
 
     def calculate_leaching_requirement(self, ec_soil_target: float) -> float:
         """
-        FAO-56 Standard Leaching Requirement (LR) formula:
-        LR = ECw / (5 * ECe - ECw)
+        Ayers & Westcot Leaching Fraction formula (FAO-56 / FAO-29):
+        LF = ECw / (5 * ECe - ECw)
+        Safety constraint: enforced only when EC_w <= 0.5 * EC_e (Annex E §E.1)
         """
+        # Safety guard: if irrigation water EC is >50% of soil target EC,
+        # leaching would worsen salt concentration — do not advise.
+        if self.ec_water > 0.5 * ec_soil_target:
+            return 0.0  # No leaching advisory; consult agronomist
         denominator = (5.0 * ec_soil_target) - self.ec_water
         if denominator <= 0:
-            return 0.15 # Fallback baseline 15% leaching buffer
+            return 0.15  # Fallback baseline 15% leaching buffer
         lr = self.ec_water / denominator
-        return round(min(max(lr, 0.05), 0.45), 2) # Clamp between 5% and 45%
+        return round(min(max(lr, 0.05), 0.45), 2)  # Clamp between 5% and 45%
 
     def evaluate_field(self, crop_name: str, raw_ec: float, temp_c: float, moisture_vwc: float) -> dict:
         """

@@ -1,10 +1,11 @@
-# 🌱 Zerthiva: Soil Intelligence System (SIS)
+﻿# 🌱 Zerthiva: Soil Intelligence System (SIS)
 > *"Know Your Soil. Feed Your Field."*
 
-[![Competition](https://img.shields.io/badge/Innovation_Competition-Master_Submission-059669?style=for-the-badge)](./Zerthiva_Full_Documentation.html)
-[![Stage](https://img.shields.io/badge/Project_Stage-Prototype-d97706?style=for-the-badge)](./Zerthiva_Full_Documentation.html)
-[![Hardware](https://img.shields.io/badge/Hardware_Cost-$30_Node-0284c7?style=for-the-badge)](./Zerthiva_Full_Documentation.html)
-[![Offline](https://img.shields.io/badge/Operation-100%25_Offline-10b981?style=for-the-badge)](./Zerthiva_Full_Documentation.html)
+[![Competition](https://img.shields.io/badge/Innovation_Competition-Master_Submission-059669?style=for-the-badge)](./index.html)
+[![Stage](https://img.shields.io/badge/Project_Stage-Prototype-d97706?style=for-the-badge)](./index.html)
+[![Hardware](https://img.shields.io/badge/Hardware_Cost-$34.80_BOM-0284c7?style=for-the-badge)](./index.html)
+[![Offline](https://img.shields.io/badge/Operation-100%25_Offline-10b981?style=for-the-badge)](./index.html)
+[![Live Site](https://img.shields.io/badge/Live_Site-GitHub_Pages-059669?style=for-the-badge&logo=github)](https://collomut.github.io/soilManagement/)
 
 **Zerthiva** is an affordable, field-deployed soil intelligence system that monitors soil salinity (apparent bulk Electrical Conductivity) and volumetric moisture in real time, provides precision irrigation timing guidance based on soil water depletion, and issues crop-specific salinity lockout and leaching alerts to prevent osmotic drought and irreversible soil degradation.
 
@@ -14,10 +15,12 @@
 
 This repository contains the complete 58-section master project plan and technical dossier:
 
-* 🌐 **[Interactive Web Documentation (Zerthiva_Full_Documentation.html)](./Zerthiva_Full_Documentation.html)**  
+* 🌐 **[Interactive 3D Soil Intelligence Viewer](./zerthiva_interactive_3d.html)**  
+  *Cinematic WebGL real-time 3D soil cutaway visualization with autonomous agronomic simulation, live sensor telemetry, and PBR-rendered soil layers.*
+* 🌐 **[Interactive Web Documentation](./index.html)**  
   *The full self-contained master document featuring live real-time position scrollspy, categorized 5-tier sidebar navigation, dynamic reading progress bar, bold topic hierarchy, and responsive data tables.*
 * 🖨️ **Print & PDF Export:**  
-  *Open `Zerthiva_Full_Documentation.html` in Chrome or Edge and press `Ctrl+P` (Save as PDF). Built-in `@media print` rules automatically format the document into a clean, 74-page master submission with section page breaks, edge-to-edge margins, and hidden navigation.*
+  *Open `index.html` in Chrome or Edge and press `Ctrl+P` (Save as PDF). Built-in `@media print` rules automatically format the document into a clean, 74-page master submission with section page breaks, edge-to-edge margins, and hidden navigation.*
 
 ---
 
@@ -36,7 +39,7 @@ Globally, soil salinization destroys **1.5 million hectares of arable land annua
 
 ## 🛠️ The Solution & System Architecture
 
-Zerthiva resolves this with a **$30.00 modular field node**:
+Zerthiva resolves this with a **\$34.80 BOM field node**:
 
 ```
  [ Field Soil ] 
@@ -78,7 +81,7 @@ Zerthiva resolves this with a **$30.00 modular field node**:
 
 ## 🏛️ Master Plan Architecture (58 Sections)
 
-The full documentation in `Zerthiva_Full_Documentation.html` is structured into five levels:
+The full documentation in `index.html` is structured into five levels:
 
 1. **Level 1: Foundations & Context (Sections 1–10):** Project Identity, Executive Summary, Agricultural Context, Problem Statement, 5-Whys Root Cause Analysis, Evidence Base, Case Studies (iCow, Proximity Designs, failed World Bank IoT), Competitor Matrix, and The Unaddressed Gap.
 2. **Level 2: Solution Architecture & Science (Sections 11–19):** Top-to-Bottom Hardware/Firmware Design, 3-Persona User Journeys, Technology Justification, System Flow Architecture, Data Governance, Phase 2 AI/ML Strategy, Agronomic Science (FAO-56, Osmosis, Leaching Fractions), and 10-Stage Crop Process Models.
@@ -96,10 +99,10 @@ The full documentation in `Zerthiva_Full_Documentation.html` is structured into 
    cd soilManagement
    ```
 2. **Open the interactive documentation:**
-   Simply double-click `Zerthiva_Full_Documentation.html` or open it with any web browser:
+   Simply double-click `index.html` or open it with any web browser:
    ```bash
    # Windows PowerShell
-   Start-Process .\Zerthiva_Full_Documentation.html
+   Start-Process .\index.html
    ```
 
 ---
@@ -109,6 +112,7 @@ The full documentation in `Zerthiva_Full_Documentation.html` is structured into 
 * **Firmware & Software:** Released under the [MIT License](https://opensource.org/licenses/MIT).
 * **Hardware Schematics & PCB:** Released under the [CERN Open Hardware Licence v2 - Strongly Reciprocal](https://ohwr.org/cernohl).
 * **Data Ownership:** Farmer field data remains the sovereign property of the individual farmer.
+* **Contributing:** See [CONTRIBUTING.md](./CONTRIBUTING.md) for development guidelines.
 
 ---
 *Created for the Agricultural Technology & Innovation Competition · October 2026 (Comprehensive Audit Reconciled Dossier)*

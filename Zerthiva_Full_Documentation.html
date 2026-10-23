@@ -4,8 +4,27 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Zerthiva: Soil Intelligence System · Precision Agritech Research Platform</title>
-    <meta name="description" content="Zerthiva: Precision Soil Intelligence System for Smallholder Climate Resilience. Post-Audit Master Technical Dossier (58 Sections & 9 Annexes).">
-    
+    <meta name="description" content="Zerthiva: Precision Soil Intelligence System for Smallholder Climate Resilience. Post-Audit Master Technical Dossier (58 Sections &amp; 9 Annexes).">
+    <meta name="author" content="Zerthiva Engineering Team">
+    <link rel="canonical" href="https://collomut.github.io/soilManagement/">
+
+    <!-- Favicon (inline SVG data URI) -->
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 36 36'%3E%3Crect width='36' height='36' rx='8' fill='%23142D25'/%3E%3Cpath d='M4 27C12 25 24 29 32 27' stroke='%23B7CC8A' stroke-width='1.5' stroke-linecap='round' opacity='0.6'/%3E%3Cpath d='M18 16V28' stroke='%23B7CC8A' stroke-width='2' stroke-linecap='round'/%3E%3Cpath d='M18 16C18 11 11 10 11 6C16 6 18 11 18 16Z' fill='%23B7CC8A'/%3E%3Cpath d='M18 16C18 12 25 11 25 8C20 8 18 12 18 16Z' fill='%23B7CC8A' opacity='0.85'/%3E%3Ccircle cx='18' cy='16' r='2.2' fill='%23FFFFFF'/%3E%3C/svg%3E">
+
+    <!-- OpenGraph / Social Sharing Meta -->
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="Zerthiva">
+    <meta property="og:title" content="Zerthiva: Soil Intelligence System · Precision Agritech">
+    <meta property="og:description" content="Affordable field-deployed soil EC &amp; moisture intelligence for smallholder farmers. 58-section master technical dossier covering hardware design, agronomic science, and pilot methodology.">
+    <meta property="og:image" content="https://collomut.github.io/soilManagement/assets/images/farm-hero.jpg">
+    <meta property="og:url" content="https://collomut.github.io/soilManagement/">
+    <meta property="og:locale" content="en_US">
+    <!-- Twitter / X Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Zerthiva: Soil Intelligence System">
+    <meta name="twitter:description" content="Precision soil salinity &amp; moisture monitoring for smallholder farmers. $34.80 BOM field node. 100% offline. Built for real farms.">
+    <meta name="twitter:image" content="https://collomut.github.io/soilManagement/assets/images/farm-hero.jpg">
+
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -2186,6 +2205,43 @@
             background: var(--sage-green);
             color: #080D0B;
         }
+        /* ── Dark Mode: Table & Table-Wrap Overrides ────────────────── */
+        [data-theme="dark"] .table-wrap {
+            background: #0d1a12;
+            border-color: rgba(183, 204, 138, 0.12);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.35);
+        }
+        [data-theme="dark"] table th {
+            background: #0a1309;
+            color: var(--sage-green);
+            border-bottom-color: rgba(183, 204, 138, 0.18);
+            border-right-color: rgba(255,255,255,0.06);
+        }
+        [data-theme="dark"] table td {
+            border-color: rgba(255,255,255,0.05);
+            color: #c8d4c0;
+        }
+        [data-theme="dark"] table tr:nth-child(even) td {
+            background: rgba(255,255,255,0.025);
+        }
+        [data-theme="dark"] table tr:hover td {
+            background: rgba(183, 204, 138, 0.05);
+        }
+        [data-theme="dark"] table thead tr {
+            border-bottom: 2px solid rgba(183, 204, 138, 0.2);
+        }
+        [data-theme="dark"] .badge-bench,
+        [data-theme="dark"] .badge-measured,
+        [data-theme="dark"] .badge-spec,
+        [data-theme="dark"] .badge-proj,
+        [data-theme="dark"] .badge-hypo,
+        [data-theme="dark"] .badge-planned,
+        [data-theme="dark"] .badge-failed,
+        [data-theme="dark"] .badge-evidence,
+        [data-theme="dark"] .badge-implemented {
+            filter: brightness(0.9) saturate(0.85);
+        }
+
 
         /* ============================================================
            PRINT STYLESHEET
@@ -2290,6 +2346,23 @@
             }
         }
 
+
+        /* ── 480px Extra-Small Phone Breakpoint ──────────────────────── */
+        @media (max-width: 480px) {
+            .hero-title { font-size: clamp(2.2rem, 10vw, 3.2rem); }
+            .hero-subtitle { font-size: 1rem; }
+            .hero-actions { flex-direction: column; gap: 0.6rem; }
+            .hero-actions .btn { width: 100%; justify-content: center; font-size: 0.88rem; padding: 0.7rem 1rem; }
+            .hero-metadata-row { grid-template-columns: 1fr 1fr; gap: 0.5rem; }
+            .meta-pill { padding: 0.45rem 0.65rem; }
+            .meta-label { font-size: 0.68rem; }
+            .meta-val { font-size: 0.82rem; }
+            .article-top-actions { display: none; }
+            h2 { font-size: 1.25rem; }
+            h3 { font-size: 1rem; }
+            .table-wrap { font-size: 0.8rem; }
+            pre, .code-block { font-size: 0.78rem; }
+        }
     </style>
 
     <script>
@@ -2587,6 +2660,10 @@
                 <a href="#section1" class="btn btn-secondary">
                   <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line></svg>
                   <span>Read the Technical Documentation</span>
+                </a>
+                <a href="./zerthiva_interactive_3d.html" class="btn btn-secondary" target="_blank" rel="noopener" title="Open cinematic 3D soil intelligence visualization">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+                  <span>Interactive 3D Viewer</span>
                 </a>
               </div>
 
@@ -3836,6 +3913,16 @@ EC_e_est ≈ EC_p × (θ_FC / θ_SP) ≈ 0.5 × EC_p (for typical loam soils)
                     </tr>
                 </tbody>
             </table></div>
+
+<div class="technical-diagram-card" id="fig-11-2">
+  <div class="diagram-header">
+    <div class="diagram-tag">FIGURE 11.2 · ZERTHIVA RHIZOSPHERE SENSING & TELEMETRY FIELD EMBODIMENT</div>
+    <div class="diagram-caption">High-fidelity visualization of in-situ subsurface electrochemical sensing, dual-depth root-zone salinity monitoring, and closed-loop farmer feedback</div>
+  </div>
+  <div class="diagram-body" style="padding: 0; background: #030705; text-align: center; overflow: hidden;">
+    <img src="assets/images/zerthiva_hologram_hero.jpg" alt="Zerthiva field deployment soil intelligence and subsurface telemetry sensing" style="width: 100%; max-height: 460px; object-fit: cover; display: block;" loading="lazy">
+  </div>
+</div>
         </section>
 
 <section id="section12">
@@ -4097,6 +4184,16 @@ EC_e_est ≈ EC_p × (θ_FC / θ_SP) ≈ 0.5 × EC_p (for typical loam soils)
                     </tr>
                 </tbody>
             </table></div>
+
+<div class="technical-diagram-card" id="fig-14-2">
+  <div class="diagram-header">
+    <div class="diagram-tag">FIGURE 14.2 · MULTI-DEPTH IN-SITU SOIL PROBE HARNESS</div>
+    <div class="diagram-caption">Stainless steel 316 dual-prong EC electrodes, conformal-coated dielectric moisture transducer, and IP68 digital temperature probe inserted directly into active crop root zone</div>
+  </div>
+  <div class="diagram-body" style="padding: 0; background: #030705; text-align: center; overflow: hidden;">
+    <img src="assets/images/zerthiva_probe_macro.jpg" alt="Macro detail of Zerthiva multi-depth soil salinity, capacitive moisture, and temperature sensor probe inserted in crop root zone" style="width: 100%; max-height: 460px; object-fit: cover; display: block;" loading="lazy">
+  </div>
+</div>
         </section>
 
 <section id="section15">

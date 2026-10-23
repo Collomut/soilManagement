@@ -1,0 +1,2 @@
+# Disable Jekyll for GitHub Pages
+# This ensures that assets, special files, and static HTML are served directly without Jekyll filtering.

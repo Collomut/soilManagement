@@ -7,10 +7,16 @@ finalize_doc.py
 fix_*.py
 inspect_*.py
 check_*.py
-test_*.py
+/test_*.py
 append_script.ps1
 *.pyc
 __pycache__/
 .DS_Store
 Thumbs.db
 *.bak
+scratch/
+
+!tests/
+!tests/**
+
+.github/
