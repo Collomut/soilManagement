@@ -2234,6 +2234,86 @@
       cursor: pointer;
     }
 
+
+    /* Phase 1 Walk Mode Overhaul */
+    .walk-start-overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: rgba(3, 7, 5, 0.45);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 46;
+      cursor: pointer;
+      opacity: 1;
+      visibility: visible;
+      transition: opacity 0.25s cubic-bezier(0.16, 1, 0.3, 1), visibility 0.25s;
+      pointer-events: auto;
+    }
+    .walk-start-overlay.hidden {
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+    }
+    .walk-start-card {
+      background: var(--bg-panel-elevated);
+      border: 1px solid var(--accent-emerald);
+      border-radius: 16px;
+      padding: 24px 32px;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 12px;
+      box-shadow: 0 20px 50px rgba(0,0,0,0.8);
+      max-width: 440px;
+    }
+    .walk-start-icon {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      background: rgba(0, 255, 135, 0.12);
+      border: 1px solid var(--accent-emerald);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--accent-emerald);
+    }
+    .walk-start-title {
+      font-family: var(--font-display);
+      font-size: 1.15rem;
+      font-weight: 700;
+      color: #fff;
+    }
+    .walk-start-sub {
+      font-family: var(--font-mono);
+      font-size: 0.68rem;
+      color: var(--text-muted);
+      line-height: 1.6;
+    }
+    .btn-exit-walk-direct {
+      background: rgba(255, 42, 95, 0.15) !important;
+      border-color: var(--accent-crimson) !important;
+      color: #fff !important;
+      font-family: var(--font-mono);
+      font-size: 0.68rem;
+      padding: 6px 16px;
+      border-radius: 6px;
+      cursor: pointer;
+      margin-top: 4px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .btn-exit-walk-direct:hover {
+      background: rgba(255, 42, 95, 0.3) !important;
+    }
+
   </style>
 </head>
 <body>
@@ -2496,6 +2576,24 @@
 
   <!-- FIRST-PERSON WALK MODE HUD -->
   <div id="walk-hud" class="walk-hud">
+    <!-- Click to Start Walking Fullscreen Overlay -->
+    <div id="walk-start-overlay" class="walk-start-overlay">
+      <div class="walk-start-card">
+        <div class="walk-start-icon">
+          <i data-lucide="mouse-pointer" style="width:24px; height:24px;"></i>
+        </div>
+        <div class="walk-start-title" id="walk-start-title">Click the field to start walking</div>
+        <div class="walk-start-sub">
+          <strong>WASD / Arrows</strong> to move &bull; <strong>Mouse</strong> to look<br>
+          <strong>SHIFT</strong> to sprint &bull; <strong>E</strong> to interact<br>
+          <strong>ESC</strong> to release mouse &bull; <strong>V</strong> to exit walk mode
+        </div>
+        <button class="btn-exit-walk-direct" id="btn-exit-walk-direct">
+          <i data-lucide="arrow-left" style="width:12px; height:12px;"></i> Exit Walk Mode
+        </button>
+      </div>
+    </div>
+
     <!-- Top Instructional Banner -->
     <div class="walk-banner" id="walk-banner">
       <span class="walk-chip walk-chip-action">WASD</span>
@@ -2509,9 +2607,9 @@
       <span style="opacity:0.3;">•</span>
       <span class="walk-chip">CLICK</span>
       <span id="label-walk-pointer-status">Mouse Look</span>
-      <span style="opacity:0.3;">•</span>
-      <span class="walk-chip">V</span>
-      <span>Exit Walk</span>
+      <button class="btn-action-small" id="btn-exit-walk-banner" style="background:rgba(255,42,95,0.18); border-color:var(--accent-crimson); color:#fff; font-family:var(--font-mono); font-size:0.6rem; padding:2px 8px; border-radius:4px; margin-left:6px; cursor:pointer;">
+        Exit [V]
+      </button>
     </div>
 
     <!-- Center Aiming Reticle -->
@@ -6223,6 +6321,8 @@ document.getElementById('label-chapter-tag').innerText = ch.tag;
     function animate() {
       requestAnimationFrame(animate);
 
+      // Phase 1 Fix: Accurately sample frame delta before getElapsedTime()
+      const dt = Math.min(clock.getDelta(), 0.08);
       const t = clock.getElapsedTime();
 
       // Phase 5: Organic multi-frequency wind sway & gusts
@@ -6280,7 +6380,6 @@ document.getElementById('label-chapter-tag').innerText = ch.tag;
       }
 
       // Phase 2: Drive First-Person Walk Movement & Head Bob
-      const dt = clock.getDelta();
       if (typeof walkState !== 'undefined' && walkState.active) {
         updateWalkMovement(dt);
       } else {
@@ -7724,6 +7823,16 @@ document.getElementById('label-chapter-tag').innerText = ch.tag;
         });
       }
 
+      // Explicit Exit Buttons
+      document.getElementById('btn-exit-walk-direct')?.addEventListener('click', (e) => {
+        e.stopPropagation();
+        leaveWalkMode();
+      });
+      document.getElementById('btn-exit-walk-banner')?.addEventListener('click', (e) => {
+        e.stopPropagation();
+        leaveWalkMode();
+      });
+
       // Contextual prompt card click
       const promptCard = document.getElementById('walk-prompt-card');
       if (promptCard) {
@@ -7732,40 +7841,16 @@ document.getElementById('label-chapter-tag').innerText = ch.tag;
         });
       }
 
-      // Keyboard Listeners
-      window.addEventListener('keydown', (e) => {
-        // [V] or [C] key toggles walk mode anytime outside input fields
-        if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
-
-        if (e.code === 'KeyV' || e.code === 'KeyC') {
-          toggleWalkMode();
-          e.preventDefault();
-          return;
-        }
-
-        if (!walkState.active) return;
-
-        if (e.code === 'KeyW' || e.code === 'ArrowUp')    walkState.keys.forward = true;
-        if (e.code === 'KeyS' || e.code === 'ArrowDown')  walkState.keys.backward = true;
-        if (e.code === 'KeyA' || e.code === 'ArrowLeft')  walkState.keys.left = true;
-        if (e.code === 'KeyD' || e.code === 'ArrowRight') walkState.keys.right = true;
-        if (e.code === 'ShiftLeft' || e.code === 'ShiftRight') walkState.keys.sprint = true;
-
-        // [E] key triggers contextual action
-        if (e.code === 'KeyE') {
-          executeWalkPromptAction();
-          e.preventDefault();
-        }
-      });
-
-      window.addEventListener('keyup', (e) => {
-        if (!walkState.active) return;
-        if (e.code === 'KeyW' || e.code === 'ArrowUp')    walkState.keys.forward = false;
-        if (e.code === 'KeyS' || e.code === 'ArrowDown')  walkState.keys.backward = false;
-        if (e.code === 'KeyA' || e.code === 'ArrowLeft')  walkState.keys.left = false;
-        if (e.code === 'KeyD' || e.code === 'ArrowRight') walkState.keys.right = false;
-        if (e.code === 'ShiftLeft' || e.code === 'ShiftRight') walkState.keys.sprint = false;
-      });
+      // Click to Start Walking Overlay: requests pointer lock on intentional user interaction
+      const startOverlay = document.getElementById('walk-start-overlay');
+      if (startOverlay) {
+        startOverlay.addEventListener('click', (e) => {
+          if (e.target.closest('#btn-exit-walk-direct')) return;
+          if (walkState.active && !walkState.isPointerLocked) {
+            renderer.domElement.requestPointerLock?.();
+          }
+        });
+      }
 
       // Pointer Lock on WebGL Canvas click when in Walk Mode
       renderer.domElement.addEventListener('click', () => {
@@ -7774,15 +7859,26 @@ document.getElementById('label-chapter-tag').innerText = ch.tag;
         }
       });
 
+      // Pointer Lock Change: manage HUD instructions and mouse look state
       document.addEventListener('pointerlockchange', () => {
         walkState.isPointerLocked = (document.pointerLockElement === renderer.domElement);
         const statusLabel = document.getElementById('label-walk-pointer-status');
-        if (statusLabel) {
-          statusLabel.innerText = walkState.isPointerLocked ? 'Pointer Locked (ESC to free)' : 'Click to Lock Look';
+        const overlay = document.getElementById('walk-start-overlay');
+        const startTitle = document.getElementById('walk-start-title');
+
+        if (walkState.isPointerLocked) {
+          if (statusLabel) statusLabel.innerText = 'Look Active (ESC to free)';
+          if (overlay) overlay.classList.add('hidden');
+        } else {
+          if (statusLabel) statusLabel.innerText = 'Click to Look';
+          if (walkState.active && overlay) {
+            overlay.classList.remove('hidden');
+            if (startTitle) startTitle.innerText = 'Click the field to resume walking';
+          }
         }
       });
 
-      // Mouse Look
+      // Mouse Look Euler Yaw & Pitch
       window.addEventListener('mousemove', (e) => {
         if (!walkState.active) return;
 
@@ -7790,14 +7886,14 @@ document.getElementById('label-chapter-tag').innerText = ch.tag;
           const sensitivity = 0.0022;
           walkState.yaw -= e.movementX * sensitivity;
           walkState.pitch -= e.movementY * sensitivity;
-          walkState.pitch = Math.max(-1.25, Math.min(1.25, walkState.pitch));
+          walkState.pitch = Math.max(-1.35, Math.min(1.35, walkState.pitch));
         } else if (walkState.isDraggingLook) {
           const dx = e.clientX - walkState.dragStartMouse.x;
           const dy = e.clientY - walkState.dragStartMouse.y;
           walkState.dragStartMouse = { x: e.clientX, y: e.clientY };
           walkState.yaw -= dx * 0.0035;
           walkState.pitch -= dy * 0.0035;
-          walkState.pitch = Math.max(-1.25, Math.min(1.25, walkState.pitch));
+          walkState.pitch = Math.max(-1.35, Math.min(1.35, walkState.pitch));
         }
       });
 
@@ -7813,6 +7909,64 @@ document.getElementById('label-chapter-tag').innerText = ch.tag;
       window.addEventListener('mouseup', () => {
         walkState.isDraggingLook = false;
       });
+
+      // Keyboard Listeners with e.preventDefault() to prevent browser scrolling
+      window.addEventListener('keydown', (e) => {
+        // Ignore typing in input/textarea
+        if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
+
+        // [V] or [C] key toggles walk mode
+        if (e.code === 'KeyV' || e.code === 'KeyC') {
+          toggleWalkMode();
+          e.preventDefault();
+          return;
+        }
+
+        if (!walkState.active) return;
+
+        // Prevent browser scrolling / navigation on movement keys while walking
+        if (['KeyW', 'KeyS', 'KeyA', 'KeyD', 'ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'Space'].includes(e.code)) {
+          e.preventDefault();
+        }
+
+        if (e.code === 'KeyW' || e.code === 'ArrowUp')    walkState.keys.forward = true;
+        if (e.code === 'KeyS' || e.code === 'ArrowDown')  walkState.keys.backward = true;
+        if (e.code === 'KeyA' || e.code === 'ArrowLeft')  walkState.keys.left = true;
+        if (e.code === 'KeyD' || e.code === 'ArrowRight') walkState.keys.right = true;
+        if (e.code === 'ShiftLeft' || e.code === 'ShiftRight') walkState.keys.sprint = true;
+
+        // [E] key triggers contextual action
+        if (e.code === 'KeyE') {
+          executeWalkPromptAction();
+          e.preventDefault();
+        }
+
+        // [Escape] leaves walk mode if not pointer-locked
+        if (e.code === 'Escape' && !walkState.isPointerLocked) {
+          leaveWalkMode();
+        }
+      });
+
+      window.addEventListener('keyup', (e) => {
+        if (!walkState.active) return;
+        if (e.code === 'KeyW' || e.code === 'ArrowUp')    walkState.keys.forward = false;
+        if (e.code === 'KeyS' || e.code === 'ArrowDown')  walkState.keys.backward = false;
+        if (e.code === 'KeyA' || e.code === 'ArrowLeft')  walkState.keys.left = false;
+        if (e.code === 'KeyD' || e.code === 'ArrowRight') walkState.keys.right = false;
+        if (e.code === 'ShiftLeft' || e.code === 'ShiftRight') walkState.keys.sprint = false;
+      });
+
+      // Window Focus Loss Safety: reset keys immediately when browser window loses focus
+      window.addEventListener('blur', () => {
+        if (walkState.active) {
+          walkState.keys.forward = false;
+          walkState.keys.backward = false;
+          walkState.keys.left = false;
+          walkState.keys.right = false;
+          walkState.keys.sprint = false;
+          walkState.isDraggingLook = false;
+        }
+      });
     }
 
     // Toggle Walk Mode vs Orbit Mode
@@ -7824,26 +7978,41 @@ document.getElementById('label-chapter-tag').innerText = ch.tag;
       }
     }
 
+    // Enter Walk Mode
     function enterWalkMode() {
-      if (labState.active) leaveDeviceLaboratory();
+      if (typeof isDeviceLabActive !== 'undefined' && isDeviceLabActive) leaveDeviceLaboratory();
+      if (typeof isSubsurfaceActive !== 'undefined' && isSubsurfaceActive) leaveSubsurfaceExplorer();
+      if (typeof isMonitoringStationActive !== 'undefined' && isMonitoringStationActive) leaveMonitoringStation();
 
       sound.playPing(720);
       walkState.active = true;
 
-      // Position player camera at ground eye-level outside central pit
-      const currentXZDist = Math.hypot(camera.position.x, camera.position.z);
-      if (currentXZDist > 2.2 && currentXZDist < 9.0) {
-        walkState.pos.x = camera.position.x;
-        walkState.pos.z = camera.position.z;
-      } else {
-        walkState.pos.set(2.4, 1.68, 3.2);
+      // Reset all movement keys on entry
+      walkState.keys.forward = false;
+      walkState.keys.backward = false;
+      walkState.keys.left = false;
+      walkState.keys.right = false;
+      walkState.keys.sprint = false;
+      walkState.isDraggingLook = false;
+
+      // Safe Spawn Boundary Check: ensure player never spawns inside pit collision
+      function isInsidePit(cx, cz) {
+        return (cx >= -2.2 && cx <= 2.2 && cz >= -2.0 && cz <= 1.5);
       }
 
-      // Calculate initial yaw facing the hero plant (0, 0, 0)
-      walkState.yaw = Math.atan2(-walkState.pos.x, -walkState.pos.z);
-      walkState.pitch = -0.15;
+      let spawnX = camera.position.x;
+      let spawnZ = camera.position.z;
 
-      // Disable orbit controls
+      if (isInsidePit(spawnX, spawnZ) || Math.hypot(spawnX, spawnZ) > 9.5 || Math.hypot(spawnX, spawnZ) < 2.0) {
+        spawnX = 2.4;
+        spawnZ = 3.2;
+      }
+
+      walkState.pos.set(spawnX, 1.68, spawnZ);
+      walkState.yaw = Math.atan2(-walkState.pos.x, -walkState.pos.z);
+      walkState.pitch = -0.08;
+
+      // Disable orbit controls to prevent competing camera updates
       controls.enabled = false;
 
       // Update Header Button UI
@@ -7857,23 +8026,42 @@ document.getElementById('label-chapter-tag').innerText = ch.tag;
       const walkHud = document.getElementById('walk-hud');
       if (walkHud) walkHud.classList.add('active');
 
+      // Show "Click to Start" overlay prompt
+      const overlay = document.getElementById('walk-start-overlay');
+      const startTitle = document.getElementById('walk-start-title');
+      if (overlay) {
+        overlay.classList.remove('hidden');
+        if (startTitle) startTitle.innerText = 'Click the field to start walking';
+      }
+
       // Hide orbit visibility toolbar & timeline to clear view
       const visToolbar = document.querySelector('.visibility-toolbar');
       const timelineDock = document.querySelector('.timeline-dock');
       if (visToolbar) visToolbar.style.display = 'none';
       if (timelineDock) timelineDock.style.display = 'none';
 
+      // Auto-show real-time field minimap
+      if (typeof toggleMinimap === 'function') toggleMinimap(true);
+
       if (typeof lucide !== 'undefined') lucide.createIcons();
     }
 
+    // Leave Walk Mode
     function leaveWalkMode() {
       if (!walkState.active) return;
       sound.playPing(540);
 
       walkState.active = false;
+      walkState.keys.forward = false;
+      walkState.keys.backward = false;
+      walkState.keys.left = false;
+      walkState.keys.right = false;
+      walkState.keys.sprint = false;
+      walkState.isDraggingLook = false;
+
       if (document.exitPointerLock) document.exitPointerLock();
 
-      // Smoothly hand back to OrbitControls
+      // Hand control back to OrbitControls
       controls.enabled = true;
       controls.target.set(0.05, -0.25, 0.0);
 
@@ -7893,6 +8081,9 @@ document.getElementById('label-chapter-tag').innerText = ch.tag;
       const timelineDock = document.querySelector('.timeline-dock');
       if (visToolbar) visToolbar.style.display = 'flex';
       if (timelineDock) timelineDock.style.display = 'flex';
+
+      // Hide minimap if desired
+      if (typeof toggleMinimap === 'function') toggleMinimap(false);
 
       // Restore camera smoothly
       gsap.to(camera.position, {
@@ -7920,6 +8111,8 @@ document.getElementById('label-chapter-tag').innerText = ch.tag;
       if (!walkState.active) return;
 
       dt = Math.min(dt, 0.08); // Clamp large delta drops
+      if (dt <= 0.0001) dt = 0.016; // Safeguard against zero delta
+
       const speed = walkState.keys.sprint ? 2.4 : 1.35; // m/s
 
       // Forward & Strafe vectors based on yaw
@@ -7939,8 +8132,12 @@ document.getElementById('label-chapter-tag').innerText = ch.tag;
       const isMoving = (moveLen > 0.001);
 
       if (isMoving) {
-        moveX = (moveX / moveLen) * speed * dt;
-        moveZ = (moveZ / moveLen) * speed * dt;
+        // Normalized diagonal movement
+        const normX = moveX / moveLen;
+        const normZ = moveZ / moveLen;
+        const step = speed * dt;
+        const dX = normX * step;
+        const dZ = normZ * step;
 
         // Collision Check: Prevent walking through central monolith cutaway
         function testPitCollision(cx, cz) {
@@ -7948,14 +8145,14 @@ document.getElementById('label-chapter-tag').innerText = ch.tag;
         }
 
         // Test with sliding along free axis
-        if (!testPitCollision(walkState.pos.x + moveX, walkState.pos.z)) {
-          walkState.pos.x += moveX;
+        if (!testPitCollision(walkState.pos.x + dX, walkState.pos.z)) {
+          walkState.pos.x += dX;
         }
-        if (!testPitCollision(walkState.pos.x, walkState.pos.z + moveZ)) {
-          walkState.pos.z += moveZ;
+        if (!testPitCollision(walkState.pos.x, walkState.pos.z + dZ)) {
+          walkState.pos.z += dZ;
         }
 
-        // Soft research field boundaries
+        // Soft research field boundaries (21m x 21m plot)
         walkState.pos.x = Math.max(-10.5, Math.min(10.5, walkState.pos.x));
         walkState.pos.z = Math.max(-10.5, Math.min(10.5, walkState.pos.z));
 
