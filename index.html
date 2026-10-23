@@ -2322,24 +2322,28 @@
 
     /* Central 4-Mode Navigation Switcher in Header */
     .nav-mode-switcher {
+      pointer-events: auto !important;
       display: flex;
       align-items: center;
-      background: rgba(0, 0, 0, 0.45);
-      backdrop-filter: blur(20px);
-      -webkit-backdrop-filter: blur(20px);
+      background: rgba(0, 0, 0, 0.55);
+      backdrop-filter: blur(24px);
+      -webkit-backdrop-filter: blur(24px);
       border: 1px solid var(--border-subtle);
       border-radius: 999px;
-      padding: 3px 5px;
-      gap: 3px;
+      padding: 3px 6px;
+      gap: 4px;
+      z-index: 35;
+      cursor: pointer;
     }
     .mode-tab {
+      pointer-events: auto !important;
       background: transparent;
       border: 1px solid transparent;
       color: var(--text-muted);
-      padding: 5px 12px;
+      padding: 6px 14px;
       border-radius: 999px;
       font-family: var(--font-display);
-      font-size: 0.72rem;
+      font-size: 0.74rem;
       font-weight: 600;
       cursor: pointer;
       display: flex;
@@ -7560,6 +7564,10 @@ document.getElementById('label-chapter-tag').innerText = ch.tag;
 
     // Enter Device Laboratory Mode
     function enterDeviceLaboratory(targetPartId = null, targetDevice = null) {
+      if (typeof walkState !== 'undefined' && walkState.active) leaveWalkMode();
+      if (typeof subsurfaceState !== 'undefined' && subsurfaceState.active) leaveSubsurfaceExplorer();
+      if (typeof isMonitoringStationActive !== 'undefined' && isMonitoringStationActive) leaveMonitoringStation();
+
       if (labState.active) {
         if (targetPartId) selectLabComponent(targetPartId);
         return;
@@ -7638,6 +7646,7 @@ document.getElementById('label-chapter-tag').innerText = ch.tag;
 
       if (typeof lucide !== 'undefined') safeCreateIcons();
       labState.active = true;
+      if (typeof syncModeTab === 'function') syncModeTab('lab');
     }
 
     // Leave Device Laboratory & Return to Research Field
@@ -7714,6 +7723,7 @@ document.getElementById('label-chapter-tag').innerText = ch.tag;
       if (visToolbar) visToolbar.style.display = 'flex';
 
       labState.active = false;
+      if (typeof syncModeTab === 'function') syncModeTab('explore');
     }
 
     // Set Device Assembly View (Gateway vs Probe vs Full System)
@@ -8384,8 +8394,8 @@ document.getElementById('label-chapter-tag').innerText = ch.tag;
 
     // Enter Walk Mode
     function enterWalkMode() {
-      if (typeof isDeviceLabActive !== 'undefined' && isDeviceLabActive) leaveDeviceLaboratory();
-      if (typeof isSubsurfaceActive !== 'undefined' && isSubsurfaceActive) leaveSubsurfaceExplorer();
+      if (typeof labState !== 'undefined' && labState.active) leaveDeviceLaboratory();
+      if (typeof subsurfaceState !== 'undefined' && subsurfaceState.active) leaveSubsurfaceExplorer();
       if (typeof isMonitoringStationActive !== 'undefined' && isMonitoringStationActive) leaveMonitoringStation();
 
       sound.playPing(720);
@@ -9124,11 +9134,13 @@ document.getElementById('label-chapter-tag').innerText = ch.tag;
 
     // Enter Subsurface Explorer Mode
     function enterSubsurfaceExplorer(initialMode = 'stratigraphy', targetId = null) {
-      if (walkState.active) leaveWalkMode();
-      if (labState.active) leaveDeviceLaboratory();
+      if (typeof walkState !== 'undefined' && walkState.active) leaveWalkMode();
+      if (typeof labState !== 'undefined' && labState.active) leaveDeviceLaboratory();
+      if (typeof isMonitoringStationActive !== 'undefined' && isMonitoringStationActive) leaveMonitoringStation();
 
       sound.playPing(780);
       subsurfaceState.active = true;
+      if (typeof syncModeTab === 'function') syncModeTab('underground');
 
       // Show overlay
       const overlay = document.getElementById('subsurface-explorer-overlay');
@@ -9161,6 +9173,7 @@ document.getElementById('label-chapter-tag').innerText = ch.tag;
       sound.playPing(520);
 
       subsurfaceState.active = false;
+      if (typeof syncModeTab === 'function') syncModeTab('explore');
 
       // Hide overlay
       const overlay = document.getElementById('subsurface-explorer-overlay');
@@ -9741,6 +9754,13 @@ document.getElementById('label-chapter-tag').innerText = ch.tag;
       // Keyboard Shortcut [M] for Monitoring Station
       window.addEventListener('keydown', (e) => {
         if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
+                if (e.key === 'u' || e.key === 'U') {
+          if (typeof subsurfaceState !== 'undefined' && subsurfaceState.active) {
+            leaveSubsurfaceExplorer();
+          } else {
+            enterSubsurfaceExplorer();
+          }
+        }
         if (e.key === 'm' || e.key === 'M') {
           if (isMonitoringStationActive) leaveMonitoringStation();
           else enterMonitoringStation();
@@ -9754,11 +9774,12 @@ document.getElementById('label-chapter-tag').innerText = ch.tag;
       if (!overlay) return;
 
       // Close other overlays if active
-      if (typeof isDeviceLabActive !== 'undefined' && isDeviceLabActive) leaveDeviceLaboratory();
-      if (typeof isSubsurfaceActive !== 'undefined' && isSubsurfaceActive) leaveSubsurfaceExplorer();
-      if (typeof isWalkModeActive !== 'undefined' && isWalkModeActive) toggleWalkMode(false);
+      if (typeof labState !== 'undefined' && labState.active) leaveDeviceLaboratory();
+      if (typeof subsurfaceState !== 'undefined' && subsurfaceState.active) leaveSubsurfaceExplorer();
+      if (typeof walkState !== 'undefined' && walkState.active) leaveWalkMode();
 
       isMonitoringStationActive = true;
+      if (typeof syncModeTab === 'function') syncModeTab('station');
       overlay.classList.add('active');
       sound.playPing(720);
 
@@ -9792,6 +9813,7 @@ document.getElementById('label-chapter-tag').innerText = ch.tag;
       if (!overlay) return;
 
       isMonitoringStationActive = false;
+      if (typeof syncModeTab === 'function') syncModeTab('explore');
       overlay.classList.remove('active');
       sound.playPing(480);
 
@@ -10548,22 +10570,38 @@ document.getElementById('label-chapter-tag').innerText = ch.tag;
       });
 
       // 2. Central 4-Mode Switcher Tabs
+      window.syncModeTab = function(mode) {
+        document.querySelectorAll('.mode-tab').forEach(t => {
+          t.classList.toggle('active', t.getAttribute('data-mode') === mode);
+        });
+      };
+
       document.querySelectorAll('.mode-tab').forEach(tab => {
-        tab.addEventListener('click', () => {
+        tab.addEventListener('click', (e) => {
+          e.stopPropagation();
           const mode = tab.getAttribute('data-mode');
-          document.querySelectorAll('.mode-tab').forEach(t => t.classList.remove('active'));
-          tab.classList.add('active');
+          syncModeTab(mode);
 
           if (mode === 'explore') {
-            if (typeof isDeviceLabActive !== 'undefined' && isDeviceLabActive) leaveDeviceLaboratory();
-            if (typeof isSubsurfaceActive !== 'undefined' && isSubsurfaceActive) leaveSubsurfaceExplorer();
+            if (typeof labState !== 'undefined' && labState.active) leaveDeviceLaboratory();
+            if (typeof subsurfaceState !== 'undefined' && subsurfaceState.active) leaveSubsurfaceExplorer();
             if (typeof isMonitoringStationActive !== 'undefined' && isMonitoringStationActive) leaveMonitoringStation();
+            if (typeof walkState !== 'undefined' && walkState.active) leaveWalkMode();
             sound.playPing(680);
           } else if (mode === 'underground') {
+            if (typeof labState !== 'undefined' && labState.active) leaveDeviceLaboratory();
+            if (typeof isMonitoringStationActive !== 'undefined' && isMonitoringStationActive) leaveMonitoringStation();
+            if (typeof walkState !== 'undefined' && walkState.active) leaveWalkMode();
             enterSubsurfaceExplorer();
           } else if (mode === 'lab') {
+            if (typeof subsurfaceState !== 'undefined' && subsurfaceState.active) leaveSubsurfaceExplorer();
+            if (typeof isMonitoringStationActive !== 'undefined' && isMonitoringStationActive) leaveMonitoringStation();
+            if (typeof walkState !== 'undefined' && walkState.active) leaveWalkMode();
             enterDeviceLaboratory();
           } else if (mode === 'station') {
+            if (typeof labState !== 'undefined' && labState.active) leaveDeviceLaboratory();
+            if (typeof subsurfaceState !== 'undefined' && subsurfaceState.active) leaveSubsurfaceExplorer();
+            if (typeof walkState !== 'undefined' && walkState.active) leaveWalkMode();
             enterMonitoringStation();
           }
         });
