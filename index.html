@@ -5,6 +5,25 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title>ZERTHIVA // BENEATH THE LIVING EARTH · Interactive 3D Soil Intelligence</title>
   <meta name="description" content="Cinematic, high-fidelity real-time 3D soil intelligence visualization. Detailed maize plant anatomy, geological soil cutaway, root-zone electrochemical sensing, and autonomous agronomic simulation.">
+  <meta name="author" content="Zerthiva Engineering Team">
+  <link rel="canonical" href="https://collomut.github.io/soilManagement/zerthiva_interactive_3d.html">
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 36 36'%3E%3Crect width='36' height='36' rx='8' fill='%23142D25'/%3E%3Cpath d='M4 27C12 25 24 29 32 27' stroke='%23B7CC8A' stroke-width='1.5' stroke-linecap='round' opacity='0.6'/%3E%3Cpath d='M18 16V28' stroke='%23B7CC8A' stroke-width='2' stroke-linecap='round'/%3E%3Cpath d='M18 16C18 11 11 10 11 6C16 6 18 11 18 16Z' fill='%23B7CC8A'/%3E%3Cpath d='M18 16C18 12 25 11 25 8C20 8 18 12 18 16Z' fill='%23B7CC8A' opacity='0.85'/%3E%3Ccircle cx='18' cy='16' r='2.2' fill='%23FFFFFF'/%3E%3C/svg%3E">
+
+  <!-- OpenGraph / Social Sharing Meta -->
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Zerthiva">
+  <meta property="og:title" content="Zerthiva 3D // Beneath the Living Earth · Interactive Soil Intelligence">
+  <meta property="og:description" content="Cinematic WebGL real-time 3D soil cutaway visualization with autonomous agronomic simulation, live root-zone electrochemical sensing, and PBR-rendered geological layers.">
+  <meta property="og:image" content="https://collomut.github.io/soilManagement/assets/images/farm-hero.jpg">
+  <meta property="og:url" content="https://collomut.github.io/soilManagement/zerthiva_interactive_3d.html">
+  <meta property="og:locale" content="en_US">
+  <!-- Twitter / X Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Zerthiva 3D // Beneath the Living Earth">
+  <meta name="twitter:description" content="Cinematic WebGL real-time 3D soil cutaway visualization with autonomous agronomic simulation.">
+  <meta name="twitter:image" content="https://collomut.github.io/soilManagement/assets/images/farm-hero.jpg">
 
   <!-- Typography -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -426,6 +445,24 @@
       color: #fff;
       font-weight: 700;
     }
+    .inspection-mode-group {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+    .toolbar-divider {
+      width: 1px;
+      height: 18px;
+      background: rgba(255, 255, 255, 0.15);
+      margin: 0 4px;
+    }
+    .mode-btn.active {
+      background: rgba(0, 229, 255, 0.18) !important;
+      border-color: var(--accent-cyan) !important;
+      color: #fff !important;
+      font-weight: 700;
+      box-shadow: 0 0 10px rgba(0, 229, 255, 0.25);
+    }
 
     /* Interactive 3D Component Inspector Card */
     .component-inspector-card {
@@ -759,7 +796,7 @@
       </button>
 
       <!-- Master Technical Dossier Link -->
-      <a href="./Zerthiva_Full_Documentation.html" class="btn-pill" target="_blank" title="Open master 58-section dossier">
+      <a href="./index.html" class="btn-pill" target="_blank" title="Open master 58-section dossier">
         <i data-lucide="file-text" style="width: 13px; height: 13px;"></i> Master Specs
       </a>
 
@@ -811,13 +848,27 @@
     </div>
   </aside>
 
-  <!-- Floating Layer Visibility Toolbar -->
+  <!-- Floating Layer & Inspection Toolbar -->
   <div class="visibility-toolbar">
+    <!-- View Inspection Modes: Cutaway, Solid Soil, Root Focus -->
+    <div class="inspection-mode-group">
+      <button class="vis-toggle mode-btn active" id="btn-mode-cutaway" title="Diagnostic 31° Soil Cross-Section Cutaway">
+        <i data-lucide="scissors" style="width:12px; height:12px;"></i> Cutaway
+      </button>
+      <button class="vis-toggle mode-btn" id="btn-mode-solid" title="Solid Undisturbed Agricultural Soil Monolith">
+        <i data-lucide="box" style="width:12px; height:12px;"></i> Solid Soil
+      </button>
+      <button class="vis-toggle mode-btn" id="btn-mode-rootfocus" title="Rhizosphere Root Isolation Inspection">
+        <i data-lucide="scan" style="width:12px; height:12px;"></i> Root Focus
+      </button>
+    </div>
+    <div class="toolbar-divider"></div>
+    <!-- Layer Visibility Toggles -->
     <button class="vis-toggle active" id="tog-canopy" title="Toggle Above-Ground Plant Canopy"><i data-lucide="leaf" style="width:12px; height:12px;"></i> Canopy</button>
     <button class="vis-toggle active" id="tog-roots" title="Toggle Subsurface Root Architecture"><i data-lucide="git-branch" style="width:12px; height:12px;"></i> Roots</button>
     <button class="vis-toggle active" id="tog-soil" title="Toggle Geological Soil Strata"><i data-lucide="layers" style="width:12px; height:12px;"></i> Soil Strata</button>
     <button class="vis-toggle active" id="tog-hw" title="Toggle Hardware & Sensors"><i data-lucide="cpu" style="width:12px; height:12px;"></i> Hardware</button>
-    <button class="vis-toggle active" id="tog-hydro" title="Toggle Hydrologic Flow Lines"><i data-lucide="droplet" style="width:12px; height:12px;"></i> Hydrology</button>
+    <button class="vis-toggle" id="tog-hydro" title="Toggle Hydrologic Flow Lines"><i data-lucide="droplet" style="width:12px; height:12px;"></i> Hydrology</button>
   </div>
 
   <!-- Interactive 3D Raycast Component Inspector Card -->
@@ -1078,43 +1129,52 @@
     const texMudRough  = setupPBRTexture('assets/textures/soil/brown_mud_02_rough_1k.jpg', 2.5, 2.5, 'Subsoil Roughness');
     texMudRough.wrapS = texMudRough.wrapT = THREE.RepeatWrapping;
 
-    // Procedural Monocot Maize Leaf Texture with parallel venation & central midrib
+    // High-Fidelity Procedural Monocot Maize Leaf Texture with parallel venation & central midrib
     function generateMaizeLeafTexture() {
       const c = document.createElement('canvas');
-      c.width = 512;
-      c.height = 1024;
+      c.width = 1024;
+      c.height = 2048;
       const ctx = c.getContext('2d');
 
-      ctx.fillStyle = '#2c8f38';
-      ctx.fillRect(0, 0, 512, 1024);
+      // Base biological chlorophyll green with longitudinal maturation gradient
+      ctx.fillStyle = '#266320';
+      ctx.fillRect(0, 0, 1024, 2048);
 
-      const lenGrad = ctx.createLinearGradient(0, 0, 0, 1024);
-      lenGrad.addColorStop(0, 'rgba(56, 155, 65, 0.45)');
-      lenGrad.addColorStop(0.5, 'rgba(38, 130, 48, 0.15)');
-      lenGrad.addColorStop(1.0, 'rgba(28, 105, 36, 0.55)');
+      const lenGrad = ctx.createLinearGradient(0, 0, 0, 2048);
+      lenGrad.addColorStop(0.0, 'rgba(68, 142, 54, 0.40)');
+      lenGrad.addColorStop(0.35, 'rgba(42, 108, 36, 0.15)');
+      lenGrad.addColorStop(0.85, 'rgba(32, 85, 26, 0.45)');
+      lenGrad.addColorStop(1.0, 'rgba(45, 95, 32, 0.60)');
       ctx.fillStyle = lenGrad;
-      ctx.fillRect(0, 0, 512, 1024);
+      ctx.fillRect(0, 0, 1024, 2048);
 
-      // Fine parallel monocot venation lines
-      ctx.lineWidth = 1;
-      for (let x = 0; x < 512; x += 3) {
-        const isMajor = (x % 18 === 0);
-        ctx.strokeStyle = isMajor ? 'rgba(85, 205, 95, 0.32)' : 'rgba(20, 80, 28, 0.22)';
+      // Fine parallel monocot venation lines (120 parallel veins per leaf half)
+      for (let x = 0; x < 1024; x += 4) {
+        const isMajor = (x % 32 === 0);
+        const isSecondary = (x % 16 === 0);
+        ctx.strokeStyle = isMajor ? 'rgba(105, 195, 95, 0.38)' : (isSecondary ? 'rgba(75, 160, 68, 0.24)' : 'rgba(20, 60, 22, 0.22)');
+        ctx.lineWidth = isMajor ? 1.8 : 1.0;
         ctx.beginPath();
         ctx.moveTo(x, 0);
-        ctx.lineTo(x, 1024);
+        ctx.lineTo(x, 2048);
         ctx.stroke();
       }
 
-      // Pale luminous midrib along the center (x = 256)
-      const midrib = ctx.createLinearGradient(236, 0, 276, 0);
-      midrib.addColorStop(0, 'rgba(85, 205, 95, 0)');
-      midrib.addColorStop(0.3, 'rgba(155, 225, 140, 0.8)');
-      midrib.addColorStop(0.5, 'rgba(195, 245, 175, 0.95)');
-      midrib.addColorStop(0.7, 'rgba(155, 225, 140, 0.8)');
-      midrib.addColorStop(1, 'rgba(85, 205, 95, 0)');
+      // Pale central midrib vascular bundle (center at x = 512, width ~64px)
+      const midrib = ctx.createLinearGradient(460, 0, 564, 0);
+      midrib.addColorStop(0, 'rgba(85, 185, 75, 0)');
+      midrib.addColorStop(0.25, 'rgba(145, 215, 125, 0.70)');
+      midrib.addColorStop(0.50, 'rgba(190, 240, 170, 0.92)');
+      midrib.addColorStop(0.75, 'rgba(145, 215, 125, 0.70)');
+      midrib.addColorStop(1, 'rgba(85, 185, 75, 0)');
       ctx.fillStyle = midrib;
-      ctx.fillRect(236, 0, 40, 1024);
+      ctx.fillRect(460, 0, 104, 2048);
+
+      // Delicate transverse micro-cuticle striations
+      ctx.fillStyle = 'rgba(255, 255, 255, 0.02)';
+      for (let y = 0; y < 2048; y += 8) {
+        ctx.fillRect(0, y, 1024, 1.5);
+      }
 
       const t = new THREE.CanvasTexture(c);
       t.wrapS = THREE.ClampToEdgeWrapping;
@@ -1130,22 +1190,33 @@
     const container = document.getElementById('webgl-canvas');
     const scene = new THREE.Scene();
     scene.background = new THREE.Color(0x06100c);
-    // Linear fog tuned for crisp foreground foliage and soft subterranean horizon depth
-    scene.fog = new THREE.Fog(0x06100c, 7.5, 22.0);
+    scene.fog = new THREE.Fog(0x06100c, 8.5, 24.0);
 
-    const camera = new THREE.PerspectiveCamera(42, window.innerWidth / window.innerHeight, 0.1, 100);
-    camera.position.set(3.4, 0.6, 5.6);
+    // Balanced 44-deg FOV with hero composition framing canopy down to Horizon C base
+    const camera = new THREE.PerspectiveCamera(44, window.innerWidth / window.innerHeight, 0.1, 100);
+    camera.position.set(3.8, 0.45, 6.2);
 
     const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true, powerPreference: "high-performance" });
+
+    if (!renderer || !renderer.getContext()) {
+      document.body.innerHTML = '<div style="display:flex;align-items:center;justify-content:center;height:100vh;background:#030705;color:#B7CC8A;font-family:sans-serif;text-align:center;padding:2rem;"><div><h2 style="font-size:1.4rem;margin-bottom:1rem;">WebGL Not Supported</h2><p style="color:#888;max-width:400px;">Your browser or device does not support WebGL, which is required for this 3D visualization.<br><br>Please open this page in Chrome, Firefox, or Edge on a desktop or modern device.</p><a href="./index.html" style="display:inline-block;margin-top:1.5rem;padding:0.75rem 1.5rem;background:#142D25;color:#B7CC8A;border-radius:6px;text-decoration:none;">← View Documentation</a></div></div>';
+      throw new Error('WebGL not supported — graceful exit');
+    }
+
+    const isMobile = /Mobi|Android|iPhone|iPad|iPod/i.test(navigator.userAgent) || window.innerWidth < 768;
+    const isLowPower = isMobile || navigator.hardwareConcurrency <= 2;
+
+    renderer.setPixelRatio(isLowPower ? Math.min(window.devicePixelRatio, 1.0) : Math.min(window.devicePixelRatio, 2.0));
+    if (isMobile) {
+      renderer.shadowMap.enabled = false;
+    }
     renderer.setSize(window.innerWidth, window.innerHeight);
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
     renderer.shadowMap.enabled = true;
     renderer.shadowMap.type = THREE.PCFSoftShadowMap;
     renderer.toneMapping = THREE.ACESFilmicToneMapping;
-    renderer.toneMappingExposure = 1.28;
+    renderer.toneMappingExposure = 1.16;
     container.appendChild(renderer.domElement);
 
-    // Poly Haven CC0 HDRI Environment Map via RGBELoader + PMREMGenerator
     const pmremGen = new THREE.PMREMGenerator(renderer);
     pmremGen.compileEquirectangularShader();
     new THREE.RGBELoader()
@@ -1164,45 +1235,128 @@
     const controls = new THREE.OrbitControls(camera, renderer.domElement);
     controls.enableDamping = true;
     controls.dampingFactor = 0.06;
-    controls.maxPolarAngle = Math.PI / 2 + 0.15;
+    controls.maxPolarAngle = Math.PI / 2 + 0.12;
     controls.minDistance = 1.2;
     controls.maxDistance = 14.0;
-    controls.target.set(0, -0.15, 0);
+    controls.target.set(0.05, -0.25, 0.0);
 
-    // Controlled 4-Point Cinematic Lighting Setup with tight shadow frustum
-    // 1. Soft Warm Key Sunlight from above
-    const keySunLight = new THREE.DirectionalLight(0xfff6ea, 3.1);
+    // Controlled 4-Point Natural Lighting Setup (zero neon glow)
+    // 1. Natural Warm Key Sunlight
+    const keySunLight = new THREE.DirectionalLight(0xfff8ee, 2.85);
     keySunLight.position.set(5.5, 11, 4.8);
     keySunLight.castShadow = true;
     keySunLight.shadow.mapSize.width = 2048;
     keySunLight.shadow.mapSize.height = 2048;
     keySunLight.shadow.camera.near = 1.0;
     keySunLight.shadow.camera.far = 22;
-    keySunLight.shadow.camera.left = -2.6;
-    keySunLight.shadow.camera.right = 2.6;
-    keySunLight.shadow.camera.top = 3.6;
-    keySunLight.shadow.camera.bottom = -3.6;
+    keySunLight.shadow.camera.left = -2.8;
+    keySunLight.shadow.camera.right = 2.8;
+    keySunLight.shadow.camera.top = 3.8;
+    keySunLight.shadow.camera.bottom = -3.8;
     keySunLight.shadow.bias = -0.00015;
     keySunLight.shadow.normalBias = 0.025;
     scene.add(keySunLight);
 
-    // 2. Cool Sky Fill Light from opposite angle
-    const skyFillLight = new THREE.DirectionalLight(0x93c5fd, 0.95);
+    // 2. Soft Sky Fill Light from opposite quadrant
+    const skyFillLight = new THREE.DirectionalLight(0xa4c6eb, 0.80);
     skyFillLight.position.set(-4.5, 5.5, -2.5);
     scene.add(skyFillLight);
 
-    // 3. Subterranean Earthen Bounce Light (illuminates root cavities & cutaway)
-    const earthenBounce = new THREE.DirectionalLight(0x784a28, 0.85);
+    // 3. Subterranean Earthen Bounce Light (illuminates root zone & cutaway cavity)
+    const earthenBounce = new THREE.DirectionalLight(0x6e482b, 0.70);
     earthenBounce.position.set(0, -5, 2.5);
     scene.add(earthenBounce);
 
-    // 4. Subtle Foliage Rim Light (separates foliage from deep dark backdrop)
-    const rimLight = new THREE.DirectionalLight(0x6ee7b7, 0.65);
+    // 4. Natural Sunlight Rim Light (warm sunlight edge backlight, replaces neon green)
+    const rimLight = new THREE.DirectionalLight(0xfef3c7, 0.35);
     rimLight.position.set(-5, 2.5, -5);
     scene.add(rimLight);
 
-    const ambientLight = new THREE.AmbientLight(0xdcfce7, 0.40);
+    const ambientLight = new THREE.AmbientLight(0xe3e8e2, 0.45);
     scene.add(ambientLight);
+
+    // Smooth Tapered Tube Geometry Generator with Parallel Transport Framing
+    function createTaperedTubeGeometry(curve, segments = 20, rStart = 0.015, rEnd = 0.003, radialSegments = 8, capTip = true) {
+      const geom = new THREE.BufferGeometry();
+      const vertices = [];
+      const uvs = [];
+      const normals = [];
+      const indices = [];
+
+      const points = curve.getPoints(segments);
+      const tangents = [];
+      for (let i = 0; i <= segments; i++) {
+        const u = i / segments;
+        tangents.push(curve.getTangent(u).normalize());
+      }
+
+      // Parallel transport frames (rotation-minimizing)
+      const normalsFrame = [];
+      const binormalsFrame = [];
+      let initNorm = new THREE.Vector3(0, 1, 0);
+      if (Math.abs(tangents[0].y) > 0.9) initNorm.set(1, 0, 0);
+      let prevN = new THREE.Vector3().crossVectors(tangents[0], initNorm).normalize();
+      let prevB = new THREE.Vector3().crossVectors(tangents[0], prevN).normalize();
+      normalsFrame.push(prevN);
+      binormalsFrame.push(prevB);
+
+      for (let i = 1; i <= segments; i++) {
+        let v = prevN.clone().sub(tangents[i].clone().multiplyScalar(tangents[i].dot(prevN)));
+        if (v.lengthSq() < 0.0001) {
+          v = prevB.clone().sub(tangents[i].clone().multiplyScalar(tangents[i].dot(prevB)));
+        }
+        let curN = v.normalize();
+        let curB = new THREE.Vector3().crossVectors(tangents[i], curN).normalize();
+        normalsFrame.push(curN);
+        binormalsFrame.push(curB);
+        prevN = curN;
+        prevB = curB;
+      }
+
+      for (let i = 0; i <= segments; i++) {
+        const u = i / segments;
+        const r = rStart + (rEnd - rStart) * Math.pow(u, 0.88);
+        const center = points[i];
+        const N = normalsFrame[i];
+        const B = binormalsFrame[i];
+
+        for (let j = 0; j <= radialSegments; j++) {
+          const theta = (j / radialSegments) * Math.PI * 2;
+          const normal = N.clone().multiplyScalar(Math.cos(theta)).add(B.clone().multiplyScalar(Math.sin(theta))).normalize();
+          const pos = center.clone().add(normal.clone().multiplyScalar(r));
+          vertices.push(pos.x, pos.y, pos.z);
+          normals.push(normal.x, normal.y, normal.z);
+          uvs.push(j / radialSegments, u);
+        }
+      }
+
+      for (let i = 0; i < segments; i++) {
+        const row1 = i * (radialSegments + 1);
+        const row2 = (i + 1) * (radialSegments + 1);
+        for (let j = 0; j < radialSegments; j++) {
+          indices.push(row1 + j, row1 + j + 1, row2 + j);
+          indices.push(row1 + j + 1, row2 + j + 1, row2 + j);
+        }
+      }
+
+      if (capTip) {
+        const tipIdx = vertices.length / 3;
+        const tipPoint = points[segments].clone().add(tangents[segments].clone().multiplyScalar(rEnd * 1.5));
+        vertices.push(tipPoint.x, tipPoint.y, tipPoint.z);
+        normals.push(tangents[segments].x, tangents[segments].y, tangents[segments].z);
+        uvs.push(0.5, 1.0);
+        const lastRow = segments * (radialSegments + 1);
+        for (let j = 0; j < radialSegments; j++) {
+          indices.push(lastRow + j, lastRow + j + 1, tipIdx);
+        }
+      }
+
+      geom.setAttribute('position', new THREE.Float32BufferAttribute(vertices, 3));
+      geom.setAttribute('normal', new THREE.Float32BufferAttribute(normals, 3));
+      geom.setAttribute('uv', new THREE.Float32BufferAttribute(uvs, 2));
+      geom.setIndex(indices);
+      return geom;
+    }
 
     /* =========================================================================
        4. SCULPTED GEOLOGICAL SOIL CUTAWAY & STRATA HORIZONS
@@ -1210,8 +1364,47 @@
     const geologyGroup = new THREE.Group();
     scene.add(geologyGroup);
 
-    // Parametric Geological Cutaway Generator for Stratified Pedological Horizons
-    function createStratumBlock(yTop, yBottom, horizonType) {
+    // Front closing group for Solid Soil Mode
+    const solidFrontGroup = new THREE.Group();
+    solidFrontGroup.visible = false;
+    geologyGroup.add(solidFrontGroup);
+
+    // Continuous Undulating Pedological Boundary Surfaces
+    function getHorizonElevation(x, z, level) {
+      if (level === 'TOP') {
+        const distToPlant = Math.sqrt((x - 0.35) ** 2 + (z - 0.20) ** 2);
+        const mound = Math.max(0, 0.07 * (1.0 - distToPlant / 0.85));
+        const furrows = Math.sin(z * 6.5) * 0.016 + Math.sin(x * 3.5) * 0.012;
+        return 0.04 + mound + furrows;
+      } else if (level === 'OA') {
+        return -0.08 + Math.sin(x * 4.5 + 0.4) * 0.014 + Math.cos(z * 4.2) * 0.010;
+      } else if (level === 'AB') {
+        return -0.85 + Math.sin(x * 3.2 + 0.8) * 0.045 + Math.cos(z * 3.8 - 0.5) * 0.035;
+      } else if (level === 'BC') {
+        return -1.80 + Math.sin(x * 2.6 - 0.9) * 0.065 + Math.cos(z * 3.2 + 0.7) * 0.045;
+      } else { // 'BOTTOM'
+        return -2.60;
+      }
+    }
+
+    function calcCutawayZ(x) {
+      return 0.555 * x - 0.005;
+    }
+
+    function getCutawayFracture(x, y) {
+      const baseNoise = Math.sin(x * 6.5 + y * 7.5) * 0.024 + Math.cos(x * 13.0 - y * 11.0) * 0.014 + Math.sin(x * 24.0 + y * 18.0) * 0.007;
+      if (y > -0.08) {
+        return Math.sin(x * 12.0 + y * 16.0) * 0.012 + Math.cos(x * 26.0) * 0.008;
+      } else if (y > -0.85) {
+        return baseNoise * 1.1;
+      } else if (y > -1.80) {
+        return baseNoise * 1.35 + Math.sin(x * 3.8 - y * 5.2) * 0.025;
+      } else {
+        return baseNoise * 1.6 + Math.sin(x * 2.8 + y * 3.5) * 0.038 + Math.cos(x * 8.0 - y * 6.0) * 0.025;
+      }
+    }
+
+    function createStratumBlock(topLevel, botLevel, horizonType, isSolidFront = false) {
       const geom = new THREE.BufferGeometry();
       const vertices = [];
       const uvs = [];
@@ -1221,52 +1414,25 @@
       const xMin = -1.75;
       const xMax = 1.75;
       const zBack = -1.50;
+      const zFrontSolid = 1.05;
 
-      // Natural diagonal cutaway line passing through sensor (-0.55, -0.35) and maize stalk (0.35, 0.20)
-      function getZFront(x) {
-        return 0.533 * x - 0.007;
-      }
-
-      // Pedological micro-relief and fractured structural peds along the exposed cutaway face
-      function getFracture(x, y) {
-        if (horizonType === 'O') {
-          return Math.sin(x * 9.5 + y * 12.0) * 0.022 + Math.cos(x * 20.0) * 0.012;
-        } else if (horizonType === 'A') {
-          return Math.sin(x * 6.5 + y * 7.2) * 0.035 + Math.cos(x * 14.0 - y * 11.0) * 0.018 + Math.sin(x * 26.0 + y * 18.0) * 0.008;
-        } else if (horizonType === 'B') {
-          return Math.sin(x * 4.2 - y * 6.5) * 0.045 + Math.sin(x * 9.5 + y * 8.0) * 0.024 + Math.cos(x * 18.0) * 0.015;
-        } else { // 'C'
-          return Math.sin(x * 3.0 + y * 4.0) * 0.055 + Math.cos(x * 7.5 - y * 5.5) * 0.035 + Math.sin(x * 16.0 + y * 10.0) * 0.018;
-        }
-      }
-
-      // Surface agricultural terrain micro-furrows and root collar mound
-      function getSurfaceRelief(x, z) {
-        const distToPlant = Math.sqrt((x - 0.35) ** 2 + (z - 0.20) ** 2);
-        const mound = Math.max(0, 0.09 * (1.0 - distToPlant / 0.85));
-        const furrows = Math.sin(z * 6.0) * 0.018 + Math.sin(x * 3.5) * 0.014;
-        return mound + furrows;
-      }
-
-      // Multi-scale organic color variation to eliminate visible texture tiling patterns
       function getVertexColor(x, y, z) {
-        const band = Math.sin(y * 18.0 + Math.sin(x * 4.0) * 1.5) * 0.06;
-        const patch = (Math.sin(x * 3.2 + z * 2.8) * Math.cos(y * 4.0)) * 0.08;
+        const band = Math.sin(y * 18.0 + Math.sin(x * 4.0) * 1.5) * 0.05;
+        const patch = (Math.sin(x * 3.2 + z * 2.8) * Math.cos(y * 4.0)) * 0.07;
         const v = 1.0 + band + patch;
-
         let r = 1.0, g = 1.0, b = 1.0;
         if (horizonType === 'O') {
-          r = 0.85 * v; g = 0.88 * v; b = 0.82 * v;
+          r = 0.82 * v; g = 0.85 * v; b = 0.80 * v;
         } else if (horizonType === 'A') {
-          r = 1.02 * v; g = 0.96 * v; b = 0.90 * v;
+          r = 1.02 * v; g = 0.95 * v; b = 0.88 * v;
         } else if (horizonType === 'B') {
-          const ironBand = Math.sin(y * 12.0) * 0.08;
-          r = (1.08 + ironBand) * v; g = 0.95 * v; b = 0.85 * v;
+          const iron = Math.sin(y * 12.0) * 0.07;
+          r = (1.08 + iron) * v; g = 0.94 * v; b = 0.84 * v;
         } else { // 'C'
-          const stoneSpeck = (Math.sin(x * 24.0) * Math.cos(z * 24.0)) * 0.12;
-          r = (0.95 + stoneSpeck) * v; g = (0.95 + stoneSpeck) * v; b = (0.98 + stoneSpeck) * v;
+          const stone = (Math.sin(x * 22.0) * Math.cos(z * 22.0)) * 0.10;
+          r = (0.95 + stone) * v; g = (0.95 + stone) * v; b = (0.98 + stone) * v;
         }
-        return [Math.max(0.2, Math.min(1.5, r)), Math.max(0.2, Math.min(1.5, g)), Math.max(0.2, Math.min(1.5, b))];
+        return [Math.max(0.2, Math.min(1.4, r)), Math.max(0.2, Math.min(1.4, g)), Math.max(0.2, Math.min(1.4, b))];
       }
 
       function addQuadFace(nu, nv, getPos, getUV, flipTriangles) {
@@ -1277,15 +1443,12 @@
             const uParam = i / nu;
             const [px, py, pz] = getPos(uParam, vParam);
             vertices.push(px, py, pz);
-
             const [uCoord, vCoord] = getUV(uParam, vParam, px, py, pz);
             uvs.push(uCoord, vCoord);
-
             const [cr, cg, cb] = getVertexColor(px, py, pz);
             colors.push(cr, cg, cb);
           }
         }
-
         for (let j = 0; j < nv; j++) {
           const row1 = baseIdx + j * (nu + 1);
           const row2 = baseIdx + (j + 1) * (nu + 1);
@@ -1301,49 +1464,111 @@
         }
       }
 
-      // 1. Front Cutaway Face
-      addQuadFace(36, 12, (u, w) => {
-        const px = xMin + u * (xMax - xMin);
-        const py = yBottom + w * (yTop - yBottom) + (w === 1 && horizonType === 'O' ? getSurfaceRelief(px, getZFront(px)) : 0);
-        const pz = getZFront(px) + getFracture(px, py);
-        return [px, py, pz];
-      }, (u, w, px, py, pz) => [px * 1.5, py * 1.5], false);
+      if (!isSolidFront) {
+        // Cutaway Block: between zBack (-1.50) and calcCutawayZ(x)
+        // 1. Front Cutaway Face
+        addQuadFace(36, 12, (u, w) => {
+          const px = xMin + u * (xMax - xMin);
+          const cutZ = calcCutawayZ(px);
+          const yB = getHorizonElevation(px, cutZ, botLevel);
+          const yT = getHorizonElevation(px, cutZ, topLevel);
+          const py = yB + w * (yT - yB);
+          const pz = cutZ + getCutawayFracture(px, py);
+          return [px, py, pz];
+        }, (u, w, px, py, pz) => [px * 1.5, py * 1.5], false);
 
-      // 2. Top Face
-      addQuadFace(36, 20, (u, v) => {
-        const px = xMin + u * (xMax - xMin);
-        const pz = zBack + v * (getZFront(px) - zBack);
-        const py = yTop + (horizonType === 'O' ? getSurfaceRelief(px, pz) : 0);
-        return [px, py, pz];
-      }, (u, v, px, py, pz) => [px * 1.5, pz * 1.5], true);
+        // 2. Top Face
+        addQuadFace(36, 20, (u, v) => {
+          const px = xMin + u * (xMax - xMin);
+          const pz = zBack + v * (calcCutawayZ(px) - zBack);
+          const py = getHorizonElevation(px, pz, topLevel);
+          return [px, py, pz];
+        }, (u, v, px, py, pz) => [px * 1.5, pz * 1.5], true);
 
-      // 3. Bottom Face
-      addQuadFace(18, 12, (u, v) => {
-        const px = xMin + u * (xMax - xMin);
-        const pz = zBack + v * (getZFront(px) - zBack);
-        return [px, yBottom, pz];
-      }, (u, v, px, py, pz) => [px * 1.5, pz * 1.5], false);
+        // 3. Bottom Face
+        addQuadFace(18, 12, (u, v) => {
+          const px = xMin + u * (xMax - xMin);
+          const pz = zBack + v * (calcCutawayZ(px) - zBack);
+          const py = getHorizonElevation(px, pz, botLevel);
+          return [px, py, pz];
+        }, (u, v, px, py, pz) => [px * 1.5, pz * 1.5], false);
 
-      // 4. Back Face
-      addQuadFace(20, 8, (u, w) => {
-        const px = xMin + u * (xMax - xMin);
-        const py = yBottom + w * (yTop - yBottom);
-        return [px, py, zBack];
-      }, (u, w, px, py, pz) => [px * 1.5, py * 1.5], true);
+        // 4. Back Face
+        addQuadFace(20, 8, (u, w) => {
+          const px = xMin + u * (xMax - xMin);
+          const yB = getHorizonElevation(px, zBack, botLevel);
+          const yT = getHorizonElevation(px, zBack, topLevel);
+          const py = yB + w * (yT - yB);
+          return [px, py, zBack];
+        }, (u, w, px, py, pz) => [px * 1.5, py * 1.5], true);
 
-      // 5. Left Face
-      addQuadFace(14, 8, (v, w) => {
-        const pz = zBack + v * (getZFront(xMin) - zBack);
-        const py = yBottom + w * (yTop - yBottom);
-        return [xMin, py, pz];
-      }, (v, w, px, py, pz) => [pz * 1.5, py * 1.5], false);
+        // 5. Left Face
+        addQuadFace(14, 8, (v, w) => {
+          const pz = zBack + v * (calcCutawayZ(xMin) - zBack);
+          const yB = getHorizonElevation(xMin, pz, botLevel);
+          const yT = getHorizonElevation(xMin, pz, topLevel);
+          const py = yB + w * (yT - yB);
+          return [xMin, py, pz];
+        }, (v, w, px, py, pz) => [pz * 1.5, py * 1.5], false);
 
-      // 6. Right Face
-      addQuadFace(14, 8, (v, w) => {
-        const pz = zBack + v * (getZFront(xMax) - zBack);
-        const py = yBottom + w * (yTop - yBottom);
-        return [xMax, py, pz];
-      }, (v, w, px, py, pz) => [pz * 1.5, py * 1.5], true);
+        // 6. Right Face
+        addQuadFace(14, 8, (v, w) => {
+          const pz = zBack + v * (calcCutawayZ(xMax) - zBack);
+          const yB = getHorizonElevation(xMax, pz, botLevel);
+          const yT = getHorizonElevation(xMax, pz, topLevel);
+          const py = yB + w * (yT - yB);
+          return [xMax, py, pz];
+        }, (v, w, px, py, pz) => [pz * 1.5, py * 1.5], true);
+
+      } else {
+        // Solid Front Closing Block: between calcCutawayZ(x) and zFrontSolid (1.05)
+        // 1. Exterior Front Face
+        addQuadFace(28, 8, (u, w) => {
+          const px = xMin + u * (xMax - xMin);
+          const yB = getHorizonElevation(px, zFrontSolid, botLevel);
+          const yT = getHorizonElevation(px, zFrontSolid, topLevel);
+          const py = yB + w * (yT - yB);
+          return [px, py, zFrontSolid];
+        }, (u, w, px, py, pz) => [px * 1.5, py * 1.5], false);
+
+        // 2. Top Face
+        addQuadFace(28, 14, (u, v) => {
+          const px = xMin + u * (xMax - xMin);
+          const cutZ = calcCutawayZ(px);
+          const pz = cutZ + v * (zFrontSolid - cutZ);
+          const py = getHorizonElevation(px, pz, topLevel);
+          return [px, py, pz];
+        }, (u, v, px, py, pz) => [px * 1.5, pz * 1.5], true);
+
+        // 3. Bottom Face
+        addQuadFace(16, 8, (u, v) => {
+          const px = xMin + u * (xMax - xMin);
+          const cutZ = calcCutawayZ(px);
+          const pz = cutZ + v * (zFrontSolid - cutZ);
+          const py = getHorizonElevation(px, pz, botLevel);
+          return [px, py, pz];
+        }, (u, v, px, py, pz) => [px * 1.5, pz * 1.5], false);
+
+        // 4. Left Face
+        addQuadFace(10, 6, (v, w) => {
+          const cutZ = calcCutawayZ(xMin);
+          const pz = cutZ + v * (zFrontSolid - cutZ);
+          const yB = getHorizonElevation(xMin, pz, botLevel);
+          const yT = getHorizonElevation(xMin, pz, topLevel);
+          const py = yB + w * (yT - yB);
+          return [xMin, py, pz];
+        }, (v, w, px, py, pz) => [pz * 1.5, py * 1.5], false);
+
+        // 5. Right Face
+        addQuadFace(10, 6, (v, w) => {
+          const cutZ = calcCutawayZ(xMax);
+          const pz = cutZ + v * (zFrontSolid - cutZ);
+          const yB = getHorizonElevation(xMax, pz, botLevel);
+          const yT = getHorizonElevation(xMax, pz, topLevel);
+          const py = yB + w * (yT - yB);
+          return [xMax, py, pz];
+        }, (v, w, px, py, pz) => [pz * 1.5, py * 1.5], true);
+      }
 
       geom.setAttribute('position', new THREE.Float32BufferAttribute(vertices, 3));
       geom.setAttribute('uv', new THREE.Float32BufferAttribute(uvs, 2));
@@ -1354,18 +1579,11 @@
       return geom;
     }
 
-    // Helper: Front Cutaway Profile Z calculation for embedded elements
-    function calcCutawayZ(x) {
-      return 0.533 * x - 0.007;
-    }
-
-    // =========================================================================
-    // HORIZON O: Organic Mulch & Humus Litter (0 - 4cm)
-    // =========================================================================
+    // Horizon O: Organic Mulch & Humus Litter (0 - 4cm)
     const horizonOGroup = new THREE.Group();
     geologyGroup.add(horizonOGroup);
     const matHorizonO = new THREE.MeshStandardMaterial({
-      color: 0x1f241a,
+      color: 0x1c1712,
       map: texDirtDiff,
       normalMap: texDirtNor,
       normalScale: new THREE.Vector2(1.1, 1.1),
@@ -1374,19 +1592,20 @@
       metalness: 0.01,
       vertexColors: true
     });
-    const geoO = createStratumBlock(0.04, -0.08, 'O');
+    const geoO = createStratumBlock('TOP', 'OA', 'O', false);
     const meshO = new THREE.Mesh(geoO, matHorizonO);
     meshO.receiveShadow = true;
     meshO.castShadow = true;
     meshO.userData = { id: 'soil-o', name: 'Horizon O (Organic Mulch & Humus Litter)', type: 'GEOLOGY', badge: 'MEASURED' };
     horizonOGroup.add(meshO);
 
+    const geoSolidO = createStratumBlock('TOP', 'OA', 'O', true);
+    const meshSolidO = new THREE.Mesh(geoSolidO, matHorizonO);
+    meshSolidO.receiveShadow = true;
+    solidFrontGroup.add(meshSolidO);
+
     // Scattered Surface Organic Mulch & Leaf Litter Fragments
-    const mulchMat = new THREE.MeshStandardMaterial({
-      color: 0x3d3525,
-      roughness: 0.88,
-      side: THREE.DoubleSide
-    });
+    const mulchMat = new THREE.MeshStandardMaterial({ color: 0x3d3525, roughness: 0.88, side: THREE.DoubleSide });
     const mulchGeo = new THREE.PlaneGeometry(0.045, 0.022);
     mulchGeo.rotateX(-Math.PI / 2);
     const mulchInstanced = new THREE.InstancedMesh(mulchGeo, mulchMat, 36);
@@ -1394,8 +1613,7 @@
     for (let m = 0; m < 36; m++) {
       const mx = (Math.random() - 0.4) * 2.2;
       const mz = -1.3 + Math.random() * (calcCutawayZ(mx) + 1.25);
-      const distToPlant = Math.sqrt((mx - 0.35) ** 2 + (mz - 0.20) ** 2);
-      const my = 0.045 + Math.max(0, 0.09 * (1.0 - distToPlant / 0.85)) + Math.sin(mz * 6.0) * 0.015;
+      const my = getHorizonElevation(mx, mz, 'TOP') + 0.005;
       dummyMulch.position.set(mx, my, mz);
       dummyMulch.rotation.set((Math.random() - 0.5) * 0.3, Math.random() * Math.PI, (Math.random() - 0.5) * 0.3);
       dummyMulch.scale.set(0.7 + Math.random() * 0.7, 1.0, 0.7 + Math.random() * 0.7);
@@ -1406,13 +1624,11 @@
     mulchInstanced.userData = { id: 'soil-mulch', name: 'Organic Leaf Litter & Mulch Debris', type: 'GEOLOGY', badge: 'MEASURED' };
     horizonOGroup.add(mulchInstanced);
 
-    // =========================================================================
-    // HORIZON A: Topsoil Humus Layer (4 - 25cm)
-    // =========================================================================
+    // Horizon A: Melanic Agricultural Topsoil Humus (4 - 25cm)
     const horizonAGroup = new THREE.Group();
     geologyGroup.add(horizonAGroup);
     const matHorizonA = new THREE.MeshStandardMaterial({
-      color: 0x2e1d13,
+      color: 0x2d1d12,
       map: texDirtDiff,
       normalMap: texDirtNor,
       normalScale: new THREE.Vector2(1.45, 1.45),
@@ -1421,11 +1637,16 @@
       metalness: 0.02,
       vertexColors: true
     });
-    const geoA = createStratumBlock(-0.08, -0.85, 'A');
+    const geoA = createStratumBlock('OA', 'AB', 'A', false);
     const meshA = new THREE.Mesh(geoA, matHorizonA);
     meshA.receiveShadow = true;
     meshA.userData = { id: 'soil-a', name: 'Horizon A (Melanic Topsoil Humus)', type: 'GEOLOGY', badge: 'MEASURED' };
     horizonAGroup.add(meshA);
+
+    const geoSolidA = createStratumBlock('OA', 'AB', 'A', true);
+    const meshSolidA = new THREE.Mesh(geoSolidA, matHorizonA);
+    meshSolidA.receiveShadow = true;
+    solidFrontGroup.add(meshSolidA);
 
     // Embedded Topsoil River Pebbles & Mineral Aggregates in Horizon A
     const stoneGeoA = new THREE.DodecahedronGeometry(0.032, 1);
@@ -1447,7 +1668,7 @@
     horizonAGroup.add(stoneInstancedA);
 
     // Fine Capillary Rootlets protruding from Horizon A Cutaway Face
-    const rootletMat = new THREE.MeshStandardMaterial({ color: 0xded5c2, roughness: 0.38, metalness: 0.02 });
+    const rootletMat = new THREE.MeshStandardMaterial({ color: 0xcfc4a8, roughness: 0.42, metalness: 0.02 });
     for (let r = 0; r < 24; r++) {
       const rx = (Math.random() - 0.5) * 2.8;
       const ry = -0.15 - Math.random() * 0.62;
@@ -1459,32 +1680,35 @@
         new THREE.Vector3(rx + Math.cos(angle) * (rLen * 0.5), ry - rLen * 0.4, rz + 0.02),
         new THREE.Vector3(rx + Math.cos(angle) * rLen, ry - rLen * 0.9, rz + (Math.random() - 0.5) * 0.03)
       ]);
-      const rGeo = new THREE.TubeGeometry(rCurve, 8, 0.0035, 4, false);
+      const rGeo = createTaperedTubeGeometry(rCurve, 8, 0.0035, 0.0010, 5, true);
       const rMesh = new THREE.Mesh(rGeo, rootletMat);
       rMesh.userData = { id: `soil-rootlet-a-${r+1}`, name: 'Rhizosphere Feeder Capillary Rootlet', type: 'BOTANY', badge: 'PHYSIOLOGY' };
       horizonAGroup.add(rMesh);
     }
 
-    // =========================================================================
-    // HORIZON B: Compacted Clay Subsoil (25 - 60cm)
-    // =========================================================================
+    // Horizon B: Compacted Clay Subsoil (25 - 60cm)
     const horizonBGroup = new THREE.Group();
     geologyGroup.add(horizonBGroup);
     const matHorizonB = new THREE.MeshStandardMaterial({
-      color: 0x62391a,
+      color: 0x523218,
       map: texMudDiff,
       normalMap: texMudNor,
       normalScale: new THREE.Vector2(1.35, 1.35),
       roughnessMap: texMudRough,
-      roughness: 0.85,
+      roughness: 0.86,
       metalness: 0.03,
       vertexColors: true
     });
-    const geoB = createStratumBlock(-0.85, -1.80, 'B');
+    const geoB = createStratumBlock('AB', 'BC', 'B', false);
     const meshB = new THREE.Mesh(geoB, matHorizonB);
     meshB.receiveShadow = true;
     meshB.userData = { id: 'soil-b', name: 'Horizon B (Compacted Clay Subsoil)', type: 'GEOLOGY', badge: 'MEASURED' };
     horizonBGroup.add(meshB);
+
+    const geoSolidB = createStratumBlock('AB', 'BC', 'B', true);
+    const meshSolidB = new THREE.Mesh(geoSolidB, matHorizonB);
+    meshSolidB.receiveShadow = true;
+    solidFrontGroup.add(meshSolidB);
 
     // Clay Clods & Ferruginous Concretions in Horizon B
     const stoneGeoB = new THREE.DodecahedronGeometry(0.048, 1);
@@ -1515,32 +1739,35 @@
         new THREE.Vector3(rx + (Math.random() - 0.5) * 0.04, ry - 0.12, rz + 0.015),
         new THREE.Vector3(rx + (Math.random() - 0.5) * 0.06, ry - 0.24, rz)
       ]);
-      const rGeo = new THREE.TubeGeometry(rCurve, 8, 0.005, 4, false);
+      const rGeo = createTaperedTubeGeometry(rCurve, 8, 0.005, 0.002, 5, true);
       const rMesh = new THREE.Mesh(rGeo, rootletMat);
       rMesh.userData = { id: `soil-rootlet-b-${r+1}`, name: 'Deep Subsoil Seminal Root Cleavage Axis', type: 'BOTANY', badge: 'PHYSIOLOGY' };
       horizonBGroup.add(rMesh);
     }
 
-    // =========================================================================
-    // HORIZON C: Gravel Drainage & Bedrock Substratum (60cm+)
-    // =========================================================================
+    // Horizon C: Gravel Drainage & Bedrock Substratum (60cm+)
     const horizonCGroup = new THREE.Group();
     geologyGroup.add(horizonCGroup);
     const matHorizonC = new THREE.MeshStandardMaterial({
-      color: 0x363836,
+      color: 0x3a3834,
       map: texMudDiff,
       normalMap: texMudNor,
       normalScale: new THREE.Vector2(1.65, 1.65),
       roughnessMap: texMudRough,
-      roughness: 0.72,
-      metalness: 0.22,
+      roughness: 0.76,
+      metalness: 0.18,
       vertexColors: true
     });
-    const geoC = createStratumBlock(-1.80, -2.60, 'C');
+    const geoC = createStratumBlock('BC', 'BOTTOM', 'C', false);
     const meshC = new THREE.Mesh(geoC, matHorizonC);
     meshC.receiveShadow = true;
     meshC.userData = { id: 'soil-c', name: 'Horizon C (Parent Substratum & Saprolite)', type: 'GEOLOGY', badge: 'MEASURED' };
     horizonCGroup.add(meshC);
+
+    const geoSolidC = createStratumBlock('BC', 'BOTTOM', 'C', true);
+    const meshSolidC = new THREE.Mesh(geoSolidC, matHorizonC);
+    meshSolidC.receiveShadow = true;
+    solidFrontGroup.add(meshSolidC);
 
     // Angular Saprolite Rock Clods & Slate Gravel in Horizon C
     const stoneGeoC = new THREE.DodecahedronGeometry(0.075, 1);
@@ -1560,11 +1787,12 @@
     stoneInstancedC.instanceMatrix.needsUpdate = true;
     stoneInstancedC.userData = { id: 'soil-stone-c', name: 'Saprolite Weathered Bedrock / Slate Gravel', type: 'GEOLOGY', badge: 'MEASURED' };
     horizonCGroup.add(stoneInstancedC);
-/* =========================================================================
+
+    /* =========================================================================
        5. BOTANICAL MAIZE ORGANISM (ZEA MAYS L.) WITH DETAILED FIBROUS ARCHITECTURE
        ========================================================================= */
     const plantGroup = new THREE.Group();
-    plantGroup.position.set(0.35, 0.07, 0.2);
+    plantGroup.position.set(0.35, 0.04, 0.20);
     scene.add(plantGroup);
 
     const anatomyParts = {
@@ -1580,90 +1808,90 @@
     };
     Object.values(anatomyParts).forEach(g => plantGroup.add(g));
 
-    // Stalk (Culm) Material with subtle rind luster
+    // Stalk (Culm) Material with realistic waxy rind cuticle (no electric glow)
     const stalkMat = new THREE.MeshStandardMaterial({
-      color: 0x3d9e38,
-      roughness: 0.50,
-      metalness: 0.05
+      color: 0x367728,
+      roughness: 0.46,
+      metalness: 0.02
     });
 
-    // Root Materials with natural ivory-cream hydration sheen (fibrous monocot system)
+    // Root Materials: Hydrated monocot tones (natural cream, ivory, amber-tan, NO pure white)
     const braceRootMat = new THREE.MeshStandardMaterial({
-      color: 0xd6c7af,
-      roughness: 0.40,
-      metalness: 0.03
+      color: 0x9c8358,
+      roughness: 0.48,
+      metalness: 0.02
     });
     const crownRootMat = new THREE.MeshStandardMaterial({
-      color: 0xe8dfce,
-      roughness: 0.38,
+      color: 0xc8bba0,
+      roughness: 0.42,
+      metalness: 0.01
+    });
+    const seminalRootMat = new THREE.MeshStandardMaterial({
+      color: 0xbaa887,
+      roughness: 0.45,
       metalness: 0.02
     });
     const lateralRootMat = new THREE.MeshStandardMaterial({
-      color: 0xf0e8db,
-      roughness: 0.34,
-      metalness: 0.02
+      color: 0xd2c7aa,
+      roughness: 0.38,
+      metalness: 0.01
     });
     const rootCapMat = new THREE.MeshStandardMaterial({
-      color: 0xfdfbf7,
-      roughness: 0.22,
-      metalness: 0.04
+      color: 0xded5ba,
+      roughness: 0.32,
+      metalness: 0.02
     });
 
-    // Stratified Canopy Foliage Materials (Upper, Mid, Lower Canopy with distinct age & cuticle thickness)
+    // Stratified Canopy Foliage Materials (Upper, Mid, Lower Canopy with authentic chlorophyll greens)
     const leafMatUpper = new THREE.MeshStandardMaterial({
-      color: 0x4fae3b,
+      color: 0x4a9634,
       map: leafTexture,
-      roughness: 0.30,
-      metalness: 0.02,
-      emissive: 0x0c2a09,
-      emissiveIntensity: 0.22,
+      roughness: 0.42,
+      metalness: 0.01,
       side: THREE.DoubleSide
     });
     const leafMatMid = new THREE.MeshStandardMaterial({
-      color: 0x277824,
+      color: 0x367726,
       map: leafTexture,
-      roughness: 0.34,
-      metalness: 0.03,
-      emissive: 0x071e06,
-      emissiveIntensity: 0.18,
+      roughness: 0.45,
+      metalness: 0.01,
       side: THREE.DoubleSide
     });
     const leafMatLower = new THREE.MeshStandardMaterial({
-      color: 0x316f2b,
+      color: 0x2e6320,
       map: leafTexture,
-      roughness: 0.42,
-      metalness: 0.04,
-      emissive: 0x051604,
-      emissiveIntensity: 0.14,
+      roughness: 0.50,
+      metalness: 0.02,
       side: THREE.DoubleSide
     });
     const sheathMat = new THREE.MeshStandardMaterial({
-      color: 0x48963c,
+      color: 0x3d7a2c,
       roughness: 0.46,
-      metalness: 0.04,
+      metalness: 0.02,
       side: THREE.DoubleSide
     });
 
-    // A. Culm (Stalk) with Anatomically Spaced Nodes and Solid Internodes
-    const stalkPoints = [
+    // A. Culm (Stalk) with Authentic Anatomical Taper from Ground Collar to Tassel
+    const culmCurve = new THREE.CatmullRomCurve3([
       new THREE.Vector3(0, 0, 0),
-      new THREE.Vector3(0.012, 0.4, -0.008),
-      new THREE.Vector3(-0.015, 0.95, 0.012),
-      new THREE.Vector3(0.01, 1.6, -0.01),
-      new THREE.Vector3(0.005, 2.3, 0.0)
-    ];
-    const stalkCurve = new THREE.CatmullRomCurve3(stalkPoints);
-    const stalkGeo = new THREE.TubeGeometry(stalkCurve, 40, 0.046, 16, false);
-    const stalkMesh = new THREE.Mesh(stalkGeo, stalkMat);
+      new THREE.Vector3(0.008, 0.35, -0.005),
+      new THREE.Vector3(-0.010, 0.85, 0.008),
+      new THREE.Vector3(0.006, 1.45, -0.006),
+      new THREE.Vector3(0.002, 1.98, 0.0)
+    ]);
+    const culmGeo = createTaperedTubeGeometry(culmCurve, 40, 0.038, 0.012, 16, true);
+    const stalkMesh = new THREE.Mesh(culmGeo, stalkMat);
     stalkMesh.castShadow = true;
     stalkMesh.receiveShadow = true;
     stalkMesh.userData = { id: 'plant-stem', name: 'Zea Mays Culm (Stalk Internodes)', type: 'BOTANY', badge: 'PHYSIOLOGY' };
     anatomyParts.stem.add(stalkMesh);
 
-    // Node Collars along the Culm
-    const nodeHeights = [0.08, 0.18, 0.35, 0.55, 0.80, 1.08, 1.38, 1.70, 2.05];
+    // Anatomical Node Collar Rings
+    const nodeHeights = [0.05, 0.12, 0.20, 0.32, 0.48, 0.68, 0.92, 1.18, 1.46, 1.74, 1.98];
     nodeHeights.forEach((nh, idx) => {
-      const nodeGeo = new THREE.TorusGeometry(0.049, 0.008, 8, 24);
+      const u = nh / 1.98;
+      const nodeR = (0.038 + (0.012 - 0.038) * Math.pow(u, 0.88)) * 1.12;
+      const nodeGeo = new THREE.TorusGeometry(nodeR, 0.006, 8, 24);
       nodeGeo.rotateX(Math.PI / 2);
       const nodeMesh = new THREE.Mesh(nodeGeo, stalkMat);
       nodeMesh.position.set(0, nh, 0);
@@ -1672,134 +1900,142 @@
     });
 
     // Apical Tassel (Male Inflorescence with central spike & radiating branches)
-    const tasselSpike = new THREE.TubeGeometry(new THREE.CatmullRomCurve3([
-      new THREE.Vector3(0, 2.25, 0),
-      new THREE.Vector3(0, 2.52, 0)
-    ]), 8, 0.008, 6, false);
-    const tasselMat = new THREE.MeshStandardMaterial({ color: 0xd4be6a, roughness: 0.65 });
+    const tasselSpikeCurve = new THREE.CatmullRomCurve3([
+      new THREE.Vector3(0, 1.98, 0),
+      new THREE.Vector3(0.001, 2.22, 0),
+      new THREE.Vector3(0, 2.42, 0)
+    ]);
+    const tasselSpike = createTaperedTubeGeometry(tasselSpikeCurve, 12, 0.010, 0.003, 8, true);
+    const tasselMat = new THREE.MeshStandardMaterial({ color: 0xcfb872, roughness: 0.65 });
     const spikeMesh = new THREE.Mesh(tasselSpike, tasselMat);
     spikeMesh.userData = { id: 'tassel-central', name: 'Tassel Central Rachis (Inflorescence)', type: 'BOTANY', badge: 'PHYSIOLOGY' };
     anatomyParts.stem.add(spikeMesh);
 
-    for (let t = 0; t < 10; t++) {
-      const angle = (t / 10) * Math.PI * 2 + (Math.random() - 0.5) * 0.2;
+    for (let t = 0; t < 14; t++) {
+      const angle = (t / 14) * Math.PI * 2 + (t % 3) * 0.15;
       const tCurve = new THREE.CatmullRomCurve3([
-        new THREE.Vector3(0, 2.26 + (t / 10) * 0.06, 0),
-        new THREE.Vector3(Math.cos(angle) * 0.08, 2.38, Math.sin(angle) * 0.08),
-        new THREE.Vector3(Math.cos(angle) * 0.19, 2.48, Math.sin(angle) * 0.19),
-        new THREE.Vector3(Math.cos(angle) * 0.24, 2.44, Math.sin(angle) * 0.24)
+        new THREE.Vector3(0, 2.02 + (t / 14) * 0.14, 0),
+        new THREE.Vector3(Math.cos(angle) * 0.07, 2.15, Math.sin(angle) * 0.07),
+        new THREE.Vector3(Math.cos(angle) * 0.17, 2.30, Math.sin(angle) * 0.17),
+        new THREE.Vector3(Math.cos(angle) * 0.22, 2.32, Math.sin(angle) * 0.22)
       ]);
-      const tGeo = new THREE.TubeGeometry(tCurve, 8, 0.005, 5, false);
+      const tGeo = createTaperedTubeGeometry(tCurve, 10, 0.005, 0.0018, 5, true);
       const tMesh = new THREE.Mesh(tGeo, tasselMat);
       tMesh.userData = { id: `tassel-branch-${t+1}`, name: `Tassel Spikelet Branch #${t+1}`, type: 'BOTANY', badge: 'PHYSIOLOGY' };
       anatomyParts.stem.add(tMesh);
     }
 
-    // B. Anatomically Detailed Maize Leaves (Sheath + 7-Point Cross-Section Blade with Ruffled Margins)
+    // B. Anatomically Detailed Maize Leaves (Sheaths + 9-Point Curved Blade with Ruffled Margins)
     const leafMeshes = [];
 
     function createBotanicalMaizeLeaf(index, totalLeaves) {
       const leafGroup = new THREE.Group();
-      const nodeH = nodeHeights[Math.min(nodeHeights.length - 1, index + 1)] || (0.3 + (index / totalLeaves) * 1.6);
+      const nodeH = nodeHeights[Math.min(nodeHeights.length - 1, index)];
       leafGroup.position.set(0, nodeH, 0);
 
-      // Distichous alternating phyllotaxis (~180° alternation with subtle 15° natural spiral)
+      // Alternating distichous phyllotaxis (~180° alternation with subtle 12° natural spiral)
       const baseAngle = (index % 2 === 0) ? 0 : Math.PI;
-      const spiralOffset = (index - 5) * 0.12 + (Math.random() - 0.5) * 0.08;
+      const spiralOffset = (index - 5.5) * 0.14 + (Math.sin(index * 1.7) * 0.08);
       leafGroup.rotation.y = baseAngle + spiralOffset;
 
-      // 1. Clasping Cylindrical Leaf Sheath wrapping the stalk below the collar
-      const sheathLen = 0.14 + (index / totalLeaves) * 0.08;
-      const sheathGeo = new THREE.CylinderGeometry(0.052, 0.050, sheathLen, 16, 1, true, 0.2, Math.PI * 1.85);
+      // 1. Clasping Cylindrical Leaf Sheath wrapping the culm
+      const sheathLen = 0.12 + (index / totalLeaves) * 0.06;
+      const culmR = (0.038 + (0.012 - 0.038) * (nodeH / 1.98)) * 1.08;
+      const sheathGeo = new THREE.CylinderGeometry(culmR * 0.98, culmR, sheathLen, 16, 1, true, 0.25, Math.PI * 1.82);
       sheathGeo.translate(0, -sheathLen * 0.45, 0);
       const sheathMesh = new THREE.Mesh(sheathGeo, sheathMat);
       sheathMesh.castShadow = true;
       sheathMesh.userData = { id: `sheath-${index+1}`, name: `Leaf Sheath #${index+1} (Clasping Collar)`, type: 'BOTANY', badge: 'PHYSIOLOGY' };
       anatomyParts.sheaths.add(sheathMesh);
 
-      // 2. Leaf Blade with 7-Point Profile, V-Groove, and Undulating Fluted Margins
-      const length = 1.35 + Math.sin((index / totalLeaves) * Math.PI) * 0.42;
-      const maxWidth = 0.17 + Math.sin((index / totalLeaves) * Math.PI) * 0.07;
-      const segments = 28;
+      // 2. Leaf Blade with 9-Point Cross Section & Parabolic Gravity Arch
+      const isLower = index <= 2;
+      const isUpper = index >= 8;
+      const length = isLower ? (0.85 + index * 0.08) : (isUpper ? (1.05 - (index - 8) * 0.05) : (1.25 + (index - 3) * 0.04));
+      const maxWidth = isLower ? 0.13 : (isUpper ? 0.10 : 0.16);
+      const emergeAngle = (isLower ? 24 : (isUpper ? 42 : 34)) * Math.PI / 180;
+      const droopExp = isLower ? 1.7 : (isUpper ? 2.2 : 1.9);
+      const droopFactor = isLower ? 0.60 : (isUpper ? 0.38 : 0.46);
+      const lateralSweep = ((index % 3) - 1.0) * 0.08;
 
-      const archFactor = 0.28 + (index / totalLeaves) * 0.35;
-      const droopPower = 1.8 + (1.0 - index / totalLeaves) * 0.7;
-
+      const segments = 26;
       const curvePoints = [];
-      for (let i = 0; i <= segments; i++) {
-        const u = i / segments;
-        const x = Math.sin(u * Math.PI * 0.5) * length;
-        const y = Math.sin(u * Math.PI * 0.8) * archFactor - Math.pow(u, droopPower) * (0.45 + (1.0 - index / totalLeaves) * 0.25);
-        const z = Math.sin(u * Math.PI) * (0.035 * (Math.random() - 0.5));
+      for (let s = 0; s <= segments; s++) {
+        const u = s / segments;
+        const x = length * (Math.sin(u * Math.PI * 0.5) * 0.92 + u * 0.08);
+        const y = length * (Math.sin(u * Math.PI * 0.55) * Math.sin(emergeAngle) - droopFactor * Math.pow(u, droopExp));
+        const z = length * Math.sin(u * Math.PI * 0.8) * lateralSweep;
         curvePoints.push(new THREE.Vector3(x, y, z));
       }
 
-      // 7-Point Transverse Profile Mesh
+      // 9-Point Transverse Profile Mesh across each segment
       const geom = new THREE.BufferGeometry();
       const vertices = [];
       const uvs = [];
+      const normals = [];
       const indices = [];
 
-      for (let i = 0; i <= segments; i++) {
-        const u = i / segments;
-        const p = curvePoints[i];
-        const w = Math.sin(u * Math.PI) * maxWidth * (1.0 - u * 0.35);
+      const profileFracs = [-1.0, -0.72, -0.44, -0.18, 0.0, 0.18, 0.44, 0.72, 1.0];
 
-        const tangent = (i < segments)
-          ? curvePoints[i + 1].clone().sub(p).normalize()
-          : p.clone().sub(curvePoints[i - 1]).normalize();
+      for (let s = 0; s <= segments; s++) {
+        const u = s / segments;
+        const p = curvePoints[s];
+
+        // Realistic leaf width profile: collar flare, mid-blade swell, sharp tip
+        let w;
+        if (u < 0.35) {
+          const t = u / 0.35;
+          w = maxWidth * (0.35 + 0.65 * Math.sin(t * Math.PI * 0.5));
+        } else {
+          const t = (u - 0.35) / 0.65;
+          w = maxWidth * Math.cos(t * Math.PI * 0.5);
+        }
+
+        const tangent = (s < segments)
+          ? curvePoints[s + 1].clone().sub(p).normalize()
+          : p.clone().sub(curvePoints[s - 1]).normalize();
+
         let side = new THREE.Vector3(0, 0, 1).cross(tangent).normalize();
         if (side.lengthSq() < 0.001) side.set(0, 0, 1);
+        let up = tangent.clone().cross(side).normalize();
 
-        // Fluted wavy margin undulations
-        const marginWave = Math.sin(u * 26.0 + index) * (0.015 * Math.sin(u * Math.PI));
+        // Sinusoidal ruffling along blade margins
+        const marginWave = Math.sin(u * 24.0 + index * 1.5) * (0.014 * Math.sin(u * Math.PI));
 
-        // 7 profile points: p0 (ruffled left) to p6 (ruffled right) with p3 (midrib keel)
-        const v0 = p.clone().add(side.clone().multiplyScalar(w * 0.50)).add(new THREE.Vector3(0, 0.014 + marginWave, 0));
-        const v1 = p.clone().add(side.clone().multiplyScalar(w * 0.32)).add(new THREE.Vector3(0, 0.008 + marginWave * 0.5, 0));
-        const v2 = p.clone().add(side.clone().multiplyScalar(w * 0.12)).add(new THREE.Vector3(0, 0.002, 0));
-        const v3 = p.clone().add(new THREE.Vector3(0, -0.010, 0));
-        const v4 = p.clone().sub(side.clone().multiplyScalar(w * 0.12)).add(new THREE.Vector3(0, 0.002, 0));
-        const v5 = p.clone().sub(side.clone().multiplyScalar(w * 0.32)).add(new THREE.Vector3(0, 0.008 - marginWave * 0.5, 0));
-        const v6 = p.clone().sub(side.clone().multiplyScalar(w * 0.50)).add(new THREE.Vector3(0, 0.014 - marginWave, 0));
+        profileFracs.forEach((frac, pIdx) => {
+          const isMidrib = (frac === 0.0);
+          const absFrac = Math.abs(frac);
+          // V-keel midrib + arched lamina wings + ruffled fluted edges
+          const midribKeel = isMidrib ? -0.007 * (1.0 - u * 0.6) : (0.003 * Math.sin(absFrac * Math.PI) * (1.0 - u * 0.5));
+          const waveElevation = (absFrac > 0.5) ? marginWave * Math.pow(absFrac, 1.5) : 0;
 
-        vertices.push(
-          v0.x, v0.y, v0.z,
-          v1.x, v1.y, v1.z,
-          v2.x, v2.y, v2.z,
-          v3.x, v3.y, v3.z,
-          v4.x, v4.y, v4.z,
-          v5.x, v5.y, v5.z,
-          v6.x, v6.y, v6.z
-        );
+          const pt = p.clone()
+            .add(side.clone().multiplyScalar(frac * w * 0.5))
+            .add(up.clone().multiplyScalar(midribKeel + waveElevation));
 
-        uvs.push(
-          0.00, u,
-          0.18, u,
-          0.38, u,
-          0.50, u,
-          0.62, u,
-          0.82, u,
-          1.00, u
-        );
+          vertices.push(pt.x, pt.y, pt.z);
+          normals.push(up.x, up.y, up.z);
+          uvs.push((frac + 1.0) * 0.5, u);
+        });
+      }
 
-        if (i < segments) {
-          const row = i * 7;
-          for (let q = 0; q < 6; q++) {
-            indices.push(row + q, row + q + 7, row + q + 1);
-            indices.push(row + q + 1, row + q + 7, row + q + 8);
-          }
+      for (let s = 0; s < segments; s++) {
+        const row1 = s * profileFracs.length;
+        const row2 = (s + 1) * profileFracs.length;
+        for (let q = 0; q < profileFracs.length - 1; q++) {
+          indices.push(row1 + q, row2 + q, row1 + q + 1);
+          indices.push(row1 + q + 1, row2 + q, row2 + q + 1);
         }
       }
 
       geom.setAttribute('position', new THREE.Float32BufferAttribute(vertices, 3));
+      geom.setAttribute('normal', new THREE.Float32BufferAttribute(normals, 3));
       geom.setAttribute('uv', new THREE.Float32BufferAttribute(uvs, 2));
       geom.setIndex(indices);
       geom.computeVertexNormals();
 
-      // Stratified foliage material based on leaf insertion level
       let chosenMat = leafMatMid;
-      if (index >= 7) chosenMat = leafMatUpper;
+      if (index >= 8) chosenMat = leafMatUpper;
       else if (index <= 2) chosenMat = leafMatLower;
 
       const mesh = new THREE.Mesh(geom, chosenMat);
@@ -1812,65 +2048,64 @@
       leafMeshes.push(leafGroup);
     }
 
-    for (let l = 0; l < 11; l++) {
-      createBotanicalMaizeLeaf(l, 11);
+    for (let l = 0; l < 12; l++) {
+      createBotanicalMaizeLeaf(l, 12);
     }
 
-    // C. Developing Maize Ears (Female Inflorescences with Husks and Cascading Silk)
+    // C. Developing Maize Ears (Female Inflorescences at Nodes 5 & 7)
     function createBotanicalMaizeEar(nodeHeight, angle, earIndex) {
       const earGroup = new THREE.Group();
       earGroup.position.set(0, nodeHeight, 0);
       earGroup.rotation.y = angle;
-      earGroup.rotation.z = -0.44;
+      earGroup.rotation.z = -0.42;
 
-      // Rigid Ear Shank
-      const shankGeo = new THREE.CylinderGeometry(0.018, 0.024, 0.15, 10);
-      const shankMat = new THREE.MeshStandardMaterial({ color: 0x2e8b38, roughness: 0.58 });
+      // Ear Shank
+      const shankGeo = new THREE.CylinderGeometry(0.014, 0.018, 0.12, 10);
+      const shankMat = new THREE.MeshStandardMaterial({ color: 0x367728, roughness: 0.55 });
       const shank = new THREE.Mesh(shankGeo, shankMat);
-      shank.position.y = 0.07;
+      shank.position.y = 0.06;
       earGroup.add(shank);
 
-      // Cob Body wrapped in Spathe Husk Leaves
-      const cobGeo = new THREE.CylinderGeometry(0.046, 0.068, 0.42, 16);
+      // Cob wrapped in protective husks
+      const cobGeo = new THREE.CylinderGeometry(0.038, 0.052, 0.35, 16);
       const huskMat = new THREE.MeshStandardMaterial({
-        color: 0x3d9e40,
+        color: 0x3b852e,
         map: leafTexture,
         roughness: 0.45,
-        metalness: 0.04
+        metalness: 0.02
       });
       const cob = new THREE.Mesh(cobGeo, huskMat);
-      cob.position.y = 0.26;
+      cob.position.y = 0.22;
       cob.castShadow = true;
       cob.userData = { id: `ear-${earIndex}`, name: `Developing Maize Ear #${earIndex} (Husk Sheaths)`, type: 'BOTANY', badge: 'PHYSIOLOGY' };
       earGroup.add(cob);
 
-      // Overlapping Husk Bracts (spathes)
+      // Husk Bract Spathes
       for (let h = 0; h < 6; h++) {
         const hPoints = [
-          new THREE.Vector3(0, 0.10, 0),
-          new THREE.Vector3(Math.cos(h * 1.05) * 0.075, 0.28, Math.sin(h * 1.05) * 0.075),
-          new THREE.Vector3(Math.cos(h * 1.05) * 0.022, 0.47, Math.sin(h * 1.05) * 0.022)
+          new THREE.Vector3(0, 0.08, 0),
+          new THREE.Vector3(Math.cos(h * 1.05) * 0.060, 0.24, Math.sin(h * 1.05) * 0.060),
+          new THREE.Vector3(Math.cos(h * 1.05) * 0.018, 0.40, Math.sin(h * 1.05) * 0.018)
         ];
         const hCurve = new THREE.CatmullRomCurve3(hPoints);
-        const hGeo = new THREE.TubeGeometry(hCurve, 8, 0.015, 6, false);
+        const hGeo = createTaperedTubeGeometry(hCurve, 8, 0.012, 0.003, 6, true);
         const hMesh = new THREE.Mesh(hGeo, huskMat);
         earGroup.add(hMesh);
       }
 
-      // Cascading Corn Silk Tufts (styles/stigmata)
+      // Cascading Corn Silk Styles (stigmata)
       for (let s = 0; s < 18; s++) {
         const sAngle = (s / 18) * Math.PI * 2;
         const sCurve = new THREE.CatmullRomCurve3([
-          new THREE.Vector3(0, 0.45, 0),
-          new THREE.Vector3(Math.cos(sAngle) * 0.038, 0.51, Math.sin(sAngle) * 0.038),
-          new THREE.Vector3(Math.cos(sAngle) * 0.075 + (Math.random() - 0.5) * 0.03, 0.56 - Math.random() * 0.04, Math.sin(sAngle) * 0.075),
-          new THREE.Vector3(Math.cos(sAngle) * 0.09, 0.49 - Math.random() * 0.08, Math.sin(sAngle) * 0.09)
+          new THREE.Vector3(0, 0.38, 0),
+          new THREE.Vector3(Math.cos(sAngle) * 0.032, 0.44, Math.sin(sAngle) * 0.032),
+          new THREE.Vector3(Math.cos(sAngle) * 0.065 + (Math.random() - 0.5) * 0.02, 0.48 - Math.random() * 0.03, Math.sin(sAngle) * 0.065),
+          new THREE.Vector3(Math.cos(sAngle) * 0.075, 0.42 - Math.random() * 0.06, Math.sin(sAngle) * 0.075)
         ]);
-        const sGeo = new THREE.TubeGeometry(sCurve, 8, 0.003, 4, false);
+        const sGeo = createTaperedTubeGeometry(sCurve, 8, 0.0024, 0.0008, 4, true);
         const sMesh = new THREE.Mesh(sGeo, new THREE.MeshStandardMaterial({
-          color: 0xdeb842,
-          roughness: 0.45,
-          emissive: 0x4a3508
+          color: 0xcca338,
+          roughness: 0.45
         }));
         earGroup.add(sMesh);
       }
@@ -1878,36 +2113,34 @@
       anatomyParts.ears.add(earGroup);
     }
 
-    createBotanicalMaizeEar(0.82, 1.30, 1);
-    createBotanicalMaizeEar(1.40, 3.90, 2);
+    createBotanicalMaizeEar(0.68, 1.25, 1);
+    createBotanicalMaizeEar(1.18, 3.85, 2);
 
-    // D. Whorled Aerial Brace Roots (Prop Roots for Mechanical Support & Topsoil Uptake)
-    // Whorl 1: Emerging from above-ground Node 1 (8 prop roots)
+    // D. Tiered Aerial Brace Roots (Whorl 1 & Whorl 2 clasping stalk collar)
     for (let c = 0; c < 8; c++) {
-      const angle = (c / 8) * Math.PI * 2 + 0.15;
+      const angle = (c / 8) * Math.PI * 2 + 0.12;
       const cPoints = [
-        new THREE.Vector3(0, 0.08, 0),
-        new THREE.Vector3(Math.cos(angle) * 0.12, 0.03, Math.sin(angle) * 0.12),
-        new THREE.Vector3(Math.cos(angle) * 0.24, -0.14, Math.sin(angle) * 0.24)
+        new THREE.Vector3(0, 0.05, 0),
+        new THREE.Vector3(Math.cos(angle) * 0.10, 0.01, Math.sin(angle) * 0.10),
+        new THREE.Vector3(Math.cos(angle) * 0.20, -0.12, Math.sin(angle) * 0.20)
       ];
       const cCurve = new THREE.CatmullRomCurve3(cPoints);
-      const cGeo = new THREE.TubeGeometry(cCurve, 10, 0.022, 6, false);
+      const cGeo = createTaperedTubeGeometry(cCurve, 10, 0.012, 0.005, 6, true);
       const cMesh = new THREE.Mesh(cGeo, braceRootMat);
       cMesh.castShadow = true;
       cMesh.userData = { id: `brace-root-w1-${c+1}`, name: `Brace Root (Whorl 1, #${c+1})`, type: 'BOTANY', badge: 'PHYSIOLOGY' };
       anatomyParts.braceRoots.add(cMesh);
     }
 
-    // Whorl 2: Emerging from above-ground Node 2 (10 prop roots)
     for (let c = 0; c < 10; c++) {
       const angle = (c / 10) * Math.PI * 2;
       const cPoints = [
-        new THREE.Vector3(0, 0.18, 0),
-        new THREE.Vector3(Math.cos(angle) * 0.16, 0.08, Math.sin(angle) * 0.16),
-        new THREE.Vector3(Math.cos(angle) * 0.32, -0.20, Math.sin(angle) * 0.32)
+        new THREE.Vector3(0, 0.12, 0),
+        new THREE.Vector3(Math.cos(angle) * 0.14, 0.05, Math.sin(angle) * 0.14),
+        new THREE.Vector3(Math.cos(angle) * 0.28, -0.18, Math.sin(angle) * 0.28)
       ];
       const cCurve = new THREE.CatmullRomCurve3(cPoints);
-      const cGeo = new THREE.TubeGeometry(cCurve, 12, 0.026, 6, false);
+      const cGeo = createTaperedTubeGeometry(cCurve, 12, 0.014, 0.006, 6, true);
       const cMesh = new THREE.Mesh(cGeo, braceRootMat);
       cMesh.castShadow = true;
       cMesh.userData = { id: `brace-root-w2-${c+1}`, name: `Brace Root (Whorl 2, #${c+1})`, type: 'BOTANY', badge: 'PHYSIOLOGY' };
@@ -1916,76 +2149,75 @@
 
     // E. Subterranean Crown Roots (Nodal Roots radiating in Topsoil Horizon A)
     const crownRootAxes = [];
-    for (let cr = 0; cr < 16; cr++) {
-      const angle = (cr / 16) * Math.PI * 2 + (Math.random() - 0.5) * 0.3;
-      const reach = 0.55 + Math.random() * 0.35;
-      const depth = -0.25 - Math.random() * 0.35;
+    for (let cr = 0; cr < 18; cr++) {
+      const angle = (cr / 18) * Math.PI * 2 + (Math.random() - 0.5) * 0.25;
+      const reach = 0.50 + Math.random() * 0.35;
+      const depth = -0.25 - Math.random() * 0.45;
       const crPoints = [
-        new THREE.Vector3(0, -0.04 - (cr % 4) * 0.02, 0),
-        new THREE.Vector3(Math.cos(angle) * (reach * 0.45), depth * 0.5, Math.sin(angle) * (reach * 0.45)),
+        new THREE.Vector3(0, -0.02 - (cr % 4) * 0.025, 0),
+        new THREE.Vector3(Math.cos(angle) * (reach * 0.45), depth * 0.45, Math.sin(angle) * (reach * 0.45)),
         new THREE.Vector3(Math.cos(angle) * reach, depth, Math.sin(angle) * reach)
       ];
       const crCurve = new THREE.CatmullRomCurve3(crPoints);
-      const crGeo = new THREE.TubeGeometry(crCurve, 16, 0.020, 6, false);
+      const crGeo = createTaperedTubeGeometry(crCurve, 16, 0.010, 0.0035, 6, true);
       const crMesh = new THREE.Mesh(crGeo, crownRootMat);
       crMesh.castShadow = true;
       crMesh.userData = { id: `crown-root-${cr+1}`, name: `Crown Nodal Root #${cr+1} (Horizon A)`, type: 'BOTANY', badge: 'PHYSIOLOGY' };
       anatomyParts.crownRoots.add(crMesh);
-      crownRootAxes.push(crPoints[2]);
+      crownRootAxes.push({ curve: crCurve, endPoint: crPoints[2] });
     }
 
     // F. Seminal Taproot System (Deep vertical moisture axes penetrating Horizons B & C)
     const tapPoints = [
-      new THREE.Vector3(0, -0.05, 0),
-      new THREE.Vector3(0.03, -0.45, -0.02),
-      new THREE.Vector3(-0.025, -1.05, 0.02),
-      new THREE.Vector3(0.015, -1.82, 0.0)
+      new THREE.Vector3(0, -0.04, 0),
+      new THREE.Vector3(0.025, -0.45, -0.015),
+      new THREE.Vector3(-0.020, -1.15, 0.018),
+      new THREE.Vector3(0.012, -2.15, 0.0)
     ];
     const tapCurve = new THREE.CatmullRomCurve3(tapPoints);
-    const tapGeo = new THREE.TubeGeometry(tapCurve, 28, 0.034, 8, false);
-    const tapMesh = new THREE.Mesh(tapGeo, crownRootMat);
+    const tapGeo = createTaperedTubeGeometry(tapCurve, 32, 0.014, 0.004, 8, true);
+    const tapMesh = new THREE.Mesh(tapGeo, seminalRootMat);
     tapMesh.castShadow = true;
     tapMesh.userData = { id: 'seminal-taproot', name: 'Primary Seminal Taproot (Deep Subsoil)', type: 'BOTANY', badge: 'PHYSIOLOGY' };
     anatomyParts.seminalRoots.add(tapMesh);
 
-    // 4 Secondary Seminal Axes radiating downwards
     for (let s = 0; s < 4; s++) {
-      const sAngle = (s / 4) * Math.PI * 2 + 0.4;
+      const sAngle = (s / 4) * Math.PI * 2 + 0.35;
       const sCurve = new THREE.CatmullRomCurve3([
-        new THREE.Vector3(0, -0.06, 0),
-        new THREE.Vector3(Math.cos(sAngle) * 0.12, -0.65, Math.sin(sAngle) * 0.12),
-        new THREE.Vector3(Math.cos(sAngle) * 0.18, -1.45, Math.sin(sAngle) * 0.18)
+        new THREE.Vector3(0, -0.05, 0),
+        new THREE.Vector3(Math.cos(sAngle) * 0.10, -0.65, Math.sin(sAngle) * 0.10),
+        new THREE.Vector3(Math.cos(sAngle) * 0.16, -1.65, Math.sin(sAngle) * 0.16)
       ]);
-      const sGeo = new THREE.TubeGeometry(sCurve, 18, 0.018, 6, false);
-      const sMesh = new THREE.Mesh(sGeo, crownRootMat);
+      const sGeo = createTaperedTubeGeometry(sCurve, 20, 0.009, 0.003, 6, true);
+      const sMesh = new THREE.Mesh(sGeo, seminalRootMat);
       sMesh.userData = { id: `seminal-axis-${s+1}`, name: `Secondary Seminal Axis #${s+1}`, type: 'BOTANY', badge: 'PHYSIOLOGY' };
       anatomyParts.seminalRoots.add(sMesh);
     }
 
-    // G. Dense Lateral Feeder Root Web (1st and 2nd Order Branches in Rhizosphere)
+    // G. Hierarchical Lateral Feeder Roots (Rhizosphere Network)
     const rootTipPositions = [];
-    for (let r = 0; r < 48; r++) {
-      const angle = (r / 48) * Math.PI * 2 + (Math.random() - 0.5) * 0.45;
-      const startDepth = -0.12 - (r / 48) * 1.45;
-      const reach = 0.42 + Math.random() * 0.85;
-      const endDepth = startDepth - 0.18 - Math.random() * 0.32;
+    for (let r = 0; r < 60; r++) {
+      const angle = (r / 60) * Math.PI * 2 + (Math.random() - 0.5) * 0.40;
+      const startDepth = -0.10 - (r / 60) * 1.55;
+      const reach = 0.38 + Math.random() * 0.72;
+      const endDepth = startDepth - 0.15 - Math.random() * 0.28;
 
       const p0 = new THREE.Vector3(0, startDepth, 0);
       const p2 = new THREE.Vector3(Math.cos(angle) * reach, endDepth, Math.sin(angle) * reach);
       const p1 = new THREE.Vector3(
-        (p0.x + p2.x) * 0.5 + (Math.random() - 0.5) * 0.16,
-        (p0.y + p2.y) * 0.5 - 0.05,
-        (p0.z + p2.z) * 0.5 + (Math.random() - 0.5) * 0.16
+        (p0.x + p2.x) * 0.5 + (Math.random() - 0.5) * 0.12,
+        (p0.y + p2.y) * 0.5 - 0.04,
+        (p0.z + p2.z) * 0.5 + (Math.random() - 0.5) * 0.12
       );
 
       const latCurve = new THREE.CatmullRomCurve3([p0, p1, p2]);
-      const latGeo = new THREE.TubeGeometry(latCurve, 12, 0.012, 5, false);
+      const latGeo = createTaperedTubeGeometry(latCurve, 12, 0.0035, 0.0012, 5, true);
       const latMesh = new THREE.Mesh(latGeo, lateralRootMat);
       latMesh.userData = { id: `feeder-root-${r+1}`, name: `Lateral Feeder Root #${r+1} (Rhizosphere)`, type: 'BOTANY', badge: 'PHYSIOLOGY' };
       anatomyParts.lateralRoots.add(latMesh);
 
-      // Active Meristematic Root Cap (Calyptra)
-      const tipGeo = new THREE.SphereGeometry(0.018, 8, 8);
+      // Fine active meristematic calyptra marker
+      const tipGeo = new THREE.SphereGeometry(0.0045, 6, 6);
       const tipMesh = new THREE.Mesh(tipGeo, rootCapMat);
       tipMesh.position.copy(p2);
       tipMesh.userData = { id: `root-cap-${r+1}`, name: `Active Root Cap #${r+1} (Calyptra)`, type: 'BOTANY', badge: 'PHYSIOLOGY' };
@@ -2364,6 +2596,7 @@
        7. RESTRAINED SCIENTIFIC HYDROLOGY (PLANT ROOT CONVERGENCE STREAMLINES)
        ========================================================================= */
     const hydrologyGroup = new THREE.Group();
+    hydrologyGroup.visible = false;
     scene.add(hydrologyGroup);
 
     // Streamline curves collection & mesh registry
@@ -2487,6 +2720,7 @@
     });
     const plumeMesh = new THREE.Mesh(plumeGeo, plumeMat);
     plumeMesh.position.set(0.35, -0.70, 0.20);
+    plumeMesh.visible = false;
     plumeMesh.userData = { id: 'hydro-plume', name: 'Rhizosphere Infiltration Wetting Envelope', type: 'HYDROLOGY', badge: 'SIMULATED' };
     hydrologyGroup.add(plumeMesh);
 
@@ -2666,17 +2900,118 @@
       roots: { el: document.getElementById('tog-roots'), active: true, target: [anatomyParts.braceRoots, anatomyParts.crownRoots, anatomyParts.seminalRoots, anatomyParts.lateralRoots, anatomyParts.rootTips] },
       soil: { el: document.getElementById('tog-soil'), active: true, target: [geologyGroup] },
       hw: { el: document.getElementById('tog-hw'), active: true, target: [hardwareGroup] },
-      hydro: { el: document.getElementById('tog-hydro'), active: true, target: [hydrologyGroup] }
+      hydro: { el: document.getElementById('tog-hydro'), active: false, target: [hydrologyGroup] }
     };
 
     Object.entries(visibilityToggles).forEach(([key, cfg]) => {
+      if (!cfg.el) return;
       cfg.el.addEventListener('click', () => {
         cfg.active = !cfg.active;
         if (cfg.active) cfg.el.classList.add('active');
         else cfg.el.classList.remove('active');
         cfg.target.forEach(t => t.visible = cfg.active);
+        if (key === 'hydro') plumeMesh.visible = cfg.active;
         sound.playPing(cfg.active ? 740 : 420);
       });
+    });
+
+    /* =========================================================================
+       9B. DELIBERATE 3-MODE INSPECTION SYSTEM (Cutaway, Solid, Root Focus)
+       ========================================================================= */
+    let currentInspectionMode = 'cutaway';
+
+    function setInspectionMode(mode) {
+      currentInspectionMode = mode;
+      
+      const btnCutaway = document.getElementById('btn-mode-cutaway');
+      const btnSolid = document.getElementById('btn-mode-solid');
+      const btnRootFocus = document.getElementById('btn-mode-rootfocus');
+
+      [btnCutaway, btnSolid, btnRootFocus].forEach(btn => btn?.classList.remove('active'));
+
+      if (mode === 'cutaway') {
+        btnCutaway?.classList.add('active');
+        // Restore full opaque soil cross-section
+        [matHorizonO, matHorizonA, matHorizonB, matHorizonC].forEach(mat => {
+          mat.transparent = false;
+          mat.opacity = 1.0;
+          mat.depthWrite = true;
+          mat.needsUpdate = true;
+        });
+        meshO.visible = true; meshA.visible = true; meshB.visible = true; meshC.visible = true;
+        solidFrontGroup.visible = false;
+        stoneInstancedA.visible = true; stoneInstancedB.visible = true; stoneInstancedC.visible = true;
+        mulchInstanced.visible = true;
+        
+        // Restore canopy opacity
+        [leafMatUpper, leafMatMid, leafMatLower, stalkMat, sheathMat].forEach(mat => {
+          mat.transparent = false;
+          mat.opacity = 1.0;
+          mat.needsUpdate = true;
+        });
+
+      } else if (mode === 'solid') {
+        btnSolid?.classList.add('active');
+        // Close front cutaway with solid agricultural monolith blocks
+        [matHorizonO, matHorizonA, matHorizonB, matHorizonC].forEach(mat => {
+          mat.transparent = false;
+          mat.opacity = 1.0;
+          mat.depthWrite = true;
+          mat.needsUpdate = true;
+        });
+        meshO.visible = true; meshA.visible = true; meshB.visible = true; meshC.visible = true;
+        solidFrontGroup.visible = true;
+        stoneInstancedA.visible = false; stoneInstancedB.visible = false; stoneInstancedC.visible = false;
+        mulchInstanced.visible = true;
+
+        [leafMatUpper, leafMatMid, leafMatLower, stalkMat, sheathMat].forEach(mat => {
+          mat.transparent = false;
+          mat.opacity = 1.0;
+          mat.needsUpdate = true;
+        });
+
+      } else if (mode === 'rootfocus') {
+        btnRootFocus?.classList.add('active');
+        // X-Ray Rhizosphere: soil becomes subtle non-depth-writing ghost context
+        [matHorizonO, matHorizonA, matHorizonB, matHorizonC].forEach(mat => {
+          mat.transparent = true;
+          mat.opacity = 0.08;
+          mat.depthWrite = false;
+          mat.needsUpdate = true;
+        });
+        solidFrontGroup.visible = false;
+        stoneInstancedA.visible = false; stoneInstancedB.visible = false; stoneInstancedC.visible = false;
+        mulchInstanced.visible = false;
+
+        // Softly dim plant canopy to highlight subterranean root system
+        [leafMatUpper, leafMatMid, leafMatLower, stalkMat, sheathMat].forEach(mat => {
+          mat.transparent = true;
+          mat.opacity = 0.35;
+          mat.needsUpdate = true;
+        });
+
+        // Ensure roots are visible
+        visibilityToggles.roots.active = true;
+        document.getElementById('tog-roots')?.classList.add('active');
+        visibilityToggles.roots.target.forEach(t => t.visible = true);
+
+        // Smooth camera glide to frame root architecture
+        gsap.to(camera.position, { x: 2.2, y: -0.65, z: 3.6, duration: 1.5, ease: "power2.inOut" });
+        gsap.to(controls.target, { x: 0.35, y: -0.65, z: 0.20, duration: 1.5, ease: "power2.inOut" });
+      }
+    }
+
+    document.getElementById('btn-mode-cutaway')?.addEventListener('click', () => {
+      sound.playPing(720);
+      setInspectionMode('cutaway');
+    });
+    document.getElementById('btn-mode-solid')?.addEventListener('click', () => {
+      sound.playPing(640);
+      setInspectionMode('solid');
+    });
+    document.getElementById('btn-mode-rootfocus')?.addEventListener('click', () => {
+      sound.playPing(840);
+      setInspectionMode('rootfocus');
     });
 
     /* =========================================================================
@@ -2854,13 +3189,18 @@
        11. THE 10 INTERACTIVE CHAPTERS & SCENARIO CONTROLS
        ========================================================================= */
     const CHAPTERS = [
+      // 0: CHAPTER 01 // SURFACE
       {
         tag: "CHAPTER 01 // SURFACE", badge: "CANOPY",
         title: "The Living Surface",
         desc: "What happens above the soil begins beneath it. A mature maize plant (<em>Zea mays</em>) grows in natural agricultural daylight. Rotate and inspect the above-ground canopy before the subterranean descent.",
-        camPos: new THREE.Vector3(3.4, 0.6, 5.6),
-        camTarget: new THREE.Vector3(0, -0.15, 0),
+        camPos: new THREE.Vector3(3.8, 0.45, 6.2),
+        camTarget: new THREE.Vector3(0.05, -0.25, 0.0),
         setup: () => {
+          setInspectionMode('cutaway');
+          collapseLayers();
+          assembleAnatomy();
+          assembleHardware();
           setContextualUI(`
             <div class="module-row">
               <span class="module-label">Hardware Explosion</span>
@@ -2873,7 +3213,7 @@
             </div>
             <div class="module-row" style="margin-top:6px; padding:6px 8px; background:rgba(10,24,36,0.6); border-radius:4px; border:1px solid rgba(56,189,248,0.15);">
               <div style="font-size:0.60rem; color:#94a3b8; line-height:1.4;">
-                Click any exploded component in 3D to inspect its real pinout, hardware ICs, operating voltages, and telemetry source.
+                Click any 3D component (stalk, leaves, ears, probe, solar wafer) to inspect verified pinouts and physiological traits.
               </div>
             </div>
           `);
@@ -2881,6 +3221,215 @@
           document.getElementById('btn-assemble-hw').addEventListener('click', assembleHardware);
         }
       },
+      // 1: CHAPTER 02 // STRATIGRAPHY
+      {
+        tag: "CHAPTER 02 // STRATIGRAPHY", badge: "GEOLOGY",
+        title: "Descent Into the Soil Horizons",
+        desc: "Pedological profile cross-section exposing 4 natural horizons: Horizon O (humus mulch, 0–4cm), Horizon A (melanic topsoil, 4–25cm), Horizon B (compacted clay, 25–60cm), and Horizon C (saprolite gravel, 60cm+).",
+        camPos: new THREE.Vector3(3.2, -0.35, 4.6),
+        camTarget: new THREE.Vector3(0.0, -0.75, 0.0),
+        setup: () => {
+          setInspectionMode('cutaway');
+          assembleAnatomy();
+          assembleHardware();
+          setContextualUI(`
+            <div class="module-row">
+              <span class="module-label">Strata Separation</span>
+              <button class="btn-action-small" id="btn-separate-strata" style="flex:1; justify-content:center;">
+                <i data-lucide="move-vertical" style="width:12px; height:12px;"></i> Separate Strata
+              </button>
+              <button class="btn-action-small" id="btn-collapse-strata" style="flex:1; justify-content:center;">
+                <i data-lucide="minimize-2" style="width:12px; height:12px;"></i> Close Strata
+              </button>
+            </div>
+            <div class="module-row" style="margin-top:6px; padding:6px 8px; background:rgba(10,24,36,0.6); border-radius:4px; border:1px solid rgba(56,189,248,0.15);">
+              <div style="font-size:0.60rem; color:#94a3b8; line-height:1.4;">
+                Examine soil texture, bulk density, pore space, and embedded quartz aggregates across distinct horizons.
+              </div>
+            </div>
+          `);
+          document.getElementById('btn-separate-strata').addEventListener('click', () => {
+            applyLayerSeparation(1.0);
+            sound.playPing(720);
+          });
+          document.getElementById('btn-collapse-strata').addEventListener('click', () => {
+            collapseLayers();
+            sound.playPing(520);
+          });
+        }
+      },
+      // 2: CHAPTER 03 // ANATOMY
+      {
+        tag: "CHAPTER 03 // ANATOMY", badge: "BOTANY",
+        title: "Botanical Plant Dissection",
+        desc: "Dissect <em>Zea mays</em> into distinct morphological subsystems: aerial brace prop roots, subterranean nodal crown roots, deep seminal taproot axis, clasping sheaths, 9-point V-groove blades, husk spathes, and apical tassel.",
+        camPos: new THREE.Vector3(2.5, 0.15, 3.8),
+        camTarget: new THREE.Vector3(0.35, 0.05, 0.20),
+        setup: () => {
+          collapseLayers();
+          assembleHardware();
+          setContextualUI(`
+            <div class="module-row">
+              <span class="module-label">Organism Dissection</span>
+              <button class="btn-action-small" id="btn-dissect-plant" style="flex:1; justify-content:center;">
+                <i data-lucide="layers" style="width:12px; height:12px;"></i> Explode Anatomy
+              </button>
+              <button class="btn-action-small" id="btn-assemble-plant" style="flex:1; justify-content:center;">
+                <i data-lucide="minimize-2" style="width:12px; height:12px;"></i> Reassemble
+              </button>
+            </div>
+            <div class="module-row" style="margin-top:6px;">
+              <button class="btn-action-small" id="btn-isolate-roots" style="width:100%; justify-content:center;">
+                <i data-lucide="scan" style="width:12px; height:12px;"></i> Focus on Root System
+              </button>
+            </div>
+          `);
+          document.getElementById('btn-dissect-plant').addEventListener('click', () => {
+            applyAnatomyExplosion(1.0);
+            sound.playPing(760);
+          });
+          document.getElementById('btn-assemble-plant').addEventListener('click', () => {
+            assembleAnatomy();
+            sound.playPing(540);
+          });
+          document.getElementById('btn-isolate-roots').addEventListener('click', () => {
+            setInspectionMode('rootfocus');
+            sound.playPing(880);
+          });
+        }
+      },
+      // 3: CHAPTER 04 // HYDROLOGY
+      {
+        tag: "CHAPTER 04 // HYDROLOGY", badge: "SIMULATED",
+        title: "The Hidden Water World",
+        desc: "Pore water dynamics governed by Darcy-Buckingham unsaturated capillary flow converging on active root caps, alongside gravitational percolation draining vertically past Horizon B into Horizon C saprolite gravel.",
+        camPos: new THREE.Vector3(2.6, -0.65, 4.2),
+        camTarget: new THREE.Vector3(0.35, -0.75, 0.20),
+        setup: () => {
+          setInspectionMode('cutaway');
+          collapseLayers();
+          assembleAnatomy();
+          assembleHardware();
+          hydrologyGroup.visible = true;
+          plumeMesh.visible = true;
+          document.getElementById('tog-hydro')?.classList.add('active');
+          visibilityToggles.hydro.active = true;
+          setContextualUI(`
+            <div class="module-row">
+              <span class="module-label">Hydraulic Regime</span>
+              <select id="select-hydro-scenario" style="background:#000; color:#fff; border:1px solid #333; padding:4px 6px; border-radius:4px; font-family:var(--font-mono); font-size:0.65rem;">
+                <option value="optimal">Optimal Field Capacity (-33 kPa)</option>
+                <option value="drought">Severe Drought Deficit (-1500 kPa)</option>
+                <option value="saturation">Waterlogged Saturation (0 kPa)</option>
+                <option value="saline">Saline Osmotic Lockout</option>
+              </select>
+            </div>
+            <div class="module-row" style="margin-top:6px;">
+              <span class="module-label">Matric Suction</span>
+              <span id="label-matric-readout" style="font-family:var(--font-mono); font-size:0.65rem; color:var(--accent-cyan);">-33 kPa (Field Cap)</span>
+            </div>
+          `);
+          document.getElementById('select-hydro-scenario').addEventListener('change', (e) => {
+            const sc = HYDRATION_SCENARIOS[e.target.value];
+            if (!sc) return;
+            sound.playWaterInfiltration();
+            simState.vwcRaw = sc.vwc;
+            simState.ecRaw = sc.ec;
+            simState.tempRaw = sc.temp;
+            simState.flowSpeed = sc.flowSpeed;
+            simState.matricPotential = sc.matric;
+            document.getElementById('label-matric-readout').innerText = sc.matric;
+            plumeMesh.scale.set(sc.plumeScale, sc.plumeScale * 1.45, sc.plumeScale * 0.95);
+            plumeMat.opacity = sc.plumeOpacity;
+            calculateAgronomicEngine();
+          });
+        }
+      },
+      // 4: CHAPTER 05 // RHIZOSPHERE
+      {
+        tag: "CHAPTER 05 // RHIZOSPHERE", badge: "CHEMISTRY",
+        title: "Rhizosphere Nutrient Chemistry",
+        desc: "Solute transport and osmotic potential in the active root extraction envelope. High salt concentrations suppress water potential (ψ_s), inducing physiological drought even when soil moisture is physically present.",
+        camPos: new THREE.Vector3(1.8, -0.45, 3.2),
+        camTarget: new THREE.Vector3(0.1, -0.55, 0.1),
+        setup: () => {
+          collapseLayers();
+          assembleAnatomy();
+          assembleHardware();
+          setContextualUI(`
+            <div class="module-row">
+              <span class="module-label">Soil Salinity (EC)</span>
+              <input type="range" id="slider-ec-live" min="0.5" max="5.0" step="0.1" value="${simState.ecRaw.toFixed(1)}" style="flex:1; accent-color:var(--accent-emerald);">
+              <span id="slider-ec-val" style="font-family:var(--font-mono); font-size:0.68rem; color:#fff; width:36px; text-align:right;">${simState.ecRaw.toFixed(1)}</span>
+            </div>
+            <div class="module-row" style="margin-top:6px;">
+              <span class="module-label">Maas-Hoffman</span>
+              <span id="label-chem-status" style="font-family:var(--font-mono); font-size:0.65rem; color:var(--accent-emerald);">SAFE (Threshold: 1.70 dS/m)</span>
+            </div>
+          `);
+          document.getElementById('slider-ec-live').addEventListener('input', (e) => {
+            simState.ecRaw = parseFloat(e.target.value);
+            document.getElementById('slider-ec-val').innerText = simState.ecRaw.toFixed(1);
+            calculateAgronomicEngine();
+            const statEl = document.getElementById('label-chem-status');
+            if (simState.yieldLoss > 0) {
+              statEl.innerText = `PENALTY: -${simState.yieldLoss.toFixed(1)}% YIELD`;
+              statEl.style.color = 'var(--accent-crimson)';
+            } else {
+              statEl.innerText = 'SAFE (Under 1.70 dS/m threshold)';
+              statEl.style.color = 'var(--accent-emerald)';
+            }
+          });
+        }
+      },
+      // 5: CHAPTER 06 // SENSING
+      {
+        tag: "CHAPTER 06 // SENSING", badge: "MEASURED",
+        title: "The Subsurface Sensor Reveal",
+        desc: "Zerthiva $34.80 ruggedized multi-depth probe embedded in Horizon A (15–25cm target). Dual 316L stainless annular rings for 10 kHz AC apparent EC, high-frequency coplanar dielectric VWC blade, and digital DS18B20 1-Wire temperature capsule.",
+        camPos: new THREE.Vector3(-0.55, -0.32, 2.0),
+        camTarget: new THREE.Vector3(-0.55, -0.52, -0.30),
+        setup: () => {
+          setInspectionMode('cutaway');
+          collapseLayers();
+          assembleAnatomy();
+          assembleHardware();
+          setContextualUI(`
+            <div class="module-row">
+              <span class="module-label">Probe Transducers</span>
+              <span style="font-family:var(--font-mono); font-size:0.65rem; color:var(--accent-cyan);">3-IN-1 ACTIVE CORE</span>
+            </div>
+            <div class="module-row" style="margin-top:6px; font-size:0.62rem; color:#94a3b8; line-height:1.4;">
+              Dual 316L rings (10 kHz AC) + Capacitive 1.5 MHz VWC blade + DS18B20 1-Wire thermal capsule (1.91%/°C compensation).
+            </div>
+          `);
+        }
+      },
+      // 6: CHAPTER 07 // HARDWARE
+      {
+        tag: "CHAPTER 07 // HARDWARE", badge: "CALIBRATED",
+        title: "Hardware Architecture Explosion",
+        desc: "CAD-accurate exploded view of the IP67 ASA field node: 5W monocrystal PV wafer, 360° Fresnel RGB sentry ring, Seeed Xiao ESP32-S3 (240MHz Xtensa LX7), SIM800L GSM uplink, SPI MicroSD shield, and 18650 Li-Ion BMS.",
+        camPos: new THREE.Vector3(-0.55, 0.45, 2.3),
+        camTarget: new THREE.Vector3(-0.55, 0.22, -0.30),
+        setup: () => {
+          explodeHardware();
+          setContextualUI(`
+            <div class="module-row">
+              <span class="module-label">Node Assembly</span>
+              <button class="btn-action-small" id="btn-re-assemble-hw" style="flex:1; justify-content:center;">
+                <i data-lucide="minimize-2" style="width:12px; height:12px;"></i> Reassemble Node
+              </button>
+              <button class="btn-action-small" id="btn-re-explode-hw" style="flex:1; justify-content:center;">
+                <i data-lucide="layers" style="width:12px; height:12px;"></i> Explode Again
+              </button>
+            </div>
+          `);
+          document.getElementById('btn-re-assemble-hw').addEventListener('click', assembleHardware);
+          document.getElementById('btn-re-explode-hw').addEventListener('click', explodeHardware);
+        }
+      },
+      // 7: CHAPTER 08 // MONITORING SEQUENCE
       {
         tag: "CHAPTER 08 // MONITORING SEQUENCE", badge: "FIRMWARE",
         title: "The Monitoring Sequence",
@@ -2927,6 +3476,7 @@
           });
         }
       },
+      // 8: CHAPTER 09 // DECISION ENGINE
       {
         tag: "CHAPTER 09 // DECISION ENGINE", badge: "ALGORITHM",
         title: "The Decision Engine",
@@ -2945,6 +3495,7 @@
           `);
         }
       },
+      // 9: CHAPTER 10 // EXPERIMENTAL LAB
       {
         tag: "CHAPTER 10 // EXPERIMENTAL LAB", badge: "VERIFIED",
         title: "The Experimental Test Lab",
@@ -3078,6 +3629,7 @@
       simState.tempRaw = 24.6;
       calculateAgronomicEngine();
 
+      setInspectionMode('cutaway');
       setChapter(0);
     });
 
@@ -3136,16 +3688,16 @@
         .call(() => { sound.playPing(920); })
         .to(camera.position, { x: -0.55, y: 0.9, z: 2.5, duration: 2.0, ease: "power2.inOut" })
         .to(controls.target, { x: -0.55, y: 0.5, z: -0.35, duration: 2.0, ease: "power2.inOut" }, "<")
-        .to(camera.position, { x: 3.4, y: 0.6, z: 5.6, duration: 3.0, ease: "power3.inOut" })
-        .to(controls.target, { x: 0, y: -0.15, z: 0, duration: 3.0, ease: "power3.inOut" }, "<");
+        .to(camera.position, { x: 3.8, y: 0.45, z: 6.2, duration: 3.0, ease: "power3.inOut" })
+        .to(controls.target, { x: 0.05, y: -0.25, z: 0.0, duration: 3.0, ease: "power3.inOut" }, "<");
     }
 
     function finishOpeningSequence() {
       if (openingTimeline) openingTimeline.kill();
       skipBtn.style.display = 'none';
       controls.enabled = true;
-      gsap.to(camera.position, { x: 3.4, y: 0.6, z: 5.6, duration: 1.0 });
-      gsap.to(controls.target, { x: 0, y: -0.15, z: 0, duration: 1.0 });
+      gsap.to(camera.position, { x: 3.8, y: 0.45, z: 6.2, duration: 1.0 });
+      gsap.to(controls.target, { x: 0.05, y: -0.25, z: 0.0, duration: 1.0 });
       setChapter(0);
     }
 
