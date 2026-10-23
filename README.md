@@ -1,8 +1,9 @@
 # 🌱 Zerthiva — Soil Intelligence System (SIS)
 > *"Know Your Soil. Feed Your Field."*
 
-[![Competition Master Submission](https://img.shields.io/badge/Innovation_Competition-Master_Submission-059669?style=for-the-badge&logo=googledocs)](https://collomut.github.io/soilManagement/)
-[![Live 3D Simulation](https://img.shields.io/badge/3D_Viewer-Live_Simulation-0284c7?style=for-the-badge&logo=three.js)](https://collomut.github.io/soilManagement/zerthiva_interactive_3d.html)
+[![Launch Live 3D Simulation](https://img.shields.io/badge/🌾_3D_Simulation-Launch_Live_WebGL-0284c7?style=for-the-badge&logo=three.js)](https://collomut.github.io/soilManagement/zerthiva_interactive_3d.html)
+[![Open Master Dossier](https://img.shields.io/badge/📘_Master_Dossier-Open_58_Sections-059669?style=for-the-badge&logo=googledocs)](https://collomut.github.io/soilManagement/)
+[![Software Stack Branch](https://img.shields.io/badge/💻_Software_Stack-View_Codebase-6366f1?style=for-the-badge&logo=github)](https://github.com/Collomut/soilManagement/tree/software-stack)
 [![Hardware Cost](https://img.shields.io/badge/Node_BOM-$34.80-d97706?style=for-the-badge)](https://github.com/Collomut/soilManagement/tree/research-dossier#section14)
 [![Operation](https://img.shields.io/badge/Operation-100%25_Offline-10b981?style=for-the-badge)](https://github.com/Collomut/soilManagement/tree/research-dossier#section11)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow?style=for-the-badge)](./LICENSE)
@@ -11,15 +12,29 @@
 
 ---
 
+## 🚀 Live Web Sites & Quick Launch Directory
+
+All components of the Zerthiva platform are hosted, deployed, and instantly accessible:
+
+| Platform / Experience | Description | 🌐 Direct Live Link | 📁 Source Branch / Repo |
+|---|---|---|---|
+| 🌾 **3D Soil Intelligence Digital Twin** | Real-time WebGL 3D cutaway simulation: pedological horizons (O/A/B/C), root-zone Darcy hydrology, interactive hardware explosion, and sensor inspection | [**👉 Launch Live 3D Simulation**](https://collomut.github.io/soilManagement/zerthiva_interactive_3d.html) | [`interactive-3d` Branch](https://github.com/Collomut/soilManagement/tree/interactive-3d) |
+| 📘 **Master Technical Dossier Platform** | Complete 58-section post-audit research dossier: real-time position scrollspy, dark/light theme, KaTeX formulas, Rhoades transfer equations, and 15-point risk register | [**👉 Open Live Dossier Platform**](https://collomut.github.io/soilManagement/) | [`research-dossier` Branch](https://github.com/Collomut/soilManagement/tree/research-dossier) |
+| 💻 **Software Implementation Stack** | Complete runnable software: ESP32 MicroPython firmware, FastAPI cloud API, React extension console, and synthetic field simulator | [**👉 Explore Software Codebase**](https://github.com/Collomut/soilManagement/tree/software-stack) | [`software-stack` Branch](https://github.com/Collomut/soilManagement/tree/software-stack) |
+| 🏢 **Zerthiva Companion Implementation Repo** | Dedicated codebase repository with Docker Compose local dev stack, database migrations, and synthetic telemetry stream generator | [**👉 Open Zerthiva Repository**](https://github.com/Collomut/Zerthiva) | [`Collomut/Zerthiva:main`](https://github.com/Collomut/Zerthiva) |
+| 🏛️ **Main Repository Hub** | Central entry portal, branch directory, executive summary, problem statement, and developer quick start | [**👉 You Are Here (`main`)**](https://github.com/Collomut/soilManagement) | [`main` Branch](https://github.com/Collomut/soilManagement/tree/main) |
+
+---
+
 ## 🗂️ Branch Architecture & Codebase Map
 
 To ensure clean separation of concerns, the Zerthiva project is organized into specialized, self-contained branches:
 
-```
+```text
 Collomut/soilManagement (Repository)
 │
 ├── 🌟 main (Current Branch)
-│   └── Central Portal · Executive Overview · Direct Branch & Demo Access
+│   └── Central Portal · Executive Overview · Direct Branch Directory & Live Links
 │
 ├── 🌾 interactive-3d
 │   └── Real-time WebGL 3D soil cutaway simulation (Three.js r128, PBR soil strata, Darcy hydrology)
@@ -33,23 +48,10 @@ Collomut/soilManagement (Repository)
 
 | Branch | Description | Direct Access |
 |---|---|---|
-| **`main`** | Central portal, executive summary, ecosystem directory, and quick actions | [Browse Branch](https://github.com/Collomut/soilManagement/tree/main) |
+| **`main`** | Central portal, executive summary, ecosystem directory, and quick actions | [Browse `main`](https://github.com/Collomut/soilManagement/tree/main) |
 | **`interactive-3d`** | Photorealistic WebGL 3D digital twin: pedological soil horizons (O/A/B/C), root-zone Darcy hydrology, Raycast inspection, and GSAP hardware explosion | [Explore `interactive-3d`](https://github.com/Collomut/soilManagement/tree/interactive-3d) |
 | **`research-dossier`** | The comprehensive 58-section master submission dossier, matched-pair experimental pilot protocols, Rhoades transfer equations, and failure scenarios | [Explore `research-dossier`](https://github.com/Collomut/soilManagement/tree/research-dossier) |
 | **`software-stack`** | Full runnable code: ESP32 firmware drivers (12/12 unit tests), FastAPI ingestion endpoints (11/11 pytest tests), and React extension console | [Explore `software-stack`](https://github.com/Collomut/soilManagement/tree/software-stack) |
-
----
-
-## 🌐 Live Demonstrations & Web Platforms
-
-Experience the working system live in your browser:
-
-* 🌾 **[Interactive 3D WebGL Soil Intelligence Simulation](https://collomut.github.io/soilManagement/zerthiva_interactive_3d.html)**  
-  *Explore cinematic 3D underground root-zone dynamics, interactive sensor hardware explosion, Darcy flow streamlines, and autonomous salinity stress simulations.*
-* 📘 **[58-Section Master Technical Dossier Platform](https://collomut.github.io/soilManagement/)**  
-  *Browse the complete scientific dossier featuring real-time scrollspy navigation, dark/light theme toggle, KaTeX formulas, and 15-point risk register.*
-* 💻 **[Companion Software Implementation Repository (Collomut/Zerthiva)](https://github.com/Collomut/Zerthiva)**  
-  *Dedicated code repository for developers: local Docker Compose stack, database migrations, and synthetic telemetry simulator.*
 
 ---
 
@@ -57,7 +59,7 @@ Experience the working system live in your browser:
 
 In irrigated drylands across developing regions, smallholder farmers unknowingly suffer from **osmotic drought**:
 
-```
+```text
  Fixed-Schedule Irrigation (Saline Water)
                  │
                  ▼
@@ -155,13 +157,13 @@ $$\text{Yield Loss } (\%) = (\text{EC}_{25} - a) \cdot b$$
 ### Clone a Specific Branch
 
 ```bash
-# Clone the 3D WebGL Simulation Branch
+# 1. Clone the 3D WebGL Simulation Branch
 git clone -b interactive-3d https://github.com/Collomut/soilManagement.git
 
-# Clone the 58-Section Research Dossier Platform
+# 2. Clone the 58-Section Research Dossier Platform
 git clone -b research-dossier https://github.com/Collomut/soilManagement.git
 
-# Clone the Full Software Implementation Stack
+# 3. Clone the Full Software Implementation Stack
 git clone -b software-stack https://github.com/Collomut/soilManagement.git
 ```
 
@@ -169,10 +171,10 @@ git clone -b software-stack https://github.com/Collomut/soilManagement.git
 
 ```bash
 # In the software-stack branch:
-# Run firmware unit tests
+# Run firmware unit tests (12/12 passing)
 python -m unittest discover -s firmware/tests
 
-# Run backend API pytest suite
+# Run backend API pytest suite (11/11 passing)
 python -m pytest backend/tests
 ```
 
